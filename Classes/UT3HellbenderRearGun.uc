@@ -110,17 +110,25 @@ state InstantFireMode
     }
 }
 
-defaultproperties
+
+DefaultProperties
 {
-     MaxHoldTime=3.000000
-     bHoldingFire=True
-     ChargingSound=None
-     ChargedLoop=None
-     bShowChargingBar=False
-     FireInterval=0.500000
-     FireSoundClass=Sound'UT3Vehicles.HELLBENDER.HellbenderSecondFire'
-     DamageMin=180
-     DamageMax=180
-     Momentum=75000.000000
-     AIInfo(0)=(bFireOnRelease=False,RefireRate=0.500000)
+
+    FireSoundClass=sound'UT3Vehicles.HELLBENDER.HellbenderSecondFire'
+    //BeamEffectClass=class'ShockBeamEffect'//'ONSChargeBeamEffect'
+    FireInterval=0.5
+    DamageMin=180
+    DamageMax=180
+    Momentum=75000
+    MaxHoldTime=3.0
+    //MinDamageScale=1.0
+    bShowChargingBar=False
+    TraceRange=20000
+    bDoOffsetTrace=true
+    AIInfo(0)=(bInstantHit=true,RefireRate=0.5,bFireOnRelease=false)//0.85
+    FlashEmitterClass=class'ONSPRVRearGunCharge'
+    ChargingSound=None
+    ChargedLoop=None
+    bHoldingFire=True
 }
+

@@ -4,6 +4,7 @@ UT3HellfireSPMA
 Creation date: 2008-05-02 20:50
 Last change: $Id$
 Copyright (c) 2009, Wormbo
+Copyright (c) 2013-2014, GreatEmerald
 Copyright (c) 2013-2014, José Luís '100GPing100'
 ******************************************************************************/
 
@@ -14,8 +15,8 @@ class UT3HellfireSPMA extends ONSArtillery;
 // Inports
 //=============================================================================
 
-#exec obj load file=Sounds/include/UT3SPMA.uax package=UT3Style.SPMA
-#exec obj load file=..\Animations\UT3SPMAAnims.ukx
+#exec obj load file=UT3SPMA.uax
+#exec obj load file=../Animations/UT3SPMAAnims.ukx
 
 
 //=============================================================================
@@ -53,10 +54,10 @@ replication
 {
 	reliable if (Role < ROLE_Authority)
 		ServerToggleDeploy;
-	
+
 	reliable if (bNetDirty)
 		DeployState;
-		
+
 	reliable if (!bNetOwner)
 		CannonAim;
 }
@@ -86,9 +87,9 @@ simulated function Tick(float DeltaTime)
 	/* 100GPing100 BEGIN */
 	local rotator rot;
 	/* 100GPing100 END */
-	
+
 	Super(ONSWheeledCraft).Tick(DeltaTime);
-	
+
 	/* 100GPing100 BEGIN */
 	if (bStationary == false) {
 		// Secondary turret rotation
@@ -96,7 +97,7 @@ simulated function Tick(float DeltaTime)
 		//SetBoneRotation('SecondaryTurret_YawLift', rot);
 	}
 	/* 100GPing100 END */
-	
+
 	if (bBotDeploy || Role == ROLE_Authority && IsHumanControlled() && Rise > 0 && Level.TimeSeconds - LastDeployAttempt > 0.1) {
 		if (bBotDeploy) {
 			Throttle = 0;
@@ -122,21 +123,21 @@ simulated function Tick(float DeltaTime)
 		bDrawCanDeployTooltip = DeployState == DS_Undeployed && Driver != None && CanDeploy(True);
 		LastDeployCheckTime = Level.TimeSeconds;
 	}
-	
+
 	if (MortarCamera != None) {
 		// mouse view aiming for SPMA camera
 		bCustomAiming = True;
 		bAltFocalPoint = true; // for bots
-		
+
 		if (IsLocallyControlled() && IsHumanControlled()) {
 			if (!MortarCamera.bShotDown && PlayerController(Controller).ViewTarget != MortarCamera) {
 				PlayerController(Controller).SetViewTarget(MortarCamera);
 				PlayerController(Controller).bBehindView = False;
 				PlayerController(Controller).ClientSetBehindView(False);
 			}
-			
+
 			CustomAim = UT3HellfireSPMACannon(Weapons[ActiveWeapon]).TargetRotation;
-			
+
 			if (bJustDeployed || Level.TimeSeconds - ClientUpdateTime > 0.0222 && CustomAim != LastAim) {
 				ClientUpdateTime = Level.TimeSeconds;
 				ServerAim((CustomAim.Yaw & 0xffff) | (CustomAim.Pitch << 16));
@@ -158,7 +159,7 @@ simulated function Tick(float DeltaTime)
 						MortarCamera.ShotDown();
 						Weapons[ActiveWeapon].FireCountDown = Weapons[ActiveWeapon].AltFireInterval;
 					}
-					
+
 					AltFocalPoint = Weapons[ActiveWeapon].Location + vector(CustomAim) * Weapons[ActiveWeapon].MaxRange();
 					Controller.Focus = None;
 				}
@@ -249,16 +250,16 @@ simulated function bool CanDeploy(optional bool bNoMessage)
 {
 	local int i;
 	local bool bOneUnstable;
-	
+
 	if (VSize(Velocity) > MaxDeploySpeed) {
 		if (!bNoMessage && PlayerController(Controller) != None)
 			PlayerController(Controller).ReceiveLocalizedMessage(class'UT3DeployMessage', 0);
 		return false;
 	}
-	
+
 	if (IsFiring())
 		return false;
-	
+
 	Rise = 0;
 	for (i = 0; i < Wheels.Length; i++) {
 		if (!Wheels[i].bWheelOnGround) {
@@ -301,7 +302,7 @@ function ChangeDeployState(EDeployState NewState)
 simulated function PostNetReceive()
 {
 	Super.PostNetReceive();
-	
+
 	if (LastDeployState != DeployState) {
 		LastDeployState = DeployState;
 		DeployStateChanged();
@@ -318,17 +319,17 @@ simulated function DeployStateChanged()
 		if (DeploySound != None)
 			PlaySound(DeploySound, SLOT_Misc, 1.0);
 		break;
-		
+
 	case DS_Deployed:
 		break;
-		
+
 	case DS_UnDeploying:
 		LastDeployStartTime = Level.TimeSeconds;
 		SetVehicleUndeploying();
 		if (UndeploySound != None)
 			PlaySound(UndeploySound, SLOT_Misc, 1.0);
 		break;
-		
+
 	case DS_Undeployed:
 		SetVehicleUnDeployed();
 		break;
@@ -338,18 +339,18 @@ simulated function DeployStateChanged()
 simulated function SetVehicleDeployed()
 {
 	local int i;
-	
+
 	// play shutdown sound
 	if (Driver != None && ShutdownSound != None)
 		PlaySound(ShutdownSound, SLOT_None, 1.0);
 	if (AmbientSound != None)
 		AmbientSound = None;
-	
+
 	// HACK: don't play engine sounds when entering/leaving while deployed
 	IdleSound = None;
 	StartupSound = None;
 	ShutdownSound = None;
-	
+
 	// make immobile
 	SetPhysics(PHYS_None);
 	SetBase(None); // Ensure we are not hooked on something (eg another vehicle)
@@ -359,7 +360,7 @@ simulated function SetVehicleDeployed()
 	SetActiveWeapon(1);
 	Weapons[1].bForceCenterAim = False;
 	Weapons[1].FireCountdown = DeployTime;
-	
+
 	// stop wheels and dirt effects
 	for (i = 0; i < Wheels.Length; ++i) {
 		Wheels[i].SpinVel = 0.0;
@@ -373,14 +374,14 @@ simulated function SetVehicleUndeployed()
 	IdleSound = default.IdleSound;
 	StartupSound = default.StartupSound;
 	ShutdownSound = default.ShutdownSound;
-	
+
 	if (Driver != None && Health > 0) {
 		// play startup sounds
 		AmbientSound = IdleSound;
 		if (StartupSound != None)
 			PlaySound(StartupSound, SLOT_None, 1.0);
 	}
-	
+
 	// restore mobility
 	bCannotBeBased = false;
 	bStationary = false;
@@ -400,7 +401,7 @@ function int LimitPitch(int Pitch)
 {
 	if (MortarCamera != None)
 		return Clamp(Pitch, -16384, 16383);
-	
+
 	return Super(ONSWheeledCraft).LimitPitch(Pitch);
 }
 
@@ -412,7 +413,7 @@ function VehicleFire(bool bWasAltFire)
 		if (!MortarCamera.bDeployed) {
 			if (AIController(Instigator.Controller) != None)
 				return;
-			
+
 			MortarCamera.Deploy();
 			CustomAim = Weapons[ActiveWeapon].WeaponFireRotation;
 			Weapons[ActiveWeapon].FireCountdown = Weapons[ActiveWeapon].AltFireInterval;
@@ -453,7 +454,7 @@ function Died(Controller Killer, class<DamageType> damageType, vector HitLocatio
 	SetPhysics(PHYS_Karma); // ONSVehicle expects PHYS_Karma when dying
 	if (MortarCamera != None)
 		MortarCamera.ShotDown();
-	
+
 	Super.Died(Killer, damageType, HitLocation);
 }
 
@@ -464,13 +465,13 @@ state Deployed
 	{
 		ServerToggleDeploy();
 	}
-	
+
 	function ServerToggleDeploy()
 	{
 		if (!IsFiring())
 			GotoState('Undeploying');
 	}
-	
+
 	/**
 	Makes sure the wheels are still on stable ground, otherwise undeploys.
 	*/
@@ -510,7 +511,7 @@ state Deployed
 state UnDeploying
 {
 	ignores ServerToggleDeploy;
-	
+
 	function BeginState()
 	{
 		/* 100GPing100 BEGIN */
@@ -530,7 +531,7 @@ state UnDeploying
 state Deploying
 {
 	ignores ServerToggleDeploy;
-	
+
 	function BeginState()
 	{
 		/* 100GPing100 BEGIN */
@@ -559,11 +560,11 @@ function DriverLeft()
 {
 	if (MortarCamera != None)
 		MortarCamera.ShotDown();
-	
+
 	/* 100GPing100 BEGIN */
 	PlayAnim('GetOut', 1.0, 0.1);
 	/* 100GPing100 END */
-	
+
 	Super(ONSWheeledCraft).DriverLeft();
 }
 
@@ -572,14 +573,14 @@ function DriverLeft()
 event PostBeginPlay()
 {
 	PlayAnim('InActiveStill', 1.0, 0.0);
-	
+
 	super.PostBeginPlay();
 }
 
 event KDriverEnter(Pawn P)
 {
 	PlayAnim('GetIn', 1.0, 0.0);
-	
+
 	super.KDriverEnter(P);
 }
 /* 100GPing100 END */
@@ -592,13 +593,13 @@ event KDriverEnter(Pawn P)
 defaultproperties
 {
     /* 100GPing100 BEGIN */
-    
+
     Mesh = SkeletalMesh'UT3SPMAAnims.SPMA';
     RedSkin = Shader'UT3SPMATex.Body.RedSkin';
     BlueSkin = Shader'UT3SPMATex.Body.BlueSkin';
-    
+
     FlagBone = 'Body';
-    
+
 	DriverWeapons = ();
 	DriverWeapons(0) = (WeaponClass=class'UT3HellfireSPMASideGun',WeaponBone=body);
 	DriverWeapons(1) = (WeaponClass=class'UT3HellfireSPMACannon',WeaponBone=MainTurret_Yaw);
@@ -617,7 +618,7 @@ defaultproperties
 		SupportBoneAxis=AXIS_X
 	End Object
 	Wheels(0)=SVehicleWheel'LWheel1'
-	
+
 	Begin Object Class=SVehicleWheel Name=LWheel2
 		BoneName="LtTread_Wheel2"
 		BoneRollAxis=AXIS_Y
@@ -645,7 +646,7 @@ defaultproperties
 		SupportBoneAxis=AXIS_X
 	End Object
 	Wheels(2)=SVehicleWheel'LWheel3'
-    
+
     Begin Object Class=SVehicleWheel Name=RWheel1
 		BoneName="RtFrontTire"
 		BoneRollAxis=AXIS_Y
@@ -658,8 +659,8 @@ defaultproperties
 		SupportBoneName="RtFrontTire"
 		SupportBoneAxis=AXIS_X
 	End Object
-	Wheels(3)=SVehicleWheel'RWheel1'    
-    
+	Wheels(3)=SVehicleWheel'RWheel1'
+
 	Begin Object Class=SVehicleWheel Name=RWheel2
 		BoneName="RtTread_Wheel2"
 		BoneRollAxis=AXIS_Y
@@ -673,7 +674,7 @@ defaultproperties
 		SupportBoneAxis=AXIS_X
 	End Object
 	Wheels(4)=SVehicleWheel'RWheel2'
-	
+
 	Begin Object Class=SVehicleWheel Name=RWheel3
 		BoneName="RtTread_Wheel3"
 		BoneRollAxis=AXIS_Y
@@ -687,34 +688,34 @@ defaultproperties
 		SupportBoneAxis=AXIS_X
 	End Object
 	Wheels(5)=SVehicleWheel'RWheel3'
-    
+
     /* 100GPing100 END */
-    
+
 	VehiclePositionString="in a Hellfire SPMA"
 	VehicleNameString = "UT3 Hellfire SPMA"
-	
+
 	DeployIconCoords = (X1=2,Y1=371,X2=124,Y2=115)
-	
+
 	//DriverWeapons(0) = (WeaponClass=class'UT3HellfireSPMASideGun',WeaponBone=SideGunAttach);
 	//DriverWeapons(1) = (WeaponClass=class'UT3HellfireSPMACannon',WeaponBone=CannonAttach);
 	PassengerWeapons = ()
 	FireImpulse      = (X=0) // sidegun shouldn't recoil and main cannon is fired when deployed
 	bAllowViewChange = false // who would want to use it 1st-person anyway
-	
+
 	GroundSpeed = 650.0
-	
+
 	bStasis = False // would interfer with aiming when deployed
-	
+
 	bNetNotify      = True
 	DeployState     = DS_Undeployed
 	LastDeployState = DS_Undeployed
-	
+
 	MaxDeploySpeed = 100.0
 	DeployTime     = 2.1
 	UndeployTime   = 2.0
 	DeploySound    = Sound'SPMADeploy'
 	UndeploySound  = Sound'SPMADeploy'
-	
+
 	SoundVolume    = 255
 	SoundRadius    = 300
 	IdleSound      = Sound'SPMAEngineIdle'

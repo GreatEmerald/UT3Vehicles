@@ -8,7 +8,10 @@ class UT3HBShockBall extends ONSSkyMine;
 
 defaultproperties
 {
-     ComboSound=Sound'UT3Weapons.ShockRifle.ShockCombo'
-     Speed=1400.000000
-     MaxSpeed=1400.000000
+   //Speed=1100.000000
+   //MaxSpeed=1100.000000
+   Speed=1400.000000
+   MaxSpeed=1400.000000
+   ComboSound=Sound'UT3Weapons.ShockRifle.ShockCombo'
 }
+

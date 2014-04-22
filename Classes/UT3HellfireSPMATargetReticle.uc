@@ -3,7 +3,7 @@ UT3HellfireSPMATargetReticle
 
 Creation date: 2009-02-17 15:58
 Latest change: $Id$
-Copyright (c) 2009, Wormbo
+Copyright (c) 2009, 2013 Wormbo, GreatEmerald
 ******************************************************************************/
 
 class UT3HellfireSPMATargetReticle extends ONSMortarTargetBeam;
@@ -13,7 +13,7 @@ class UT3HellfireSPMATargetReticle extends ONSMortarTargetBeam;
 // Imports
 //=============================================================================
 
-#exec obj load file=StaticMeshes/include/UT3SPMAReticle.usx package=UT3Style.SPMAReticle
+#exec obj load file=UT3SPMAReticle.usx
 
 
 //=============================================================================
@@ -64,7 +64,7 @@ defaultproperties
 	DrawScale3D = (X=1,Y=1,Z=1)
 	DrawScale   = 1.0
 	StaticMesh  = StaticMesh'SPMAReticle'
-	
+
 	ReachableInitScale = 1.25
 	ReachableScale     = 1.0
 	UnreachableScale   = 0.8
