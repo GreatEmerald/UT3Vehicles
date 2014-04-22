@@ -8,5 +8,6 @@ class UT3HellbenderRearGunPawn extends ONSPRVRearGunPawn;
 
 defaultproperties
 {
-     GunClass=Class'UT3HellbenderRearGun'
+    GunClass=class'UT3HellbenderRearGun'
 }
+

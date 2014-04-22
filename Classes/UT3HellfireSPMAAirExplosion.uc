@@ -3,7 +3,7 @@ UT3HellfireSPMAAirExplosion
 
 Creation date: 2009-02-24 19:22
 Last change: $Id$
-Copyright (c) 2009, Wormbo
+Copyright (c) 2009, 2013 Wormbo, GreatEmerald
 ******************************************************************************/
 
 class UT3HellfireSPMAAirExplosion extends Emitter;
@@ -13,7 +13,7 @@ class UT3HellfireSPMAAirExplosion extends Emitter;
 // Imports
 //=============================================================================
 
-#exec obj load file=StaticMeshes/include/UT3SPMAEffects.usx package=UT3Style.SPMAEffects
+#exec obj load file=UT3SPMAEffects.usx
 #exec obj load file=VMParticleTextures.utx
 
 
@@ -118,7 +118,7 @@ defaultproperties
 		StartVelocityRange=(X=(Min=200.0,Max=700.0),Y=(Min=-200.0,Max=200.0),Z=(Min=-200.0,Max=200.0))
 	End Object
 	Emitters(3)=SpriteEmitter'Sparks'
-	
+
 	AmbientGlow=64
 	bNoDelete=False
 	AutoDestroy=True
