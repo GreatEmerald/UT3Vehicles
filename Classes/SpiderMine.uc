@@ -2,15 +2,16 @@
 // Spider Mine (spawns spiders to kill close enemies).
 // Credits: 100GPing100(José Luís)
 // Copytight José Luís, 2012
+// Copyright GreatEmerald, 2014
 // Contact: zeluis.100@gmail.com
 //============================================================
 class SpiderMine extends DeployableMine;
 
 
-#exec audio import group=SpiderSounds file=..\Sounds\UT3Nightshade\SpiderMine\SpiderMine_Active01.wav
-#exec audio import group=SpiderSounds file=..\Sounds\UT3Nightshade\SpiderMine\SpiderMine_Active02.wav
-#exec audio import group=SpiderSounds file=..\Sounds\UT3Nightshade\SpiderMine\SpiderMine_Active03.wav
-#exec audio import group=SpiderSounds file=..\Sounds\UT3Nightshade\SpiderMine\SpiderMine_Drop.wav
+#exec audio import group=SpiderSounds file=../UT3Vehicles/Sounds/UT3Nightshade/SpiderMine/SpiderMine_Active01.wav
+#exec audio import group=SpiderSounds file=../UT3Vehicles/Sounds/UT3Nightshade/SpiderMine/SpiderMine_Active02.wav
+#exec audio import group=SpiderSounds file=../UT3Vehicles/Sounds/UT3Nightshade/SpiderMine/SpiderMine_Active03.wav
+#exec audio import group=SpiderSounds file=../UT3Vehicles/Sounds/UT3Nightshade/SpiderMine/SpiderMine_Drop.wav
 
 
 /* Max range for detecting enemies. */
@@ -46,7 +47,7 @@ function SpawnMine(Pawn Target, vector TargetDir)
 	// ONSMineProjectile.
 	local Spider Mine;
 	local Vector X,Y,Z;
-	
+
 	if (AvailableMines > 0)
 	{
 		PlaySound(ActivateSnd[Rand(4) - 1], SLOT_None, 1.0);
@@ -71,7 +72,7 @@ function CheckForEnemies()
 {
 	local Pawn P;
 	local bool spawnedmine;
-	
+
 	if (Controller != None)
 	{
 		if (Controller.Pawn != None)
@@ -83,7 +84,7 @@ function CheckForEnemies()
 		Destroy();
 		return;
 	}
-	
+
 	if (Team != Controller.PlayerReplicationInfo.Team.TeamIndex && Controller.PlayerReplicationInfo.Team != None)
 	{
 		// Deployable and controller are not off the same team
@@ -91,18 +92,18 @@ function CheckForEnemies()
 		Destroy();
 		return;
 	}
-	
+
 	if (AvailableMines + DeployedMines <= 0)
 	{
 		// UT3: Out of mines.
 		// @100GPing100: won't ever be true since the addition
 		// will allways be the start count of mines.
-		
+
 		// @100GPing100: as I said, it's never true.
 		Destroy();
 		return;
 	}
-	
+
 	if (!bDeleteMe)
 	{
 		spawnedmine = false;
@@ -141,17 +142,17 @@ DefaultProperties
 	// Looks.
 	Mesh=SkeletalMesh'UT3NightshadeAnims.SpiderMine';
 	DrawType=DT_Mesh;
-	
+
 	// Damage.
 	DetectionRange=1500.0;
 	AvailableMines=15;
-	
+
 	// Sound.
-	ActivateSnd(0) = Sound'UT3Nightshade.SpiderSounds.SpiderMine_Active01';
-	ActivateSnd(1) = Sound'UT3Nightshade.SpiderSounds.SpiderMine_Active02';
-	ActivateSnd(2) = Sound'UT3Nightshade.SpiderSounds.SpiderMine_Active03';
-	DropSnd = Sound'UT3Nightshade.SpiderSounds.SpiderMine_Drop';
-	
+	ActivateSnd(0) = Sound'SpiderMine_Active01';
+	ActivateSnd(1) = Sound'SpiderMine_Active02';
+	ActivateSnd(2) = Sound'SpiderMine_Active03';
+	DropSnd = Sound'SpiderMine_Drop';
+
 	// Misc.
 	LifeSpan=150.0;
 	bOrientOnSlope=true;

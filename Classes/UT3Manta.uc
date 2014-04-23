@@ -5,6 +5,7 @@ Creation date: 2008-05-02 20:50
 Last change: $Id$
 Copyright (c) 2008, Wormbo and GreatEmerald
 Copyright (c) 2012, 100GPing100
+Copyright (c) 2014, GreatEmerald
 ******************************************************************************/
 
 class UT3Manta extends ONSHoverBike;
@@ -14,18 +15,8 @@ var Emitter DuckEffect;
 //===============
 // @100GPing100
 /* Load the packages. */
-#exec obj load file=..\Animations\UT3MantaAnims.ukx
-#exec obj load file=..\Textures\UT3MantaTex.utx
-
-/* Import all the sounds. */
-#exec audio import group=Sounds file=..\Sounds\UT3Manta\Engine.wav
-#exec audio import group=Sounds file=..\Sounds\UT3Manta\EngineStart.wav
-#exec audio import group=Sounds file=..\Sounds\UT3Manta\EngineStop.wav
-#exec audio import group=Sounds file=..\Sounds\UT3Manta\Jump.wav
-#exec audio import group=Sounds file=..\Sounds\UT3Manta\Duck.wav
-#exec audio import group=Sounds file=..\Sounds\UT3Manta\Impact01.wav
-#exec audio import group=Sounds file=..\Sounds\UT3Manta\Impact02.wav
-#exec audio import group=Sounds file=..\Sounds\UT3Manta\Explode.wav
+#exec obj load file=../Animations/UT3MantaAnims.ukx
+#exec obj load file=../Textures/UT3MantaTex.utx
 
 /* The spining blades. */
 var array<UT3MantaBlade> Blades;
@@ -36,13 +27,13 @@ var array<UT3MantaBlade> Blades;
 function PostBeginPlay()
 {
 	Super.PostBeginPlay();
-	
+
 	// Spawn the blades and attach them to the manta.
 	Blades[0] = Spawn(class'UT3MantaBlade');
 	AttachToBone(Blades[0], 'Blade_rt');
 	Blades[1] = Spawn(class'UT3MantaBlade');
 	AttachToBone(Blades[1], 'Blade_lt');
-	
+
 	ToggleBlades(false);
 }
 
@@ -52,9 +43,9 @@ function PostBeginPlay()
 function DrivingStatusChanged()
 {
 	Super.DrivingStatusChanged();
-	
+
 	ToggleBlades(Driver != None);
-	
+
 	if (Driver == None) // The default value is set by the mutator.
 		bCanBeBaseForPawns = default.bCanBeBaseForPawns;
 	else
@@ -90,19 +81,19 @@ function ToggleBlades(bool OnOff)
 //
 function Ailerons(float DeltaTime)
 {
-	// 45º = 8192 RUU
+	// 45° = 8192 RUU
 	local Rotator AileronsRotation;
-	
+
 	// 1000 = The velocity at wich the angle is of 45º
 	AileronsRotation.Pitch = 8192 * (Velocity.Z / 1000) - Rotation.Pitch;
 	AileronsRotation.Yaw = 0;
 	AileronsRotation.Roll = 0;
-	
+
 	if (AileronsRotation.Pitch > 8192)
 		AileronsRotation.Pitch = 8192;
 	else if (AileronsRotation.Pitch < -8192)
 		AileronsRotation.Pitch = -8192;
-	
+
 	SetBoneRotation('Aileron_Rt', AileronsRotation, 0, 1);
 	SetBoneRotation('Aileron_Lt', AileronsRotation, 0, 1);
 }
@@ -114,7 +105,7 @@ function Destroyed()
 {
 	Blades[0].Destroy();
 	Blades[1].Destroy();
-	
+
 	Super.Destroyed();
 }
 // @100GPing100
@@ -202,40 +193,40 @@ defaultproperties
 	RedSkin = Shader'UT3MantaTex.MantaSkin';
 	BlueSkin = Shader'UT3MantaTex.MantaSkinBlue';
 	DrivePos = (X=-70,Y=0.0,Z=55.0);
-	
+
 	// Damage.
 	DriverWeapons(0)=(WeaponClass=class'UT3MantaPlasmaGun',WeaponBone=barrel_rt);
-	
+
 	// Strings.
 	VehiclePositionString = "in a UT3 Manta";
-	
+
 	// Movement.
 	MaxPitchSpeed = 2000;
 	HoverCheckDist = 155;
 	AirControl = 1.5;
-	
+
 	// Sounds.
-	IdleSound = Sound'UT3Manta.Sounds.Engine';
-	StartUpSound = Sound'UT3Manta.Sounds.EngineStart';
-	ShutDownSound = Sound'UT3Manta.Sounds.EngineStop';
-	JumpSound = Sound'UT3Manta.Sounds.Jump';
-	DuckSound = Sound'UT3Manta.Sounds.Duck';
-	ImpactDamageSounds(0) = Sound'UT3Manta.Sounds.Impact01';
-	ImpactDamageSounds(1) = Sound'UT3Manta.Sounds.Impact02';
-	ImpactDamageSounds(2) = Sound'UT3Manta.Sounds.Impact01';
-	ImpactDamageSounds(3) = Sound'UT3Manta.Sounds.Impact02';
-	ImpactDamageSounds(4) = Sound'UT3Manta.Sounds.Impact01';
-	ImpactDamageSounds(5) = Sound'UT3Manta.Sounds.Impact02';
-	ImpactDamageSounds(6) = Sound'UT3Manta.Sounds.Impact01';
-	ExplosionSounds(0) = Sound'UT3Manta.Sounds.Explode';
-	ExplosionSounds(1) = Sound'UT3Manta.Sounds.Explode';
-	ExplosionSounds(2) = Sound'UT3Manta.Sounds.Explode';
-	ExplosionSounds(3) = Sound'UT3Manta.Sounds.Explode';
-	ExplosionSounds(4) = Sound'UT3Manta.Sounds.Explode';
+	IdleSound = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_EngineLoop01';
+	StartUpSound = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Start01';
+	ShutDownSound = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Stop01';
+	JumpSound = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Jump';
+	DuckSound = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Crouch';
+	ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Collide01';
+	ImpactDamageSounds(1) = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Collide02';
+	ImpactDamageSounds(2) = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Collide01';
+	ImpactDamageSounds(3) = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Collide02';
+	ImpactDamageSounds(4) = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Collide01';
+	ImpactDamageSounds(5) = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Collide02';
+	ImpactDamageSounds(6) = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Collide01';
+	ExplosionSounds(0) = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Explode01';
+	ExplosionSounds(1) = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Explode01';
+	ExplosionSounds(2) = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Explode01';
+	ExplosionSounds(3) = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Explode01';
+	ExplosionSounds(4) = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Explode01';
 	// @100GPing100
 	//======END======
-	
-	
+
+
 	VehicleNameString = "UT3 Manta"
 
     MaxYawRate=3.0

@@ -3,15 +3,9 @@
 // Go over to the Projectile.
 // GreatEmerald, 2008
 // Copyright (c) 2012, 100GPing100 (visuals + fixed sounds)
+// Copyright (c) 2014, GreatEmerald
 //-----------------------------------------------------------
 class UT3GoliathCannon extends ONSHoverTankCannon;
-
-//=====================
-// @100GPing100
-#exec audio import group=Sounds file=..\Sounds\UT3Goliath\Fire.wav
-#exec audio import group=Sounds file=..\Sounds\UT3Goliath\Reload.wav
-// @100GPing100
-//=========END=========
 
 var()   sound           ReloadSoundClass;
 
@@ -87,15 +81,15 @@ DefaultProperties
 	Mesh = SkeletalMesh'UT3GoliathAnims.GoliathCannon';
 	RedSkin = Shader'UT3GoliathTex.Goliath.GoliathSkin';
 	BlueSkin = Shader'UT3GoliathTex.Goliath.GoliathSkinBlue';
-	
+
 	YawBone = "Object01";
 	PitchBone = "Object09";
 	WeaponFireAttachmentBone = "Object08";
-	
-	FireSoundClass = Sound'UT3Goliath.Sounds.Fire';
-	ReloadSoundClass = Sound'UT3Goliath.Sounds.Reload';
+
+	FireSoundClass = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Fire01';
+	ReloadSoundClass = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Reload02';
 	// @100GPing100
 	//======END======
-	
+
 	ProjectileClass=class'UT3GoliathProjectile'
 }

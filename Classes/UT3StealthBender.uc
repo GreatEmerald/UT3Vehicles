@@ -2,6 +2,7 @@
 // UT3 StealthBender Mutator
 // Contact: zeluis.100@gmail.com
 // Copyright José Luís '100GPing100', 2012
+// Copyright GreatEmerald, 2014
 //============================================================
 class UT3StealthBender extends ONSWheeledCraft;
 
@@ -65,17 +66,17 @@ simulated function CheckJump()
 			// Select a mine if we don't have one selected already.
 			if (SelectedMine == 0)
 				SelectNextMine();
-			
+
 			ArmMine = Spawn(MineObjectClasses[SelectedMine - 1], Driver,, Location);
 			AttachToBone(ArmMine, 'ArmWrist');
-			
+
 			Cloak(false);
-			
+
 			CurrentState = VS_Deploying;
 			PlaySound(DeploySnd, SLOT_None);
 			PlayAnim('ArmExtend', 1.6, 0.2);
 			CurrentAnim = "ArmExtend";
-			
+
 			// Do not allow to move or rotate.
 			GroundSpeed = 0;
 			//KarmaParamsRBFull(KParams).KMaxSpeed = 0.0;
@@ -105,7 +106,7 @@ function bool bOnWater()
 	for(i = 0; i < KarmaParams(KParams).Repulsors.Length; i++)
 		if (KarmaParams(KParams).Repulsors[i].bRepulsorOnWater)
 			return true;
-	
+
 	return false;
 }
 
@@ -115,10 +116,10 @@ function bool bOnWater()
 function bool NoObstacle()
 {
 	local vector HitLocation, HitNormal, TraceEnd, Direction;
-	
+
 	Direction = -Vector(Rotation);
 	TraceEnd = Location - vect(0,0,5) + Direction * DeployCheckDistance;
-	
+
 	if (Trace(HitLocation, HitNormal, TraceEnd, Location, true) == None)
 		return true;
 	else
@@ -155,12 +156,12 @@ function bool IsOnGround()
 {
 	local KarmaParams KP;
 	local int i;
-	
+
 	KP = KarmaParams(KParams);
 	for(i=0; i<KP.Repulsors.Length; i++)
 		if( KP.Repulsors[i] != None && KP.Repulsors[i].bRepulsorInContact )
 			return true;
-	
+
 	return false;
 }
 
@@ -190,7 +191,7 @@ function Fire(optional float F)
 	// Do not fire if deploying or undeploying.
 	if (CurrentState == VS_Deploying || CurrentState == VS_Undeploying)
 		return;
-	
+
 	if (CurrentState == VS_Deployed)
 	{
 		/* Actor Spawn (class<Actor> SpawnClass,
@@ -202,7 +203,7 @@ function Fire(optional float F)
 		{
 			Mines[0] = Spawn(Class'SpiderMine', Driver,, ArmMine.Location);
 			PlaySound(DropItemSnd);
-			
+
 			if (!bHasAmmo(1))
 				SelectNextMine();
 		}
@@ -210,7 +211,7 @@ function Fire(optional float F)
 		{
 			Mines[1] = Spawn(Class'SpiderMine', Driver,, ArmMine.Location);
 			PlaySound(DropItemSnd);
-			
+
 			if (!bHasAmmo(1))
 				SelectNextMine();
 		}
@@ -219,7 +220,7 @@ function Fire(optional float F)
 			ShowMessage(0, 4); // "Only in next beta (have a shield :D)"
 			Mines[2] = Spawn(Class'EnergyShield', Driver,, ArmMine.Location);
 			PlaySound(DropItemSnd);
-			
+
 			if (!bHasAmmo(2))
 				SelectNextMine();
 		}
@@ -227,7 +228,7 @@ function Fire(optional float F)
 		{
 			Mines[3] = Spawn(Class'EMPMine', Driver,, ArmMine.Location);
 			PlaySound(DropItemSnd);
-			
+
 			if (!bHasAmmo(3))
 				SelectNextMine();
 		}
@@ -235,13 +236,13 @@ function Fire(optional float F)
 		{
 			Mines[4] = Spawn(Class'EnergyShield', Driver,, ArmMine.Location);
 			PlaySound(DropItemSnd);
-			
+
 			if (!bHasAmmo(4))
 				SelectNextMine();
 		}
-		
+
 		ArmMine.Destroy();
-		
+
 		// Undeploy.
 		CurrentState = VS_Undeploying;
 		PlaySound(UndeploySnd, SLOT_None);
@@ -260,7 +261,7 @@ function Tick(float DeltaTime)
 	// If we have ammo available and we have no mine selected, select one right away!
 	if (bHasAmmo(0) && SelectedMine == 0)
 		SelectNextMine();
-	
+
 	CheckJump();
 	CheckState();
 	super.Tick(DeltaTime);
@@ -313,7 +314,7 @@ function Cloak(bool OnOff)
 		}
 		Visibility = Default.Visibility;
 		bDrawVehicleShadow = true;
-		
+
 		GroundSpeed = Default.GroundSpeed;
 		//KarmaParamsRBFull(KParams).KMaxSpeed = Default.GroundSpeed;
 	}
@@ -333,19 +334,19 @@ simulated event DrivingStatusChanged()
 {
 	// Do not call it in ONSHoverBike because of the dust effects.
 	Super(ONSHoverCraft).DrivingStatusChanged();
-	
+
 	if (Driver == None)
 	{
 		if (ArmMine != None)
 			ArmMine.Destroy();
-		
+
 		GroundSpeed = Default.GroundSpeed;
 		Cloak(false);
-		
+
 		PlayAnim('Idle', 1, 0.7);
 		CurrentAnim = "Idle";
 		CurrentState = VS_Undeployed;
-		
+
 		GroundSpeed = Default.GroundSpeed;
 		//KarmaParamsRBFull(KParams).KMaxSpeed = Default.GroundSpeed;
 	}
@@ -356,7 +357,7 @@ simulated event DrivingStatusChanged()
 		Cloak(true);
 		CurrentState = VS_Cloaked;
 	}
-	
+
 	if (Role == ROLE_Authority)
 	{
 		if (Bot(Controller) != None || AIController(Controller) != None)
@@ -371,24 +372,24 @@ Begin:
 	// Prevents driver from firing.
 	CurrentAnim = "ArmRetract";
 	CurrentState = VS_Deploying;
-	
+
 	// Undeploy.
 	PlaySound(UndeploySnd, SLOT_None);
 	PlayAnim('ArmRetract', 4.8, 0.2);
-	
+
 	// Wait for the animation to end.
 	FinishAnim();
-	
+
 	// Update mine object.
 	if (ArmMine != None)
 		ArmMine.Destroy();
 	ArmMine = Spawn(MineObjectClasses[SelectedMine - 1], Driver,, Location);
 	AttachToBone(ArmMine, 'Object');
-	
+
 	// Deploy.
 	PlaySound(DeploySnd, SLOT_None);
 	PlayAnim('ArmExtend', 1.6, 0.2);
-	
+
 	// Will change it back to VS_Deployed in CheckState().
 	CurrentAnim = "ArmExtend";
 }
@@ -406,7 +407,7 @@ simulated function NextWeapon()
 					break;
 				}
 				SelectedMine = 2;
-				PlaySound(Sound'UT3Nightshade.Sounds.SwitchDeployable', SLOT_None);
+				PlaySound(SwitchDeployableSnd, SLOT_None);
 				ShowMessage(1, 1); // "Stasis Field"
 				break;
 			case 2:
@@ -417,7 +418,7 @@ simulated function NextWeapon()
 					break;
 				}
 				SelectedMine = 3;
-				PlaySound(Sound'UT3Nightshade.Sounds.SwitchDeployable', SLOT_None);
+				PlaySound(SwitchDeployableSnd, SLOT_None);
 				ShowMessage(1, 2); // "EMP"
 				break;
 			case 3:
@@ -428,7 +429,7 @@ simulated function NextWeapon()
 					break;
 				}
 				SelectedMine = 4;
-				PlaySound(Sound'UT3Nightshade.Sounds.SwitchDeployable', SLOT_None);
+				PlaySound(SwitchDeployableSnd, SLOT_None);
 				ShowMessage(1, 3); // "Shield Generator"
 				break;
 			case 4:
@@ -439,7 +440,7 @@ simulated function NextWeapon()
 					break;
 				}
 				SelectedMine = 1;
-				PlaySound(Sound'UT3Nightshade.Sounds.SwitchDeployable', SLOT_None);
+				PlaySound(SwitchDeployableSnd, SLOT_None);
 				ShowMessage(1, 0); // "Spidermine Trap"
 				break;
 		}
@@ -462,7 +463,7 @@ simulated function PrevWeapon()
 					break;
 				}
 				SelectedMine = 4;
-				PlaySound(Sound'UT3Nightshade.Sounds.SwitchDeployable', SLOT_None);
+				PlaySound(SwitchDeployableSnd, SLOT_None);
 				ShowMessage(1, 3); // "Shield Generator"
 				break;
 			case 2:
@@ -473,7 +474,7 @@ simulated function PrevWeapon()
 					break;
 				}
 				SelectedMine = 1;
-				PlaySound(Sound'UT3Nightshade.Sounds.SwitchDeployable', SLOT_None);
+				PlaySound(SwitchDeployableSnd, SLOT_None);
 				ShowMessage(1, 0); // "Spidermine Trap"
 				break;
 			case 3:
@@ -484,7 +485,7 @@ simulated function PrevWeapon()
 					break;
 				}
 				SelectedMine = 2;
-				PlaySound(Sound'UT3Nightshade.Sounds.SwitchDeployable', SLOT_None);
+				PlaySound(SwitchDeployableSnd, SLOT_None);
 				ShowMessage(1, 1); // "Stasis Field"
 				break;
 			case 4:
@@ -495,7 +496,7 @@ simulated function PrevWeapon()
 					break;
 				}
 				SelectedMine = 3;
-				PlaySound(Sound'UT3Nightshade.Sounds.SwitchDeployable', SLOT_None);
+				PlaySound(SwitchDeployableSnd, SLOT_None);
 				ShowMessage(1, 2); // "EMP"
 				break;
 		}
@@ -518,7 +519,7 @@ simulated function SwitchWeapon(byte F)
 				break;
 			}
 			SelectedMine = 1;
-			PlaySound(Sound'UT3Nightshade.Sounds.SwitchDeployable', SLOT_None);
+			PlaySound(SwitchDeployableSnd, SLOT_None);
 			ShowMessage(1, 0); // "Spidermine Trap"
 			break;
 		case 2:
@@ -529,7 +530,7 @@ simulated function SwitchWeapon(byte F)
 				break;
 			}
 			SelectedMine = 2;
-			PlaySound(Sound'UT3Nightshade.Sounds.SwitchDeployable', SLOT_None);
+			PlaySound(SwitchDeployableSnd, SLOT_None);
 			ShowMessage(1, 1); // "Stasis Field"
 			break;
 		case 3:
@@ -540,7 +541,7 @@ simulated function SwitchWeapon(byte F)
 				break;
 			}
 			SelectedMine = 3;
-			PlaySound(Sound'UT3Nightshade.Sounds.SwitchDeployable', SLOT_None);
+			PlaySound(SwitchDeployableSnd, SLOT_None);
 			ShowMessage(1, 2); // "EMP"
 			break;
 		case 4:
@@ -551,7 +552,7 @@ simulated function SwitchWeapon(byte F)
 				break;
 			}
 			SelectedMine = 4;
-			PlaySound(Sound'UT3Nightshade.Sounds.SwitchDeployable', SLOT_None);
+			PlaySound(SwitchDeployableSnd, SLOT_None);
 			ShowMessage(1, 3); // "Shield Generator"
 			break;
 	}
@@ -597,7 +598,7 @@ function SelectNextMine()
 		SelectedMine = 4;
 	else
 		SelectedMine = 0;
-	
+
 	switch (SelectedMine)
 	{
 		case 1:
@@ -620,7 +621,7 @@ function SelectNextMine()
 function DrawHUD(Canvas Canvas)
 {
 	local int i;
-	
+
 	// Do not draw the HUD on bots.
 	if (Bot(Controller) != None || AIController(Controller) != None)
 		return;
@@ -638,7 +639,7 @@ function DrawHUD(Canvas Canvas)
 		HUDItems[3].PosY = Canvas.ClipY * 0.90;
 		bItemsInitialized = true;
 	}
-	
+
 	if (SelectedMine != 0)
 	{
 		// Draw the selected mine with normal colours.
@@ -676,7 +677,7 @@ function CheckAICloak()
 {
 	local Bot b;
 	local AIController AI;
-	
+
 	b = Bot(Controller);
 	AI = AIController(Controller);
 	if (b != None || AI != None)
@@ -694,21 +695,21 @@ function bool BotDropDeployable()
 	if (CurrentState == VS_Undeployed || CurrentState == VS_Cloaked)
 	{
 		Cloak(false);
-		
+
 		// Select a mine if we don't have one selected already.
 		if (SelectedMine == 0)
 			SelectNextMine();
-		
+
 		ArmMine = Spawn(MineObjectClasses[SelectedMine - 1], Driver,, Location);
 		AttachToBone(ArmMine, 'Object');
-		
+
 		Cloak(false);
-		
+
 		CurrentState = VS_Deploying;
 		PlaySound(DeploySnd, SLOT_None);
 		PlayAnim('ArmExtend', 1.6, 0.2);
 		CurrentAnim = "ArmExtend";
-		
+
 		// Do not allow to move or rotate.
 		GroundSpeed = 0;
 		//KarmaParamsRBFull(KParams).KMaxSpeed = 0.0;
@@ -717,16 +718,16 @@ function bool BotDropDeployable()
 	{
 		LastDropAttemptTime = Level.TimeSeconds;
 		Fire(0);
-		
+
 		CurrentState = VS_Undeploying;
 		PlaySound(UndeploySnd, SLOT_None);
 		PlayAnim('ArmRetract', 4.8, 0.2);
 		CurrentAnim = "ArmRetract";
-		
+
 		if (ArmMine != None)
 			ArmMine.Destroy();
 	}
-	
+
 	return false;
 }
 function bool ShouldDropDeployable()
@@ -734,16 +735,16 @@ function bool ShouldDropDeployable()
 	local Bot b;
 	local vector EnemyDir;
 	local GameObjective O;
-	
+
 	SelectNextMine();
-	
+
 	if (CurrentState == VS_Deployed)
 	{
 		BotDropDeployable();
 		return true;
 	}
-	
-	
+
+
 	b = Bot(Controller);
 	if (b != None && Level.TimeSeconds - LastDropAttemptTime > 7.0)
 	{
@@ -752,7 +753,7 @@ function bool ShouldDropDeployable()
 			LastDropAttemptTime = Level.TimeSeconds;
 			return false;
 		}
-		
+
 		if (b.Enemy == None)
 		{
 			EnemyDir = b.Enemy.Location - Location;
@@ -831,7 +832,7 @@ DefaultProperties
 	MineObjectClasses(1) = class'StasisFieldObject';
 	MineObjectClasses(2) = class'EMPObject';
 	MineObjectClasses(3) = class'ShieldObject';
-	
+
 	// HUD.
 	Begin Object Class=HUDItem Name=HUDSpidermineTrap
 		DrawColor = (R=128,G=128,B=128,A=255);
@@ -857,7 +858,7 @@ DefaultProperties
 		Scale = 0.5;
 	End Object
 	HUDItems(3) = HUDShield
-	
+
 	// Damage.
 	DriverWeapons(0) = (WeaponClass=Class'Onslaught.ONSHoverBikePlasmaGun',WeaponBone="SecondaryTurretBarrel")
 	Health = 600;
@@ -870,11 +871,11 @@ DefaultProperties
 	Mines(2) = none;
 	Mines(3) = none;
 	Mines(4) = none;
-	
+
 	// Checks.
 	DeployCheckRadius = 1800.0;
 	DeployCheckDistance = 375.0;
-	
+
 	// Movement.
 	CloakedSpeedModifier = 0.45;
 
@@ -1092,5 +1093,7 @@ DefaultProperties
 
 	ObjectiveGetOutDist=1500.0
 	bCanDoTrickJumps=true
+
+	SwitchDeployableSnd = Sound'UT3A_Vehicle_Nightshade.Sounds.A_Vehicle_Nightshade_SwitchDeployables'
 }
 

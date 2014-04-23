@@ -5,6 +5,7 @@ Creation date: 2008-05-02 20:50
 Last change: $Id$
 Copyright (c) 2008, Wormbo
 Copyright (c) 2012, 100GPing100 (visuals + fixed sounds)
+Copyright (c) 2014, GreatEmerald
 ******************************************************************************/
 
 class UT3Goliath extends ONSHoverTank;
@@ -12,14 +13,8 @@ class UT3Goliath extends ONSHoverTank;
 
 //=====================
 // @100GPing100
-#exec obj load file=..\Animations\UT3GoliathAnims.ukx
-#exec obj load file=..\Textures\UT3GoliathTex.utx
-
-#exec audio import group=Sounds file=..\Sounds\UT3Goliath\Engine.wav
-#exec audio import group=Sounds file=..\Sounds\UT3Goliath\EngineStart.wav
-#exec audio import group=Sounds file=..\Sounds\UT3Goliath\EngineStop.wav
-#exec audio import group=Sounds file=..\Sounds\UT3Goliath\Impact.wav
-#exec audio import group=Sounds file=..\Sounds\UT3Goliath\Explode.wav
+#exec obj load file=../Animations/UT3GoliathAnims.ukx
+#exec obj load file=../Textures/UT3GoliathTex.utx
 
 
 simulated function SetupTreads()
@@ -42,7 +37,7 @@ simulated function SetupTreads()
 		RightTreadPanner.PanRate = 0.0;
 		Skins[2] = RightTreadPanner;
 	}
-	local a;
+	//local a;
 }
 // @100GPing100
 //=========END=========
@@ -60,35 +55,35 @@ defaultproperties
 	Mesh = SkeletalMesh'UT3GoliathAnims.Goliath';
 	RedSkin = Shader'UT3GoliathTex.Goliath.GoliathSkin';
 	BlueSkin = Shader'UT3GoliathTex.Goliath.GoliathSkinBlue';
-	
+
 	Skins(1) = Shader'UT3GoliathTex.GoliathWheels.GoliathWheelsSkin';
 	Skins(2) = Shader'UT3GoliathTex.GoliathWheels.GoliathWheelsSkin';
-	
+
 	DriverWeapons(0)=(WeaponClass=class'UT3GoliathCannon',WeaponBone=Chassis)
 	PassengerWeapons(0)=(WeaponPawnClass=class'UT3GoliathTurretPawn',WeaponBone=Object10)
-	
-	IdleSound = Sound'UT3Goliath.Sounds.Engine';
-	StartUpSound = Sound'UT3Goliath.Sounds.EngineStart';
-	ShutDownSound = Sound'UT3Goliath.Sounds.EngineStop';
-	
-	ImpactDamageSounds(0) = Sound'UT3Goliath.Sounds.Impact';
-	ImpactDamageSounds(1) = Sound'UT3Goliath.Sounds.Impact';
-	ImpactDamageSounds(2) = Sound'UT3Goliath.Sounds.Impact';
-	ImpactDamageSounds(3) = Sound'UT3Goliath.Sounds.Impact';
-	ImpactDamageSounds(4) = Sound'UT3Goliath.Sounds.Impact';
-	ImpactDamageSounds(5) = Sound'UT3Goliath.Sounds.Impact';
-	ImpactDamageSounds(6) = Sound'UT3Goliath.Sounds.Impact';
-	ExplosionSounds(0) = Sound'UT3Goliath.Sounds.Explode';
-	ExplosionSounds(1) = Sound'UT3Goliath.Sounds.Explode';
-	ExplosionSounds(2) = Sound'UT3Goliath.Sounds.Explode';
-	ExplosionSounds(3) = Sound'UT3Goliath.Sounds.Explode';
-	ExplosionSounds(4) = Sound'UT3Goliath.Sounds.Explode';
-	
+
+	IdleSound = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_EngineLoop01';
+	StartUpSound = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Start01';
+	ShutDownSound = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Stop01';
+
+	ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Collide01';
+	ImpactDamageSounds(1) = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Collide01';
+	ImpactDamageSounds(2) = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Collide01';
+	ImpactDamageSounds(3) = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Collide01';
+	ImpactDamageSounds(4) = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Collide01';
+	ImpactDamageSounds(5) = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Collide01';
+	ImpactDamageSounds(6) = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Collide01';
+	ExplosionSounds(0) = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Explode01';
+	ExplosionSounds(1) = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Explode01';
+	ExplosionSounds(2) = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Explode01';
+	ExplosionSounds(3) = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Explode01';
+	ExplosionSounds(4) = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Explode01';
+
 	TreadVelocityScale = 146.25; // Based on the new MaxThrust value: (65/200)*450
 	// @100GPing100
 	//======END======
-	
-	
+
+
 	VehicleNameString = "UT3 Goliath"
 	MaxGroundSpeed=600.0
 	GroundSpeed=500

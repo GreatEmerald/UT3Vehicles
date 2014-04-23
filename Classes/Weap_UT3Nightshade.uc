@@ -2,14 +2,10 @@
 // UT3 Nightshade
 // Credits: 100GPing100(José Luís)
 // Copytight José Luís, 2012
+// Copyright GreatEmerald, 2014
 // Contact: zeluis.100@gmail.com
 //============================================================
 class Weap_UT3Nightshade extends ONSWeapon;
-
-
-#exec audio import group=Sounds file=..\Sounds\UT3Nightshade\FireStart.wav
-#exec audio import group=Sounds file=..\Sounds\UT3Nightshade\Fire.wav
-#exec audio import group=Sounds file=..\Sounds\UT3Nightshade\FireEnd.wav
 
 
 /* The beam effect. */
@@ -66,27 +62,27 @@ state InstantFireMode
 	{
 		local Vector HitLocation, HitNormal, TraceStart, TraceEnd;
 		local Actor HitActor;
-		
+
 		if (!bIsFiring)
 		{
 			bIsFiring = true;
-			
+
 			PlaySound(FireStart, SLOT_None);
-			
+
 			TraceStart = WeaponFireLocation;
 			TraceEnd = TraceStart + Vector(CurrentAim + Rotation) * TraceRange;
 			HitActor = Trace(HitLocation, HitNormal, TraceEnd, TraceStart, true);
-			
+
 			// Spawm the beam, the rest is done in Tick.
 			if (Beam != None)
 				Beam.Destroy();
 			Beam = Spawn(class'Beam', Instigator);
-			
+
 			if (Team == 1)
 				Beam.LinkColor = 2; // Blue.
 			else
 				Beam.LinkColor = 1; // Red.
-			
+
 			UpdateBeam();
 		}
 	}
@@ -94,12 +90,12 @@ state InstantFireMode
 	{
 		local Vector HitLocation, HitNormal, TraceStart, TraceEnd;
 		local Actor HitActor;
-		
+
 		// @TODO: Change the trace info on the other functions.
 		TraceStart = WeaponFireLocation;
 		TraceEnd = TraceStart + Vector(CurrentAim + Rotation) * TraceRange;
 		HitActor = Trace(HitLocation, HitNormal, TraceEnd, TraceStart, true);
-		
+
 		Beam.StartEffect = TraceStart;
 		if (HitActor != None)
 		{
@@ -119,21 +115,21 @@ state InstantFireMode
 		if (bIsFiring)
 		{
 			FlashMuzzleFlash();
-			
+
 			if (AmbientEffectEmitter != None)
 			{
 				AmbientEffectEmitter.SetEmitterStatus(true);
 			}
-			
+
 			// Play firing noise
 			if (bAmbientFireSound)
 				AmbientSound = FireSoundClass;
 			else
 				PlayOwnedSound(FireSoundClass, SLOT_None, FireSoundVolume/255.0,, FireSoundRadius, FireSoundPitch, False);
-			
+
 			// Increase SavedDamage.
 			SavedDamage += Damage * DeltaTime;
-			
+
 			UpdateBeam();
 			ProcessBeam();
 		}
@@ -143,13 +139,13 @@ state InstantFireMode
 		local Vector HitLocation, HitNormal, TraceStart, TraceEnd;
 		local Actor HitActor;
 		local int DamageAmount;
-		
+
 		TraceStart = WeaponFireLocation;
 		TraceEnd = TraceStart + Vector(CurrentAim + Rotation) * TraceRange;
 		HitActor = Trace(HitLocation, HitNormal, TraceEnd, TraceStart, true);
-		
+
 		DamageAmount = int(SavedDamage);
-		
+
 		// We didn't hit anything, but were still linked, so unlink.
 		if (HitActor == None && LinkedTo != None)
 			BreakLink();
@@ -178,7 +174,7 @@ state InstantFireMode
 				LinkedTo = DestroyableObjective(HitActor);
 			else if (HitActor.IsA('ONSPowerNodeShield') && DestroyableObjective(HitActor.Owner) != None && DestroyableObjective(HitActor.Owner).TeamLink(Team))
 				LinkedTo = DestroyableObjective(HitActor.Owner);
-			
+
 			// If we didn't link to anything, deal damage.
 			if (HitActor != None && LinkedTo == None && DamageAmount >= MinimumDamage)
 			{
@@ -197,13 +193,13 @@ state InstantFireMode
 function CeaseFire(Controller C)
 {
 	Super.CeaseFire(C);
-	
+
 	PlaySound(FireEnd, SLOT_None);
-	
+
 	// Destroy the beam.
 	if (Beam != None)
 		Beam.Destroy();
-	
+
 	bIsFiring = false;
 }
 
@@ -213,17 +209,17 @@ DefaultProperties
 	Mesh = SkeletalMesh'UT3NightshadeAnims.NightshadeWeap';
 	RedSkin = Shader'UT3NightshadeTex.Nightshader.NightshadeSkin';
 	BlueSkin = Shader'UT3NightshadeTex.Nightshader.NightshadeSkinBlue';
-	
+
 	// Bones.
 	YawBone = "Turret_Yaw";
 	PitchBone = "Turret_Pitch";
 	WeaponFireAttachmentBone = "Turret_Pitch";
-	
+
 	// Fire offset/speed.
 	FireInterval = 0.0;
 	AltFireInterval = 0.0;
 	WeaponFireOffset = 5.0;
-	
+
 	// Damage/Aim.
 	bInstantFire = true;
 	TraceRange = 900;
@@ -231,16 +227,16 @@ DefaultProperties
 	Momentum = 50000.0;
 	Damage = 120;
 	MinimumDamage = 5.0;
-	
+
 	// Sound.
-	FireStart = Sound'UT3Nightshade.Sounds.FireStart';
-	FireSoundClass = Sound'UT3Nightshade.Sounds.Fire';
-	FireEnd = Sound'UT3Nightshade.Sounds.FireEnd;';
+	FireStart = Sound'UT3A_Vehicle_Nightshade.Sounds.A_Vehicle_Nightshade_FireStart01';
+	FireSoundClass = Sound'UT3A_Vehicle_Nightshade.Sounds.A_Vehicle_Nightshade_FireLoop01';
+	FireEnd = Sound'UT3A_Vehicle_Nightshade.Sounds.A_Vehicle_Nightshade_FireStop01';
 	bAmbientFireSound = true;
-	
+
 	// Force feedback.
 	FireForce = "LinkActivated";
-	
+
 	// AI.
 	AIInfo(0)=(bLeadTarget=True,bInstantHit=True,AimError=100,bTrySplash=False,bTossed=False,bLeadTarget=True,bFireOnRelease=False,RefireRate=0.0)
 }
