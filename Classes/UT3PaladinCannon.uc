@@ -1,13 +1,9 @@
 //-----------------------------------------------------------
 // UT3PaladinCannon.uc
 // The main Paladin gun.
-// Last change: Alpha 2
-// By GreatEmerald, 2009
+// By GreatEmerald, 2009, 2014
 //-----------------------------------------------------------
 class UT3PaladinCannon extends ONSShockTankCannon;
-
-#exec audio import group=Sounds file=..\Sounds\UT3Paladin\Fire.wav
-#exec audio import group=Sounds file=..\Sounds\UT3Paladin\FireImpact.wav
 
 /* Name of the shield's pitch bone. */
 var name ShieldPitchBone;
@@ -53,9 +49,9 @@ function Tick(float DeltaTime)
 	local Rotator Aim, NewAim, AimRotatorWorld, rot;
 	local float YawDelta, PitchDelta;
 	local vector AimVectorWorld, AimVectorLocal;
-	
+
 	Super.Tick(DeltaTime);
-	
+
 	// Apply pitch rotation to the shield arm too.
 	if (bForceCenterAim)
 		Aim = rot(0,0,0);
@@ -67,20 +63,20 @@ function Tick(float DeltaTime)
 		AimVectorLocal = AimVectorWorld >> Rotation;
 		Aim = Rotator(AimVectorLocal);
 	}
-	
+
 	NewAim.Yaw = 0;
 	NewAim.Pitch = 0;
 	NewAim.Roll = 0;
-	
+
 	YawDelta = ShortestAngularDelta(Aim.Yaw, CurrentAim.Yaw);
 	PitchDelta = ShortestAngularDelta(Aim.Pitch, CurrentAim.Pitch);
-	
+
 	NewAim = SmoothRotate(YawDelta, PitchDelta, CurrentAim, RotationsPerSecond, DeltaTime);
-	
+
 	rot.Pitch = -NewAim.Pitch;
 	rot.Yaw = 0;
 	rot.Roll = 0;
-	
+
 	SetBoneRotation(ShieldPitchBone, rot, 0, 1);
 }
 
@@ -89,7 +85,7 @@ state ProjectileFireMode
 	function Fire(Controller C)
 	{
 		Super.Fire(C);
-		
+
 		PlayAnim('Fire');
 	}
 }
@@ -98,10 +94,10 @@ state ProjectileFireMode
 function float ShortestAngularDelta(float EndAngle, float StartAngle)
 {
 	local float DeltaCW, DeltaCCW;
-	
+
 	DeltaCW = CWAngularDelta(EndAngle, StartAngle);
 	DeltaCCW = CCWAngularDelta(EndAngle, StartAngle);
-	
+
 	if (DeltaCW < 32768)
 		return DeltaCW;
 	else
@@ -124,13 +120,13 @@ function rotator SmoothRotate(float YawDelta, float PitchDelta, rotator CurrentR
 {
 	local float AngularDistance;
 	local Rotator Aim;
-	
+
 	AngularDistance = ClampAngle(deltaSeconds * RPS * 65536);
-	
+
 	Aim.Yaw = CurrentRotation.Yaw + Clamp(YawDelta, -AngularDistance, AngularDistance);
 	Aim.Pitch = CurrentRotation.Pitch + Clamp(PitchDelta, -AngularDistance, AngularDistance);
 	Aim.Roll = 0;
-	
+
 	return Aim;
 }
 // @100GPing100
@@ -143,19 +139,19 @@ DefaultProperties
 	Mesh = SkeletalMesh'UT3PaladinAnims.PaladinCannon';
 	RedSkin = Shader'UT3PaladinTex.Paladin.PaladinSkin';
 	BlueSkin = Shader'UT3PaladinTex.Paladin.PaladinSkinBlue';
-	
-	FireSoundClass = Sound'UT3Paladin.Sounds.Fire';
-	FireImpact = Sound'UT3Paladin.Sounds.FireImpact';
+
+	FireSoundClass = Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Fire01';
+	FireImpact = Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_FireImpact01';
     //RotateSound=sound'ONSBPSounds.ShockTank.TurretHorizontal'
-	
+
 	YawBone=Turret_Yaw
 	PitchBone=Cannon_Pitch
 	ShieldPitchBone=Shield_Pitch
 	WeaponFireAttachmentBone=CannonBarrel
 	// @100GPing100
 	//======END======
-	
-	
+
+
 	MaxShieldHealth=1200.000000    //GE: Exact Copy-Paste of the UT3 code
 	MaxDelayTime=2.500000          //Increased
 	ShieldRechargeRate=350.000000  //Decreased

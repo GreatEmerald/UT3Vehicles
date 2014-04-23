@@ -2,6 +2,7 @@
 // Self Destruct Damage Type
 // Credits: 100GPing100(José Luís)
 // Copytight José Luís, 2012
+// Copyright GreatEmerald, 2014
 // Contact: zeluis.100@gmail.com
 //============================================================
 class DmgType_SelfDestruct extends VehicleDamageType
@@ -20,9 +21,9 @@ DefaultProperties
 	DeathString="%k stung %o with a Viper self-destruct.";
 	MaleSuicide="%o stung himself with his own Viper self-destruct."
 	FemaleSuicide="%o stung herself with her own Viper self-destruct."
-	
+
 	// Misc.
-	VehicleClass=Class'UT3Viper.UT3Viper';
+	VehicleClass=Class'UT3Viper';
 	bDelayedDamage=true;
 	bDetonatesGoop=true;
 	FlashFog=(X=700.0);

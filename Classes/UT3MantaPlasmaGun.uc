@@ -1,13 +1,10 @@
 //-----------------------------------------------------------------------------
 // UT3MantaPlasmaGun.uc
 // Sounds increased by 25%...
-// GreatEmerald, 2008
+// GreatEmerald, 2008, 2014
 //-----------------------------------------------------------------------------
 
 class UT3MantaPlasmaGun extends ONSHoverBikePlasmaGun;
-
-// @100GPing100
-#exec audio import group=Sounds file=..\Sounds\UT3Manta\Fire.wav
 
 function float SuggestAttackStyle()
 {
@@ -25,8 +22,8 @@ function float SuggestAttackStyle()
 defaultproperties
 {
 	// @100GPing100
-	FireSoundClass = Sound'UT3Manta.Sounds.Fire';
-	
+	FireSoundClass = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Fire01';
+
 	//FireSoundClass=sound'UT3Vehicles.Manta.MantaFire'
 	TransientSoundVolume=0.4
 	ProjectileClass=class'UT3MantaPlasmaProjectile'

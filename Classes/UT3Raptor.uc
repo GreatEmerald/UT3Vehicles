@@ -5,6 +5,7 @@ Creation date: 2008-05-02 20:34
 Last change: Alpha 2
 Copyright (c) 2008 and 2009, Wormbo and GreatEmerald
 Copyright (c) 2012 100GPing100
+Copyright (c) 2014 GreatEmerald
 ******************************************************************************/
 
 class UT3Raptor extends ONSAttackCraft;
@@ -12,16 +13,8 @@ class UT3Raptor extends ONSAttackCraft;
 
 //===========================
 // @100GPing100
-#exec obj load file=..\Animations\UT3RaptorAnims.ukx
-#exec obj load file=..\Textures\UT3RaptorTex.utx
-
-#exec audio import group=Sounds file=..\Sounds\UT3Raptor\Engine.wav
-#exec audio import group=Sounds file=..\Sounds\UT3Raptor\EngineStart.wav
-#exec audio import group=Sounds file=..\Sounds\UT3Raptor\EngineStop.wav
-#exec audio import group=Sounds file=..\Sounds\UT3Raptor\Impact01.wav
-#exec audio import group=Sounds file=..\Sounds\UT3Raptor\Impact02.wav
-#exec audio import group=Sounds file=..\Sounds\UT3Raptor\Explode.wav
-
+#exec obj load file=../Animations/UT3RaptorAnims.ukx
+#exec obj load file=../Textures/UT3RaptorTex.utx
 
 /* Wing's rotation rate. */
 var float WingsRPS;
@@ -36,10 +29,10 @@ var Rotator RuddersRotation;
 event PostBeginPlay()
 {
 	WingsRotation = rot(16384,0,0);
-	
+
 	SetBoneRotation('Rt_Wing', WingsRotation, 0, 1);
 	SetBoneRotation('Lft_Wing', WingsRotation, 0, 1);
-	
+
 	Super.PostBeginPlay();
 }
 
@@ -49,7 +42,7 @@ event PostBeginPlay()
 function bool KDriverLeave(bool bForceLeave)
 {
 	SetTimer(0.05, true);
-	
+
 	return super.KDriverLeave(bForceLeave);
 }
 
@@ -67,10 +60,10 @@ event Timer()
 			SetTimer(0, false);
 		}
 	}
-	
+
 	WingsRotation.Yaw = 0;
 	WingsRotation.Roll = 0;
-	
+
 	SetBoneRotation('Rt_Wing', WingsRotation, 0, 1);
 	SetBoneRotation('Lft_Wing', WingsRotation, 0, 1);
 }
@@ -81,7 +74,7 @@ event Timer()
 function Tick(float DeltaTime)
 {
 	Super.Tick(DeltaTime);
-	
+
 	Wings(DeltaTime);
 	Rudders(DeltaTime);
 	Guns();
@@ -111,10 +104,10 @@ function Wings(float DeltaTime)
 		if (WingsRotation.Pitch < 0)
 			WingsRotation.Pitch = 0;
 	}
-	
+
 	WingsRotation.Yaw = 0;
 	WingsRotation.Roll = 0;
-	
+
 	SetBoneRotation('Rt_Wing', WingsRotation, 0, 1);
 	SetBoneRotation('Lft_Wing', WingsRotation, 0, 1);
 }
@@ -126,21 +119,21 @@ function Rudders(float DeltaTime)
 {
 	// 30º ~= 5461 RUU
 	local Rotator NewRotation, NewDriverYaw;
-	
+
 	// Normalize Rotation and DriverViewYaw or we get weird values..
 	SetRotation(Normalize(Rotation));
 	NewDriverYaw.Yaw = DriverViewYaw;
 	DriverViewYaw = Normalize(NewDriverYaw).Yaw;
-	
+
 	// 3000 = The angle at which the angle of the rudders is of 30º
 	NewRotation.Yaw = 5461 * (Rotation.Yaw - DriverViewYaw) / 3000;
-	
+
 	// Limit the angle.
 	if (NewRotation.Yaw > 5461)
 		NewRotation.Yaw = 5461;
 	else if (NewRotation.Yaw < -5461)
 		NewRotation.Yaw = -5461;
-	
+
 	// Update rudders' rotation.
 	if (NewRotation.Yaw > 1000 || NewRotation.Yaw < -1000)
 		RuddersRotation.Yaw += 182 * DeltaTime * NewRotation.Yaw / 100;
@@ -152,16 +145,16 @@ function Rudders(float DeltaTime)
 		else if (RuddersRotation.Yaw < -200)
 			RuddersRotation.Yaw += 182 * DeltaTime * 30;
 	}
-	
+
 	// Limit the current angle.
 	if (RuddersRotation.Yaw > 5461)
 		RuddersRotation.Yaw = 5461;
 	else if (RuddersRotation.Yaw < -5461)
 		RuddersRotation.Yaw = -5461;
-	
+
 	RuddersRotation.Roll = 0;
 	RuddersRotation.Pitch = 0;
-	
+
 	// Apply the new rotation.
 	SetBoneRotation('Rudder_Rt', RuddersRotation, 0, 1);
 	SetBoneRotation('Rudder_left', RuddersRotation, 0, 1);
@@ -173,9 +166,9 @@ function Rudders(float DeltaTime)
 function Guns()
 {
 	local Rotator GunsRotation;
-	
+
 	GunsRotation.Pitch = -DriverViewPitch;
-	
+
 	SetBoneRotation('rt_gun', GunsRotation, 0, 1);
 	SetBoneRotation('left_gun', GunsRotation, 0, 1);
 }
@@ -187,7 +180,7 @@ function Guns()
 function Died(Controller Killer, class<DamageType> DmgType, Vector HitLocation)
 {
 	local int i;
-	
+
 	if (Level.NetMode != NM_DedicatedServer)
 	{
 		for (i = 0; i < TrailEffects.Length; i++)
@@ -199,7 +192,7 @@ function Died(Controller Killer, class<DamageType> DmgType, Vector HitLocation)
 simulated function Destroyed()
 {
 	local int i;
-	
+
 	if (Level.NetMode != NM_DedicatedServer)
 	{
 		for (i = 0; i < TrailEffects.Length; i++)
@@ -211,7 +204,7 @@ simulated function Destroyed()
 simulated event DrivingStatusChanged()
 {
 	local int i;
-	
+
 	if (bDriving && Level.NetMode != NM_DedicatedServer && !bDropDetail)
 	{
         if (TrailEffects.Length == 0)
@@ -238,7 +231,7 @@ simulated event DrivingStatusChanged()
         	TrailEffects.Length = 0;
         }
     }
-	
+
 	Super(ONSChopperCraft).DrivingStatusChanged();
 }
 // @100GPing100
@@ -265,32 +258,32 @@ defaultproperties
 	Mesh = SkeletalMesh'UT3RaptorAnims.RAPTOR';
 	RedSkin = Shader'UT3RaptorTex.RaptorSkin';
 	BlueSkin = Shader'UT3RaptorTex.RaptorSkinBlue';
-	
+
 	TrailEffectPositions(0) = (X=-105,Y=-35,Z=-15);
 	TrailEffectPositions(1) = (X=-105,Y=35,Z=-15);
-	
+
 	VehiclePositionString = "in a UT3 Raptor";
-	
+
 	DriverWeapons[0] = (WeaponClass=class'UT3RaptorWeapon',WeaponBone=Fuselage)
-	
+
 	WingsRPS = 182; // 182 ~= 1º
-	
+
 	// Sounds.
-	IdleSound = Sound'UT3Raptor.Sounds.Engine';
-	StartUpSound = Sound'UT3Raptor.Sounds.EngineStart';
-	ShutDownSound = Sound'UT3Raptor.Sounds.EngineStop';
-	ImpactDamageSounds(0) = Sound'UT3Raptor.Sounds.Impact01';
-	ImpactDamageSounds(1) = Sound'UT3Raptor.Sounds.Impact02';
-	ImpactDamageSounds(2) = Sound'UT3Raptor.Sounds.Impact01';
-	ImpactDamageSounds(3) = Sound'UT3Raptor.Sounds.Impact02';
-	ImpactDamageSounds(4) = Sound'UT3Raptor.Sounds.Impact01';
-	ImpactDamageSounds(5) = Sound'UT3Raptor.Sounds.Impact02';
-	ImpactDamageSounds(6) = Sound'UT3Raptor.Sounds.Impact01';
-	ExplosionSounds(0) = Sound'UT3Raptor.Sounds.Explode';
-	ExplosionSounds(1) = Sound'UT3Raptor.Sounds.Explode';
-	ExplosionSounds(2) = Sound'UT3Raptor.Sounds.Explode';
-	ExplosionSounds(3) = Sound'UT3Raptor.Sounds.Explode';
-	ExplosionSounds(4) = Sound'UT3Raptor.Sounds.Explode';
+	IdleSound = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_EngineLoop01';
+	StartUpSound = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Start01';
+	ShutDownSound = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Stop01';
+	ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Collide01';
+	ImpactDamageSounds(1) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Collide02';
+	ImpactDamageSounds(2) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Collide01';
+	ImpactDamageSounds(3) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Collide02';
+	ImpactDamageSounds(4) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Collide01';
+	ImpactDamageSounds(5) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Collide02';
+	ImpactDamageSounds(6) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Collide01';
+	ExplosionSounds(0) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Explode01';
+	ExplosionSounds(1) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Explode01';
+	ExplosionSounds(2) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Explode01';
+	ExplosionSounds(3) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Explode01';
+	ExplosionSounds(4) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Explode01';
 	// @100GPing100
 	//============EDN============
 	VehicleNameString = "UT3 Raptor"

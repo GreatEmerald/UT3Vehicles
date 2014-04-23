@@ -1,13 +1,10 @@
 //============================================================
 // UT3 Paladin Shield
 // Copyright (c) 2012, José Luís '100GPing100'
+// Copyright (c) 2014, GreatEmerald
 // Contact: zeluis.100@gmail.com
 //============================================================
 class UT3PaladinShield extends ONSShockTankShield;
-
-#exec audio import group=Sounds file=..\Sounds\UT3Paladin\ShieldActivate.wav
-#exec audio import group=Sounds file=..\Sounds\UT3Paladin\ShieldDeactivate.wav
-#exec audio import group=Sounds file=..\Sounds\UT3Paladin\ShieldAmbient.wav
 
 /* Sound played when the shield is actiavted. */
 var Sound ShieldActivateSound;
@@ -51,7 +48,7 @@ simulated function ActivateShield(byte TeamNum)
         if (ShockShieldEffect != None && Owner != None && ONSShockTankCannon(Owner) != None)
             Owner.AttachToBone(ShockShieldEffect, 'Shield_Pitch');
     }
-	
+
 	AmbientSound = ShieldAmbientSound;
 }
 
@@ -66,13 +63,13 @@ simulated function DeactivateShield()
 		if (Level.NetMode != NM_DedicatedServer)
 			PlaySound(ShieldDeactivateSound, SLOT_None, 2.0);
 	}
-	
+
 	AmbientSound = None;
 }
 
 DefaultProperties
 {
-	ShieldActivateSound = Sound'UT3Paladin.Sounds.ShieldActivate';
-	ShieldDeactivateSound = Sound'UT3Paladin.Sounds.ShieldDeactivate';
-	ShieldAmbientSound = Sound'UT3Paladin.Sounds.ShieldAmbient';
+	ShieldActivateSound = Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_ShieldActivate01';
+	ShieldDeactivateSound = Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_ShieldOff01';
+	ShieldAmbientSound = Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_ShieldAmbient01';
 }

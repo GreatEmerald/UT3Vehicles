@@ -2,20 +2,21 @@
 // Spider (spiders that spawn with the Spidermine Trap).
 // Credits: 100GPing100(José Luís)
 // Copytight José Luís, 2012
+// Copyright GreatEmerald, 2014
 // Contact: zeluis.100@gmail.com
 //============================================================
 class Spider extends Projectile;
 
 
-#exec audio import group=SpiderSounds file=..\Sounds\UT3Nightshade\SpiderMine\Spider_Explode01.wav
-#exec audio import group=SpiderSounds file=..\Sounds\UT3Nightshade\SpiderMine\Spider_Explode02.wav
-#exec audio import group=SpiderSounds file=..\Sounds\UT3Nightshade\SpiderMine\Spider_Explode03.wav
-#exec audio import group=SpiderSounds file=..\Sounds\UT3Nightshade\SpiderMine\Spider_Attack01.wav
-#exec audio import group=SpiderSounds file=..\Sounds\UT3Nightshade\SpiderMine\Spider_Attack02.wav
-#exec audio import group=SpiderSounds file=..\Sounds\UT3Nightshade\SpiderMine\Spider_Attack03.wav
-#exec audio import group=SpiderSounds file=..\Sounds\UT3Nightshade\SpiderMine\Spider_Walk01.wav
-#exec audio import group=SpiderSounds file=..\Sounds\UT3Nightshade\SpiderMine\Spider_Walk02.wav
-#exec audio import group=SpiderSounds file=..\Sounds\UT3Nightshade\SpiderMine\Spider_Walk03.wav
+#exec audio import group=SpiderSounds file=../UT3Vehicles/Sounds/UT3Nightshade/SpiderMine/Spider_Explode01.wav
+#exec audio import group=SpiderSounds file=../UT3Vehicles/Sounds/UT3Nightshade/SpiderMine/Spider_Explode02.wav
+#exec audio import group=SpiderSounds file=../UT3Vehicles/Sounds/UT3Nightshade/SpiderMine/Spider_Explode03.wav
+#exec audio import group=SpiderSounds file=../UT3Vehicles/Sounds/UT3Nightshade/SpiderMine/Spider_Attack01.wav
+#exec audio import group=SpiderSounds file=../UT3Vehicles/Sounds/UT3Nightshade/SpiderMine/Spider_Attack02.wav
+#exec audio import group=SpiderSounds file=../UT3Vehicles/Sounds/UT3Nightshade/SpiderMine/Spider_Attack03.wav
+#exec audio import group=SpiderSounds file=../UT3Vehicles/Sounds/UT3Nightshade/SpiderMine/Spider_Walk01.wav
+#exec audio import group=SpiderSounds file=../UT3Vehicles/Sounds/UT3Nightshade/SpiderMine/Spider_Walk02.wav
+#exec audio import group=SpiderSounds file=../UT3Vehicles/Sounds/UT3Nightshade/SpiderMine/Spider_Walk03.wav
 
 
 var float DetectionTimer; // check target every this many seconds
@@ -133,7 +134,7 @@ simulated function ProcessTouch(Actor Other, Vector HitNormal)
 	}
 	else if (Other.bCanBeDamaged && Other.Base != self)
 		Explode(Location, HitNormal);
-	
+
 	ImpactedActor = None;
 }
 
@@ -268,7 +269,7 @@ auto state Flying
 		SetPhysics(PHYS_Falling);
 		Lifespan = 6.0;
 	}
-	
+
 	simulated function EndState()
 	{
 		Lifespan = 0.0;
@@ -353,7 +354,7 @@ simulated state OnGround
 		ReturnToTrapEnabled = false;
 		LifeSpan = 0.0;
 	}
-	
+
 	function Tick(float DeltaTime)
 	{
 		if (ReturnToTrapEnabled && DeltaTime - ReturnToTrapTime >= ReturnToTrapDelay)
@@ -399,7 +400,7 @@ simulated state Scurrying
 
 					//Play a nice screeching sound (not in WarnTarget because its meant only for on the 'jump')
 					PlaySound(AttackScreechSnd[Rand(4) - 1], SLOT_None, 1.0);
-					
+
 					WarnTarget();
 				}
 				else
@@ -458,7 +459,7 @@ simulated function Explode(vector HitLocation, vector HitNormal)
 	{
 		Attached[i].TakeDamage(Damage, InstigatorController.Pawn, Attached[i].Location, vect(0,0,0), MyDamageType);
 	}
-	
+
 	//Super.Explode(HitLocation, HitNormal);
 	// From UT:'Projectile'.Explode:
 	if (Damage > 0 && DamageRadius > 0)
@@ -742,20 +743,20 @@ defaultproperties
 
 	bBounce=True
 	bHardAttach=True
-	
+
 	Mesh=SkeletalMesh'UT3NightshadeAnims.Spider_1P';
 	CollisionRadius=10.000000
 	CollisionHeight=10.000000
 	bBlockKarma=True
-	
+
 	// Sound.
-	ExplosionSnd(0) = Sound'UT3Nightshade.SpiderSounds.Spider_Explode01';
-	ExplosionSnd(1) = Sound'UT3Nightshade.SpiderSounds.Spider_Explode02';
-	ExplosionSnd(2) = Sound'UT3Nightshade.SpiderSounds.Spider_Explode03';
-	AttackScreechSnd(0) = Sound'UT3Nightshade.SpiderSounds.Spider_Attack01';
-	AttackScreechSnd(1) = Sound'UT3Nightshade.SpiderSounds.Spider_Attack02';
-	AttackScreechSnd(2) = Sound'UT3Nightshade.SpiderSounds.Spider_Attack03';
-	WalkingSnd(0) = Sound'UT3Nightshade.SpiderSounds.Spider_Walk01';
-	WalkingSnd(1) = Sound'UT3Nightshade.SpiderSounds.Spider_Walk02';
-	WalkingSnd(2) = Sound'UT3Nightshade.SpiderSounds.Spider_Walk03';
+	ExplosionSnd(0) = Sound'Spider_Explode01';
+	ExplosionSnd(1) = Sound'Spider_Explode02';
+	ExplosionSnd(2) = Sound'Spider_Explode03';
+	AttackScreechSnd(0) = Sound'Spider_Attack01';
+	AttackScreechSnd(1) = Sound'Spider_Attack02';
+	AttackScreechSnd(2) = Sound'Spider_Attack03';
+	WalkingSnd(0) = Sound'Spider_Walk01';
+	WalkingSnd(1) = Sound'Spider_Walk02';
+	WalkingSnd(2) = Sound'Spider_Walk03';
 }

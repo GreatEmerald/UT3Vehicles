@@ -1,6 +1,7 @@
 //============================================================
 // UT3 Viper (NecrisManta)
 // Copyright (c) José Luís '100GPing100' 2012-2013
+// Copyright (c) GreatEmerald 2014
 // Contact: zeluis.100@gmail.com
 // Website: http://www.100gping100.com/
 //============================================================
@@ -10,17 +11,6 @@ class UT3Viper extends ONSHoverBike;
 #exec OBJ LOAD FILE=../Animations/UT3ViperAnims.ukx
 #exec OBJ LOAD FILE=../Textures/UT3ViperTex.utx
 #exec OBJ LOAD FILE=../StaticMeshes/UT3ViperSM.usx
-
-// Import sounds.
-#exec audio import group=Sounds file=../Sounds/UT3Viper/Eject.wav
-#exec audio import group=Sounds file=../Sounds/UT3Viper/EjectReady.wav
-#exec audio import group=Sounds file=../Sounds/UT3Viper/Engine.wav
-#exec audio import group=Sounds file=../Sounds/UT3Viper/EnterVehicle.wav
-#exec audio import group=Sounds file=../Sounds/UT3Viper/ExitVehicle.wav
-#exec audio import group=Sounds file=../Sounds/UT3Viper/Explode.wav
-#exec audio import group=Sounds file=../Sounds/UT3Viper/Impact.wav
-#exec audio import group=Sounds file=../Sounds/UT3Viper/Jump.wav
-#exec audio import group=Sounds file=../Sounds/UT3Viper/SelfDestruct.wav
 
 
 /* Time, in seconds, that the driver has to activate the self-destruct. */
@@ -102,17 +92,17 @@ simulated state SelfDestruct
 	{
 		Other.TakeDamage(600, OldDriver, Other.Location, 200000 * Normal(Velocity), DmgType_SelfDestruct);
 		SelfDestructExplode();
-		
+
 		TextToSpeech("Bullseye!", 1.0);
-		
+
 		// @TODO: Maybe add "Bullseye!"?
 	}
-	
+
 	event Timer()
 	{
 		SelfDestructExplode();
 	}
-	
+
 	event Tick(float DeltaTime)
 	{
 	}
@@ -120,7 +110,7 @@ Begin:
 	EjectDriver();
 	bEjected = true;
 	PlaySound(SelfDestructSnd, SLOT_None, 1.5, true);
-	
+
 	SetTimer(SelfDestructForceDuration, false);
 	/*Sleep(SelfDestructForceDuration);
 	SelfDestructExplode();*/
@@ -142,26 +132,26 @@ function EjectDriver()
 	local Vector EjectVel;
 	local Inv_SelfDestruct SelfDestructInv;
 	local Inv_Ejection EjectionInv;
-	
+
 	LoopAnim('jumpidle', 0.8, 0.5);
-	
+
 	OldPawn = Driver;
-	
+
 	KDriverLeave(true);
 	bEjected = true;
-	
+
 	if (OldPawn == none) {
 		return;
 	}
-	
+
 	EjectVel = VRand();
 	EjectVel.Z = 0;
 	EjectVel = (Normal(EjectVel) * 0.2 + Vect(0,0,1)) * EjectMomentum;
-	
+
 	OldPawn.Velocity = EjectVel;
-	
+
 	PlaySound(DriverEjectSnd, SLOT_None, 1.0, true);
-	
+
 	// Do not take self destruct damage
 	SelfDestructInv = Spawn(class'Inv_SelfDestruct', OldPawn,,, Rot(0,0,0));
 	SelfDestructInv.GiveTo(OldPawn);
@@ -175,12 +165,12 @@ function EjectDriver()
 simulated function KApplyForce(out Vector Force, out Vector Torque)
 {
 	super.KApplyForce(Force, Torque);
-	
+
 	if (bDriving && JumpCountdown > 0.0) { // jump
 		Force += Vect(0,0,1) * JumpForceMag;
 		PlayAnim('JumpStart', 1.2, 0.15);
 		CurrentAnim = "JumpStart";
-		
+
 		if (KGetActorGravScale() == GlidingGravScale) {
 			// Do not jump too much.
 			Force += vect(0,0,-0.5) * Mass * GlidingGravScale;
@@ -190,7 +180,7 @@ simulated function KApplyForce(out Vector Force, out Vector Torque)
 	if (KGetActorGravScale() == GlidingGravScale) // Do not jump too much.
 		Force += vect(0,0,-0.5) * Mass * GlidingGravScale;
 		*/
-	
+
 	if (bEjected) {
 		if (bGotBoostDir == false) {
 			// only calculate 'BoostDir' once
@@ -204,18 +194,18 @@ simulated function KApplyForce(out Vector Force, out Vector Torque)
 function vector GetBoostForce()
 {
 	local Rotator AimRotation;
-	
+
 	AimRotation.Pitch = Weapons[0].CurrentAim.Pitch;
 	AimRotation.Yaw = Rotation.Yaw;
 	AimRotation.Roll = Rotation.Roll;
-	
+
 	return vector(AimRotation) * BoostForce;
 }
 
 simulated function CheckJumpDuck()
 {
 	local Emitter JumpEffect;
-	
+
     if (JumpCountdown <= 0.0 && (Rise > 0 || bWeaponIsAltFiring) && Level.TimeSeconds - JumpDelay >= LastJumpTime && TraceJump(JumpTraceDist)) {
 		bJumped = true;
         PlaySound(JumpSound, SLOT_Misc, 1.0, true);
@@ -241,7 +231,7 @@ simulated function CheckJumpDuck()
 function AltFire(optional float F)
 {
 	super(Vehicle).AltFire(F);
-	
+
 	if (bSelfDestructReady && Level.TimeSeconds - SelfDestructStartTime <= SelfDestructWindow) {
 		GoToState('SelfDestruct');
 	}
@@ -250,20 +240,20 @@ function AltFire(optional float F)
 simulated event DrivingStatusChanged()
 {
 	local int i;
-	
+
 	super(ONSHoverCraft).DrivingStatusChanged();
-	
+
 	if (Driver == none && !bEjected) {
 		PlayAnim('InactiveIdle', 0.8, 0.5);
 		CurrentAnim = "InactiveIdle";
 	} else if (Driver == none && bEjected) {
 		Enable('Tick');
 	}
-	
+
 	if (bDriving && Level.NetMode != NM_DedicatedServer && BikeDust.Length == 0 && bDropDetail == false) {
 		BikeDust.Length = BikeDustOffset.Length;
 		BikeDustLastNormal.Length = BikeDustOffset.Length;
-		
+
 		for (i = 0; i < BikeDust.Length; i++) {
 			if (BikeDust[i] == none) {
 				BikeDust[i] = Spawn(class'Emitter_ViperDust', self,, Location + (BikeDustOffset[i] >> Rotation));
@@ -276,13 +266,13 @@ simulated event DrivingStatusChanged()
 			for (i = 0; i < BikeDust.Length; i++) {
 				BikeDust[i].Destroy();
 			}
-			
+
 			BikeDust.Length = 0;
 		}
-		
+
 		JumpCountDown = 0.0;
 	}
-	
+
 	if (bDriving) {
 		bCanBeBaseForPawns = false;
 	} else {
@@ -293,14 +283,14 @@ simulated event DrivingStatusChanged()
 function UsedBy(Pawn user)
 {
 	local bool bSuccess;
-	
+
 	if (Driver != none) {
 		return;
 	}
-	
+
 	// Enter vehicle code
 	bSuccess = TryToDrive(User);
-	
+
 	if (bSuccess) {
 		LoopAnim('SlowIdle', 0.8, 0.5);
 		CurrentAnim = "SlowIdle";
@@ -313,14 +303,14 @@ simulated function Tick(float DeltaTime)
 		Animate();
 		CheckGliding();
 	}
-	
+
 	if (bJumped == true && Level.TimeSeconds - JumpDelay >= LastJumpTime && TraceJump(JumpTraceDist)) {
 		bJumped = false;
 	}
-	
+
 	if (bSelfDestructReady == false && bJumped == true && bStoppedRise == false && (Rise > 0 || bWeaponIsAltFiring)) {
 		RiseTime += DeltaTime;
-		
+
 		if (RiseTime >= 1.1) {
 			RiseTime = 0.0;
 			bSelfDestructReady = true;
@@ -332,14 +322,14 @@ simulated function Tick(float DeltaTime)
 		bSelfDestructReady = false;
 		bStoppedRise = false;
 	}
-	
+
 	if (bJumped == false) {
 		// If we're on ground, these get reset.
 		bStoppedRise = false;
 		bSelfDestructReady = false;
 		RiseTime = 0.0;
 	}
-	
+
 	super.Tick(DeltaTime);
 }
 
@@ -372,10 +362,10 @@ function Animate() {
 	*/
 	local bool bIsOnGround;
 	local bool bIsAnimating;
-	
+
 	bIsOnGround = IsOnGround();
 	bIsAnimating = IsAnimating();
-	
+
 	if ((Rise > 0 || bWeaponIsAltFiring) && CurrentAnim != "JumpIdle" && TraceJump(JumpTraceDist) == false) {
 		LoopAnim('JumpIdle', 1, 0.5);
 		CurrentAnim = "JumpIdle";
@@ -428,14 +418,14 @@ function bool IsOnGround()
 {
 	local KarmaParams KP;
 	local int i;
-	
+
 	KP = KarmaParams(KParams);
 	for (i = 0; i < KP.Repulsors.Length; i++) {
 		if (KP.Repulsors[i] != none && KP.Repulsors[i].bRepulsorInContact == true) {
 			return true;
 		}
 	}
-	
+
 	return false;
 }
 
@@ -444,13 +434,13 @@ function bool TraceJump(int TraceDist)
 	local Vector HitLocation, HitNormal;
 	local Vector TraceEnd, TraceStart;
 	local Actor HitActor;
-	
+
 	TraceStart = Location;
 	TraceEnd = TraceStart;
 	TraceEnd.Z -= TraceDist;
-	
+
 	HitActor = Trace(HitLocation, HitNormal, TraceEnd, TraceStart, true);
-	
+
 	return (HitActor != none);
 }
 
@@ -464,10 +454,10 @@ event Touch(Actor Other)
 	if (bEjected == true) {
 		Other.TakeDamage(600, OldDriver, Other.Location, 200000 * Normal(Velocity), DmgType_SelfDestruct);
 		SelfDestructExplode();
-		
+
 		// @TODO: Maybe add "Bullseye!"?
 	}
-	
+
 	super.Touch(Other);
 }
 
@@ -476,9 +466,9 @@ event TakeDamage(int Damage, Pawn EventInstigator, vector HitLocation, vector Mo
 	if (bEjected) {
 		Damage = Damage * 2;
 	}
-	
+
 	// @TODO: Maybe add "Last Second Saved!"?
-	
+
 	super.TakeDamage(Damage, EventInstigator, HitLocation, Momentum, DamageType);
 }
 
@@ -495,7 +485,7 @@ function ChooseFireAt(Actor A)
 		&& VSize(Controller.FocalPoint - Location) <= 500) {
 		GoToState('BotSelfDestruct');
 	}
-	
+
 	if (Controller.LineOfSightTo(Controller.Focus)) {
 		Fire(0);
 	}
@@ -507,21 +497,21 @@ state BotSelfDestruct
 	function BeginState()
 	{
 		local Emitter JumpEffect;
-		
+
 		PlaySound(JumpSound, SLOT_Misc, 1.0, true);
-		
+
 		if (Role == ROLE_Authority) {
 			DoBikeJump = !DoBikeJump;
 		}
-	
+
 		if (Level.NetMode != NM_DedicatedServer) {
 			JumpEffect = Spawn(class'ONSHoverBikeJumpEffect');
 			JumpEffect.SetBase(Self);
 		}
-		
+
 		Rise = 0;
 	}
-	
+
 // Perform the self destruct here.
 Begin:
 	Sleep(TimeToRiseForSelfDestruct + 0.1);
@@ -541,19 +531,19 @@ DefaultProperties
 	HeadlightCoronaMaxSize=0.0;
 	BikeDustOffset(0)=(X=50.00,Y=0.0,Z=10.0)
 	BikeDustOffset(1)=(X=-25.0,Y=0.0,Z=10.0)
-	
+
 	// Weapons.
-	DriverWeapons(0)=(WeaponClass=Class'UT3Viper.Weap_ViperGun',WeaponBone="FrontBody")
-	
-	
+	DriverWeapons(0)=(WeaponClass=Class'Weap_ViperGun',WeaponBone="FrontBody")
+
+
 	// Health
 	Health=200;
 	HealthMax=200;
-	
+
 	// Strings.
 	VehiclePositionString="in a UT3 Viper";
 	VehicleNameString="UT3 Viper";
-	
+
 	// Movement
 	GroundSpeed=1000.0;
 	AirSpeed=2400.0;
@@ -568,41 +558,33 @@ DefaultProperties
 	GlideMaxStrafeForce = 1.0;
 	NormalMaxThrustForce = 27.0;
 	NormalMaxStrafeForce = 20.0;
-	
+
 	// Sound.
-	IdleSound=Sound'UT3Viper.Sounds.Engine';
-	StartUpSound=Sound'UT3Viper.Sounds.EnterVehicle';
-	ShutDownSound=Sound'UT3Viper.Sounds.ExitVehicle';
-	JumpSound=Sound'UT3Viper.Sounds.Jump';
-	DriverEjectSnd=Sound'UT3Viper.Sounds.Eject';
-	EjectReadySnd=Sound'UT3Viper.Sounds.EjectReady';
-	SelfDestructSnd=Sound'UT3Viper.Sounds.SelfDestruct';
-	ExplosionSounds(0)=Sound'UT3Viper.Sounds.Explode';
-	ExplosionSounds(1)=Sound'UT3Viper.Sounds.Explode';
-	ExplosionSounds(2)=Sound'UT3Viper.Sounds.Explode';
-	ExplosionSounds(3)=Sound'UT3Viper.Sounds.Explode';
-	ExplosionSounds(4)=Sound'UT3Viper.Sounds.Explode';
-	ImpactDamageSounds(0)=Sound'UT3Viper.Sounds.Impact';
-	ImpactDamageSounds(1)=Sound'UT3Viper.Sounds.Impact';
-	ImpactDamageSounds(2)=Sound'UT3Viper.Sounds.Impact';
-	ImpactDamageSounds(3)=Sound'UT3Viper.Sounds.Impact';
-	ImpactDamageSounds(4)=Sound'UT3Viper.Sounds.Impact';
-	ImpactDamageSounds(5)=Sound'UT3Viper.Sounds.Impact';
-	ImpactDamageSounds(6)=Sound'UT3Viper.Sounds.Impact';
+	IdleSound=Sound'UT3A_Vehicle_Viper.Sounds.A_Vehicle_Viper_EngineLoop';
+	StartUpSound=Sound'UT3A_Vehicle_Viper.Sounds.A_Vehicle_Viper_Start';
+	ShutDownSound=Sound'UT3A_Vehicle_Viper.Sounds.A_Vehicle_Viper_Stop';
+	JumpSound=Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Jump';
+	DriverEjectSnd=Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_Eject01';
+	EjectReadySnd=Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_EjectReadyBeep';
+	SelfDestructSnd=Sound'UT3A_Vehicle_Viper.Sounds.A_Vehicle_Viper_SelfDestruct';
+    ExplosionSounds=()
+	ExplosionSounds(0)=Sound'UT3A_Vehicle_Viper.Sounds.A_Vehicle_Viper_Explosion';
+    ImpactDamageSounds=();
+	ImpactDamageSounds(0)=Sound'UT3A_Vehicle_Viper.Sounds.A_Vehicle_Viper_Collision';
 	MaxPitchSpeed=1000;
 	SoundVolume=200;
 	SoundRadius=900;
-	
+
 	// SelfDestruct.
 	SelfDestructWindow = 3;
 	SelfDestructForceDuration = 1;
-	DmgType_SelfDestruct = Class'UT3Viper.DmgType_SelfDestruct'
+	DmgType_SelfDestruct = Class'DmgType_SelfDestruct'
 	SelfDestructDamage = 800;
 	SelfDestructRadius = 600;
 	SelfDestructMomentum = 200000;
 	BoostForce = 500; // 200
 	TimeToRiseForSelfDestruct = 1.1;
-	
+
 	// Misc.
 	bCanBeBaseForPawns = true;
 	CollisionHeight=50;
@@ -613,18 +595,18 @@ DefaultProperties
 	LinkHealMult=0.35;
 	MeleeRange=-100.0;
 	HoverCheckDist=100; // 150
-	
+
 	TurnDamping=55;
 	TurnTorqueFactor=750.0;
 	TurnTorqueMax=1000.0;
 	MaxYawRate=150.0;
-	
+
 	RollTorqueTurnFactor=200.0;
 	RollTorqueStrafeFactor=65.0;
 	RollTorqueMax=200.0;
 	RollDamping=20;
-	
+
 	UpDamping=0.0;
-	
+
 	PitchTorqueMax=35.0;
 }

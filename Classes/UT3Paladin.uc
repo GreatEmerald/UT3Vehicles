@@ -4,6 +4,7 @@ UT3Paladin
 Creation date: 2008-05-02 20:51
 Last change since: Alpha 2
 Copyright (c) 2008, 2009, Wormbo and GreatEmerald
+Copyright (c) 2014, GreatEmerald
 Copyright (c) 2012, José Luís '100GPing100'
 ******************************************************************************/
 
@@ -11,7 +12,7 @@ Copyright (c) 2012, José Luís '100GPing100'
  * To increase the ground speed increase the radius of the
  * wheels. And make the BoneOffset's z component equal to
  * (WheelRadius - 30).
- * 
+ *
  * The real radius of the wheels is 30.
  */
 
@@ -19,15 +20,8 @@ class UT3Paladin extends ONSShockTank;
 
 //===============
 // @100GPing100
-#exec obj load file=..\Animations\UT3PaladinAnims.ukx
-#exec obj load file=..\Textures\UT3PaladinTex.utx
-
-#exec audio import group=Sounds file=..\Sounds\UT3Paladin\Engine.wav
-#exec audio import group=Sounds file=..\Sounds\UT3Paladin\EngineStart.wav
-#exec audio import group=Sounds file=..\Sounds\UT3Paladin\EngineStop.wav
-#exec audio import group=Sounds file=..\Sounds\UT3Paladin\Impact.wav
-#exec audio import group=Sounds file=..\Sounds\UT3Paladin\Explode0.wav
-#exec audio import group=Sounds file=..\Sounds\UT3Paladin\Explode1.wav
+#exec obj load file=../Animations/UT3PaladinAnims.ukx
+#exec obj load file=../Textures/UT3PaladinTex.utx
 // @100GPing100
 //======END======
 
@@ -43,40 +37,40 @@ defaultproperties
 	Mesh = SkeletalMesh'UT3PaladinAnims.Paladin';
 	RedSkin = Shader'UT3PaladinTex.Paladin.PaladinSkin';
 	BlueSkin = Shader'UT3PaladinTex.Paladin.PaladinSkinBlue';
-	
+
 	DriverWeapons(0)=(WeaponClass=class'UT3PaladinCannon',WeaponBone=Body);
-	
+
 	FPCamPos = (X=-30,Y=0,Z=120);
 	FPCamViewOffset = (X=-100,Y=0,Z=0);
 	TPCamWorldOffset = (X=0,Y=0,Z=200);
 	TPCamDistance = 575;
-	
+
 	VehiclePositionString = "in a UT3 Paladin";
 	SteerBoneName="Body"
-	
+
 	// Sound.
-	IdleSound = Sound'UT3Paladin.Sounds.Engine';
-	StartUpSound = Sound'UT3Paladin.Sounds.EngineStart';
-	ShutDownSound = Sound'UT3Paladin.Sounds.EngineStop';
-	ExplosionSounds(0) = Sound'UT3Paladin.Sounds.Explode0';
-	ExplosionSounds(1) = Sound'UT3Paladin.Sounds.Explode1';
-	ExplosionSounds(2) = Sound'UT3Paladin.Sounds.Explode0';
-	ExplosionSounds(3) = Sound'UT3Paladin.Sounds.Explode1';
-	ExplosionSounds(4) = Sound'UT3Paladin.Sounds.Explode0';
-	ImpactDamageSounds(0) = Sound'UT3Paladin.Sounds.Impact';
-	ImpactDamageSounds(1) = Sound'UT3Paladin.Sounds.Impact';
-	ImpactDamageSounds(2) = Sound'UT3Paladin.Sounds.Impact';
-	ImpactDamageSounds(3) = Sound'UT3Paladin.Sounds.Impact';
-	ImpactDamageSounds(4) = Sound'UT3Paladin.Sounds.Impact';
-	ImpactDamageSounds(5) = Sound'UT3Paladin.Sounds.Impact';
-	ImpactDamageSounds(6) = Sound'UT3Paladin.Sounds.Impact';
-	
+	IdleSound = Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_EngineLoop01';
+	StartUpSound = Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Start01';
+	ShutDownSound = Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Stop01';
+	ExplosionSounds(0) = Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Explode01';
+	ExplosionSounds(1) = Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Explode02';
+	ExplosionSounds(2) = Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Explode01';
+	ExplosionSounds(3) = Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Explode02';
+	ExplosionSounds(4) = Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Explode01';
+	ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Collide01';
+	ImpactDamageSounds(1) = Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Collide01';
+	ImpactDamageSounds(2) = Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Collide01';
+	ImpactDamageSounds(3) = Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Collide01';
+	ImpactDamageSounds(4) = Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Collide01';
+	ImpactDamageSounds(5) = Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Collide01';
+	ImpactDamageSounds(6) = Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Collide01';
+
 	//HornSounds(0)=sound'ONSBPSounds.ShockTank.PaladinHorn'
 	//HornSounds(1)=sound'ONSVehicleSounds-S.Dixie_Horn'
-	
+
 	BaseEyeheight = 40;
 	Eyeheight = 40;
-	
+
 	Begin Object Class=SVehicleWheel Name=RWheel1
 		BoneName = "RtTire01";
 		SupportBoneName = "RtSuspension01";
@@ -84,7 +78,7 @@ defaultproperties
 		SuspensionTravel = 60.0;
 		bPoweredWheel = true;
 		WheelRadius = 60;
-		
+
 		BoneRollAxis=AXIS_Y
 		BoneSteerAxis=AXIS_Z
 		SupportBoneAxis=AXIS_X
@@ -97,7 +91,7 @@ defaultproperties
 		SuspensionTravel = 60.0;
 		bPoweredWheel = true;
 		WheelRadius = 60;
-		
+
 		BoneRollAxis=AXIS_Y
 		BoneSteerAxis=AXIS_Z
 		SupportBoneAxis=AXIS_X
@@ -110,7 +104,7 @@ defaultproperties
 		SuspensionTravel = 60.0;
 		bPoweredWheel = true;
 		WheelRadius = 60;
-		
+
 		BoneRollAxis=AXIS_Y
 		BoneSteerAxis=AXIS_Z
 		SupportBoneAxis=AXIS_X
@@ -123,7 +117,7 @@ defaultproperties
 		SuspensionTravel = 60.0;
 		bPoweredWheel = true;
 		WheelRadius = 60;
-		
+
 		BoneRollAxis=AXIS_Y
 		BoneSteerAxis=AXIS_Z
 		SupportBoneAxis=AXIS_X
@@ -136,7 +130,7 @@ defaultproperties
 		SuspensionTravel = 60.0;
 		bPoweredWheel = true;
 		WheelRadius = 60;
-		
+
 		BoneRollAxis=AXIS_Y
 		BoneSteerAxis=AXIS_Z
 		SupportBoneAxis=AXIS_X
@@ -149,7 +143,7 @@ defaultproperties
 		SuspensionTravel = 60.0;
 		bPoweredWheel = true;
 		WheelRadius = 60;
-		
+
 		BoneRollAxis=AXIS_Y
 		BoneSteerAxis=AXIS_Z
 		SupportBoneAxis=AXIS_X
@@ -162,7 +156,7 @@ defaultproperties
 		SuspensionTravel = 60.0;
 		bPoweredWheel = true;
 		WheelRadius = 60;
-		
+
 		BoneRollAxis=AXIS_Y
 		BoneSteerAxis=AXIS_Z
 		SupportBoneAxis=AXIS_X
@@ -175,7 +169,7 @@ defaultproperties
 		SuspensionTravel = 60.0;
 		bPoweredWheel = true;
 		WheelRadius = 60;
-		
+
 		BoneRollAxis=AXIS_Y
 		BoneSteerAxis=AXIS_Z
 		SupportBoneAxis=AXIS_X
@@ -191,7 +185,7 @@ defaultproperties
 	Wheels(7) = LWheel4;
 	// @100GPing100
 	//======END======
-	
+
 	VehicleNameString = "UT3 Paladin" //GE: UT3 Paladin...
 	SteerSpeed=90                     //Is steered more easily
 	ChassisTorqueScale=0.1            //Has a lower... setting of some kind

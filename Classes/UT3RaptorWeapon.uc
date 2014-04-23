@@ -5,6 +5,7 @@ Creation date: 2008-05-02 20:34
 Last change: Alpha 2
 Copyright (c) 2008 and 2009, Wormbo and GreatEmerald
 Copyright (c) 2012 100GPing100
+Copyright (c) 2014 GreatEmerald
 ******************************************************************************/
 
 class UT3RaptorWeapon extends ONSAttackCraftGun;
@@ -60,14 +61,6 @@ state ProjectileFireMode
     }
 }
 
-//===========================
-// @100GPing100
-#exec audio import group=Sounds file=..\Sounds\UT3Raptor\Fire.wav
-#exec audio import group=Sounds file=..\Sounds\UT3Raptor\FireRocket.wav
-#exec audio import group=Sounds file=..\Sounds\UT3Raptor\LockOn.wav
-// @100GPing100
-//============EDN============
-
 
 //=============================================================================
 // Default values
@@ -77,9 +70,9 @@ defaultproperties
 {
 	//===========================
 	// @100GPing100
-	FireSoundClass = Sound'UT3Raptor.Sounds.Fire';
-	AltFireSoundClass = Sound'UT3Raptor.Sounds.FireRocket';
-	HomingSound = Sound'UT3Raptor.Sounds.LockOn';
+	FireSoundClass = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Fire01';
+	AltFireSoundClass = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_AltFire01_Dup';
+	HomingSound = Sound'UT3A_Vehicle_Cicada.Sounds.A_Vehicle_Cicada_TargetLock01';
 	WeaponFireAttachmentBone = 'Fuselage';
 	WeaponFireOffset = 150;
 	DualFireOffset = 35;
