@@ -1,11 +1,43 @@
-/******************************************************************************
-UT3Scorpion
-
-Creation date: 2008-05-02 20:51
-Since Alpha 2
-Copyright (c) 2008 and 2009, Wormbo and GreatEmerald
-Copyright (c) 2012, 100GPing100
-******************************************************************************/
+/*
+ * Copyright © 2008, 2014 GreatEmerald
+ * Copyright © 2008-2009 Wormbo
+ * Copyright © 2012 100GPing100
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are
+ * met:
+ *
+ *     (1) Redistributions of source code must retain the above copyright
+ *     notice, this list of conditions and the following disclaimer.
+ *
+ *     (2) Redistributions in binary form must reproduce the above copyright
+ *     notice, this list of conditions and the following disclaimers in
+ *     the documentation and/or other materials provided with the
+ *     distribution.
+ *
+ *     (3) The name of the author may not be used to
+ *     endorse or promote products derived from this software without
+ *     specific prior written permission.
+ *
+ *     (4) The use, modification and redistribution of this software must
+ *     be made in compliance with the additional terms and restrictions
+ *     provided by the Unreal Tournament 2004 End User License Agreement.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+ * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT,
+ * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+ * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ *
+ * This software is not supported by Atari, S.A., Epic Games, Inc. or any
+ * of such parties' affiliates and subsidiaries.
+ */
 
 class UT3Scorpion extends EONSScorpion;
 
@@ -35,20 +67,21 @@ event KImpact(actor other, vector pos, vector impactVel, vector impactNorm) //Mo
 
 simulated function DrawHUD(Canvas C)
 {
-	local PlayerController PC;
+    local PlayerController PC;
 
-	Super.DrawHUD(C);
+    Super.DrawHUD(C);
 
-	// don't draw if we are dead, scoreboard is visible, etc
-	PC = PlayerController(Controller);
-	if (Health < 1 || PC == None || PC.myHUD == None || PC.MyHUD.bShowScoreboard )
-		return;
+    // don't draw if we are dead, scoreboard is visible, etc
+    PC = PlayerController(Controller);
+    if (Health < 1 || PC == None || PC.myHUD == None || PC.MyHUD.bShowScoreboard )
+        return;
 
-	// draw tooltips
-	/*if (BoostCount > 0 && !bBoost) //GE: BoostCount > 0 == bReadyToBoost ;)
-		class'UT3HudOverlay'.static.DrawToolTip(C, PC, "Jump", C.ClipX*0.5, C.ClipY * 0.92, BoostIconCoords);
-	else
-	    class'UT3HudOverlay'.static.DrawToolTip(C, PC, "Jump", C.ClipX*0.5, C.ClipY * 0.92, EjectIconCoords);*/
+    // draw tooltips
+    // GEm: FIXME: UT3HudOverlay should be in UT3HUD.u (used by both UT3Style and UT3Vehicles)
+    if (BoostCount > 0 && !bBoost) //GE: BoostCount > 0 == bReadyToBoost ;)
+        class'UT3HudOverlay'.static.DrawToolTip(C, PC, "Jump", C.ClipX*0.5, C.ClipY * 0.92, BoostIconCoords);
+    else
+        class'UT3HudOverlay'.static.DrawToolTip(C, PC, "Jump", C.ClipX*0.5, C.ClipY * 0.92, EjectIconCoords);
 }
 
 simulated function Tick(float DT)
@@ -304,21 +337,21 @@ defaultproperties
 	Mesh = SkeletalMesh'UT3ScorpionAnims.Scorpion';
 	RedSkin = Shader'UT3ScorpionTex.ScorpionSkin';
 	BlueSkin = Shader'UT3ScorpionTex.ScorpionSkinBlue';
-	
+
 	DriverWeapons(0)=(WeaponClass=Class'UT3ScorpionTurret',WeaponBone="Gun_Base")
-	
+
 	SteerBoneName = "Main_Root";
-	
+
 	Begin Object Class=SVehicleWheel Name=RRWheel
 		BoneName = "B_R_Tire";
 		SupportBoneName = "B_R_Axle";
-		
+
 		BoneRollAxis = AXIS_Y;
 		BoneSteerAxis = AXIS_Z;
 		SupportBoneAxis = AXIS_X;
 		SteerType = VST_Fixed;
 		BoneOffset = (X=0.0,Y=20.0,Z=0.0);
-		
+
 		WheelRadius = 20; //27
 		//SuspensionTravel = 40;
 		bPoweredWheel = true;
@@ -327,13 +360,13 @@ defaultproperties
 	Begin Object Class=SVehicleWheel Name=LRWheel
 		BoneName = "B_L_Tire";
 		SupportBoneName = "B_L_Axle";
-		
+
 		BoneRollAxis = AXIS_Y;
 		BoneSteerAxis = AXIS_Z;
 		SupportBoneAxis = AXIS_X;
 		SteerType = VST_Fixed;
 		BoneOffset = (X=0.0,Y=20.0,Z=0.0);
-		
+
 		WheelRadius = 20;
 		//SuspensionTravel = 40;
 		bPoweredWheel = true;
@@ -342,13 +375,13 @@ defaultproperties
 	Begin Object Class=SVehicleWheel Name=RFWheel
 		BoneName = "F_R_Tire";
 		SupportBoneName = "F_R_Axle";
-		
+
 		BoneRollAxis = AXIS_Y;
 		BoneSteerAxis = AXIS_Z;
 		SupportBoneAxis = AXIS_X;
 		SteerType = VST_Steered;
 		BoneOffset = (X=0.0,Y=-20.0,Z=0.0);
-		
+
 		WheelRadius = 20;
 		//SuspensionTravel = 40;
 		bPoweredWheel = true;
@@ -356,13 +389,13 @@ defaultproperties
 	Begin Object Class=SVehicleWheel Name=LFWheel
 		BoneName = "F_L_Tire";
 		SupportBoneName = "F_L_Axle";
-		
+
 		BoneRollAxis = AXIS_Y;
 		BoneSteerAxis = AXIS_Z;
 		SupportBoneAxis = AXIS_X;
 		SteerType = VST_Steered;
 		BoneOffset = (X=0.0,Y=-20.0,Z=0.0);
-		
+
 		WheelRadius = 20;
 		//SuspensionTravel = 40;
 		bPoweredWheel = true;
@@ -383,11 +416,11 @@ defaultproperties
     SelfDestructDamage=600
     GroundSpeed=950.0000
     bHasHandBrake=False //GE: Override for the space bar?
-    BoostSound=Sound'UT3Vehicles.SCORPION.ScorpionBoost'
+    BoostSound=Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_EjectReadyBeep'
     BoostReadySound=None
     //IdleSound=sound'UT3Vehicles.SCORPION.ScorpionEngine'
-    StartUpSound=sound'UT3Vehicles.SCORPION.ScorpionStartUp'
-    ShutDownSound=sound'UT3Vehicles.SCORPION.ScorpionExit'
+    StartUpSound=sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_Start01'
+    ShutDownSound=sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_Stop01'
     RanOverDamageType=class'DamTypeRVRoadkill'
     CrushedDamageType=class'DamTypeRVPancake'
     SelfDestructDamageType=class'UT3ScorpionSDDamage'
