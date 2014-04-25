@@ -1,11 +1,44 @@
-//============================================================
-// Spider Mine (spawns spiders to kill close enemies).
-// Credits: 100GPing100(José Luís)
-// Copytight José Luís, 2012
-// Copyright GreatEmerald, 2014
-// Contact: zeluis.100@gmail.com
-//============================================================
-class SpiderMine extends DeployableMine;
+/*
+ * Copyright © 2012 100GPing100
+ * Copyright © 2014 GreatEmerald
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are
+ * met:
+ *
+ *     (1) Redistributions of source code must retain the above copyright
+ *     notice, this list of conditions and the following disclaimer.
+ *
+ *     (2) Redistributions in binary form must reproduce the above copyright
+ *     notice, this list of conditions and the following disclaimers in
+ *     the documentation and/or other materials provided with the
+ *     distribution.
+ *
+ *     (3) The name of the author may not be used to
+ *     endorse or promote products derived from this software without
+ *     specific prior written permission.
+ *
+ *     (4) The use, modification and redistribution of this software must
+ *     be made in compliance with the additional terms and restrictions
+ *     provided by the Unreal Tournament 2004 End User License Agreement.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+ * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT,
+ * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+ * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ *
+ * This software is not supported by Atari, S.A., Epic Games, Inc. or any
+ * of such parties' affiliates and subsidiaries.
+ */
+
+class UT3SpiderMineTrap extends UT3DeployableMine;
 
 
 #exec audio import group=SpiderSounds file=../UT3Vehicles/Sounds/UT3Nightshade/SpiderMine/SpiderMine_Active01.wav
@@ -45,17 +78,17 @@ function Deploy()
 function SpawnMine(Pawn Target, vector TargetDir)
 {
 	// ONSMineProjectile.
-	local Spider Mine;
+	local UT3SpiderMine Mine;
 	local Vector X,Y,Z;
 
 	if (AvailableMines > 0)
 	{
 		PlaySound(ActivateSnd[Rand(4) - 1], SLOT_None, 1.0);
 		GetAxes(Rotation, X,Y,Z);
-		Mine = Spawn(Class'Spider',,, Location + 25*Z);
+		Mine = Spawn(Class'UT3SpiderMine',,, Location + 25*Z);
 		if (Mine == None)
 		{
-			Mine = Spawn(Class'Spider',,, Location + Vect(0,0, 10));
+			Mine = Spawn(Class'UT3SpiderMine',,, Location + Vect(0,0, 10));
 		}
 		Mine.Lifeline = self;
 		Mine.InstigatorController = Instigator.Controller;

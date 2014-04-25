@@ -1,10 +1,43 @@
-//============================================================
-// UT3 Viper (NecrisManta)
-// Copyright (c) José Luís '100GPing100' 2012-2013
-// Copyright (c) GreatEmerald 2014
-// Contact: zeluis.100@gmail.com
-// Website: http://www.100gping100.com/
-//============================================================
+/*
+ * Copyright © 2012-2013 100GPing100
+ * Copyright © 2014 GreatEmerald
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are
+ * met:
+ *
+ *     (1) Redistributions of source code must retain the above copyright
+ *     notice, this list of conditions and the following disclaimer.
+ *
+ *     (2) Redistributions in binary form must reproduce the above copyright
+ *     notice, this list of conditions and the following disclaimers in
+ *     the documentation and/or other materials provided with the
+ *     distribution.
+ *
+ *     (3) The name of the author may not be used to
+ *     endorse or promote products derived from this software without
+ *     specific prior written permission.
+ *
+ *     (4) The use, modification and redistribution of this software must
+ *     be made in compliance with the additional terms and restrictions
+ *     provided by the Unreal Tournament 2004 End User License Agreement.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+ * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT,
+ * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+ * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ *
+ * This software is not supported by Atari, S.A., Epic Games, Inc. or any
+ * of such parties' affiliates and subsidiaries.
+ */
+
 class UT3Viper extends ONSHoverBike;
 
 // Load packages.
@@ -130,8 +163,8 @@ function EjectDriver()
 {
 	local Pawn OldPawn;
 	local Vector EjectVel;
-	local Inv_SelfDestruct SelfDestructInv;
-	local Inv_Ejection EjectionInv;
+	local UT3Inv_SelfDestruct SelfDestructInv;
+	local UT3Inv_Ejection EjectionInv;
 
 	LoopAnim('jumpidle', 0.8, 0.5);
 
@@ -153,9 +186,9 @@ function EjectDriver()
 	PlaySound(DriverEjectSnd, SLOT_None, 1.0, true);
 
 	// Do not take self destruct damage
-	SelfDestructInv = Spawn(class'Inv_SelfDestruct', OldPawn,,, Rot(0,0,0));
+	SelfDestructInv = Spawn(class'UT3Inv_SelfDestruct', OldPawn,,, Rot(0,0,0));
 	SelfDestructInv.GiveTo(OldPawn);
-	EjectionInv = Spawn(class'Inv_Ejection', OldPawn,,, Rot(0,0,0));
+	EjectionInv = Spawn(class'UT3Inv_Ejection', OldPawn,,, Rot(0,0,0));
 	EjectionInv.GiveTo(OldPawn);
 }
 //===============================
@@ -256,7 +289,7 @@ simulated event DrivingStatusChanged()
 
 		for (i = 0; i < BikeDust.Length; i++) {
 			if (BikeDust[i] == none) {
-				BikeDust[i] = Spawn(class'Emitter_ViperDust', self,, Location + (BikeDustOffset[i] >> Rotation));
+				BikeDust[i] = Spawn(class'UT3Emitter_ViperDust', self,, Location + (BikeDustOffset[i] >> Rotation));
 				BikeDust[i].SetDustColor(Level.DustColor);
 				BikeDustLastNormal[i] = Vect(0,0,1);
 			}
@@ -533,7 +566,7 @@ DefaultProperties
 	BikeDustOffset(1)=(X=-25.0,Y=0.0,Z=10.0)
 
 	// Weapons.
-	DriverWeapons(0)=(WeaponClass=Class'Weap_ViperGun',WeaponBone="FrontBody")
+	DriverWeapons(0)=(WeaponClass=Class'UT3Weap_ViperGun',WeaponBone="FrontBody")
 
 
 	// Health
@@ -578,7 +611,7 @@ DefaultProperties
 	// SelfDestruct.
 	SelfDestructWindow = 3;
 	SelfDestructForceDuration = 1;
-	DmgType_SelfDestruct = Class'DmgType_SelfDestruct'
+	DmgType_SelfDestruct = Class'UT3DmgType_SelfDestruct'
 	SelfDestructDamage = 800;
 	SelfDestructRadius = 600;
 	SelfDestructMomentum = 200000;

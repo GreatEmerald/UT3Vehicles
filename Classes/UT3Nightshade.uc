@@ -1,10 +1,43 @@
-//============================================================
-// UT3 Nightshade
-// Credits: 100GPing100(José Luís)
-// Copyright José Luís, 2012
-// Copyright GreatEmerald, 2014
-// Contact: zeluis.100@gmail.com
-//============================================================
+/*
+ * Copyright © 2012 100GPing100
+ * Copyright © 2014 GreatEmerald
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are
+ * met:
+ *
+ *     (1) Redistributions of source code must retain the above copyright
+ *     notice, this list of conditions and the following disclaimer.
+ *
+ *     (2) Redistributions in binary form must reproduce the above copyright
+ *     notice, this list of conditions and the following disclaimers in
+ *     the documentation and/or other materials provided with the
+ *     distribution.
+ *
+ *     (3) The name of the author may not be used to
+ *     endorse or promote products derived from this software without
+ *     specific prior written permission.
+ *
+ *     (4) The use, modification and redistribution of this software must
+ *     be made in compliance with the additional terms and restrictions
+ *     provided by the Unreal Tournament 2004 End User License Agreement.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+ * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT,
+ * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+ * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ *
+ * This software is not supported by Atari, S.A., Epic Games, Inc. or any
+ * of such parties' affiliates and subsidiaries.
+ */
+
 class UT3Nightshade extends ONSHoverBike;
 
 
@@ -35,7 +68,7 @@ var Sound DeploySnd;
 /* Sound played when undeploying. */
 var Sound UndeploySnd;
 /* Mines deployed. */
-var array<DeployableMine> Mines;
+var array<UT3DeployableMine> Mines;
 /* Max speed when not cloaked. */
 var float MaxVisibleSpeed;
 /* The radius to check for deployables. */
@@ -45,7 +78,7 @@ var float DeployCheckDistance;
 /* The currently selected mine. 0 = none, 1 = SpiderMine, 2 = SlowVolume, 3 = EMPMine, 4 = ShieldMine */
 var byte SelectedMine;
 /* The items to be displayed on the HUD. */
-var array<HUDItem> HUDItems;
+var array<UT3HUDItem> HUDItems;
 /* Only used once to initialize the position of the menu items. */
 var bool bItemsInitialized;
 /* Sound played when a new deployable is selected. */
@@ -136,7 +169,7 @@ function ShowMessage(byte Type, int Switch)
 }
 function bool CheckNearby()
 {
-	return !(class'DeployableMine'.static.DeployablesNearby(self, Location, DeployCheckRadius));
+	return !(class'UT3DeployableMine'.static.DeployablesNearby(self, Location, DeployCheckRadius));
 }
 function bool IsOnGround()
 {
@@ -179,7 +212,7 @@ function Fire(optional float F)
 		optional Object.Rotator SpawnRotation)*/
 		if (Mines[0] == None && SelectedMine == 1)
 		{
-			Mines[0] = Spawn(Class'SpiderMine', Driver,, ArmMine.Location);
+			Mines[0] = Spawn(Class'UT3SpiderMineTrap', Driver,, ArmMine.Location);
 			PlaySound(DropItemSnd);
 
 			if (!bHasAmmo(1))
@@ -187,7 +220,7 @@ function Fire(optional float F)
 		}
 		else if (Mines[1] == None && SelectedMine == 1)
 		{
-			Mines[1] = Spawn(Class'SpiderMine', Driver,, ArmMine.Location);
+			Mines[1] = Spawn(Class'UT3SpiderMineTrap', Driver,, ArmMine.Location);
 			PlaySound(DropItemSnd);
 
 			if (!bHasAmmo(1))
@@ -196,7 +229,7 @@ function Fire(optional float F)
 		else if (Mines[2] == None && SelectedMine == 2)
 		{
 			ShowMessage(0, 4); // "Only in next beta (have a shield :D)"
-			Mines[2] = Spawn(Class'EnergyShield', Driver,, ArmMine.Location);
+			Mines[2] = Spawn(Class'UT3DeployableEnergyShield', Driver,, ArmMine.Location);
 			PlaySound(DropItemSnd);
 
 			if (!bHasAmmo(2))
@@ -204,7 +237,7 @@ function Fire(optional float F)
 		}
 		else if (Mines[3] == None && SelectedMine == 3)
 		{
-			Mines[3] = Spawn(Class'EMPMine', Driver,, ArmMine.Location);
+			Mines[3] = Spawn(Class'UT3EMPMine', Driver,, ArmMine.Location);
 			PlaySound(DropItemSnd);
 
 			if (!bHasAmmo(3))
@@ -212,7 +245,7 @@ function Fire(optional float F)
 		}
 		else if (Mines[4] == None && SelectedMine == 4)
 		{
-			Mines[4] = Spawn(Class'EnergyShield', Driver,, ArmMine.Location);
+			Mines[4] = Spawn(Class'UT3DeployableEnergyShield', Driver,, ArmMine.Location);
 			PlaySound(DropItemSnd);
 
 			if (!bHasAmmo(4))
@@ -808,32 +841,32 @@ DefaultProperties
 	HeadlightCoronaMaxSize = 0.0;
 	BikeDustTraceDistance = 0.0;
 	bAdjustDriversHead = false;
-	MineObjectClasses(0) = class'SpidermineObject';
-	MineObjectClasses(1) = class'StasisFieldObject';
-	MineObjectClasses(2) = class'EMPObject';
-	MineObjectClasses(3) = class'ShieldObject';
+	MineObjectClasses(0) = class'UT3SpiderMineObject';
+	MineObjectClasses(1) = class'UT3StasisFieldObject';
+	MineObjectClasses(2) = class'UT3EMPObject';
+	MineObjectClasses(3) = class'UT3ShieldObject';
 
 	// HUD.
 	bShowChargingBar = false;
-	Begin Object Class=HUDItem Name=HUDSpidermineTrap
+	Begin Object Class=UT3HUDItem Name=HUDSpidermineTrap
 		DrawColor = (R=128,G=128,B=128,A=255);
 		Icon = Texture'UT3NightshadeTex.SpiderMine.Icon_SpiderMineTrap';
 		Scale = 0.5;
 	End Object
 	HUDItems(0) = HUDSpidermineTrap
-	Begin Object Class=HUDItem Name=HUDStasisField
+	Begin Object Class=UT3HUDItem Name=HUDStasisField
 		DrawColor = (R=128,G=128,B=128,A=255);
 		Icon = Texture'UT3NightshadeTex.SlowField.Icon_SlowFieldGenerator';
 		Scale = 0.5;
 	End Object
 	HUDItems(1) = HUDStasisField
-	Begin Object Class=HUDItem Name=HUDEMP
+	Begin Object Class=UT3HUDItem Name=HUDEMP
 		DrawColor = (R=128,G=128,B=128,A=255);
 		Icon = Texture'UT3NightshadeTex.EMPMine.Icon_EMPMine';
 		Scale = 0.5;
 	End Object
 	HUDItems(2) = HUDEMP
-	Begin Object Class=HUDItem Name=HUDShield
+	Begin Object Class=UT3HUDItem Name=HUDShield
 		DrawColor = (R=128,G=128,B=128,A=255);
 		Icon = Texture'UT3NightshadeTex.ShieldGenerator.Icon_ShieldGenerator';
 		Scale = 0.5;
