@@ -1,3 +1,14 @@
-* Rename conflict-prone classes
-* Get the Hellbender up to snuff
+* Hellbender: Adjust movement physics
+* Hellbender: Mesh too small?
+* SPMA: Wheels incorrect
+* SPMA: Incorrect fire origin
+* SPMA: Lights incorrectly positioned
+* Scorpion: Cannon rotates incorrectly
+* Scorpion: Can sometimes fall over like Hellbender
+* Leviathan: Missing mesh
+* Cicada: Mesh parts do not animate
+* Cicada: Second turret does not fire
+* Cicada: Does not flap hard enough
+* Paladin: Can shoot itself in the foot
+* Raptor: Flaps too hard
 * Merge mutators into two
