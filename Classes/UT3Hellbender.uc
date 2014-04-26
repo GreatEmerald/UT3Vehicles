@@ -302,6 +302,7 @@ defaultproperties
      EntryRadius=300.000000
      TPCamWorldOffset=(Z=200.000000)
      MomentumMult=1.000000
+     bDrawDriverInTP=False
      DriverDamageMult=0.000000
      VehiclePositionString="in a Hellbender"
      VehicleNameString="UT3 Hellbender"

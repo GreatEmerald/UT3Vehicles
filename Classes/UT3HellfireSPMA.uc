@@ -647,6 +647,34 @@ defaultproperties
 	End Object
 	Wheels(2)=SVehicleWheel'LWheel3'
 
+    /*Begin Object Class=SVehicleWheel Name=LWheel2
+        BoneName="LtTread_MIdStrut"
+        BoneRollAxis=AXIS_Y
+        BoneSteerAxis=AXIS_Z
+        BoneOffset=(X=0.0,Y=0.0,Z=0.0)
+        WheelRadius=40
+        bPoweredWheel=True
+        bHandbrakeWheel=True
+        SteerType=VST_Fixed
+        SupportBoneName="LtTread_MIdStrut"
+        SupportBoneAxis=AXIS_X
+    End Object
+    Wheels(1)=SVehicleWheel'LWheel2'
+
+    Begin Object Class=SVehicleWheel Name=RWheel2
+        BoneName="RtTread_MIdStrut"
+        BoneRollAxis=AXIS_Y
+        BoneSteerAxis=AXIS_Z
+        BoneOffset=(X=0.0,Y=0.0,Z=0.0)
+        WheelRadius=40
+        bPoweredWheel=True
+        bHandbrakeWheel=True
+        SteerType=VST_Fixed
+        SupportBoneName="RtTread_MIdStrut"
+        SupportBoneAxis=AXIS_X
+    End Object
+    Wheels(2)=SVehicleWheel'RWheel2'*/
+
     Begin Object Class=SVehicleWheel Name=RWheel1
 		BoneName="RtFrontTire"
 		BoneRollAxis=AXIS_Y
@@ -721,4 +749,7 @@ defaultproperties
 	IdleSound      = Sound'SPMAEngineIdle'
 	StartUpSound   = Sound'SPMAEngineStart'
 	ShutDownSound  = Sound'SPMAEngineStop'
+
+    bDrawDriverInTP=False
+    DriverDamageMult=0.0
 }

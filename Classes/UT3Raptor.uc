@@ -85,7 +85,7 @@ function Tick(float DeltaTime)
 //
 function Wings(float DeltaTime)
 {
-	// 90º = 16384 RUU
+	// 90° = 16384 RUU
 	if (OutputThrust > 0 && WingsRotation.Pitch < 16384)
 	{
 		WingsRotation.Pitch += WingsRPS * DeltaTime * 100;
@@ -117,7 +117,7 @@ function Wings(float DeltaTime)
 //
 function Rudders(float DeltaTime)
 {
-	// 30º ~= 5461 RUU
+	// 30° ~= 5461 RUU
 	local Rotator NewRotation, NewDriverYaw;
 
 	// Normalize Rotation and DriverViewYaw or we get weird values..
@@ -125,7 +125,7 @@ function Rudders(float DeltaTime)
 	NewDriverYaw.Yaw = DriverViewYaw;
 	DriverViewYaw = Normalize(NewDriverYaw).Yaw;
 
-	// 3000 = The angle at which the angle of the rudders is of 30º
+	// 3000 = The angle at which the angle of the rudders is of 30°
 	NewRotation.Yaw = 5461 * (Rotation.Yaw - DriverViewYaw) / 3000;
 
 	// Limit the angle.
