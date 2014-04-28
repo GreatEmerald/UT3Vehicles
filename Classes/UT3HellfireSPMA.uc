@@ -601,7 +601,7 @@ defaultproperties
     FlagBone = 'Body';
 
 	DriverWeapons = ();
-	DriverWeapons(0) = (WeaponClass=class'UT3HellfireSPMASideGun',WeaponBone=body);
+	DriverWeapons(0) = (WeaponClass=class'UT3HellfireSPMASideGun',WeaponBone=SecondaryTurret_YawLift);
 	DriverWeapons(1) = (WeaponClass=class'UT3HellfireSPMACannon',WeaponBone=MainTurret_Yaw);
 
 	Wheels = ();

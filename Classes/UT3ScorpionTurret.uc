@@ -51,13 +51,13 @@ DefaultProperties
 {
 	//=======================
 	// @100GPing100
-	Mesh = SkeletalMesh'UT3ScorpionAnims.Scorpion_Turret';
+	/*Mesh = SkeletalMesh'UT3ScorpionAnims.Scorpion_Turret';
 	RedSkin = Shader'UT3ScorpionTex.ScorpionSkin';
 	BlueSkin = Shader'UT3ScorpionTex.ScorpionSkinBlue';
 
 	YawBone = "gun_rotate";
 	PitchBone = "gun_rotate";
-	WeaponFireAttachmentBone = "gun_rotate";
+	WeaponFireAttachmentBone = "gun_rotate";*/
 	// @100GPing100
 	//==========END==========
 
