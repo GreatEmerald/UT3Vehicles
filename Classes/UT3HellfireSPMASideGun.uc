@@ -46,7 +46,7 @@ class UT3HellfireSPMASideGun extends ONSArtillerySideGun;
 //=============================================================================
 
 /* 100GPing100 BEGIN */
-function CalcWeaponFire()
+/*function CalcWeaponFire()
 {
 	local UT3HellfireSPMA HellFire;
 	local coords WeaponBoneCoords;
@@ -127,7 +127,7 @@ event Tick(float DeltaTime)
 		rot.Yaw = 0;
 		SetRotation(rot);
 	}
-}
+}*/
 /* 100GPing100 END */
 
 defaultproperties
@@ -135,9 +135,9 @@ defaultproperties
 	/* 100GPing100 BEGIN */
 	//Mesh = SkeletalMesh'UT3SPMAAnims.SPMA';
 
-	YawBone = 'SecondaryTurret_YawLift';
+	//YawBone = 'SecondaryTurret_YawLift';
 	//PitchBone = 'SecondaryTurret_Pitch';
-	WeaponFireAttachmentBone = 'SecondaryTurret_Barrel';
+	//WeaponFireAttachmentBone = 'SecondaryTurret_Barrel';
 	//GunnerAttachmentBone = 'SecondaryTurret_YawLift';
 	/* 100GPing100 END */
 
