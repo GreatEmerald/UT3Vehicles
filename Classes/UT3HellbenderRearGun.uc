@@ -144,9 +144,15 @@ state InstantFireMode
 }
 
 
-DefaultProperties
+defaultproperties
 {
-
+    Mesh = SkeletalMesh'UT3VH_Hellbender_Anims.HellbenderMainTurret'
+    RedSkin = Shader'UT3HellbenderTex.UT3HellbenderSkinRed'
+    BlueSkin = Shader'UT3HellbenderTex.UT3HellbenderSkinBlue'
+    PitchBone = MainTurretPitch
+    YawBone = MainTurretYaw
+    WeaponFireAttachmentBone = MainTurretBarrel
+    GunnerAttachmentBone = MainTurretYaw
     FireSoundClass=sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_TurretFire01'
     //BeamEffectClass=class'ShockBeamEffect'//'ONSChargeBeamEffect'
     FireInterval=0.5
