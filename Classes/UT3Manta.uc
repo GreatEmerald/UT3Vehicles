@@ -186,56 +186,56 @@ simulated function EmeraldTick(float DeltaTime)
 
 defaultproperties
 {
-	//===============
-	// @100GPing100
-	// Looks.
-	Mesh = SkeletalMesh'UT3MantaAnims.Manta';
-	RedSkin = Shader'UT3MantaTex.MantaSkin';
-	BlueSkin = Shader'UT3MantaTex.MantaSkinBlue';
-	DrivePos = (X=-70,Y=0.0,Z=55.0);
+    //===============
+    // @100GPing100
+    // Looks.
+    Mesh = SkeletalMesh'UT3MantaAnims.Manta';
+    RedSkin = Shader'UT3MantaTex.MantaSkin';
+    BlueSkin = Shader'UT3MantaTex.MantaSkinBlue';
+    DrivePos = (X=-70,Y=0.0,Z=50.0);
 
-	// Damage.
-	DriverWeapons(0)=(WeaponClass=class'UT3MantaPlasmaGun',WeaponBone=barrel_rt);
+    // Damage.
+    DriverWeapons(0)=(WeaponClass=class'UT3MantaPlasmaGun',WeaponBone=barrel_rt);
 
-	// Strings.
-	VehiclePositionString = "in a UT3 Manta";
+    // Strings.
+    VehiclePositionString = "in a UT3 Manta";
 
-	// Movement.
-	MaxPitchSpeed = 2000;
-	HoverCheckDist = 155;
-	AirControl = 1.5;
+    // Movement.
+    MaxPitchSpeed = 2000;
+    HoverCheckDist = 155;
+    AirControl = 1.5;
 
-	// Sounds.
-	IdleSound = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_EngineLoop01';
-	StartUpSound = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Start01';
-	ShutDownSound = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Stop01';
-	JumpSound = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Jump';
-	DuckSound = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Crouch';
-	ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Collide01';
-	ImpactDamageSounds(1) = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Collide02';
-	ImpactDamageSounds(2) = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Collide01';
-	ImpactDamageSounds(3) = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Collide02';
-	ImpactDamageSounds(4) = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Collide01';
-	ImpactDamageSounds(5) = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Collide02';
-	ImpactDamageSounds(6) = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Collide01';
-	ExplosionSounds(0) = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Explode01';
-	ExplosionSounds(1) = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Explode01';
-	ExplosionSounds(2) = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Explode01';
-	ExplosionSounds(3) = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Explode01';
-	ExplosionSounds(4) = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Explode01';
-	// @100GPing100
-	//======END======
+    // Sounds.
+    IdleSound = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_EngineLoop01';
+    StartUpSound = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Start01';
+    ShutDownSound = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Stop01';
+    JumpSound = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Jump';
+    DuckSound = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Crouch';
+    ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Collide01';
+    ImpactDamageSounds(1) = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Collide02';
+    ImpactDamageSounds(2) = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Collide01';
+    ImpactDamageSounds(3) = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Collide02';
+    ImpactDamageSounds(4) = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Collide01';
+    ImpactDamageSounds(5) = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Collide02';
+    ImpactDamageSounds(6) = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Collide01';
+    ExplosionSounds(0) = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Explode01';
+    ExplosionSounds(1) = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Explode01';
+    ExplosionSounds(2) = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Explode01';
+    ExplosionSounds(3) = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Explode01';
+    ExplosionSounds(4) = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Explode01';
+    // @100GPing100
+    //======END======
 
 
-	VehicleNameString = "UT3 Manta"
+    VehicleNameString = "UT3 Manta"
 
     MaxYawRate=3.0
     UprightStiffness=450.000000 //The manual says it doesn't do anything
-	UprightDamping=20.000000  //The manual says it doesn't do anything
-	PitchTorqueMax=9.0  //18 is a bit too over the top  //13.5 as well
-	RollTorqueMax=25.0
-	/*DriverWeapons(0)=(WeaponClass=class'UT3MantaPlasmaGun',WeaponBone=PlasmaGunAttachment);
-	IdleSound=sound'UT3Manta.Sounds.Engine';
+    UprightDamping=20.000000  //The manual says it doesn't do anything
+    PitchTorqueMax=9.0  //18 is a bit too over the top  //13.5 as well
+    RollTorqueMax=25.0
+    /*DriverWeapons(0)=(WeaponClass=class'UT3MantaPlasmaGun',WeaponBone=PlasmaGunAttachment);
+    IdleSound=sound'UT3Manta.Sounds.Engine';
     StartUpSound=sound'UT3Vehicles.Manta.MantaEnter'
     ShutDownSound=sound'UT3Vehicles.Manta.MantaLeave'
     JumpSound=sound'UT3Vehicles.Manta.MantaJump'
