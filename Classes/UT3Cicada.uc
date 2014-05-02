@@ -194,13 +194,13 @@ defaultproperties
 	// @100GPing100
 	VehiclePositionString = "in a UT3 Cicada";
 
-	Mesh = SkeletalMesh'UT3CicadaAnims.Cicada';
+	Mesh = SkeletalMesh'UT3VH_Cicada_Anims.VH_Cicada_Anims';
 	RedSkin = Shader'UT3CicadaTex.CicadaSkin';
 	BlueSkin = Shader'UT3CicadaTex.CicadaSkinBlue';
 
-	DriverWeapons(0)=(WeaponClass=class'UT3CicadaMissileLauncher',WeaponBone=Rt_Gun_Pitch);
-	DriverWeapons(1)=(WeaponClass=class'UT3CicadaMissileLauncher',WeaponBone=Lt_Gun_Pitch);
-	PassengerWeapons(0)=(WeaponPawnClass=Class'UT3CicadaTurretPawn',WeaponBone="GatlingGunAttach")
+	DriverWeapons(0)=(WeaponClass=class'UT3CicadaMissileLauncher',WeaponBone=Rt_Gun_Yaw);
+	DriverWeapons(1)=(WeaponClass=class'UT3CicadaMissileLauncherLeft',WeaponBone=Lt_Gun_Yaw);
+	PassengerWeapons(0)=(WeaponPawnClass=Class'UT3CicadaTurretPawn',WeaponBone=MainTurret_Yaw)
 	// @100GPing100
 	//==========END==========
 	  VehicleNameString = "UT3 Cicada"

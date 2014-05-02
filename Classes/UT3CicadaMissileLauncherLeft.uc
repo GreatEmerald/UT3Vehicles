@@ -1,5 +1,5 @@
 /*
- * Copyright © 2009, 2014 GreatEmerald
+ * Copyright © 2014 GreatEmerald
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -36,11 +36,13 @@
  * This software is not supported by Atari, S.A., Epic Games, Inc. or any
  * of such parties' affiliates and subsidiaries.
  */
-class UT3CicadaTurretPawn extends ONSDualACGatlingGunPawn;
+
+class UT3CicadaMissileLauncherLeft extends UT3CicadaMissileLauncher;
 
 defaultproperties
 {
-    GunClass = class'UT3CicadaTurret'
-    VehicleNameString = "UT3 Cicada Laser Turret"
-    CameraBone = "MainTurret_Pitch"
+    Mesh = SkeletalMesh'UT3VH_Cicada_Anims.VH_Cicada_LeftSideGun'
+    PitchBone = Lt_Gun_Pitch
+    YawBone = Lt_Gun_Yaw
+    WeaponFireAttachmentBone = Lt_Gun_Pitch
 }

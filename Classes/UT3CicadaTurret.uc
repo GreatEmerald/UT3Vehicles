@@ -41,10 +41,17 @@ class UT3CicadaTurret extends ONSDualACGatlingGun;
 
 DefaultProperties
 {
-     BeamEffectClass(0)=Class'UT3CicadaTurretFire'
-     BeamEffectClass(1)=Class'UT3CicadaTurretFire'
+    BeamEffectClass(0) = class'UT3CicadaTurretFire'
+    BeamEffectClass(1) = class'UT3CicadaTurretFire'
 
-     FireSoundClass=sound'UT3A_Vehicle_Cicada.SoundCues.A_Vehicle_Cicada_TurretFire'
-     FireSoundVolume=3.000000 //GE: Again it's a FLOAT!!
-     //FireForce=""
+    FireSoundClass = Sound'UT3A_Vehicle_Cicada.SoundCues.A_Vehicle_Cicada_TurretFire'
+    FireSoundVolume = 3.0 //GE: Again it's a FLOAT!!
+    //FireForce=""
+
+    Mesh = SkeletalMesh'UT3VH_Cicada_Anims.VH_Cicada_MainTurret'
+    RedSkin = Shader'UT3CicadaTex.CicadaSkin'
+    BlueSkin = Shader'UT3CicadaTex.CicadaSkinBlue'
+    PitchBone = MainTurret_Pitch
+    YawBone = MainTurret_Yaw
+    WeaponFireAttachmentBone = MainTurret_Pitch
 }
