@@ -205,108 +205,110 @@ simulated function PostNetBeginPlay()
 
 defaultproperties
 {
-	//===========================
-	// @100GPing100
-	Mesh = SkeletalMesh'UT3HellbenderAnims.Hellbender';
-	RedSkin = Shader'UT3HellbenderTex.UT3HellbenderSkinRed';
-	BlueSkin = Shader'UT3HellbenderTex.UT3HellbenderSkinBlue';
+    //===========================
+    // @100GPing100
+    Mesh = SkeletalMesh'UT3VH_Hellbender_Anims.SK_VH_Hellbender';
+    RedSkin = Shader'UT3HellbenderTex.UT3HellbenderSkinRed';
+    BlueSkin = Shader'UT3HellbenderTex.UT3HellbenderSkinBlue';
+    DriveAnim = "Idle"
+    MovementAnims(0) = "Idle"
 
-	DriverWeapons(0)=(WeaponClass=Class'UT3HellbenderSideGun',WeaponBone="SecondaryTurretYaw")
-	PassengerWeapons(0)=(WeaponPawnClass=Class'UT3HellbenderRearGunPawn',WeaponBone="MainTurretYaw")
+    DriverWeapons(0)=(WeaponClass=Class'UT3HellbenderSideGun',WeaponBone="SecondaryTurretYaw")
+    PassengerWeapons(0)=(WeaponPawnClass=Class'UT3HellbenderRearGunPawn',WeaponBone="MainTurretYaw")
 
-	FlagBone = Hood;
+    FlagBone = Hood;
 
-	Begin Object Class=KarmaParamsRBFull Name=KParams0
-		KStartEnabled=True
-		KFriction=0.5
-		KLinearDamping=0.05
-		KAngularDamping=0.05
-		KImpactThreshold=500
-		bKNonSphericalInertia=True
+    Begin Object Class=KarmaParamsRBFull Name=KParams0
+        KStartEnabled=True
+        KFriction=0.5
+        KLinearDamping=0.05
+        KAngularDamping=0.05
+        KImpactThreshold=500
+        bKNonSphericalInertia=True
         bHighDetailOnly=False
         bClientOnly=False
-		bKDoubleTickRate=True
-		KInertiaTensor(0)=1.0
-		KInertiaTensor(1)=0.0
-		KInertiaTensor(2)=0.0
-		KInertiaTensor(3)=3.0
-		KInertiaTensor(4)=0.0
-		KInertiaTensor(5)=3.5
-		KCOMOffset=(X=-0.3,Y=0.0,Z=-0.5)
-		bDestroyOnWorldPenetrate=True
-		bDoSafetime=True
+        bKDoubleTickRate=True
+        KInertiaTensor(0)=1.0
+        KInertiaTensor(1)=0.0
+        KInertiaTensor(2)=0.0
+        KInertiaTensor(3)=3.0
+        KInertiaTensor(4)=0.0
+        KInertiaTensor(5)=3.5
+        KCOMOffset=(X=-0.3,Y=0.0,Z=-0.5)
+        bDestroyOnWorldPenetrate=True
+        bDoSafetime=True
         Name="KParams0"
     End Object
     KParams=KarmaParams'KParams0'
 
-	Begin Object Class=SVehicleWheel Name=RRWheel
-		BoneName="Rt_Rear_Tire"
-		BoneRollAxis=AXIS_Y
-		BoneSteerAxis=AXIS_Z
-		BoneOffset=(X=-15.0,Y=0.0,Z=0.0)
-		WheelRadius=30
-		bPoweredWheel=True
-		bHandbrakeWheel=True
-		SteerType=VST_Fixed
-		SupportBoneName="Rt_Rear_Suspension"
-		SupportBoneAxis=AXIS_Y
-	End Object
-	Begin Object Class=SVehicleWheel Name=LRWheel
-		BoneName="Lt_Rear_Tire"
-		BoneRollAxis=AXIS_Y
-		BoneSteerAxis=AXIS_Z
-		BoneOffset=(X=15.0,Y=0.0,Z=0.0)
-		WheelRadius=30
-		bPoweredWheel=True
-		bHandbrakeWheel=True
-		SteerType=VST_Fixed
-		SupportBoneName="Lt_Rear_Suspension"
-		SupportBoneAxis=AXIS_Y
-	End Object
-	Begin Object Class=SVehicleWheel Name=RFWheel
-		BoneName="Rt_Front_Tire"
-		BoneRollAxis=AXIS_Y
-		BoneSteerAxis=AXIS_Z
-		BoneOffset=(X=-15.0,Y=0.0,Z=0.0)
-		WheelRadius=30
-		bPoweredWheel=True
-		SteerType=VST_Steered
-		SupportBoneName="Rt_Front_Suspension"
-		SupportBoneAxis=AXIS_Y
-	End Object
-	Begin Object Class=SVehicleWheel Name=LFWheel
-		BoneName="Lt_Front_Tire"
-		BoneRollAxis=AXIS_Y
-		BoneSteerAxis=AXIS_Z
-		BoneOffset=(X=15.0,Y=0.0,Z=0.0)
-		WheelRadius=30
-		bPoweredWheel=True
-		SteerType=VST_Steered
-		SupportBoneName="Lt_Front_Suspension"
-		SupportBoneAxis=AXIS_Y
-	End Object
+    Begin Object Class=SVehicleWheel Name=RRWheel
+        BoneName="Rt_Rear_Tire"
+        BoneRollAxis=AXIS_Y
+        BoneSteerAxis=AXIS_Z
+        BoneOffset=(X=-15.0,Y=0.0,Z=0.0)
+        WheelRadius=30
+        bPoweredWheel=True
+        bHandbrakeWheel=True
+        SteerType=VST_Fixed
+        SupportBoneName="Rt_Rear_Suspension"
+        SupportBoneAxis=AXIS_Y
+    End Object
+    Begin Object Class=SVehicleWheel Name=LRWheel
+        BoneName="Lt_Rear_Tire"
+        BoneRollAxis=AXIS_Y
+        BoneSteerAxis=AXIS_Z
+        BoneOffset=(X=15.0,Y=0.0,Z=0.0)
+        WheelRadius=30
+        bPoweredWheel=True
+        bHandbrakeWheel=True
+        SteerType=VST_Fixed
+        SupportBoneName="Lt_Rear_Suspension"
+        SupportBoneAxis=AXIS_Y
+    End Object
+    Begin Object Class=SVehicleWheel Name=RFWheel
+        BoneName="Rt_Front_Tire"
+        BoneRollAxis=AXIS_Y
+        BoneSteerAxis=AXIS_Z
+        BoneOffset=(X=-15.0,Y=0.0,Z=0.0)
+        WheelRadius=30
+        bPoweredWheel=True
+        SteerType=VST_Steered
+        SupportBoneName="Rt_Front_Suspension"
+        SupportBoneAxis=AXIS_Y
+    End Object
+    Begin Object Class=SVehicleWheel Name=LFWheel
+        BoneName="Lt_Front_Tire"
+        BoneRollAxis=AXIS_Y
+        BoneSteerAxis=AXIS_Z
+        BoneOffset=(X=15.0,Y=0.0,Z=0.0)
+        WheelRadius=30
+        bPoweredWheel=True
+        SteerType=VST_Steered
+        SupportBoneName="Lt_Front_Suspension"
+        SupportBoneAxis=AXIS_Y
+    End Object
 
-	Wheels(0) = RRWheel;
-	Wheels(1) = LRWheel;
-	Wheels(2) = RFWheel;
-	Wheels(3) = LFWheel;
-	// @100GPing100
-	//============EDN============
+    Wheels(0) = RRWheel;
+    Wheels(1) = LRWheel;
+    Wheels(2) = RFWheel;
+    Wheels(3) = LFWheel;
+    // @100GPing100
+    //============EDN============
 
-     //MaxSteerAngleCurve=(Points=((OutVal=50.000000),,)) @100GPing100: Causes crash.
-     SteerSpeed=220.000000
-     PassengerWeapons(1)=()
-     IdleSound=Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_EngineIdle01'
-     StartUpSound=Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_EngineStart01'
-     ShutDownSound=Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_EngineStop01'
-     EntryRadius=300.000000
-     TPCamWorldOffset=(Z=200.000000)
-     MomentumMult=1.000000
-     bDrawDriverInTP=False
-     DriverDamageMult=0.000000
-     VehiclePositionString="in a Hellbender"
-     VehicleNameString="UT3 Hellbender"
-     HornSounds(0)=Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_Horn01'
-     GroundSpeed=700.000000
-     SoundVolume=255
+    //MaxSteerAngleCurve=(Points=((OutVal=50.000000),,)) @100GPing100: Causes crash.
+    SteerSpeed=220.000000
+    PassengerWeapons(1)=()
+    IdleSound=Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_EngineIdle01'
+    StartUpSound=Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_EngineStart01'
+    ShutDownSound=Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_EngineStop01'
+    EntryRadius=300.000000
+    TPCamWorldOffset=(Z=200.000000)
+    MomentumMult=1.000000
+    bDrawDriverInTP=False
+    DriverDamageMult=0.000000
+    VehiclePositionString="in a Hellbender"
+    VehicleNameString="UT3 Hellbender"
+    HornSounds(0)=Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_Horn01'
+    GroundSpeed=700.000000
+    SoundVolume=255
 }

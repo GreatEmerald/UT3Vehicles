@@ -1,5 +1,5 @@
-+ Hellbender: Mesh too small?
 + Hellbender: Incorrect light positions
+- Hellbender: Wheel animation incorrect
 - SPMA: Wheels incorrect
 + SPMA: Lights incorrectly positioned
 - Scorpion: Cannon rotates incorrectly
@@ -7,9 +7,8 @@
 * Scorpion: Make use of all the animations
 * Leviathan: Missing mesh
 - Cicada: Mesh parts do not animate
-- Cicada: Second turret does not fire
-+ Cicada: Does not flap hard enough
 + Paladin: Can shoot itself in the foot
+* Paladin: Weird physics when running into one
 + Raptor: Flaps too hard
 - Raptor: Front guns are not linked to the weapon
 * Manta: Cannot enter from the back
