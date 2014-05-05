@@ -1,12 +1,43 @@
-/******************************************************************************
-UT3Raptor
-
-Creation date: 2008-05-02 20:34
-Last change: Alpha 2
-Copyright (c) 2008 and 2009, Wormbo and GreatEmerald
-Copyright (c) 2012 100GPing100
-Copyright (c) 2014 GreatEmerald
-******************************************************************************/
+/*
+ * Copyright © 2008-2009 Wormbo
+ * Copyright © 2008-2009, 2014 GreatEmerald
+ * Copyright © 2012 100GPing100
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are
+ * met:
+ *
+ *     (1) Redistributions of source code must retain the above copyright
+ *     notice, this list of conditions and the following disclaimer.
+ *
+ *     (2) Redistributions in binary form must reproduce the above copyright
+ *     notice, this list of conditions and the following disclaimers in
+ *     the documentation and/or other materials provided with the
+ *     distribution.
+ *
+ *     (3) The name of the author may not be used to
+ *     endorse or promote products derived from this software without
+ *     specific prior written permission.
+ *
+ *     (4) The use, modification and redistribution of this software must
+ *     be made in compliance with the additional terms and restrictions
+ *     provided by the Unreal Tournament 2004 End User License Agreement.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+ * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT,
+ * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+ * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ *
+ * This software is not supported by Atari, S.A., Epic Games, Inc. or any
+ * of such parties' affiliates and subsidiaries.
+ */
 
 class UT3Raptor extends ONSAttackCraft;
 
@@ -28,12 +59,12 @@ var Rotator RuddersRotation;
 //
 event PostBeginPlay()
 {
-	WingsRotation = rot(16384,0,0);
+    WingsRotation = rot(16384,0,0);
 
-	SetBoneRotation('Rt_Wing', WingsRotation, 0, 1);
-	SetBoneRotation('Lft_Wing', WingsRotation, 0, 1);
+    SetBoneRotation('Rt_Wing', WingsRotation, 0, 1);
+    SetBoneRotation('Lft_Wing', WingsRotation, 0, 1);
 
-	Super.PostBeginPlay();
+    Super.PostBeginPlay();
 }
 
 //
@@ -41,9 +72,9 @@ event PostBeginPlay()
 //
 function bool KDriverLeave(bool bForceLeave)
 {
-	SetTimer(0.05, true);
+    SetTimer(0.05, true);
 
-	return super.KDriverLeave(bForceLeave);
+    return super.KDriverLeave(bForceLeave);
 }
 
 //
@@ -51,21 +82,21 @@ function bool KDriverLeave(bool bForceLeave)
 //
 event Timer()
 {
-	if (WingsRotation.Pitch < 16384)
-	{
-		WingsRotation.Pitch += WingsRPS * 0.05 * 100;
-		if (WingsRotation.Pitch > 16384)
-		{
-			WingsRotation.Pitch = 16384;
-			SetTimer(0, false);
-		}
-	}
+    if (WingsRotation.Pitch < 16384)
+    {
+        WingsRotation.Pitch += WingsRPS * 0.05 * 100;
+        if (WingsRotation.Pitch > 16384)
+        {
+            WingsRotation.Pitch = 16384;
+            SetTimer(0, false);
+        }
+    }
 
-	WingsRotation.Yaw = 0;
-	WingsRotation.Roll = 0;
+    WingsRotation.Yaw = 0;
+    WingsRotation.Roll = 0;
 
-	SetBoneRotation('Rt_Wing', WingsRotation, 0, 1);
-	SetBoneRotation('Lft_Wing', WingsRotation, 0, 1);
+    SetBoneRotation('Rt_Wing', WingsRotation, 0, 1);
+    SetBoneRotation('Lft_Wing', WingsRotation, 0, 1);
 }
 
 //
@@ -73,11 +104,11 @@ event Timer()
 //
 function Tick(float DeltaTime)
 {
-	Super.Tick(DeltaTime);
+    Super.Tick(DeltaTime);
 
-	Wings(DeltaTime);
-	Rudders(DeltaTime);
-	Guns();
+    Wings(DeltaTime);
+    Rudders(DeltaTime);
+    Guns();
 }
 
 //
@@ -85,31 +116,31 @@ function Tick(float DeltaTime)
 //
 function Wings(float DeltaTime)
 {
-	// 90° = 16384 RUU
-	if (OutputThrust > 0 && WingsRotation.Pitch < 16384)
-	{
-		WingsRotation.Pitch += WingsRPS * DeltaTime * 100;
-		if (WingsRotation.Pitch > 16384)
-			WingsRotation.Pitch = 16384;
-	}
-	else if (OutputThrust == 0 && WingsRotation.Pitch > 0)
-	{
-		WingsRotation.Pitch -= WingsRPS * DeltaTime * 100;
-		if (WingsRotation.Pitch < 0)
-			WingsRotation.Pitch = 0;
-	}
-	else if (OutputThrust < 0 && WingsRotation.Pitch > 0)
-	{
-		WingsRotation.Pitch -= WingsRPS * 2 * DeltaTime * 100;
-		if (WingsRotation.Pitch < 0)
-			WingsRotation.Pitch = 0;
-	}
+    // 90° = 16384 RUU
+    if (OutputThrust > 0 && WingsRotation.Pitch < 16384)
+    {
+        WingsRotation.Pitch += WingsRPS * DeltaTime * 100;
+        if (WingsRotation.Pitch > 16384)
+            WingsRotation.Pitch = 16384;
+    }
+    else if (OutputThrust == 0 && WingsRotation.Pitch > 0)
+    {
+        WingsRotation.Pitch -= WingsRPS * DeltaTime * 100;
+        if (WingsRotation.Pitch < 0)
+            WingsRotation.Pitch = 0;
+    }
+    else if (OutputThrust < 0 && WingsRotation.Pitch > 0)
+    {
+        WingsRotation.Pitch -= WingsRPS * 2 * DeltaTime * 100;
+        if (WingsRotation.Pitch < 0)
+            WingsRotation.Pitch = 0;
+    }
 
-	WingsRotation.Yaw = 0;
-	WingsRotation.Roll = 0;
+    WingsRotation.Yaw = 0;
+    WingsRotation.Roll = 0;
 
-	SetBoneRotation('Rt_Wing', WingsRotation, 0, 1);
-	SetBoneRotation('Lft_Wing', WingsRotation, 0, 1);
+    SetBoneRotation('Rt_Wing', WingsRotation, 0, 1);
+    SetBoneRotation('Lft_Wing', WingsRotation, 0, 1);
 }
 
 //
@@ -117,47 +148,47 @@ function Wings(float DeltaTime)
 //
 function Rudders(float DeltaTime)
 {
-	// 30° ~= 5461 RUU
-	local Rotator NewRotation, NewDriverYaw;
+    // 30° ~= 5461 RUU
+    local Rotator NewRotation, NewDriverYaw;
 
-	// Normalize Rotation and DriverViewYaw or we get weird values..
-	SetRotation(Normalize(Rotation));
-	NewDriverYaw.Yaw = DriverViewYaw;
-	DriverViewYaw = Normalize(NewDriverYaw).Yaw;
+    // Normalize Rotation and DriverViewYaw or we get weird values..
+    SetRotation(Normalize(Rotation));
+    NewDriverYaw.Yaw = DriverViewYaw;
+    DriverViewYaw = Normalize(NewDriverYaw).Yaw;
 
-	// 3000 = The angle at which the angle of the rudders is of 30°
-	NewRotation.Yaw = 5461 * (Rotation.Yaw - DriverViewYaw) / 3000;
+    // 3000 = The angle at which the angle of the rudders is of 30°
+    NewRotation.Yaw = 5461 * (Rotation.Yaw - DriverViewYaw) / 3000;
 
-	// Limit the angle.
-	if (NewRotation.Yaw > 5461)
-		NewRotation.Yaw = 5461;
-	else if (NewRotation.Yaw < -5461)
-		NewRotation.Yaw = -5461;
+    // Limit the angle.
+    if (NewRotation.Yaw > 5461)
+        NewRotation.Yaw = 5461;
+    else if (NewRotation.Yaw < -5461)
+        NewRotation.Yaw = -5461;
 
-	// Update rudders' rotation.
-	if (NewRotation.Yaw > 1000 || NewRotation.Yaw < -1000)
-		RuddersRotation.Yaw += 182 * DeltaTime * NewRotation.Yaw / 100;
-	else
-	{
-		// Not turning.
-		if (RuddersRotation.Yaw > 200)
-			RuddersRotation.Yaw -= 182 * DeltaTime * 30;
-		else if (RuddersRotation.Yaw < -200)
-			RuddersRotation.Yaw += 182 * DeltaTime * 30;
-	}
+    // Update rudders' rotation.
+    if (NewRotation.Yaw > 1000 || NewRotation.Yaw < -1000)
+        RuddersRotation.Yaw += 182 * DeltaTime * NewRotation.Yaw / 100;
+    else
+    {
+        // Not turning.
+        if (RuddersRotation.Yaw > 200)
+            RuddersRotation.Yaw -= 182 * DeltaTime * 30;
+        else if (RuddersRotation.Yaw < -200)
+            RuddersRotation.Yaw += 182 * DeltaTime * 30;
+    }
 
-	// Limit the current angle.
-	if (RuddersRotation.Yaw > 5461)
-		RuddersRotation.Yaw = 5461;
-	else if (RuddersRotation.Yaw < -5461)
-		RuddersRotation.Yaw = -5461;
+    // Limit the current angle.
+    if (RuddersRotation.Yaw > 5461)
+        RuddersRotation.Yaw = 5461;
+    else if (RuddersRotation.Yaw < -5461)
+        RuddersRotation.Yaw = -5461;
 
-	RuddersRotation.Roll = 0;
-	RuddersRotation.Pitch = 0;
+    RuddersRotation.Roll = 0;
+    RuddersRotation.Pitch = 0;
 
-	// Apply the new rotation.
-	SetBoneRotation('Rudder_Rt', RuddersRotation, 0, 1);
-	SetBoneRotation('Rudder_left', RuddersRotation, 0, 1);
+    // Apply the new rotation.
+    SetBoneRotation('Rudder_Rt', RuddersRotation, 0, 1);
+    SetBoneRotation('Rudder_left', RuddersRotation, 0, 1);
 }
 
 //
@@ -165,12 +196,12 @@ function Rudders(float DeltaTime)
 //
 function Guns()
 {
-	local Rotator GunsRotation;
+    local Rotator GunsRotation;
 
-	GunsRotation.Pitch = -DriverViewPitch;
+    GunsRotation.Pitch = -DriverViewPitch;
 
-	SetBoneRotation('rt_gun', GunsRotation, 0, 1);
-	SetBoneRotation('left_gun', GunsRotation, 0, 1);
+    SetBoneRotation('rt_gun', GunsRotation, 0, 1);
+    SetBoneRotation('left_gun', GunsRotation, 0, 1);
 }
 
 //
@@ -179,60 +210,60 @@ function Guns()
 //
 function Died(Controller Killer, class<DamageType> DmgType, Vector HitLocation)
 {
-	local int i;
+    local int i;
 
-	if (Level.NetMode != NM_DedicatedServer)
-	{
-		for (i = 0; i < TrailEffects.Length; i++)
-			TrailEffects[i].Destroy();
-		TrailEffects.Length = 0;
-	}
-	Super(ONSChopperCraft).Died(Killer, DmgType, HitLocation);
+    if (Level.NetMode != NM_DedicatedServer)
+    {
+        for (i = 0; i < TrailEffects.Length; i++)
+            TrailEffects[i].Destroy();
+        TrailEffects.Length = 0;
+    }
+    Super(ONSChopperCraft).Died(Killer, DmgType, HitLocation);
 }
 simulated function Destroyed()
 {
-	local int i;
+    local int i;
 
-	if (Level.NetMode != NM_DedicatedServer)
-	{
-		for (i = 0; i < TrailEffects.Length; i++)
-			TrailEffects[i].Destroy();
-		TrailEffects.Length = 0;
-	}
-	Super(ONSChopperCraft).Destroyed();
+    if (Level.NetMode != NM_DedicatedServer)
+    {
+        for (i = 0; i < TrailEffects.Length; i++)
+            TrailEffects[i].Destroy();
+        TrailEffects.Length = 0;
+    }
+    Super(ONSChopperCraft).Destroyed();
 }
 simulated event DrivingStatusChanged()
 {
-	local int i;
+    local int i;
 
-	if (bDriving && Level.NetMode != NM_DedicatedServer && !bDropDetail)
-	{
+    if (bDriving && Level.NetMode != NM_DedicatedServer && !bDropDetail)
+    {
         if (TrailEffects.Length == 0)
         {
             TrailEffects.Length = TrailEffectPositions.Length;
 
-        	for(i=0;i<TrailEffects.Length;i++)
-			{
-            	if (TrailEffects[i] == None)
-            	{
-                	TrailEffects[i] = spawn(TrailEffectClass, self,, Location + (TrailEffectPositions[i] >> Rotation) );
-                	TrailEffects[i].SetBase(self);
+            for(i=0;i<TrailEffects.Length;i++)
+            {
+                if (TrailEffects[i] == None)
+                {
+                    TrailEffects[i] = spawn(TrailEffectClass, self,, Location + (TrailEffectPositions[i] >> Rotation) );
+                    TrailEffects[i].SetBase(self);
                     TrailEffects[i].SetRelativeRotation( rot(0,32768,0) );
                 }
-			}
+            }
         }
     }
     else
     {
         if (Level.NetMode != NM_DedicatedServer)
-    	{
-        	for(i=0;i<TrailEffects.Length;i++)
-        	   TrailEffects[i].Destroy();
-        	TrailEffects.Length = 0;
+        {
+            for(i=0;i<TrailEffects.Length;i++)
+            TrailEffects[i].Destroy();
+            TrailEffects.Length = 0;
         }
     }
 
-	Super(ONSChopperCraft).DrivingStatusChanged();
+    Super(ONSChopperCraft).DrivingStatusChanged();
 }
 // @100GPing100
 //============END============
@@ -253,49 +284,49 @@ Test 4: 275 works well, although it still gives slight sinkness. But that's OK.
 
 defaultproperties
 {
-	//===========================
-	// @100GPing100
-	Mesh = SkeletalMesh'UT3RaptorAnims.RAPTOR';
-	RedSkin = Shader'UT3RaptorTex.RaptorSkin';
-	BlueSkin = Shader'UT3RaptorTex.RaptorSkinBlue';
+    //===========================
+    // @100GPing100
+    Mesh = SkeletalMesh'UT3VH_Raptor_Anims.SK_VH_Raptor';
+    RedSkin = Shader'UT3RaptorTex.RaptorSkin';
+    BlueSkin = Shader'UT3RaptorTex.RaptorSkinBlue';
 
-	TrailEffectPositions(0) = (X=-105,Y=-35,Z=-15);
-	TrailEffectPositions(1) = (X=-105,Y=35,Z=-15);
+    TrailEffectPositions(0) = (X=-105,Y=-35,Z=-15);
+    TrailEffectPositions(1) = (X=-105,Y=35,Z=-15);
 
-	VehiclePositionString = "in a UT3 Raptor";
+    VehiclePositionString = "in a UT3 Raptor";
 
-	DriverWeapons[0] = (WeaponClass=class'UT3RaptorWeapon',WeaponBone=Fuselage)
+    DriverWeapons[0] = (WeaponClass=class'UT3RaptorWeapon',WeaponBone="rt_gun")
 
-	WingsRPS = 182; // 182 ~= 1º
+    WingsRPS = 182; // 182 ~= 1°
 
-	// Sounds.
-	IdleSound = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_EngineLoop01';
-	StartUpSound = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Start01';
-	ShutDownSound = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Stop01';
-	ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Collide01';
-	ImpactDamageSounds(1) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Collide02';
-	ImpactDamageSounds(2) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Collide01';
-	ImpactDamageSounds(3) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Collide02';
-	ImpactDamageSounds(4) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Collide01';
-	ImpactDamageSounds(5) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Collide02';
-	ImpactDamageSounds(6) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Collide01';
-	ExplosionSounds(0) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Explode01';
-	ExplosionSounds(1) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Explode01';
-	ExplosionSounds(2) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Explode01';
-	ExplosionSounds(3) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Explode01';
-	ExplosionSounds(4) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Explode01';
-	// @100GPing100
-	//============EDN============
-	VehicleNameString = "UT3 Raptor"
+    // Sounds.
+    IdleSound = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_EngineLoop01';
+    StartUpSound = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Start01';
+    ShutDownSound = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Stop01';
+    ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Collide01';
+    ImpactDamageSounds(1) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Collide02';
+    ImpactDamageSounds(2) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Collide01';
+    ImpactDamageSounds(3) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Collide02';
+    ImpactDamageSounds(4) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Collide01';
+    ImpactDamageSounds(5) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Collide02';
+    ImpactDamageSounds(6) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Collide01';
+    ExplosionSounds(0) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Explode01';
+    ExplosionSounds(1) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Explode01';
+    ExplosionSounds(2) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Explode01';
+    ExplosionSounds(3) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Explode01';
+    ExplosionSounds(4) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Explode01';
+    // @100GPing100
+    //============EDN============
+    VehicleNameString = "UT3 Raptor"
 
-	//DriverWeapons[0] = (WeaponClass=class'UT3RaptorWeapon',WeaponBone=PlasmaGunAttachment)
+    //DriverWeapons[0] = (WeaponClass=class'UT3RaptorWeapon',WeaponBone=PlasmaGunAttachment)
 
     //SCREW THOSE UT3 CODE OPTIONS, THEY'RE ALL FAKE!!!
     /*UprightStiffness=400.000000 //GE: Decreased by 100, whatever that does
-	//UprightDamping=20.000000    //Decreased from 300, but according to the manual this has no effect
-	MaxThrustForce=750.000000   //Increased a lot. Might give strange side effects!
-	//LongDamping=0.700000        //Increased a lot. Might give strange side effects!
-	MaxStrafeForce=450.000000   //Increased a lot. Might give strange side effects!
+    //UprightDamping=20.000000    //Decreased from 300, but according to the manual this has no effect
+    MaxThrustForce=750.000000   //Increased a lot. Might give strange side effects!
+    //LongDamping=0.700000        //Increased a lot. Might give strange side effects!
+    MaxStrafeForce=450.000000   //Increased a lot. Might give strange side effects!
     //LatDamping=0.700000         //Increased a lot. Might give strange side effects!
     //MaxRiseForce=500.000000     //Increased a lot. Might give strange side effects!
     //UpDamping=0.700000          //Increased a lot. Might give strange side effects!
@@ -309,11 +340,11 @@ defaultproperties
     MaxRandForce=25.000000      //Increased a lot. Might give strange side effects!
     RandForceInterval=0.500000  //Somewhat decreased
     */
-   	/*UprightStiffness=450.000000 //GE: Decreased
-	UprightDamping=160.000000    //Decreased from 300, but according to the manual this has no effect
-	MaxThrustForce=200.000000   //Increased. Increased all below too.
-	//LongDamping=0.375000
-	MaxStrafeForce=265.000000
+    /*UprightStiffness=450.000000 //GE: Decreased
+    UprightDamping=160.000000    //Decreased from 300, but according to the manual this has no effect
+    MaxThrustForce=200.000000   //Increased. Increased all below too.
+    //LongDamping=0.375000
+    MaxStrafeForce=265.000000
     //LatDamping=0.375000
     MaxRiseForce=275.000000
     //UpDamping=0.375000
