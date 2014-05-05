@@ -39,9 +39,28 @@
  * of such parties' affiliates and subsidiaries.
  */
 
-class UT3RaptorWeapon extends ONSAttackCraftGun;
+class UT3RaptorWeapon extends ONSLinkableWeapon;
 
 var(Sound) Sound HomingSound;
+var bool bSkipFire; // GEm: Last shot was from this gun, let the other gun fire now
+
+var class<Projectile> TeamProjectileClasses[2];
+var float MinAim;
+
+function byte BestMode()
+{
+    local bot B;
+
+    B = Bot(Instigator.Controller);
+    if ( B == None )
+        return 0;
+
+    if ( (Vehicle(B.Enemy) != None)
+         && (B.Enemy.bCanFly || B.Enemy.IsA('ONSHoverCraft')) && (FRand() < 0.3 + 0.1 * B.Skill) )
+        return 1;
+    else
+        return 0;
+}
 
 state ProjectileFireMode
 {
@@ -92,6 +111,50 @@ state ProjectileFireMode
     }
 }
 
+event bool AttemptFire(Controller C, bool bAltFire)
+{
+    if(Role != ROLE_Authority || bForceCenterAim)
+        return False;
+
+    if (FireCountdown <= 0)
+    {
+        if (bSkipFire)
+        {
+            bSkipFire = false;
+            return false;
+        }
+        else
+            bSkipFire = true;
+
+        CalcWeaponFire();
+        if (bCorrectAim)
+            WeaponFireRotation = AdjustAim(bAltFire);
+        if (Spread > 0)
+            WeaponFireRotation = rotator(vector(WeaponFireRotation) + VRand()*FRand()*Spread);
+
+            DualFireOffset *= -1;
+
+        Instigator.MakeNoise(1.0);
+        if (bAltFire)
+        {
+            FireCountdown = AltFireInterval;
+            AltFire(C);
+        }
+        else
+        {
+            FireCountdown = FireInterval;
+            Fire(C);
+        }
+        AimLockReleaseTime = Level.TimeSeconds + FireCountdown * FireIntervalAimLock;
+
+        if (ChildWeapon != None)
+            ChildWeapon.AttemptFire(C, bAltFire);
+
+        return True;
+    }
+
+    return False;
+}
 
 //=============================================================================
 // Default values
@@ -108,9 +171,9 @@ defaultproperties
     RedSkin = Shader'UT3RaptorTex.RaptorSkin'
     BlueSkin = Shader'UT3RaptorTex.RaptorSkinBlue'
     PitchBone = 'rt_gun'
-    WeaponFireAttachmentBone = 'rt_gun';
-    WeaponFireOffset = 10;
-    DualFireOffset = 35;
+    WeaponFireAttachmentBone = 'rt_tip';
+    //WeaponFireOffset = 150.0;
+    //DualFireOffset = 35;
     // @100GPing100
     //============EDN============
     FireInterval    = 0.2
@@ -124,4 +187,7 @@ defaultproperties
     //HomingSound=Sound'UT3Weapons2.Generic.LockOn'
     //FireSoundClass=sound'UT3Vehicles.RAPTOR.RaptorFire'
     //AltFireSoundClass=sound'UT3Vehicles.RAPTOR.RaptorAltFire'
+    PitchUpLimit = 18000
+    PitchDownLimit = 49153
+    YawEndConstraint = 0
 }
