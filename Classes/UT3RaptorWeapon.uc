@@ -113,26 +113,45 @@ state ProjectileFireMode
 
 event bool AttemptFire(Controller C, bool bAltFire)
 {
+    local bool bResult;
+
     if(Role != ROLE_Authority || bForceCenterAim)
         return False;
 
+    Instigator.ClientMessage(self@"AttemptFire"@FireCountdown@bAltFire);
+    /*if (bSkipFire)
+    {
+        bSkipFire = false;
+        //Instigator.ClientMessage(self@"AttemptFire: Skipping");
+        if (ChildWeapon != None)
+            return ChildWeapon.AttemptFire(C, bAltFire);
+        return false;
+    }
+    else
+        bSkipFire = true;*/
+    //Instigator.ClientMessage(self@"AttemptFire: Firing");
+    if (bSkipFire && UT3RaptorWeapon(ChildWeapon) != None)
+    {
+        bSkipFire = false;
+        bResult = UT3RaptorWeapon(ChildWeapon).ChildAttemptFire(C, bAltFire, FireCountdown);
+        if (FireCountdown <= 0 && bAltFire)
+            FireCountdown = AltFireInterval;
+        else if (FireCountdown <= 0)
+            FireCountdown = FireInterval;
+        return bResult;
+    }
+    else if (!bSkipFire)
+        bSkipFire = true;
+
     if (FireCountdown <= 0)
     {
-        if (bSkipFire)
-        {
-            bSkipFire = false;
-            return false;
-        }
-        else
-            bSkipFire = true;
-
         CalcWeaponFire();
         if (bCorrectAim)
             WeaponFireRotation = AdjustAim(bAltFire);
         if (Spread > 0)
             WeaponFireRotation = rotator(vector(WeaponFireRotation) + VRand()*FRand()*Spread);
 
-            DualFireOffset *= -1;
+            //DualFireOffset *= -1;
 
         Instigator.MakeNoise(1.0);
         if (bAltFire)
@@ -143,17 +162,76 @@ event bool AttemptFire(Controller C, bool bAltFire)
         else
         {
             FireCountdown = FireInterval;
+            Instigator.ClientMessage(self@"Fire");
             Fire(C);
         }
         AimLockReleaseTime = Level.TimeSeconds + FireCountdown * FireIntervalAimLock;
 
-        if (ChildWeapon != None)
-            ChildWeapon.AttemptFire(C, bAltFire);
+        /*if (ChildWeapon != None)
+            UT3RaptorWeapon(ChildWeapon).bSkipFire = false;
+            ChildWeapon.AttemptFire(C, bAltFire);*/
 
         return True;
     }
 
     return False;
+}
+
+function bool ChildAttemptFire(Controller C, bool bAltFire, float RealCountdown)
+{
+    if (RealCountdown <= 0)
+    {
+        CalcWeaponFire();
+        if (bCorrectAim)
+            WeaponFireRotation = AdjustAim(bAltFire);
+        if (Spread > 0)
+            WeaponFireRotation = rotator(vector(WeaponFireRotation) + VRand()*FRand()*Spread);
+
+        //DualFireOffset *= -1;
+
+        Instigator.MakeNoise(1.0);
+        if (bAltFire)
+            AltFire(C);
+        else
+            Fire(C);
+        AimLockReleaseTime = Level.TimeSeconds + FireCountdown * FireIntervalAimLock;
+
+        return True;
+    }
+
+    return False;
+}
+
+simulated function CalcWeaponFire()
+{
+    local coords WeaponBoneCoords;
+    local vector CurrentFireOffset;
+    local float DualFireHack;
+
+    // GEm: Because I have no clue why both weapons fire from the same point
+    DualFireHack = DualFireOffset * (int(UT3RaptorWeapon(ChildWeapon) != None) * 2 - 1);
+
+    // Calculate fire offset in world space
+    WeaponBoneCoords = GetBoneCoords(WeaponFireAttachmentBone);
+    CurrentFireOffset = (WeaponFireOffset * vect(1,0,0)) + (DualFireHack * vect(0,1,0));
+
+    // Calculate rotation of the gun
+    WeaponFireRotation = rotator(vector(CurrentAim) >> Rotation);
+
+    // Calculate exact fire location
+    WeaponFireLocation = WeaponBoneCoords.Origin + (CurrentFireOffset >> WeaponFireRotation);
+
+    // Adjust fire rotation taking dual offset into account
+    //if (bDualIndependantTargeting)
+        WeaponFireRotation.Pitch = rotator(CurrentHitLocation - WeaponFireLocation).Pitch;
+
+    //local vector LogVec;
+    //Super.CalcWeaponFire();
+    //LogVec = WeaponBoneCoords.Origin;
+    /*log(self@"CalcWeaponFire: WeaponBoneCoords"
+    @WeaponBoneCoords.Origin
+    @"WeaponFireLocation"
+    @WeaponFireLocation);*/
 }
 
 //=============================================================================
@@ -171,9 +249,9 @@ defaultproperties
     RedSkin = Shader'UT3RaptorTex.RaptorSkin'
     BlueSkin = Shader'UT3RaptorTex.RaptorSkinBlue'
     PitchBone = 'rt_gun'
-    WeaponFireAttachmentBone = 'rt_tip';
-    //WeaponFireOffset = 150.0;
-    //DualFireOffset = 35;
+    WeaponFireAttachmentBone = 'rt_gun';
+    WeaponFireOffset = 95.0
+    DualFireOffset = 15.0
     // @100GPing100
     //============EDN============
     FireInterval    = 0.2
@@ -189,5 +267,5 @@ defaultproperties
     //AltFireSoundClass=sound'UT3Vehicles.RAPTOR.RaptorAltFire'
     PitchUpLimit = 18000
     PitchDownLimit = 49153
-    YawEndConstraint = 0
+    YawEndConstraint = 100
 }

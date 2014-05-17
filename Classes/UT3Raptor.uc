@@ -72,14 +72,8 @@ simulated function PostNetBeginPlay()
     Super.PostNetBeginPlay();
 
     if (Role == ROLE_Authority)
-    {
-        if (WeaponPawns[0] != None)
-            WeaponPawns[0].Gun.SetOwner(self);
-
         if (Weapons.Length == 2 && ONSLinkableWeapon(Weapons[0]) != None)
             ONSLinkableWeapon(Weapons[0]).ChildWeapon = Weapons[1];
-
-    }
 }
 
 //
