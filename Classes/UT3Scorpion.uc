@@ -46,23 +46,23 @@ var float LastBoostAttempt;
 
 event KImpact(actor other, vector pos, vector impactVel, vector impactNorm) //Modified so we would have control over when we detonate
 {
-   if (bPrimed)
-   {
-      bImminentDestruction = true;
+if (bPrimed)
+{
+    bImminentDestruction = true;
 //      if (Other != None && Other.IsA('ONSPRV'))
 //         ImpactVel = vect(0,0,0);
-      Super(ONSRV).KImpact(Other, Pos, ImpactVel, ImpactNorm);
-   }
-   if (VSize(impactVel) > 1000 && bImminentDestruction)
-   {
-      ImpactVel /= 100;
-      if (Other != None && Other.IsA('ONSPRV'))
-         ImpactVel = vect(0,0,0);
-      SuperEjectDriver();
-      HurtRadius(SelfDestructDamage, SelfDestructDamageRadius, SelfDestructDamageType, SelfDestructMomentum, Location);
-      TakeDamage(SelfDestructDamage*3, Self, Location, vect(0,0,0), SelfDestructDamageType);
-      Super(ONSRV).KImpact(Other, Pos, ImpactVel, ImpactNorm);
-   }
+    Super(ONSRV).KImpact(Other, Pos, ImpactVel, ImpactNorm);
+}
+if (VSize(impactVel) > 1000 && bImminentDestruction)
+{
+    ImpactVel /= 100;
+    if (Other != None && Other.IsA('ONSPRV'))
+        ImpactVel = vect(0,0,0);
+    SuperEjectDriver();
+    HurtRadius(SelfDestructDamage, SelfDestructDamageRadius, SelfDestructDamageType, SelfDestructMomentum, Location);
+    TakeDamage(SelfDestructDamage*3, Self, Location, vect(0,0,0), SelfDestructDamageType);
+    Super(ONSRV).KImpact(Other, Pos, ImpactVel, ImpactNorm);
+}
 }
 
 simulated function DrawHUD(Canvas C)
@@ -92,62 +92,62 @@ simulated function Tick(float DT)
 
     Super(ONSWheeledCraft).Tick(DT);
 
-  if (Role == ROLE_Authority && IsHumanControlled() && Rise > 0 && Level.TimeSeconds - LastBoostAttempt > 1)
-  {
-     Boost();
-     LastBoostAttempt = Level.TimeSeconds;
-  }
+if (Role == ROLE_Authority && IsHumanControlled() && Rise > 0 && Level.TimeSeconds - LastBoostAttempt > 1)
+{
+    Boost();
+    LastBoostAttempt = Level.TimeSeconds;
+}
 
-  //If bImminentDestruction, then we have already primed the detonator and hit something - We detonate here because detonating in KImpact seemed to cause General Protection Faults in some circumstances
-  if (bImminentDestruction)
-  {
-     GoToState('Ejecting');              //GE: Eject + delay + explosion
-     return;
-  }
+//If bImminentDestruction, then we have already primed the detonator and hit something - We detonate here because detonating in KImpact seemed to cause General Protection Faults in some circumstances
+if (bImminentDestruction)
+{
+    GoToState('Ejecting');              //GE: Eject + delay + explosion
+    return;
+}
 
-  //If bAfterburnersOn and boost state don't agree
-  if (bBoost != bAfterburnersOn)
-  {
-	   // it means we need to change the state of the vehicle (bAfterburnersOn)
-	   // to match the desired state (bBoost)
-     EnableAfterburners(bBoost); // show/hide afterburner smoke
+//If bAfterburnersOn and boost state don't agree
+if (bBoost != bAfterburnersOn)
+{
+    // it means we need to change the state of the vehicle (bAfterburnersOn)
+    // to match the desired state (bBoost)
+    EnableAfterburners(bBoost); // show/hide afterburner smoke
 
-	   // if we just enabled afterburners, set the timer
-	   // to turn them off after set time has expired
-	   if (bBoost)
-	   {
-	      SetTimer(BoostTime, false);
-     }
-	}
+    // if we just enabled afterburners, set the timer
+    // to turn them off after set time has expired
+    if (bBoost)
+    {
+        SetTimer(BoostTime, false);
+    }
+    }
 
-	if (Role == ROLE_Authority)
-	{
-	   // Afterburners recharge after the change in time exceeds the specified charge duration
-	   BoostRechargeCounter+=DT;
-	   if (BoostRechargeCounter > BoostRechargeTime)
-	   {
-	      if (BoostCount < 1)
-	      {
-           BoostCount++;
-           if( PlayerController(Controller) != None)
-           {
-			        PlayerController(Controller).ClientPlaySound(BoostReadySound,,,SLOT_Misc);
-           }
-           //PlaySound(BoostReadySound, SLOT_Misc,128);
+    if (Role == ROLE_Authority)
+    {
+    // Afterburners recharge after the change in time exceeds the specified charge duration
+    BoostRechargeCounter+=DT;
+    if (BoostRechargeCounter > BoostRechargeTime)
+    {
+        if (BoostCount < 1)
+        {
+        BoostCount++;
+        if( PlayerController(Controller) != None)
+        {
+                    PlayerController(Controller).ClientPlaySound(BoostReadySound,,,SLOT_Misc);
+        }
+        //PlaySound(BoostReadySound, SLOT_Misc,128);
         }
         BoostRechargeCounter = 0;
-	   }
-	}
-	//=======================
-	// @100GPing100
-	// Left Blade Arm System
+    }
+    }
+    //=======================
+    // @100GPing100
+    // Left Blade Arm System
     if (Role == ROLE_Authority && bWeaponIsAltFiring && !bLeftArmBroke)
     {
         //ArmBaseCoords = GetBoneCoords('CarLShoulder');
         //ArmTipCoords = GetBoneCoords('LeftBladeDummy');
-		ArmBaseCoords = GetBoneCoords('Blade_L1');
-		ArmTipCoords = GetBoneCoords('Blade_L2');
-		ArmTipCoords.Origin += vect(0,50,0) >> Rotation;
+        ArmBaseCoords = GetBoneCoords('Blade_L1');
+        ArmTipCoords = GetBoneCoords('Blade_L2');
+        ArmTipCoords.Origin += vect(0,50,0) >> Rotation;
         Victim = Trace(HitLocation, HitNormal, ArmTipCoords.Origin, ArmBaseCoords.Origin);
 
         if (Victim != None && Victim.bBlockActors)
@@ -159,7 +159,7 @@ simulated function Tick(float DT)
                 bLeftArmBroke = True;
                 bClientLeftArmBroke = True;
                 BladeBreakOff(4, 'Blade_L2', class'ONSRVLeftBladeBreakOffEffect');
-				// We use slot 4 here because slots 0-3 can be used by BigWheels mutator.
+                // We use slot 4 here because slots 0-3 can be used by BigWheels mutator.
             }
         }
     }
@@ -175,9 +175,9 @@ simulated function Tick(float DT)
     {
         //ArmBaseCoords = GetBoneCoords('CarRShoulder');
         //ArmTipCoords = GetBoneCoords('RightBladeDummy');
-		ArmBaseCoords = GetBoneCoords('Blade_R1');
-		ArmTipCoords = GetBoneCoords('Blade_R2');
-		ArmTipCoords.Origin += vect(0,50,0) >> Rotation;
+        ArmBaseCoords = GetBoneCoords('Blade_R1');
+        ArmTipCoords = GetBoneCoords('Blade_R2');
+        ArmTipCoords.Origin += vect(0,50,0) >> Rotation;
         Victim = Trace(HitLocation, HitNormal, ArmTipCoords.Origin, ArmBaseCoords.Origin);
 
         if (Victim != None && Victim.bBlockActors)
@@ -198,64 +198,64 @@ simulated function Tick(float DT)
         bClientRightArmBroke = False;
         BladeBreakOff(5, 'Blade_R2', class'ONSRVRightBladeBreakOffEffect');
     }
-	// @100GPing100
-	//==========END==========
+    // @100GPing100
+    //==========END==========
 }
 
 simulated state Ejecting {
 Begin:
-     SuperEjectDriver();
-     Sleep(1.0);
-     HurtRadius(SelfDestructDamage, SelfDestructDamageRadius, SelfDestructDamageType, SelfDestructMomentum, Location);
-     TakeDamage(SelfDestructDamage*3, Self, Location, vect(0,0,0), SelfDestructDamageType);
+    SuperEjectDriver();
+    Sleep(1.0);
+    HurtRadius(SelfDestructDamage, SelfDestructDamageRadius, SelfDestructDamageType, SelfDestructMomentum, Location);
+    TakeDamage(SelfDestructDamage*3, Self, Location, vect(0,0,0), SelfDestructDamageType);
 }
 
 event Touch(actor Other)
 {
     if (Other.IsA('Vehicle'))
     {
-       Super.Touch(Other);
-       if (bPrimed)
-       {
-          bImminentDestruction = true;
-       }
+    Super.Touch(Other);
+    if (bPrimed)
+    {
+        bImminentDestruction = true;
+    }
     }
 }
 
 function Boost()
 {
-	//If we're already boosting, then prime the detonator
-	/*if (bBoost)
-	{
-	  bImminentDestruction = true;
-	  PlaySound(BoostReadySound, SLOT_Misc, 128,,,160);
-	}*/
+    //If we're already boosting, then prime the detonator
+    /*if (bBoost)
+    {
+    bImminentDestruction = true;
+    PlaySound(BoostReadySound, SLOT_Misc, 128,,,160);
+    }*/
 
-  // If we have a boost ready and we're not currently using it
-	//log("UT3: Entering Boost!");
-	//log("UT3: BoostRechargeTime: "@BoostRechargeTime);
-	//log("UT3: BoostRechargeCounter: "@BoostRechargeCounter);
+// If we have a boost ready and we're not currently using it
+    //log("UT3: Entering Boost!");
+    //log("UT3: BoostRechargeTime: "@BoostRechargeTime);
+    //log("UT3: BoostRechargeCounter: "@BoostRechargeCounter);
     if (BoostCount > 0 && !bBoost)
-	{
+    {
     //log("UT3: Boosting!");
     BoostRechargeCounter=0;
-	  PlaySound(BoostSound, SLOT_Misc, 128,,,64); //Boost sound Pitch 160
-		bBoost = true;
-		BoostCount--;
-	}
-	else {
-	  //log("UT3: Kamikadze!");
-      bImminentDestruction = true;
-	  PlaySound(BoostReadySound, SLOT_Misc, 128,,,160);
-	}
+    PlaySound(BoostSound, SLOT_Misc, 128,,,64); //Boost sound Pitch 160
+        bBoost = true;
+        BoostCount--;
+    }
+    else {
+    //log("UT3: Kamikadze!");
+    bImminentDestruction = true;
+    PlaySound(BoostReadySound, SLOT_Misc, 128,,,160);
+    }
 }
 
 /*function VehicleFire(bool bWasAltFire)
 {
-	if (bWasAltFire)
-	{
-		Boost();
-	}
+    if (bWasAltFire)
+    {
+        Boost();
+    }
 
     else Super(ONSWheeledCraft).VehicleFire(bWasAltFire);   //So we wouldn't shoot when boosting
 }*/
@@ -264,7 +264,7 @@ function VehicleFire(bool bWasAltFire)
 {
     if (bWasAltFire)
     {
-       // Boost();
+    // Boost();
         PlayAnim('Blades_out');
         if (!bLeftArmBroke || !bRightArmBroke)
         {
@@ -279,7 +279,7 @@ function VehicleFire(bool bWasAltFire)
 
 function AltFire(optional float F)
 {
-	//avoid sending altfire to weapon
+    //avoid sending altfire to weapon
     Super(Vehicle).AltFire(F);
 }
 
@@ -332,83 +332,83 @@ function VehicleCeaseFire(bool bWasAltFire)
 
 defaultproperties
 {
-	//=======================
-	// @100GPing100
-	Mesh = SkeletalMesh'UT3ScorpionAnims.Scorpion';
-	RedSkin = Shader'UT3ScorpionTex.ScorpionSkin';
-	BlueSkin = Shader'UT3ScorpionTex.ScorpionSkinBlue';
+    //=======================
+    // @100GPing100
+    Mesh = SkeletalMesh'UT3VH_Scorpion_Anims.SK_VH_Scorpion';
+    RedSkin = Shader'UT3ScorpionTex.ScorpionSkin';
+    BlueSkin = Shader'UT3ScorpionTex.ScorpionSkinBlue';
 
-	DriverWeapons(0)=(WeaponClass=Class'UT3ScorpionTurret',WeaponBone="Gun_Base")
+    DriverWeapons(0)=(WeaponClass=Class'UT3ScorpionTurret',WeaponBone="gun_rotate")
 
-	SteerBoneName = "Main_Root";
+    SteerBoneName = "Main_Root";
 
-	Begin Object Class=SVehicleWheel Name=RRWheel
-		BoneName = "B_R_Tire";
-		SupportBoneName = "B_R_Axle";
+    Begin Object Class=SVehicleWheel Name=RRWheel
+        BoneName = "B_R_Tire";
+        SupportBoneName = "B_R_Axle";
 
-		BoneRollAxis = AXIS_Y;
-		BoneSteerAxis = AXIS_Z;
-		SupportBoneAxis = AXIS_X;
-		SteerType = VST_Fixed;
-		BoneOffset = (X=0.0,Y=20.0,Z=0.0);
+        BoneRollAxis = AXIS_Y;
+        BoneSteerAxis = AXIS_Z;
+        SupportBoneAxis = AXIS_X;
+        SteerType = VST_Fixed;
+        BoneOffset = (X=0.0,Y=20.0,Z=0.0);
 
-		WheelRadius = 20; //27
-		//SuspensionTravel = 40;
-		bPoweredWheel = true;
-		bHandbrakeWheel = true;
-	End Object
-	Begin Object Class=SVehicleWheel Name=LRWheel
-		BoneName = "B_L_Tire";
-		SupportBoneName = "B_L_Axle";
+        WheelRadius = 20; //27
+        //SuspensionTravel = 40;
+        bPoweredWheel = true;
+        bHandbrakeWheel = true;
+    End Object
+    Begin Object Class=SVehicleWheel Name=LRWheel
+        BoneName = "B_L_Tire";
+        SupportBoneName = "B_L_Axle";
 
-		BoneRollAxis = AXIS_Y;
-		BoneSteerAxis = AXIS_Z;
-		SupportBoneAxis = AXIS_X;
-		SteerType = VST_Fixed;
-		BoneOffset = (X=0.0,Y=20.0,Z=0.0);
+        BoneRollAxis = AXIS_Y;
+        BoneSteerAxis = AXIS_Z;
+        SupportBoneAxis = AXIS_X;
+        SteerType = VST_Fixed;
+        BoneOffset = (X=0.0,Y=20.0,Z=0.0);
 
-		WheelRadius = 20;
-		//SuspensionTravel = 40;
-		bPoweredWheel = true;
-		bHandbrakeWheel = true;
-	End Object
-	Begin Object Class=SVehicleWheel Name=RFWheel
-		BoneName = "F_R_Tire";
-		SupportBoneName = "F_R_Axle";
+        WheelRadius = 20;
+        //SuspensionTravel = 40;
+        bPoweredWheel = true;
+        bHandbrakeWheel = true;
+    End Object
+    Begin Object Class=SVehicleWheel Name=RFWheel
+        BoneName = "F_R_Tire";
+        SupportBoneName = "F_R_Axle";
 
-		BoneRollAxis = AXIS_Y;
-		BoneSteerAxis = AXIS_Z;
-		SupportBoneAxis = AXIS_X;
-		SteerType = VST_Steered;
-		BoneOffset = (X=0.0,Y=-20.0,Z=0.0);
+        BoneRollAxis = AXIS_Y;
+        BoneSteerAxis = AXIS_Z;
+        SupportBoneAxis = AXIS_X;
+        SteerType = VST_Steered;
+        BoneOffset = (X=0.0,Y=-20.0,Z=0.0);
 
-		WheelRadius = 20;
-		//SuspensionTravel = 40;
-		bPoweredWheel = true;
-	End Object
-	Begin Object Class=SVehicleWheel Name=LFWheel
-		BoneName = "F_L_Tire";
-		SupportBoneName = "F_L_Axle";
+        WheelRadius = 20;
+        //SuspensionTravel = 40;
+        bPoweredWheel = true;
+    End Object
+    Begin Object Class=SVehicleWheel Name=LFWheel
+        BoneName = "F_L_Tire";
+        SupportBoneName = "F_L_Axle";
 
-		BoneRollAxis = AXIS_Y;
-		BoneSteerAxis = AXIS_Z;
-		SupportBoneAxis = AXIS_X;
-		SteerType = VST_Steered;
-		BoneOffset = (X=0.0,Y=-20.0,Z=0.0);
+        BoneRollAxis = AXIS_Y;
+        BoneSteerAxis = AXIS_Z;
+        SupportBoneAxis = AXIS_X;
+        SteerType = VST_Steered;
+        BoneOffset = (X=0.0,Y=-20.0,Z=0.0);
 
-		WheelRadius = 20;
-		//SuspensionTravel = 40;
-		bPoweredWheel = true;
-	End Object
-	Wheels(0) = RRWheel;
-	Wheels(1) = LRWheel;
-	Wheels(2) = RFWheel;
-	Wheels(3) = LFWheel;
-	// @100GPing100
-	//==========END==========
-	VehicleNameString = "UT3 Scorpion"
-	VehiclePositionString="in a Scorpion"
-	//RedSkin=Shader'VMVehicles-TX.RVGroup.RVChassisFinalRED'
+        WheelRadius = 20;
+        //SuspensionTravel = 40;
+        bPoweredWheel = true;
+    End Object
+    Wheels(0) = RRWheel;
+    Wheels(1) = LRWheel;
+    Wheels(2) = RFWheel;
+    Wheels(3) = LFWheel;
+    // @100GPing100
+    //==========END==========
+    VehicleNameString = "UT3 Scorpion"
+    VehiclePositionString="in a Scorpion"
+    //RedSkin=Shader'VMVehicles-TX.RVGroup.RVChassisFinalRED'
     //BlueSkin=Shader'VMVehicles-TX.RVGroup.RVChassisFinalBLUE'
     //DriverWeapons(0)=(WeaponClass=Class'UT3ScorpionTurret',WeaponBone="ChainGunAttachment")
     bHasAltFire=False

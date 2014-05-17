@@ -47,23 +47,23 @@ simulated function float MaxRange() //GE: Makes bots look further
     return AimTraceRange;
 }
 
-DefaultProperties
+defaultproperties
 {
-	//=======================
-	// @100GPing100
-	/*Mesh = SkeletalMesh'UT3ScorpionAnims.Scorpion_Turret';
-	RedSkin = Shader'UT3ScorpionTex.ScorpionSkin';
-	BlueSkin = Shader'UT3ScorpionTex.ScorpionSkinBlue';
+    //=======================
+    // @100GPing100
+    Mesh = SkeletalMesh'UT3VH_Scorpion_Anims.ScorpionGunOnly';
+    RedSkin = Shader'UT3ScorpionTex.ScorpionSkin';
+    BlueSkin = Shader'UT3ScorpionTex.ScorpionSkinBlue';
 
-	YawBone = "gun_rotate";
-	PitchBone = "gun_rotate";
-	WeaponFireAttachmentBone = "gun_rotate";*/
-	// @100GPing100
-	//==========END==========
+    YawBone = "gun_rotate";
+    PitchBone = "gun_rotate";
+    WeaponFireAttachmentBone = "gun_tip";
+    // @100GPing100
+    //==========END==========
 
-   ProjectileClass=Class'UT3ScorpionBallRed'
-   TeamProjectileClasses(0)=class'UT3ScorpionBallRed'
-   TeamProjectileClasses(1)=class'UT3ScorpionBallBlue'
-   FireSoundClass=Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_AltFire01'
-   AIInfo(0)=(aimerror=650.000000,bTrySplash=True,bLeadTarget=True)
+    ProjectileClass=Class'UT3ScorpionBallRed'
+    TeamProjectileClasses(0)=class'UT3ScorpionBallRed'
+    TeamProjectileClasses(1)=class'UT3ScorpionBallBlue'
+    FireSoundClass=Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_AltFire01'
+    AIInfo(0)=(aimerror=650.000000,bTrySplash=True,bLeadTarget=True)
 }
