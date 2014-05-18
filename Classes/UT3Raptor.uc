@@ -54,6 +54,8 @@ var Rotator WingsRotation;
 /* Current rudders' rotation. */
 var Rotator RuddersRotation;
 
+var int RudderYawContraint;
+
 //
 // Called when spawned.
 //
@@ -157,7 +159,6 @@ function Wings(float DeltaTime)
 //
 function Rudders(float DeltaTime)
 {
-    // 30° ~= 5461 RUU
     local Rotator NewRotation, NewDriverYaw;
 
     // Normalize Rotation and DriverViewYaw or we get weird values..
@@ -166,13 +167,13 @@ function Rudders(float DeltaTime)
     DriverViewYaw = Normalize(NewDriverYaw).Yaw;
 
     // 3000 = The angle at which the angle of the rudders is of 30°
-    NewRotation.Yaw = 5461 * (Rotation.Yaw - DriverViewYaw) / 3000;
+    NewRotation.Yaw = RudderYawContraint * (Rotation.Yaw - DriverViewYaw) / 3000;
 
     // Limit the angle.
-    if (NewRotation.Yaw > 5461)
-        NewRotation.Yaw = 5461;
-    else if (NewRotation.Yaw < -5461)
-        NewRotation.Yaw = -5461;
+    if (NewRotation.Yaw > RudderYawContraint)
+        NewRotation.Yaw = RudderYawContraint;
+    else if (NewRotation.Yaw < -RudderYawContraint)
+        NewRotation.Yaw = -RudderYawContraint;
 
     // Update rudders' rotation.
     if (NewRotation.Yaw > 1000 || NewRotation.Yaw < -1000)
@@ -187,10 +188,10 @@ function Rudders(float DeltaTime)
     }
 
     // Limit the current angle.
-    if (RuddersRotation.Yaw > 5461)
-        RuddersRotation.Yaw = 5461;
-    else if (RuddersRotation.Yaw < -5461)
-        RuddersRotation.Yaw = -5461;
+    if (RuddersRotation.Yaw > RudderYawContraint)
+        RuddersRotation.Yaw = RudderYawContraint;
+    else if (RuddersRotation.Yaw < -RudderYawContraint)
+        RuddersRotation.Yaw = -RudderYawContraint;
 
     RuddersRotation.Roll = 0;
     RuddersRotation.Pitch = 0;
@@ -308,6 +309,7 @@ defaultproperties
     DriverWeapons[1] = (WeaponClass=class'UT3RaptorWeaponLeft',WeaponBone="left_gun")
 
     WingsRPS = 182; // 182 ~= 1°
+    RudderYawContraint = 3000 // 30° ~= 5461 RUU
 
     // Sounds.
     IdleSound = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_EngineLoop01';
