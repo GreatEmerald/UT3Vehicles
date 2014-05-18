@@ -365,10 +365,10 @@ defaultproperties
         BoneSteerAxis = AXIS_Z;
         SupportBoneAxis = AXIS_X;
         SteerType = VST_Fixed;
-        BoneOffset = (X=0.0,Y=20.0,Z=0.0);
+        BoneOffset = (X=0.0,Y=-20.0,Z=0.0);
 
         WheelRadius = 20;
-        //SuspensionTravel = 40;
+        //SuspensionTravel = 0;
         bPoweredWheel = true;
         bHandbrakeWheel = true;
     End Object
@@ -380,7 +380,7 @@ defaultproperties
         BoneSteerAxis = AXIS_Z;
         SupportBoneAxis = AXIS_X;
         SteerType = VST_Steered;
-        BoneOffset = (X=0.0,Y=-20.0,Z=0.0);
+        BoneOffset = (X=0.0,Y=20.0,Z=0.0);
 
         WheelRadius = 20;
         //SuspensionTravel = 40;
@@ -426,4 +426,5 @@ defaultproperties
     SelfDestructDamageType=class'UT3ScorpionSDDamage'
     BoostIconCoords = (X1=2,Y1=843,X2=97,Y2=50)
     EjectIconCoords = (X1=92,Y1=317,X2=50,Y2=50)
+    DrivePos=(X=2.0,Y=0.0,Z=55.0)
 }

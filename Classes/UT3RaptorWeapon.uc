@@ -118,7 +118,7 @@ event bool AttemptFire(Controller C, bool bAltFire)
     if(Role != ROLE_Authority || bForceCenterAim)
         return False;
 
-    Instigator.ClientMessage(self@"AttemptFire"@FireCountdown@bAltFire);
+    //Instigator.ClientMessage(self@"AttemptFire"@FireCountdown@bAltFire);
     /*if (bSkipFire)
     {
         bSkipFire = false;
@@ -162,7 +162,7 @@ event bool AttemptFire(Controller C, bool bAltFire)
         else
         {
             FireCountdown = FireInterval;
-            Instigator.ClientMessage(self@"Fire");
+            //Instigator.ClientMessage(self@"Fire");
             Fire(C);
         }
         AimLockReleaseTime = Level.TimeSeconds + FireCountdown * FireIntervalAimLock;
