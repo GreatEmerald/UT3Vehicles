@@ -1,16 +1,14 @@
-+ Hellbender: Incorrect light positions
-- Hellbender: Wheel animation incorrect
+* Hellbender: Incorrect light positions
+* Hellbender: Wheel animation finnicky
 - SPMA: Wheels incorrect
 + SPMA: Lights incorrectly positioned
-- Scorpion: Cannon rotates incorrectly
 * Scorpion: Add limits to when you can boost and eject
 * Scorpion: Make use of all the animations
 * Leviathan: Missing mesh
-- Cicada: Mesh parts do not animate
+* Cicada: Mesh parts do not animate
 + Paladin: Can shoot itself in the foot
 * Paladin: Weird physics when running into one
-+ Raptor: Flaps too hard
-- Raptor: Front guns are not linked to the weapon
+* Raptor: Front guns do not yaw
 * Manta: Cannot enter from the back
 * Merge mutators into two
 + Check materials

@@ -39,6 +39,9 @@
  */
 
 class UT3Hellbender extends ONSPRV;
+
+var float OldWheelPitch[4];
+
 //This is a great example of how to get rid of a passenger seat.
 
 function VehicleFire(bool bWasAltFire) //This is to remove the horn each time you fire
@@ -198,6 +201,32 @@ simulated function PostNetBeginPlay()
     TeamChanged();
 }
 
+simulated function Tick(float DeltaTime)
+{
+    Super.Tick(DeltaTime);
+    CloneBoneRotation('Rt_Rear_Suspension', 'Rt_Rear_Tire', 0);
+    CloneBoneRotation('Lt_Rear_Suspension', 'Lt_Rear_Tire', 1);
+    CloneBoneRotation('Rt_Front_Suspension', 'Rt_Front_Tire', 2);
+    CloneBoneRotation('Lt_Front_Suspension', 'Lt_Front_Tire', 3);
+    /*ResetBoneRotation('Rt_Rear_Tire');
+    ResetBoneRotation('Lt_Rear_Tire');
+    ResetBoneRotation('Rt_Front_Tire');
+    ResetBoneRotation('Lt_Front_Tire');*/
+}
+
+simulated function CloneBoneRotation(name BoneToSet, name BoneToCopy, byte i)
+{
+    local rotator NewRotation;
+
+    NewRotation = GetBoneRotation(BoneToSet, 2);
+    //NewRotation.Pitch = OldWheelPitch[i]-NewRotation.Pitch;
+    NewRotation.Pitch = 0;
+    //NewRotation.Roll = 0;
+    //NewRotation.Yaw = 0;
+    SetBoneDirection(BoneToSet, Normalize(NewRotation), , , 2);
+    OldWheelPitch[i] = NewRotation.Pitch;
+}
+
 
 //=============================================================================
 // Default values
@@ -245,47 +274,47 @@ defaultproperties
         BoneName="Rt_Rear_Tire"
         BoneRollAxis=AXIS_Y
         BoneSteerAxis=AXIS_Z
-        BoneOffset=(X=-15.0,Y=0.0,Z=0.0)
+        BoneOffset=(X=0.0,Y=27.0,Z=0.0)
         WheelRadius=30
         bPoweredWheel=True
         bHandbrakeWheel=True
         SteerType=VST_Fixed
-        SupportBoneName="Rt_Rear_Suspension"
-        SupportBoneAxis=AXIS_Y
+        //SupportBoneName="Rt_Rear_Suspension"
+        //SupportBoneAxis=AXIS_Y
     End Object
     Begin Object Class=SVehicleWheel Name=LRWheel
         BoneName="Lt_Rear_Tire"
         BoneRollAxis=AXIS_Y
         BoneSteerAxis=AXIS_Z
-        BoneOffset=(X=15.0,Y=0.0,Z=0.0)
+        BoneOffset=(X=15.0,Y=-27.0,Z=0.0)
         WheelRadius=30
         bPoweredWheel=True
         bHandbrakeWheel=True
         SteerType=VST_Fixed
-        SupportBoneName="Lt_Rear_Suspension"
-        SupportBoneAxis=AXIS_Y
+        //SupportBoneName="Lt_Rear_Suspension"
+        //SupportBoneAxis=AXIS_Y
     End Object
     Begin Object Class=SVehicleWheel Name=RFWheel
         BoneName="Rt_Front_Tire"
         BoneRollAxis=AXIS_Y
         BoneSteerAxis=AXIS_Z
-        BoneOffset=(X=-15.0,Y=0.0,Z=0.0)
+        BoneOffset=(X=0.0,Y=27.0,Z=0.0)
         WheelRadius=30
         bPoweredWheel=True
         SteerType=VST_Steered
-        SupportBoneName="Rt_Front_Suspension"
-        SupportBoneAxis=AXIS_Y
+        //SupportBoneName="Rt_Front_Suspension"
+        //SupportBoneAxis=AXIS_Y
     End Object
     Begin Object Class=SVehicleWheel Name=LFWheel
         BoneName="Lt_Front_Tire"
         BoneRollAxis=AXIS_Y
         BoneSteerAxis=AXIS_Z
-        BoneOffset=(X=15.0,Y=0.0,Z=0.0)
+        BoneOffset=(X=0.0,Y=-27.0,Z=0.0)
         WheelRadius=30
         bPoweredWheel=True
         SteerType=VST_Steered
-        SupportBoneName="Lt_Front_Suspension"
-        SupportBoneAxis=AXIS_Y
+        //SupportBoneName="Lt_Front_Suspension"
+        //SupportBoneAxis=AXIS_Y
     End Object
 
     Wheels(0) = RRWheel;

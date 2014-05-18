@@ -44,5 +44,6 @@ defaultproperties
     bSkipFire = true //GEm: Essential, this lets the right gun fire first
     Mesh = SkeletalMesh'UT3VH_Raptor_Anims.RaptorLeftGunOnly'
     PitchBone = 'left_gun'
+    YawBone = 'left_gun'
     WeaponFireAttachmentBone = 'left_gun';
 }
