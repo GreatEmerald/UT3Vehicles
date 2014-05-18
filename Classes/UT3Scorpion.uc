@@ -46,23 +46,23 @@ var float LastBoostAttempt;
 
 event KImpact(actor other, vector pos, vector impactVel, vector impactNorm) //Modified so we would have control over when we detonate
 {
-if (bPrimed)
-{
-    bImminentDestruction = true;
+    if (bPrimed)
+    {
+        bImminentDestruction = true;
 //      if (Other != None && Other.IsA('ONSPRV'))
 //         ImpactVel = vect(0,0,0);
-    Super(ONSRV).KImpact(Other, Pos, ImpactVel, ImpactNorm);
-}
-if (VSize(impactVel) > 1000 && bImminentDestruction)
-{
-    ImpactVel /= 100;
-    if (Other != None && Other.IsA('ONSPRV'))
-        ImpactVel = vect(0,0,0);
-    SuperEjectDriver();
-    HurtRadius(SelfDestructDamage, SelfDestructDamageRadius, SelfDestructDamageType, SelfDestructMomentum, Location);
-    TakeDamage(SelfDestructDamage*3, Self, Location, vect(0,0,0), SelfDestructDamageType);
-    Super(ONSRV).KImpact(Other, Pos, ImpactVel, ImpactNorm);
-}
+        Super(ONSRV).KImpact(Other, Pos, ImpactVel, ImpactNorm);
+    }
+    if (VSize(impactVel) > 1000 && bImminentDestruction)
+    {
+        ImpactVel /= 100;
+        if (Other != None && Other.IsA('ONSPRV'))
+            ImpactVel = vect(0,0,0);
+        SuperEjectDriver();
+        HurtRadius(SelfDestructDamage, SelfDestructDamageRadius, SelfDestructDamageType, SelfDestructMomentum, Location);
+        TakeDamage(SelfDestructDamage*3, Self, Location, vect(0,0,0), SelfDestructDamageType);
+        Super(ONSRV).KImpact(Other, Pos, ImpactVel, ImpactNorm);
+    }
 }
 
 simulated function DrawHUD(Canvas C)
@@ -92,51 +92,49 @@ simulated function Tick(float DT)
 
     Super(ONSWheeledCraft).Tick(DT);
 
-if (Role == ROLE_Authority && IsHumanControlled() && Rise > 0 && Level.TimeSeconds - LastBoostAttempt > 1)
-{
-    Boost();
-    LastBoostAttempt = Level.TimeSeconds;
-}
-
-//If bImminentDestruction, then we have already primed the detonator and hit something - We detonate here because detonating in KImpact seemed to cause General Protection Faults in some circumstances
-if (bImminentDestruction)
-{
-    GoToState('Ejecting');              //GE: Eject + delay + explosion
-    return;
-}
-
-//If bAfterburnersOn and boost state don't agree
-if (bBoost != bAfterburnersOn)
-{
-    // it means we need to change the state of the vehicle (bAfterburnersOn)
-    // to match the desired state (bBoost)
-    EnableAfterburners(bBoost); // show/hide afterburner smoke
-
-    // if we just enabled afterburners, set the timer
-    // to turn them off after set time has expired
-    if (bBoost)
+    if (Role == ROLE_Authority && IsHumanControlled() && Rise > 0 && Level.TimeSeconds - LastBoostAttempt > 1)
     {
-        SetTimer(BoostTime, false);
+        Boost();
+        LastBoostAttempt = Level.TimeSeconds;
     }
+    
+    //If bImminentDestruction, then we have already primed the detonator and hit something - We detonate here because detonating in KImpact seemed to cause General Protection Faults in some circumstances
+    if (bImminentDestruction)
+    {
+        GoToState('Ejecting');              //GE: Eject + delay + explosion
+        return;
+    }
+    
+    //If bAfterburnersOn and boost state don't agree
+    if (bBoost != bAfterburnersOn)
+    {
+        // it means we need to change the state of the vehicle (bAfterburnersOn)
+        // to match the desired state (bBoost)
+        EnableAfterburners(bBoost); // show/hide afterburner smoke
+    
+        // if we just enabled afterburners, set the timer
+        // to turn them off after set time has expired
+        if (bBoost)
+        {
+            SetTimer(BoostTime, false);
+        }
     }
 
     if (Role == ROLE_Authority)
     {
-    // Afterburners recharge after the change in time exceeds the specified charge duration
-    BoostRechargeCounter+=DT;
-    if (BoostRechargeCounter > BoostRechargeTime)
-    {
-        if (BoostCount < 1)
+        // Afterburners recharge after the change in time exceeds the specified charge duration
+        BoostRechargeCounter+=DT;
+        if (BoostRechargeCounter > BoostRechargeTime)
         {
-        BoostCount++;
-        if( PlayerController(Controller) != None)
-        {
+            if (BoostCount < 1)
+            {
+                BoostCount++;
+                if( PlayerController(Controller) != None)
                     PlayerController(Controller).ClientPlaySound(BoostReadySound,,,SLOT_Misc);
+                //PlaySound(BoostReadySound, SLOT_Misc,128);
+            }
+            BoostRechargeCounter = 0;
         }
-        //PlaySound(BoostReadySound, SLOT_Misc,128);
-        }
-        BoostRechargeCounter = 0;
-    }
     }
     //=======================
     // @100GPing100
@@ -214,11 +212,9 @@ event Touch(actor Other)
 {
     if (Other.IsA('Vehicle'))
     {
-    Super.Touch(Other);
-    if (bPrimed)
-    {
-        bImminentDestruction = true;
-    }
+        Super.Touch(Other);
+        if (bPrimed)
+            bImminentDestruction = true;
     }
 }
 
@@ -227,26 +223,27 @@ function Boost()
     //If we're already boosting, then prime the detonator
     /*if (bBoost)
     {
-    bImminentDestruction = true;
-    PlaySound(BoostReadySound, SLOT_Misc, 128,,,160);
+        bImminentDestruction = true;
+        PlaySound(BoostReadySound, SLOT_Misc, 128,,,160);
     }*/
 
-// If we have a boost ready and we're not currently using it
+    // If we have a boost ready and we're not currently using it
     //log("UT3: Entering Boost!");
     //log("UT3: BoostRechargeTime: "@BoostRechargeTime);
     //log("UT3: BoostRechargeCounter: "@BoostRechargeCounter);
     if (BoostCount > 0 && !bBoost)
     {
-    //log("UT3: Boosting!");
-    BoostRechargeCounter=0;
-    PlaySound(BoostSound, SLOT_Misc, 128,,,64); //Boost sound Pitch 160
+        //log("UT3: Boosting!");
+        BoostRechargeCounter=0;
+        PlaySound(BoostSound, SLOT_Misc, 128,,,64); //Boost sound Pitch 160
         bBoost = true;
         BoostCount--;
     }
-    else {
-    //log("UT3: Kamikadze!");
-    bImminentDestruction = true;
-    PlaySound(BoostReadySound, SLOT_Misc, 128,,,160);
+    else
+    {
+        //log("UT3: Kamikadze!");
+        bImminentDestruction = true;
+        PlaySound(BoostReadySound, SLOT_Misc, 128,,,160);
     }
 }
 
@@ -264,7 +261,7 @@ function VehicleFire(bool bWasAltFire)
 {
     if (bWasAltFire)
     {
-    // Boost();
+        // Boost();
         PlayAnim('Blades_out');
         if (!bLeftArmBroke || !bRightArmBroke)
         {
