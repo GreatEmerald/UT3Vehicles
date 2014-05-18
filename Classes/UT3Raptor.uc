@@ -309,7 +309,7 @@ defaultproperties
     DriverWeapons[1] = (WeaponClass=class'UT3RaptorWeaponLeft',WeaponBone="left_gun")
 
     WingsRPS = 182; // 182 ~= 1°
-    RudderYawContraint = 3000 // 30° ~= 5461 RUU
+    RudderYawContraint = 2048 // 30° ~= 5461 RUU
 
     // Sounds.
     IdleSound = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_EngineLoop01';

@@ -249,6 +249,7 @@ defaultproperties
     RedSkin = Shader'UT3RaptorTex.RaptorSkin'
     BlueSkin = Shader'UT3RaptorTex.RaptorSkinBlue'
     PitchBone = 'rt_gun'
+    YawBone = 'rt_gun'
     WeaponFireAttachmentBone = 'rt_gun';
     WeaponFireOffset = 95.0
     DualFireOffset = 15.0
@@ -259,7 +260,7 @@ defaultproperties
     ProjectileClass=class'UT3RaptorProjRed'
     TeamProjectileClasses(0)=class'UT3RaptorProjRed'
     TeamProjectileClasses(1)=class'UT3RaptorProjBlue'
-    RotationsPerSecond=0.11 //GE: Maybe too low?
+    RotationsPerSecond=0.51 //GE: Maybe too low?
     MinAim=0.930
     AltFireProjectileClass=class'UT3RaptorRocket'
     //HomingSound=Sound'UT3Weapons2.Generic.LockOn'
@@ -267,5 +268,7 @@ defaultproperties
     //AltFireSoundClass=sound'UT3Vehicles.RAPTOR.RaptorAltFire'
     PitchUpLimit = 18000
     PitchDownLimit = 49153
-    YawEndConstraint = 100
+    //YawEndConstraint = 49153
+    YawStartConstraint=-5000
+    YawEndConstraint=5000
 }
