@@ -1,12 +1,43 @@
-/******************************************************************************
-UT3HellfireSPMA
-
-Creation date: 2008-05-02 20:50
-Last change: $Id$
-Copyright (c) 2009, Wormbo
-Copyright (c) 2013-2014, GreatEmerald
-Copyright (c) 2013-2014, José Luís '100GPing100'
-******************************************************************************/
+/*
+ * Copyright © 2009 Wormbo
+ * Copyright © 2013-2014 José Luís '100GPing100'
+ * Copyright © 2013-2014 GreatEmerald
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are
+ * met:
+ *
+ *     (1) Redistributions of source code must retain the above copyright
+ *     notice, this list of conditions and the following disclaimer.
+ *
+ *     (2) Redistributions in binary form must reproduce the above copyright
+ *     notice, this list of conditions and the following disclaimers in
+ *     the documentation and/or other materials provided with the
+ *     distribution.
+ *
+ *     (3) The name of the author may not be used to
+ *     endorse or promote products derived from this software without
+ *     specific prior written permission.
+ *
+ *     (4) The use, modification and redistribution of this software must
+ *     be made in compliance with the additional terms and restrictions
+ *     provided by the Unreal Tournament 2004 End User License Agreement.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+ * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT,
+ * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+ * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ *
+ * This software is not supported by Atari, S.A., Epic Games, Inc. or any
+ * of such parties' affiliates and subsidiaries.
+ */
 
 class UT3HellfireSPMA extends ONSArtillery;
 
@@ -16,7 +47,7 @@ class UT3HellfireSPMA extends ONSArtillery;
 //=============================================================================
 
 #exec obj load file=UT3SPMA.uax
-#exec obj load file=../Animations/UT3SPMAAnims.ukx
+//#exec obj load file=../Animations/UT3SPMAAnims.ukx
 
 
 //=============================================================================
@@ -84,19 +115,8 @@ simulated function Tick(float DeltaTime)
 {
     local DestroyableObjective ObjectiveTarget;
     local int i;
-    /* 100GPing100 BEGIN */
-    local rotator rot;
-    /* 100GPing100 END */
 
     Super(ONSWheeledCraft).Tick(DeltaTime);
-
-    /* 100GPing100 BEGIN */
-    if (bStationary == false) {
-        // Secondary turret rotation
-        //rot.Yaw = Weapons[0].WeaponFireRotation.Yaw;
-        //SetBoneRotation('SecondaryTurret_YawLift', rot);
-    }
-    /* 100GPing100 END */
 
     if (bBotDeploy || Role == ROLE_Authority && IsHumanControlled() && Rise > 0 && Level.TimeSeconds - LastDeployAttempt > 0.1) {
         if (bBotDeploy) {
@@ -594,32 +614,32 @@ defaultproperties
 {
     /* 100GPing100 BEGIN */
 
-    Mesh = SkeletalMesh'UT3SPMAAnims.SPMA';
+    Mesh = SkeletalMesh'UT3VH_SPMA_Anims.SK_VH_SPMA';
     RedSkin = Shader'UT3SPMATex.Body.RedSkin';
     BlueSkin = Shader'UT3SPMATex.Body.BlueSkin';
 
     FlagBone = 'Body';
 
     DriverWeapons = ();
-    DriverWeapons(0) = (WeaponClass=class'UT3HellfireSPMASideGun',WeaponBone=SecondaryTurret_YawLift);
-    DriverWeapons(1) = (WeaponClass=class'UT3HellfireSPMACannon',WeaponBone=MainTurret_Yaw);
+    DriverWeapons(0) = (WeaponClass=class'UT3HellfireSPMASideGun',WeaponBone="SecondaryTurret_YawLift");
+    DriverWeapons(1) = (WeaponClass=class'UT3HellfireSPMACannon',WeaponBone="MainTurret_Yaw");
 
     Wheels = ();
     Begin Object Class=SVehicleWheel Name=LWheel1
         BoneName="LtFrontTire"
         BoneRollAxis=AXIS_Y
         BoneSteerAxis=AXIS_Z
-        BoneOffset=(X=0.0,Y=0.0,Z=0.0)
+        BoneOffset=(X=0.0,Y=-17.0,Z=0.0)
         WheelRadius=40
         bPoweredWheel=True
         bHandbrakeWheel=True
         SteerType=VST_Steered
-        SupportBoneName="LtFrontTire"
-        SupportBoneAxis=AXIS_X
+        /*SupportBoneName="LtFrontTire"
+        SupportBoneAxis=AXIS_X*/
     End Object
     Wheels(0)=SVehicleWheel'LWheel1'
 
-    Begin Object Class=SVehicleWheel Name=LWheel2
+    /*Begin Object Class=SVehicleWheel Name=LWheel2
         BoneName="LtTread_Wheel2"
         BoneRollAxis=AXIS_Y
         BoneSteerAxis=AXIS_Z
@@ -645,51 +665,56 @@ defaultproperties
         SupportBoneName="LtTread_MIdStrut"
         SupportBoneAxis=AXIS_X
     End Object
-    Wheels(2)=SVehicleWheel'LWheel3'
+    Wheels(2)=SVehicleWheel'LWheel3'*/
 
-    /*Begin Object Class=SVehicleWheel Name=LWheel2
-        BoneName="LtTread_MIdStrut"
+    Begin Object Class=SVehicleWheel Name=LWheel2
+        BoneName="LtTread_Wheel3"
         BoneRollAxis=AXIS_Y
         BoneSteerAxis=AXIS_Z
-        BoneOffset=(X=0.0,Y=0.0,Z=0.0)
+        BoneOffset=(X=30.0,Y=15.0,Z=18.0) // GEm: Or Y is 4/15, Z is 5/18 (more truthful but not symmetric)
         WheelRadius=40
         bPoweredWheel=True
         bHandbrakeWheel=True
+        bTrackWheel=True
+        bLeftTrack=True
+        SuspensionTravel=0.0
         SteerType=VST_Fixed
-        SupportBoneName="LtTread_MIdStrut"
-        SupportBoneAxis=AXIS_X
+        /*SupportBoneName="LtTread_MIdStrut"
+        SupportBoneAxis=AXIS_X*/
     End Object
     Wheels(1)=SVehicleWheel'LWheel2'
 
     Begin Object Class=SVehicleWheel Name=RWheel2
-        BoneName="RtTread_MIdStrut"
+        BoneName="RtTread_Wheel3"
         BoneRollAxis=AXIS_Y
         BoneSteerAxis=AXIS_Z
-        BoneOffset=(X=0.0,Y=0.0,Z=0.0)
+        BoneOffset=(X=30.0,Y=-15.0,Z=18.0)
         WheelRadius=40
         bPoweredWheel=True
         bHandbrakeWheel=True
+        bTrackWheel=True
+        SuspensionTravel=0.0
         SteerType=VST_Fixed
-        SupportBoneName="RtTread_MIdStrut"
-        SupportBoneAxis=AXIS_X
+        /*SupportBoneName="RtTread_MIdStrut"
+        SupportBoneAxis=AXIS_X*/
     End Object
-    Wheels(2)=SVehicleWheel'RWheel2'*/
+    Wheels(2)=SVehicleWheel'RWheel2'
 
     Begin Object Class=SVehicleWheel Name=RWheel1
         BoneName="RtFrontTire"
         BoneRollAxis=AXIS_Y
         BoneSteerAxis=AXIS_Z
-        BoneOffset=(X=0.0,Y=0.0,Z=0.0)
+        BoneOffset=(X=0.0,Y=17.0,Z=0.0)
         WheelRadius=40
         bPoweredWheel=True
         bHandbrakeWheel=True
         SteerType=VST_Steered
-        SupportBoneName="RtFrontTire"
-        SupportBoneAxis=AXIS_X
+        /*SupportBoneName="RtFrontTire"
+        SupportBoneAxis=AXIS_X*/
     End Object
     Wheels(3)=SVehicleWheel'RWheel1'
 
-    Begin Object Class=SVehicleWheel Name=RWheel2
+    /*Begin Object Class=SVehicleWheel Name=RWheel2
         BoneName="RtTread_Wheel2"
         BoneRollAxis=AXIS_Y
         BoneSteerAxis=AXIS_Z
@@ -715,7 +740,7 @@ defaultproperties
         SupportBoneName="RtTread_MIdStrut"
         SupportBoneAxis=AXIS_X
     End Object
-    Wheels(5)=SVehicleWheel'RWheel3'
+    Wheels(5)=SVehicleWheel'RWheel3'*/
 
     /* 100GPing100 END */
 
