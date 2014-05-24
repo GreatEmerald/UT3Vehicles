@@ -1,5 +1,3 @@
-* Hellbender: Incorrect light positions
-* Hellbender: Wheel animation finnicky
 - SPMA: Wheels incorrect
 + SPMA: Lights incorrectly positioned
 * Scorpion: Add limits to when you can boost and eject

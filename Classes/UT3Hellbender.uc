@@ -41,6 +41,7 @@
 class UT3Hellbender extends ONSPRV;
 
 var float OldWheelPitch[4];
+//var float DebugFloat;
 
 //This is a great example of how to get rid of a passenger seat.
 
@@ -204,27 +205,62 @@ simulated function PostNetBeginPlay()
 simulated function Tick(float DeltaTime)
 {
     Super.Tick(DeltaTime);
+
     CloneBoneRotation('Rt_Rear_Suspension', 'Rt_Rear_Tire', 0);
     CloneBoneRotation('Lt_Rear_Suspension', 'Lt_Rear_Tire', 1);
+    /*DebugFloat += DeltaTime;
+    if (DebugFloat > 1.0)
+    {
+        CloneBoneRotation('Rt_Front_Suspension', 'Rt_Front_Tire', 2, true);
+        DebugFloat = 0;
+    }
+    else*/
     CloneBoneRotation('Rt_Front_Suspension', 'Rt_Front_Tire', 2);
     CloneBoneRotation('Lt_Front_Suspension', 'Lt_Front_Tire', 3);
-    /*ResetBoneRotation('Rt_Rear_Tire');
-    ResetBoneRotation('Lt_Rear_Tire');
-    ResetBoneRotation('Rt_Front_Tire');
-    ResetBoneRotation('Lt_Front_Tire');*/
 }
 
-simulated function CloneBoneRotation(name BoneToSet, name BoneToCopy, byte i)
+simulated function CloneBoneRotation(name BoneToSet, name BoneToCopy, byte i, optional bool bLog)
 {
     local rotator NewRotation;
 
-    NewRotation = GetBoneRotation(BoneToSet, 2);
-    //NewRotation.Pitch = OldWheelPitch[i]-NewRotation.Pitch;
-    NewRotation.Pitch = 0;
-    //NewRotation.Roll = 0;
-    //NewRotation.Yaw = 0;
-    SetBoneDirection(BoneToSet, Normalize(NewRotation), , , 2);
+    NewRotation = GetBoneRotation(BoneToSet);
+    NewRotation.Pitch = OldWheelPitch[i]-NewRotation.Pitch;
+    NewRotation.Roll = 0;
+    NewRotation.Yaw = 0;
+    SetBoneRotation(BoneToSet, NewRotation);
+    //if (bLog)
+    //    Instigator.ClientMessage(self@"CloneBoneRotation:"@GetBoneRotation(BoneToSet));
     OldWheelPitch[i] = NewRotation.Pitch;
+}
+
+function DriverLeft()
+{
+    GoToState('');
+    PlayAnim('GetOut', 1.0, 0.1);
+
+    Super.DriverLeft();
+}
+
+event PostBeginPlay()
+{
+    PlayAnim('InActiveIdle', 1.0, 0.0);
+
+    super.PostBeginPlay();
+}
+
+event KDriverEnter(Pawn P)
+{
+    GoToState('Idle');
+
+    super.KDriverEnter(P);
+}
+
+simulated state Idle
+{
+    Begin:
+    PlayAnim('GetIn', 1.0, 0.0);
+    FinishAnim();
+    LoopAnim('Idle', 1.0, 0.0);
 }
 
 
@@ -340,4 +376,16 @@ defaultproperties
     HornSounds(0)=Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_Horn01'
     GroundSpeed=700.000000
     SoundVolume=255
+
+    HeadlightCoronaOffset(0)=(X=62,Y=22,Z=42)
+    HeadlightCoronaOffset(1)=(X=62,Y=-22,Z=42)
+    HeadlightCoronaOffset(2)=(X=62,Y=20,Z=33)
+    HeadlightCoronaOffset(3)=(X=62,Y=-20,Z=33)
+    HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
+    HeadlightCoronaMaxSize=75
+    HeadlightProjectorMaterial=None
+
+    BrakeLightOffset(0)=(X=-110,Y=34,Z=51)
+    BrakeLightOffset(1)=(X=-110,Y=-34,Z=51)
+    BrakeLightMaterial=Material'EpicParticles.FlickerFlare'
 }
