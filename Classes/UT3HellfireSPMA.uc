@@ -77,6 +77,8 @@ var bool bDrawCanDeployTooltip;
 
 var rotator CannonAim;
 
+var float OldWheelPitch[2];
+
 //=============================================================================
 // Replication
 //=============================================================================
@@ -118,39 +120,60 @@ simulated function Tick(float DeltaTime)
 
     Super(ONSWheeledCraft).Tick(DeltaTime);
 
-    if (bBotDeploy || Role == ROLE_Authority && IsHumanControlled() && Rise > 0 && Level.TimeSeconds - LastDeployAttempt > 0.1) {
-        if (bBotDeploy) {
+    if (bBotDeploy || Role == ROLE_Authority && IsHumanControlled() && Rise > 0 && Level.TimeSeconds - LastDeployAttempt > 0.1)
+    {
+        if (bBotDeploy)
+        {
             Throttle = 0;
             Steering = 0;
             Rise = 1; // handbrake to quickly slow down
         }
         ServerToggleDeploy();
-        if (bBotDeploy && LastDeployStartTime == Level.TimeSeconds) {
+        if (bBotDeploy && LastDeployStartTime == Level.TimeSeconds)
+        {
             bBotDeploy = False;
             Rise = 0;
         }
         LastDeployAttempt = Level.TimeSeconds;
     }
-    if (Level.NetMode != NM_DedicatedServer && Driver != None && DeployState != DS_Undeployed) {
-        // override brake lights
-        for (i = 0; i < 2; ++i) {
-            if (BrakeLight[i] != None)
-                BrakeLight[i].UpdateBrakelightState(0, 1);
+    if (Level.NetMode != NM_DedicatedServer)
+    {
+        if (Driver != None && DeployState != DS_Undeployed)
+        {
+            // override brake lights
+            for (i = 0; i < 2; ++i)
+            {
+                if (BrakeLight[i] != None)
+                    BrakeLight[i].UpdateBrakelightState(0, 1);
+            }
+        }
+        else
+        {
+            // GEm: Stop wheels from rotating (saves performance by piggy-backing as an else code, woo)
+            FixFenderRotation('RtFrontFender', 'RtFrontTire', 0);
+            FixFenderRotation('LtFrontFender', 'LtFrontTire', 1);
+
+            CopyTreadRotationLeft();
+            CopyTreadRotationRight();
         }
     }
-    if (IsLocallyControlled() && IsHumanControlled() && Level.TimeSeconds - LastDeployCheckTime > 0.25) {
+    if (IsLocallyControlled() && IsHumanControlled() && Level.TimeSeconds - LastDeployCheckTime > 0.25)
+    {
         // check if can be deployed
         bDrawCanDeployTooltip = DeployState == DS_Undeployed && Driver != None && CanDeploy(True);
         LastDeployCheckTime = Level.TimeSeconds;
     }
 
-    if (MortarCamera != None) {
+    if (MortarCamera != None)
+    {
         // mouse view aiming for SPMA camera
         bCustomAiming = True;
         bAltFocalPoint = true; // for bots
 
-        if (IsLocallyControlled() && IsHumanControlled()) {
-            if (!MortarCamera.bShotDown && PlayerController(Controller).ViewTarget != MortarCamera) {
+        if (IsLocallyControlled() && IsHumanControlled())
+        {
+            if (!MortarCamera.bShotDown && PlayerController(Controller).ViewTarget != MortarCamera)
+            {
                 PlayerController(Controller).SetViewTarget(MortarCamera);
                 PlayerController(Controller).bBehindView = False;
                 PlayerController(Controller).ClientSetBehindView(False);
@@ -158,24 +181,30 @@ simulated function Tick(float DeltaTime)
 
             CustomAim = UT3HellfireSPMACannon(Weapons[ActiveWeapon]).TargetRotation;
 
-            if (bJustDeployed || Level.TimeSeconds - ClientUpdateTime > 0.0222 && CustomAim != LastAim) {
+            if (bJustDeployed || Level.TimeSeconds - ClientUpdateTime > 0.0222 && CustomAim != LastAim)
+            {
                 ClientUpdateTime = Level.TimeSeconds;
                 ServerAim((CustomAim.Yaw & 0xffff) | (CustomAim.Pitch << 16));
                 LastAim = CustomAim;
                 bJustDeployed = false;
             }
         }
-        else {
-            if (IsLocallyControlled() && !IsHumanControlled()) {
+        else
+        {
+            if (IsLocallyControlled() && !IsHumanControlled())
+            {
                 // AI-controlled
-                if (Controller.Target != None) {
-                    if (MortarCamera.bDeployed) {
+                if (Controller.Target != None)
+                {
+                    if (MortarCamera.bDeployed)
+                    {
                         if ( ShootTarget(Controller.Target) != None )
                             ObjectiveTarget = DestroyableObjective(Controller.Target.Owner);
                         else
                             ObjectiveTarget = DestroyableObjective(Controller.Target);
                     }
-                    if (ObjectiveTarget != None && !ObjectiveTarget.LegitimateTargetOf(Bot(Controller)) || !Weapons[ActiveWeapon].CanAttack(ObjectiveTarget)) {
+                    if (ObjectiveTarget != None && !ObjectiveTarget.LegitimateTargetOf(Bot(Controller)) || !Weapons[ActiveWeapon].CanAttack(ObjectiveTarget))
+                    {
                         MortarCamera.ShotDown();
                         Weapons[ActiveWeapon].FireCountDown = Weapons[ActiveWeapon].AltFireInterval;
                     }
@@ -183,7 +212,8 @@ simulated function Tick(float DeltaTime)
                     AltFocalPoint = Weapons[ActiveWeapon].Location + vector(CustomAim) * Weapons[ActiveWeapon].MaxRange();
                     Controller.Focus = None;
                 }
-                else {
+                else
+                {
                     // no target, retry later
                     bAltFocalPoint = false;
                     MortarCamera.ShotDown();
@@ -195,7 +225,8 @@ simulated function Tick(float DeltaTime)
         Throttle = 0.0;
         Steering = 0.0;
     }
-    else {
+    else
+    {
         bCustomAiming = False;
         if (PlayerController(Controller) != None) {
             if (PlayerController(Controller).ViewTarget == MortarCamera)
@@ -205,7 +236,8 @@ simulated function Tick(float DeltaTime)
                 PlayerController(Controller).ClientSetBehindView(PointOfView());
             }
         }
-        else if (IsDeployed() && AIController(Controller) != None) {
+        else if (IsDeployed() && AIController(Controller) != None)
+        {
             bAltFocalPoint = true;
             bCustomAiming = true;
             if (Controller.Target != None)
@@ -214,12 +246,45 @@ simulated function Tick(float DeltaTime)
             AltFocalPoint = Weapons[ActiveWeapon].Location + vector(CustomAim) * Weapons[ActiveWeapon].MaxRange();
             Controller.Focus = None;
         }
-        else {
+        else
+        {
             bAltFocalPoint = false;
         }
     }
 }
 
+simulated function FixFenderRotation(name BoneToSet, name BoneToCopy, byte i)
+{
+    local rotator NewRotation;
+
+    // GEm: Still acts weirdly, unfortunately.
+    NewRotation = GetBoneRotation(BoneToSet);
+    NewRotation.Pitch = OldWheelPitch[i]-NewRotation.Pitch;
+    NewRotation.Roll = 32768;
+    NewRotation.Yaw = 32768;
+    SetBoneRotation(BoneToSet, NewRotation);
+    OldWheelPitch[i] = NewRotation.Pitch;
+}
+
+simulated function CopyTreadRotationLeft()
+{
+    local rotator NewRotation;
+
+    NewRotation = GetBoneRotation('LtTread_Wheel3');
+    SetBoneDirection('LtTread_Wheel1', NewRotation, , , 1);
+    SetBoneDirection('LtTread_Wheel2', NewRotation, , , 1);
+    SetBoneDirection('LtTread_Wheel4', NewRotation, , , 1);
+}
+
+simulated function CopyTreadRotationRight()
+{
+    local rotator NewRotation;
+
+    NewRotation = GetBoneRotation('RtTread_Wheel3');
+    SetBoneDirection('RtTread_Wheel1', NewRotation, , , 1);
+    SetBoneDirection('RtTread_Wheel2', NewRotation, , , 1);
+    SetBoneDirection('RtTread_Wheel4', NewRotation, , , 1);
+}
 
 function ServerAim(int NewYaw)
 {
@@ -305,9 +370,8 @@ function bool IsDeployed()
 
 function ServerToggleDeploy()
 {
-    if (CanDeploy()) {
+    if (CanDeploy())
         GotoState('Deploying');
-    }
 }
 
 
@@ -323,7 +387,8 @@ simulated function PostNetReceive()
 {
     Super.PostNetReceive();
 
-    if (LastDeployState != DeployState) {
+    if (LastDeployState != DeployState)
+    {
         LastDeployState = DeployState;
         DeployStateChanged();
     }
@@ -332,27 +397,28 @@ simulated function PostNetReceive()
 
 simulated function DeployStateChanged()
 {
-    switch (DeployState) {
-    case DS_Deploying:
-        LastDeployStartTime = Level.TimeSeconds;
-        SetVehicleDeployed();
-        if (DeploySound != None)
-            PlaySound(DeploySound, SLOT_Misc, 1.0);
-        break;
+    switch (DeployState)
+    {
+        case DS_Deploying:
+            LastDeployStartTime = Level.TimeSeconds;
+            SetVehicleDeployed();
+            if (DeploySound != None)
+                PlaySound(DeploySound, SLOT_Misc, 1.0);
+            break;
 
-    case DS_Deployed:
-        break;
+        case DS_Deployed:
+            break;
 
-    case DS_UnDeploying:
-        LastDeployStartTime = Level.TimeSeconds;
-        SetVehicleUndeploying();
-        if (UndeploySound != None)
-            PlaySound(UndeploySound, SLOT_Misc, 1.0);
-        break;
+        case DS_UnDeploying:
+            LastDeployStartTime = Level.TimeSeconds;
+            SetVehicleUndeploying();
+            if (UndeploySound != None)
+                PlaySound(UndeploySound, SLOT_Misc, 1.0);
+            break;
 
-    case DS_Undeployed:
-        SetVehicleUnDeployed();
-        break;
+        case DS_Undeployed:
+            SetVehicleUnDeployed();
+            break;
     }
 }
 
@@ -605,6 +671,46 @@ event KDriverEnter(Pawn P)
 }
 /* 100GPing100 END */
 
+simulated event SVehicleUpdateParams()
+{
+    local int i;
+
+    Super(ONSVehicle).SVehicleUpdateParams();
+
+    for(i=0; i<Wheels.Length; i++)
+    {
+        Wheels[i].Softness = WheelSoftness;
+        Wheels[i].PenScale = WheelPenScale;
+        Wheels[i].PenOffset = WheelPenOffset;
+        Wheels[i].LongSlip = WheelLongSlip;
+        Wheels[i].LatSlipFunc = WheelLatSlipFunc;
+        Wheels[i].Restitution = WheelRestitution;
+        Wheels[i].Adhesion = WheelAdhesion;
+        Wheels[i].WheelInertia = WheelInertia;
+        Wheels[i].LongFrictionFunc = WheelLongFrictionFunc;
+        Wheels[i].HandbrakeFrictionFactor = WheelHandbrakeFriction;
+        Wheels[i].HandbrakeSlipFactor = WheelHandbrakeSlip;
+        //Wheels[i].SuspensionTravel = WheelSuspensionTravel;
+        //Wheels[i].SuspensionOffset = WheelSuspensionOffset;
+        //Wheels[i].SuspensionMaxRenderTravel = WheelSuspensionMaxRenderTravel;
+    }
+
+    if(Level.NetMode != NM_DedicatedServer && bMakeBrakeLights)
+    {
+        for(i=0; i<2; i++)
+        {
+            if (BrakeLight[i] != None)
+            {
+                BrakeLight[i].SetBase(None);
+                BrakeLight[i].SetLocation( Location + (BrakelightOffset[i] >> Rotation) );
+                BrakeLight[i].SetBase(self);
+                BrakeLight[i].SetRelativeRotation( rot(0,32768,0) );
+                BrakeLight[i].Skins[0] = BrakeLightMaterial;
+            }
+        }
+    }
+}
+
 
 //=============================================================================
 // Default values
@@ -678,6 +784,8 @@ defaultproperties
         bTrackWheel=True
         bLeftTrack=True
         SuspensionTravel=0.0
+        SuspensionMaxRenderTravel=0.0
+        SuspensionOffset=0.0
         SteerType=VST_Fixed
         /*SupportBoneName="LtTread_MIdStrut"
         SupportBoneAxis=AXIS_X*/
@@ -694,6 +802,8 @@ defaultproperties
         bHandbrakeWheel=True
         bTrackWheel=True
         SuspensionTravel=0.0
+        SuspensionMaxRenderTravel=0.0
+        SuspensionOffset=0.0
         SteerType=VST_Fixed
         /*SupportBoneName="RtTread_MIdStrut"
         SupportBoneAxis=AXIS_X*/
@@ -713,6 +823,24 @@ defaultproperties
         SupportBoneAxis=AXIS_X*/
     End Object
     Wheels(3)=SVehicleWheel'RWheel1'
+
+    WheelPenScale=1.5
+    WheelPenOffset=0.01
+    WheelSoftness=0.06
+    WheelRestitution=0.1
+    WheelAdhesion=0.0
+    WheelLongFrictionFunc=(Points=((InVal=0,OutVal=0.0),(InVal=100.0,OutVal=1.0),(InVal=200.0,OutVal=0.9),(InVal=10000000000.0,OutVal=0.9)))
+    WheelLongFrictionScale=1.1
+    WheelLatFrictionScale=1.5
+    WheelLongSlip=0.001
+    WheelLatSlipFunc=(Points=((InVal=0.0,OutVal=0.0),(InVal=30.0,OutVal=0.009),(InVal=45.0,OutVal=0.00),(InVal=10000000000.0,OutVal=0.00)))
+
+    WheelHandbrakeSlip=0.01
+    WheelHandbrakeFriction=0.15
+    WheelInertia=0.0
+    //WheelSuspensionTravel=0.0
+    //WheelSuspensionOffset=0.0
+    //WheelSuspensionMaxRenderTravel=0.0
 
     /*Begin Object Class=SVehicleWheel Name=RWheel2
         BoneName="RtTread_Wheel2"
