@@ -79,6 +79,9 @@ var rotator CannonAim;
 
 var float OldWheelPitch[2];
 
+var VariableTexPanner TreadPanner;
+var float TreadVelocityScale;
+
 //=============================================================================
 // Replication
 //=============================================================================
@@ -146,6 +149,8 @@ simulated function Tick(float DeltaTime)
                 if (BrakeLight[i] != None)
                     BrakeLight[i].UpdateBrakelightState(0, 1);
             }
+
+            TreadPanner.PanRate = 0.0;
         }
         else
         {
@@ -155,6 +160,13 @@ simulated function Tick(float DeltaTime)
 
             CopyTreadRotationLeft();
             CopyTreadRotationRight();
+
+            if (TreadPanner != None)
+            {
+                TreadPanner.PanRate = VSize(Velocity) / TreadVelocityScale;
+                if (Velocity Dot Vector(Rotation) < 0)
+                    TreadPanner.PanRate = -1 * TreadPanner.PanRate;
+            }
         }
     }
     if (IsLocallyControlled() && IsHumanControlled() && Level.TimeSeconds - LastDeployCheckTime > 0.25)
@@ -266,6 +278,7 @@ simulated function FixFenderRotation(name BoneToSet, name BoneToCopy, byte i)
     OldWheelPitch[i] = NewRotation.Pitch;
 }
 
+// GEm: Could also copy location, but GetBoneCoords gives absolute, SetBoneLocation takes relative
 simulated function CopyTreadRotationLeft()
 {
     local rotator NewRotation;
@@ -639,6 +652,12 @@ simulated event Destroyed()
     if (MortarCamera != None)
         MortarCamera.ShotDown();
 
+    if (TreadPanner != None )
+    {
+        Level.ObjectPool.FreeObject(TreadPanner);
+        TreadPanner = None;
+    }
+
     Super(ONSWheeledCraft).Destroyed();
 }
 
@@ -660,7 +679,30 @@ event PostBeginPlay()
 {
     PlayAnim('InActiveStill', 1.0, 0.0);
 
+    if ( Level.NetMode != NM_DedicatedServer )
+        SetupTreads();
+
     super.PostBeginPlay();
+}
+
+simulated function SetupTreads()
+{
+    TreadPanner = VariableTexPanner(Level.ObjectPool.AllocateObject(class'VariableTexPanner'));
+    if (TreadPanner != None)
+    {
+        TreadPanner.Material = Skins[1];
+        TreadPanner.PanDirection = rot(0, 16384, 0);
+        TreadPanner.PanRate = 0.0;
+        Skins[1] = TreadPanner;
+    }
+}
+
+simulated event DrivingStatusChanged()
+{
+    Super.DrivingStatusChanged();
+
+    if (!bDriving && TreadPanner != None)
+        TreadPanner.PanRate = 0.0;
 }
 
 event KDriverEnter(Pawn P)
@@ -711,6 +753,12 @@ simulated event SVehicleUpdateParams()
     }
 }
 
+function TakeDamage(int Damage, Pawn instigatedBy, Vector Hitlocation, Vector Momentum, class<DamageType> DamageType)
+{                            //Make sure you don't hurt yourself with a combo
+    if (InstigatedBy != self)
+        Super.TakeDamage(Damage, instigatedBy, Hitlocation, Momentum, damageType);
+}
+
 
 //=============================================================================
 // Default values
@@ -723,6 +771,7 @@ defaultproperties
     Mesh = SkeletalMesh'UT3VH_SPMA_Anims.SK_VH_SPMA';
     RedSkin = Shader'UT3SPMATex.Body.RedSkin';
     BlueSkin = Shader'UT3SPMATex.Body.BlueSkin';
+    Skins(1) = Shader'UT3SPMATex.Threads.ThreadsSkin'
 
     FlagBone = 'Body';
 
@@ -740,38 +789,8 @@ defaultproperties
         bPoweredWheel=True
         bHandbrakeWheel=True
         SteerType=VST_Steered
-        /*SupportBoneName="LtFrontTire"
-        SupportBoneAxis=AXIS_X*/
     End Object
     Wheels(0)=SVehicleWheel'LWheel1'
-
-    /*Begin Object Class=SVehicleWheel Name=LWheel2
-        BoneName="LtTread_Wheel2"
-        BoneRollAxis=AXIS_Y
-        BoneSteerAxis=AXIS_Z
-        BoneOffset=(X=0.0,Y=0.0,Z=0.0)
-        WheelRadius=21
-        bPoweredWheel=True
-        bHandbrakeWheel=True
-        SteerType=VST_Fixed
-        SupportBoneName="LtTread_MIdStrut"
-        SupportBoneAxis=AXIS_X
-    End Object
-    Wheels(1)=SVehicleWheel'LWheel2'
-
-    Begin Object Class=SVehicleWheel Name=LWheel3
-        BoneName="LtTread_Wheel3"
-        BoneRollAxis=AXIS_Y
-        BoneSteerAxis=AXIS_Z
-        BoneOffset=(X=0.0,Y=0.0,Z=0.0)
-        WheelRadius=21
-        bPoweredWheel=True
-        bHandbrakeWheel=True
-        SteerType=VST_Fixed
-        SupportBoneName="LtTread_MIdStrut"
-        SupportBoneAxis=AXIS_X
-    End Object
-    Wheels(2)=SVehicleWheel'LWheel3'*/
 
     Begin Object Class=SVehicleWheel Name=LWheel2
         BoneName="LtTread_Wheel3"
@@ -783,12 +802,10 @@ defaultproperties
         bHandbrakeWheel=True
         bTrackWheel=True
         bLeftTrack=True
-        SuspensionTravel=0.0
+        SuspensionTravel=10.0
         SuspensionMaxRenderTravel=0.0
         SuspensionOffset=0.0
         SteerType=VST_Fixed
-        /*SupportBoneName="LtTread_MIdStrut"
-        SupportBoneAxis=AXIS_X*/
     End Object
     Wheels(1)=SVehicleWheel'LWheel2'
 
@@ -801,12 +818,10 @@ defaultproperties
         bPoweredWheel=True
         bHandbrakeWheel=True
         bTrackWheel=True
-        SuspensionTravel=0.0
+        SuspensionTravel=10.0
         SuspensionMaxRenderTravel=0.0
         SuspensionOffset=0.0
         SteerType=VST_Fixed
-        /*SupportBoneName="RtTread_MIdStrut"
-        SupportBoneAxis=AXIS_X*/
     End Object
     Wheels(2)=SVehicleWheel'RWheel2'
 
@@ -819,56 +834,8 @@ defaultproperties
         bPoweredWheel=True
         bHandbrakeWheel=True
         SteerType=VST_Steered
-        /*SupportBoneName="RtFrontTire"
-        SupportBoneAxis=AXIS_X*/
     End Object
     Wheels(3)=SVehicleWheel'RWheel1'
-
-    WheelPenScale=1.5
-    WheelPenOffset=0.01
-    WheelSoftness=0.06
-    WheelRestitution=0.1
-    WheelAdhesion=0.0
-    WheelLongFrictionFunc=(Points=((InVal=0,OutVal=0.0),(InVal=100.0,OutVal=1.0),(InVal=200.0,OutVal=0.9),(InVal=10000000000.0,OutVal=0.9)))
-    WheelLongFrictionScale=1.1
-    WheelLatFrictionScale=1.5
-    WheelLongSlip=0.001
-    WheelLatSlipFunc=(Points=((InVal=0.0,OutVal=0.0),(InVal=30.0,OutVal=0.009),(InVal=45.0,OutVal=0.00),(InVal=10000000000.0,OutVal=0.00)))
-
-    WheelHandbrakeSlip=0.01
-    WheelHandbrakeFriction=0.15
-    WheelInertia=0.0
-    //WheelSuspensionTravel=0.0
-    //WheelSuspensionOffset=0.0
-    //WheelSuspensionMaxRenderTravel=0.0
-
-    /*Begin Object Class=SVehicleWheel Name=RWheel2
-        BoneName="RtTread_Wheel2"
-        BoneRollAxis=AXIS_Y
-        BoneSteerAxis=AXIS_Z
-        BoneOffset=(X=0.0,Y=0.0,Z=0.0)
-        WheelRadius=21
-        bPoweredWheel=True
-        bHandbrakeWheel=True
-        SteerType=VST_Fixed
-        SupportBoneName="RtTread_MIdStrut"
-        SupportBoneAxis=AXIS_X
-    End Object
-    Wheels(4)=SVehicleWheel'RWheel2'
-
-    Begin Object Class=SVehicleWheel Name=RWheel3
-        BoneName="RtTread_Wheel3"
-        BoneRollAxis=AXIS_Y
-        BoneSteerAxis=AXIS_Z
-        BoneOffset=(X=0.0,Y=0.0,Z=0.0)
-        WheelRadius=21
-        bPoweredWheel=True
-        bHandbrakeWheel=True
-        SteerType=VST_Fixed
-        SupportBoneName="RtTread_MIdStrut"
-        SupportBoneAxis=AXIS_X
-    End Object
-    Wheels(5)=SVehicleWheel'RWheel3'*/
 
     /* 100GPing100 END */
 
@@ -877,8 +844,6 @@ defaultproperties
 
     DeployIconCoords = (X1=2,Y1=371,X2=124,Y2=115)
 
-    //DriverWeapons(0) = (WeaponClass=class'UT3HellfireSPMASideGun',WeaponBone=SideGunAttach);
-    //DriverWeapons(1) = (WeaponClass=class'UT3HellfireSPMACannon',WeaponBone=CannonAttach);
     PassengerWeapons = ()
     FireImpulse      = (X=0) // sidegun shouldn't recoil and main cannon is fired when deployed
     bAllowViewChange = false // who would want to use it 1st-person anyway
@@ -903,6 +868,17 @@ defaultproperties
     StartUpSound   = Sound'SPMAEngineStart'
     ShutDownSound  = Sound'SPMAEngineStop'
 
-    bDrawDriverInTP=False
-    DriverDamageMult=0.0
+    bDrawDriverInTP = false
+    DriverDamageMult = 0.0
+    TreadVelocityScale = 30.0
+
+    HeadlightCoronaOffset(0)=(X=195,Y=85,Z=70)
+    HeadlightCoronaOffset(1)=(X=195,Y=-85,Z=70)
+    HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
+    HeadlightCoronaMaxSize=75
+    HeadlightProjectorMaterial=None
+
+    BrakeLightOffset(0)=(X=-145,Y=37,Z=55)
+    BrakeLightOffset(1)=(X=-145,Y=-37,Z=55)
+    BrakeLightMaterial=Material'EpicParticles.FlickerFlare'
 }

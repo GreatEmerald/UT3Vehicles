@@ -1,12 +1,10 @@
-- SPMA: Wheels incorrect
-+ SPMA: Lights incorrectly positioned
 * Scorpion: Add limits to when you can boost and eject
-* Scorpion: Make use of all the animations
+* Scorpion: Make use of all the animations?
 * Leviathan: Missing mesh
 * Cicada: Mesh parts do not animate
 + Paladin: Can shoot itself in the foot
 * Paladin: Weird physics when running into one
-* Raptor: Front guns do not yaw
+* Raptor: No landing sequence
 * Manta: Cannot enter from the back
 * Merge mutators into two
 + Check materials
