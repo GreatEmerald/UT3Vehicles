@@ -97,21 +97,21 @@ simulated function Tick(float DT)
         Boost();
         LastBoostAttempt = Level.TimeSeconds;
     }
-    
+
     //If bImminentDestruction, then we have already primed the detonator and hit something - We detonate here because detonating in KImpact seemed to cause General Protection Faults in some circumstances
     if (bImminentDestruction)
     {
         GoToState('Ejecting');              //GE: Eject + delay + explosion
         return;
     }
-    
+
     //If bAfterburnersOn and boost state don't agree
     if (bBoost != bAfterburnersOn)
     {
         // it means we need to change the state of the vehicle (bAfterburnersOn)
         // to match the desired state (bBoost)
         EnableAfterburners(bBoost); // show/hide afterburner smoke
-    
+
         // if we just enabled afterburners, set the timer
         // to turn them off after set time has expired
         if (bBoost)
@@ -423,5 +423,17 @@ defaultproperties
     SelfDestructDamageType=class'UT3ScorpionSDDamage'
     BoostIconCoords = (X1=2,Y1=843,X2=97,Y2=50)
     EjectIconCoords = (X1=92,Y1=317,X2=50,Y2=50)
-    DrivePos=(X=2.0,Y=0.0,Z=55.0)
+    DrivePos=(X=2.0,Y=0.0,Z=50.0)
+
+    HeadlightCoronaOffset(0)=(X=65,Y=33,Z=20)
+    HeadlightCoronaOffset(1)=(X=65,Y=-33,Z=20)
+    HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
+    HeadlightCoronaMaxSize=65
+
+    bMakeBrakeLights=true
+    BrakeLightOffset(0)=(X=-72,Y=2,Z=37)
+    BrakeLightOffset(1)=(X=-72,Y=-2,Z=37)
+    BrakeLightMaterial=Material'EpicParticles.FlickerFlare'
+
+    HeadlightProjectorMaterial=None
 }
