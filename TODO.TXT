@@ -1,10 +1,17 @@
-* Scorpion: Add limits to when you can boost and eject
 * Scorpion: Make use of all the animations?
-* Leviathan: Missing mesh
-* Cicada: Mesh parts do not animate
-+ Paladin: Can shoot itself in the foot
-* Paladin: Weird physics when running into one
-* Raptor: No landing sequence
+* Leviathan: Missing turret mesh
+* Cicada: should not be able to rotate guns instantly
+* Paladin: Can shoot itself in the foot
+* Manta et al: Can shoot itself in the foot
+ * Can tanks?
 * Manta: Cannot enter from the back
+* SPMA: The AI never deploys cameras
+* Goliath: Treads rotate too slow
 * Merge mutators into two
 + Check materials
+* Add hoverboards
+
+* Scorpion: Add limits to when you can boost and eject
+* Cicada: Mesh parts do not animate
+* Raptor: No landing sequence
+* Paladin: Weird physics when running into one
