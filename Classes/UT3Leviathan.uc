@@ -59,9 +59,8 @@ Begin:
         }
         Weapons[1].bForceCenterAim = True;
         Weapons[1].PlayAnim('UnDeploying');
-        sleep(2.3);
         PlayAnim('UnDeploying');
-        sleep(4.03);
+        Sleep(8.333333);
         bMovable = True;
         SetPhysics(PHYS_Karma);
         ServerPhysics = PHYS_Karma;
@@ -92,9 +91,8 @@ Begin:
                 PlayerController(Controller).ClientPlayForceFeedback(DeployForce);
         }
         PlayAnim('Deploying');
-        sleep(3.46);
         Weapons[1].PlayAnim('Deploying');
-        sleep(2.873);
+        Sleep(6.666666);
         Weapons[1].bForceCenterAim = False;
         SetActiveWeapon(1);
         bWeaponisFiring = false; //so bots don't immediately fire until the gun has a chance to move
@@ -118,7 +116,7 @@ defaultproperties
     Health = 6500
 
     DriverWeapons(0) = (WeaponClass=class'UT3LeviathanDriverWeapon',WeaponBone="DriverTurretYaw")
-    DriverWeapons(1)=(WeaponClass=class'OnslaughtFull.ONSMASCannon',WeaponBone="MainTurretPitch");
+    DriverWeapons(1)=(WeaponClass=class'UT3LeviathanPrimaryWeapon',WeaponBone="Base");
 
     PassengerWeapons(0) = (WeaponPawnClass=class'UT3LeviathanTurretBeam',WeaponBone="RT_Front_TurretYaw")
     PassengerWeapons(1) = (WeaponPawnClass=class'UT3LeviathanTurretRocket',WeaponBone="LT_Front_TurretYaw")
@@ -236,53 +234,11 @@ defaultproperties
     End Object
     Wheels(6) = SVehicleWheel'CenterWheel'*/
 
-    /*Begin Object Class=SVehicleWheel Name=FrontWheel
-        BoneName="Lt_Front_Tire"
-        BoneRollAxis=AXIS_Y
-        BoneSteerAxis=AXIS_Z
-        BoneOffset=(X=0.0,Y=0.0,Z=0.0)
-        WheelRadius=99
-        bPoweredWheel=True
-        bHandbrakeWheel=True
-        SteerType=VST_Fixed
-//      SupportBoneName="RightRearStrut"
-    End Object
-    Wheels(0)=SVehicleWheel'FrontWheel'
+    DeploySound = Sound'UT3A_Vehicle_Leviathan.Sounds.A_Vehicle_Leviathan_Deploy01'
+    HideSound = Sound'UT3A_Vehicle_Leviathan.Sounds.A_Vehicle_Leviathan_Deploy01'
 
-    Begin Object Class=SVehicleWheel Name=LeftRearTIRE
-        BoneName="LeftRearTire"
-        BoneRollAxis=AXIS_Y
-        BoneSteerAxis=AXIS_Z
-        BoneOffset=(X=0.0,Y=0.0,Z=0.0)
-        WheelRadius=99
-        bPoweredWheel=True
-        bHandbrakeWheel=True
-        SteerType=VST_Fixed
-//      SupportBoneName="LeftRearStrut"
-    End Object
-    Wheels(1)=SVehicleWheel'LeftRearTIRE'
-
-    Begin Object Class=SVehicleWheel Name=RightFrontTIRE
-        BoneName="RightFrontTire"
-        BoneRollAxis=AXIS_Y
-        BoneSteerAxis=AXIS_Z
-        BoneOffset=(X=0.0,Y=0.0,Z=0.0)
-        WheelRadius=99
-        bPoweredWheel=True
-        SteerType=VST_Steered
-//      SupportBoneName="RightFrontStrut"
-    End Object
-    Wheels(2)=SVehicleWheel'RightFrontTIRE'
-
-    Begin Object Class=SVehicleWheel Name=LeftFrontTIRE
-        BoneName="LeftFrontTire"
-        BoneRollAxis=AXIS_Y
-        BoneSteerAxis=AXIS_Z
-        BoneOffset=(X=0.0,Y=0.0,Z=0.0)
-        WheelRadius=99
-        bPoweredWheel=True
-        SteerType=VST_Steered
-//      SupportBoneName="LeftFrontStrut"
-    End Object
-    Wheels(3)=SVehicleWheel'LeftFrontTIRE'*/
+    // GEm: TODO: Make use of EngineIdle when not moving
+    IdleSound = Sound'UT3A_Vehicle_Leviathan.Sounds.A_Vehicle_Leviathan_EngineMove01'
+    StartUpSound = Sound'UT3A_Vehicle_Leviathan.Sounds.A_Vehicle_Leviathan_EngineStart02'
+    ShutDownSound = Sound'UT3A_Vehicle_Leviathan.Sounds.A_Vehicle_Leviathan_EngineStop02'
 }

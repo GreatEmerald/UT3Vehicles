@@ -1,5 +1,4 @@
 /*
- * Copyright © 2007 Wormbo
  * Copyright © 2014 GreatEmerald
  *
  * Redistribution and use in source and binary forms, with or without
@@ -38,44 +37,18 @@
  * of such parties' affiliates and subsidiaries.
  */
 
-class UT3LeviathanDriverWeapon extends ONSMASRocketPack;
-
-// GEm: This uses skin 1, not 0
-simulated function SetTeam(byte T)
-{
-    Team = T;
-    if (T == 0 && RedSkin != None)
-    {
-        Skins[1] = RedSkin;
-        RepSkin = RedSkin;
-    }
-    else if (T == 1 && BlueSkin != None)
-    {
-        Skins[1] = BlueSkin;
-        RepSkin = BlueSkin;
-    }
-}
-
-//=============================================================================
-// Default values
-//=============================================================================
+class UT3LeviathanPrimaryWeapon extends ONSMASCannon;
 
 defaultproperties
 {
-    ProjectileClass  = Class'UT3LeviathanBolt'
-    FireInterval     = 0.3
-    DrawScale        = 0.6
-    DualFireOffset   = 45.0
-    RelativeLocation = (Z=-10)
+    FireSoundClass = Sound'UT3A_Vehicle_Leviathan.Sounds.A_Vehicle_Leviathan_CannonFire01'
 
-    Mesh = SkeletalMesh'UT3VH_Leviathan_Anims.LeviathanDriverTurretOnly'
-    RedSkin = Shader'UT3LeviathanTex.Levi2.LeviathanSkin2'
-    BlueSkin = Shader'UT3LeviathanTex.Levi2.LeviathanSkin2Blue'
-    YawBone = "DriverTurretYaw"
-    PitchBone = "DriverTurretPitch"
+    Mesh = SkeletalMesh'UT3VH_Leviathan_Anims.Leviathan_MainTurret'
+    RedSkin = Shader'UT3LeviathanTex.Levi1.LeviathanSkin1'
+    BlueSkin = Shader'UT3LeviathanTex.Levi1.LeviathanSkin1Blue'
+    YawBone = "MainTurretYaw"
+    PitchBone = "MainTurretPitch"
     // GEm: TODO: Two barrels!
-    WeaponFireAttachmentBone = "DriverTurret_Barrel1"
+    WeaponFireAttachmentBone = "MainTurretPitch"
     //GunnerAttachmentBone = "SecondaryTurret_YawLift"
-
-    FireSoundClass = Sound'UT3A_Vehicle_Leviathan.SoundCues.A_Vehicle_Leviathan_TurretFire'
 }
