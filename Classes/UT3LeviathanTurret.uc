@@ -1,10 +1,42 @@
-/******************************************************************************
-UT3LeviathanTurret
-
-Creation date: 2007-12-30 13:10
-Last change: $Id$
-Copyright (c) 2007, Wormbo
-******************************************************************************/
+/*
+ * Copyright © 2007 Wormbo
+ * Copyright © 2014 GreatEmerald
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are
+ * met:
+ *
+ *     (1) Redistributions of source code must retain the above copyright
+ *     notice, this list of conditions and the following disclaimer.
+ *
+ *     (2) Redistributions in binary form must reproduce the above copyright
+ *     notice, this list of conditions and the following disclaimers in
+ *     the documentation and/or other materials provided with the
+ *     distribution.
+ *
+ *     (3) The name of the author may not be used to
+ *     endorse or promote products derived from this software without
+ *     specific prior written permission.
+ *
+ *     (4) The use, modification and redistribution of this software must
+ *     be made in compliance with the additional terms and restrictions
+ *     provided by the Unreal Tournament 2004 End User License Agreement.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+ * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT,
+ * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+ * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ *
+ * This software is not supported by Atari, S.A., Epic Games, Inc. or any
+ * of such parties' affiliates and subsidiaries.
+ */
 
 class UT3LeviathanTurret extends ONSMASSideGunPawn abstract;
 
@@ -23,13 +55,15 @@ var float ShieldRecharge;
 
 var float ShieldAvailableTime;
 
+var name EnterAnim, LeaveAnim;
+
 
 /**
 Best mode is always primary. Shield activation is handled separately for bots.
 */
 function byte BestMode()
 {
-	return 0;
+    return 0;
 }
 
 /*
@@ -38,11 +72,11 @@ React to incoming AVRiLs.
 */
 function ShouldTargetMissile(Projectile P)
 {
-	local vector ;
-	
-	if (Bot(Controller) != None && Bot(Controller).Skill >= 3.0) {
-		GetAxes(VehicleBase.Rotation, X, Y, Z);
-	}
+    local vector ;
+
+    if (Bot(Controller) != None && Bot(Controller).Skill >= 3.0) {
+        GetAxes(VehicleBase.Rotation, X, Y, Z);
+    }
 }
 */
 
@@ -52,13 +86,13 @@ Shield charge bar fill percentage.
 */
 simulated function float ChargeBar()
 {
-	if (UT3LeviathanTurretWeapon(Gun) != None && !bHasAltFire) {
-		if (UT3LeviathanTurretWeapon(Gun).bShieldActive)
-			return FClamp(1.0 - TimerCounter / ShieldDuration, 0.0, 0.999);
-		else
-			return FClamp(1.0 - (ShieldAvailableTime - Level.TimeSeconds) / ShieldRecharge, 0.0, 0.999);
-	}
-	return 0;
+    if (UT3LeviathanTurretWeapon(Gun) != None && !bHasAltFire) {
+        if (UT3LeviathanTurretWeapon(Gun).bShieldActive)
+            return FClamp(1.0 - TimerCounter / ShieldDuration, 0.0, 0.999);
+        else
+            return FClamp(1.0 - (ShieldAvailableTime - Level.TimeSeconds) / ShieldRecharge, 0.0, 0.999);
+    }
+    return 0;
 }
 
 
@@ -67,12 +101,12 @@ Activate shield on alt-fire.
 */
 function AltFire(optional float F)
 {
-	if (!bHasAltFire) {
-		ActivateShield();
-	}
-	else {
-		Super.AltFire(F);
-	}
+    if (!bHasAltFire) {
+        ActivateShield();
+    }
+    else {
+        Super.AltFire(F);
+    }
 }
 
 
@@ -81,11 +115,11 @@ Deactivate the shield and set its recharge delay.
 */
 function ActivateShield()
 {
-	if (UT3LeviathanTurretWeapon(Gun) != None && Level.TimeSeconds >= ShieldAvailableTime) {
-		ShieldAvailableTime = Level.TimeSeconds + ShieldDuration + ShieldRecharge;
-		SetTimer(ShieldDuration, false);
-		UT3LeviathanTurretWeapon(Gun).ActivateShield();
-	}
+    if (UT3LeviathanTurretWeapon(Gun) != None && Level.TimeSeconds >= ShieldAvailableTime) {
+        ShieldAvailableTime = Level.TimeSeconds + ShieldDuration + ShieldRecharge;
+        SetTimer(ShieldDuration, false);
+        UT3LeviathanTurretWeapon(Gun).ActivateShield();
+    }
 }
 
 
@@ -94,10 +128,10 @@ Deactivate the shield and set its recharge delay.
 */
 function DeactivateShield()
 {
-	if (UT3LeviathanTurretWeapon(Gun) != None && UT3LeviathanTurretWeapon(Gun).bShieldActive) {
-		ShieldAvailableTime = Level.TimeSeconds + ShieldRecharge;
-		UT3LeviathanTurretWeapon(Gun).DeactivateShield();
-	}
+    if (UT3LeviathanTurretWeapon(Gun) != None && UT3LeviathanTurretWeapon(Gun).bShieldActive) {
+        ShieldAvailableTime = Level.TimeSeconds + ShieldRecharge;
+        UT3LeviathanTurretWeapon(Gun).DeactivateShield();
+    }
 }
 
 
@@ -106,13 +140,33 @@ Deactivate shield after its time runs out.
 */
 function Timer()
 {
-	DeactivateShield();
+    DeactivateShield();
 }
 
 
 function DriverLeft()
 {
-	DeactivateShield();
+    DeactivateShield();
+}
+
+function KDriverEnter(Pawn P)
+{
+    Super.KDriverEnter(P);
+    log(self@"KDriverEnter");
+    if (UT3LeviathanTurretWeapon(Gun) != None)
+        VehicleBase.PlayAnim(EnterAnim, 1.0, 0.0, UT3LeviathanTurretWeapon(Gun).SkinSlot);
+}
+
+function bool KDriverLeave(bool bForceLeave)
+{
+    local bool bResult;
+
+    bResult = Super.KDriverLeave(bForceLeave);
+    log(self@"KDriverLeave");
+    if (bResult && UT3LeviathanTurretWeapon(Gun) != None)
+        VehicleBase.PlayAnim(LeaveAnim, 1.0, 0.0, UT3LeviathanTurretWeapon(Gun).SkinSlot);
+
+    return bResult;
 }
 
 
@@ -122,8 +176,10 @@ function DriverLeft()
 
 defaultproperties
 {
-	bShowChargingBar = True
-	bHasAltFire      = False
-	ShieldDuration   = 4.0
-	ShieldRecharge   = 5.0
+    bShowChargingBar = True
+    bHasAltFire      = False
+    ShieldDuration   = 4.0
+    ShieldRecharge   = 5.0
+    bDrawDriverInTP = true
+    DrivePos = (X=-7.0,Y=0.0,Z=65.0)
 }

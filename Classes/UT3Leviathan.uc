@@ -60,7 +60,7 @@ Begin:
         Weapons[1].bForceCenterAim = True;
         Weapons[1].PlayAnim('UnDeploying');
         PlayAnim('UnDeploying');
-        Sleep(8.333333);
+        Sleep(6.666666);
         bMovable = True;
         SetPhysics(PHYS_Karma);
         ServerPhysics = PHYS_Karma;
@@ -92,7 +92,7 @@ Begin:
         }
         PlayAnim('Deploying');
         Weapons[1].PlayAnim('Deploying');
-        Sleep(6.666666);
+        Sleep(8.333333);
         Weapons[1].bForceCenterAim = False;
         SetActiveWeapon(1);
         bWeaponisFiring = false; //so bots don't immediately fire until the gun has a chance to move
@@ -103,6 +103,12 @@ Begin:
         bDeployed = True;
         GotoState('Deployed');
     }
+}
+
+simulated function PostBeginPlay()
+{
+    PlayAnim('InActiveStill', 1.0, 0.0);
+    super.PostBeginPlay();
 }
 
 //=============================================================================
@@ -118,8 +124,8 @@ defaultproperties
     DriverWeapons(0) = (WeaponClass=class'UT3LeviathanDriverWeapon',WeaponBone="DriverTurretYaw")
     DriverWeapons(1)=(WeaponClass=class'UT3LeviathanPrimaryWeapon',WeaponBone="Base");
 
-    PassengerWeapons(0) = (WeaponPawnClass=class'UT3LeviathanTurretBeam',WeaponBone="RT_Front_TurretYaw")
-    PassengerWeapons(1) = (WeaponPawnClass=class'UT3LeviathanTurretRocket',WeaponBone="LT_Front_TurretYaw")
+    PassengerWeapons(0) = (WeaponPawnClass=class'UT3LeviathanTurretBeam',WeaponBone="LT_Front_TurretYaw")
+    PassengerWeapons(1) = (WeaponPawnClass=class'UT3LeviathanTurretRocket',WeaponBone="RT_Front_TurretYaw")
     PassengerWeapons(2) = (WeaponPawnClass=class'UT3LeviathanTurretStinger',WeaponBone="LT_Rear_TurretYaw")
     PassengerWeapons(3) = (WeaponPawnClass=class'UT3LeviathanTurretShock',WeaponBone="RT_Rear_TurretYaw")
 
@@ -236,9 +242,11 @@ defaultproperties
 
     DeploySound = Sound'UT3A_Vehicle_Leviathan.Sounds.A_Vehicle_Leviathan_Deploy01'
     HideSound = Sound'UT3A_Vehicle_Leviathan.Sounds.A_Vehicle_Leviathan_Deploy01'
-
-    // GEm: TODO: Make use of EngineIdle when not moving
-    IdleSound = Sound'UT3A_Vehicle_Leviathan.Sounds.A_Vehicle_Leviathan_EngineMove01'
-    StartUpSound = Sound'UT3A_Vehicle_Leviathan.Sounds.A_Vehicle_Leviathan_EngineStart02'
-    ShutDownSound = Sound'UT3A_Vehicle_Leviathan.Sounds.A_Vehicle_Leviathan_EngineStop02'
+    IdleSound = Sound'UT3A_Vehicle_Leviathan.Sounds.A_Vehicle_Leviathan_EngineIdle'
+    StartUpSound = Sound'UT3A_Vehicle_Leviathan.Sounds.A_Vehicle_Leviathan_EngineStart'
+    ShutDownSound = Sound'UT3A_Vehicle_Leviathan.Sounds.A_Vehicle_Leviathan_EngineStop'
+    ImpactDamageSounds = ()
+    ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Leviathan.Sounds.A_Vehicle_Leviathan_Collide01'
+    ExplosionSounds = ()
+    ExplosionSounds(0) = Sound'UT3A_Vehicle_Leviathan.Sounds.A_Vehicle_Leviathan_Explode'
 }
