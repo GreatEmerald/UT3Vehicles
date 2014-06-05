@@ -1,5 +1,6 @@
 * Scorpion: Make use of all the animations?
-* Leviathan: Missing turret mesh
+* Leviathan: Space to deploy
+* Leviathan: Turret animations
 * Cicada: should not be able to rotate guns instantly
 * Paladin: Can shoot itself in the foot
 * Manta et al: Can shoot itself in the foot
