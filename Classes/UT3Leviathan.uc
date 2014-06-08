@@ -51,6 +51,8 @@ var bool bDrawCanDeployTooltip;
 var() float MaxDeploySpeed;
 var IntBox DeployIconCoords;
 
+var float OldWheelPitch[2];
+
 replication
 {
     reliable if (Role < ROLE_Authority)
@@ -89,6 +91,25 @@ simulated function Tick(float DeltaTime)
         bDrawCanDeployTooltip = IsInState('Undeployed') && Driver != None && CanDeploy(True);
         LastDeployCheckTime = Level.TimeSeconds;
     }
+    if (Level.NetMode != NM_DedicatedServer && IsInState('Undeployed'))
+    {
+        // GEm: Stop wheels from rotating
+        FixFenderRotation('Rt_Front_Foot', 'Rt_Front_Tire', 0);
+        FixFenderRotation('Lt_Front_Foot', 'Lt_Front_Tire', 1);
+    }
+}
+
+simulated function FixFenderRotation(name BoneToSet, name BoneToCopy, byte i)
+{
+    local rotator NewRotation;
+
+    // GEm: Still acts weirdly, unfortunately (like the SPMA)
+    NewRotation = GetBoneRotation(BoneToSet);
+    NewRotation.Pitch = OldWheelPitch[i]-NewRotation.Pitch;
+    NewRotation.Roll = 32768;
+    NewRotation.Yaw = 32768;
+    SetBoneRotation(BoneToSet, NewRotation);
+    OldWheelPitch[i] = NewRotation.Pitch;
 }
 
 function ServerToggleDeploy()
@@ -153,6 +174,7 @@ function VehicleFire(bool bWasAltFire)
     Super(ONSWheeledCraft).VehicleFire(bWasAltFire);
 }
 
+// GEm: Enable zooming on alt fire
 function AltFire(optional float F)
 {
     local PlayerController PC;
