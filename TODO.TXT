@@ -1,5 +1,5 @@
 * Scorpion: Make use of all the animations?
-* Leviathan: Space to deploy
+* Leviathan: Wheel fender hack
 * Leviathan: Turret animations
 * Cicada: should not be able to rotate guns instantly
 * Paladin: Can shoot itself in the foot
@@ -9,10 +9,11 @@
 * SPMA: The AI never deploys cameras
 * Goliath: Treads rotate too slow
 * Merge mutators into two
-+ Check materials
 * Add hoverboards
+* Split off UT3HUD
 
 * Scorpion: Add limits to when you can boost and eject
 * Cicada: Mesh parts do not animate
 * Raptor: No landing sequence
 * Paladin: Weird physics when running into one
++ Check materials

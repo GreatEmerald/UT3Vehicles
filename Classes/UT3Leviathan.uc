@@ -45,38 +45,187 @@ class UT3Leviathan extends ONSMobileAssaultStation;
 // Variables
 //=============================================================================
 
+var bool bBotDeploy; // delayed bot deploy flag
+var float LastDeployStartTime, LastDeployCheckTime, LastDeployAttempt;
+var bool bDrawCanDeployTooltip;
+var() float MaxDeploySpeed;
+var IntBox DeployIconCoords;
 
-state UnDeploying
+replication
 {
-Begin:
-    if (Controller != None)
+    reliable if (Role < ROLE_Authority)
+        ServerToggleDeploy;
+}
+
+simulated function PostBeginPlay()
+{
+    PlayAnim('InActiveStill', 1.0, 0.0);
+    super.PostBeginPlay();
+}
+
+simulated function Tick(float DeltaTime)
+{
+    Super.Tick(DeltaTime);
+
+    if (bBotDeploy || Role == ROLE_Authority && IsHumanControlled() && Rise > 0 && Level.TimeSeconds - LastDeployAttempt > 0.1)
     {
-        if (PlayerController(Controller) != None)
+        if (bBotDeploy)
         {
-            PlayerController(Controller).ClientPlaySound(HideSound);
-            if (PlayerController(Controller).bEnableGUIForceFeedback)
-                PlayerController(Controller).ClientPlayForceFeedback(HideForce);
+            Throttle = 0;
+            Steering = 0;
+            Rise = 1; // handbrake to quickly slow down
         }
-        Weapons[1].bForceCenterAim = True;
-        Weapons[1].PlayAnim('UnDeploying');
-        PlayAnim('UnDeploying');
-        Sleep(6.666666);
-        bMovable = True;
-        SetPhysics(PHYS_Karma);
-        ServerPhysics = PHYS_Karma;
-        bStationary = False;
-        SetActiveWeapon(0);
-        TPCamLookat = UnDeployedTPCamLookat;
-        TPCamWorldOffset = UnDeployedTPCamWorldOffset;
-        FPCamPos = UnDeployedFPCamPos;
-        bEnableProximityViewShake = True;
-        bDeployed = False;
-        GotoState('UnDeployed');
+        ServerToggleDeploy();
+        if (bBotDeploy && LastDeployStartTime == Level.TimeSeconds)
+        {
+            bBotDeploy = False;
+            Rise = 0;
+        }
+        LastDeployAttempt = Level.TimeSeconds;
+    }
+    if (IsLocallyControlled() && IsHumanControlled() && Level.TimeSeconds - LastDeployCheckTime > 0.25)
+    {
+        // check if can be deployed
+        bDrawCanDeployTooltip = IsInState('Undeployed') && Driver != None && CanDeploy(True);
+        LastDeployCheckTime = Level.TimeSeconds;
+    }
+}
+
+function ServerToggleDeploy()
+{
+    if (CanDeploy())
+        GotoState('Deploying');
+}
+
+simulated function bool CanDeploy(optional bool bNoMessage)
+{
+    local int i;
+    local bool bOneUnstable;
+
+    if (VSize(Velocity) > MaxDeploySpeed)
+    {
+        if (!bNoMessage && PlayerController(Controller) != None)
+            PlayerController(Controller).ReceiveLocalizedMessage(class'UT3DeployMessage', 0);
+        return false;
+    }
+
+    if (IsFiring())
+        return false;
+
+    Rise = 0;
+    for (i = 0; i < Wheels.Length; i++)
+    {
+        if (!Wheels[i].bWheelOnGround)
+        {
+            if (!bOneUnstable)
+            {
+                // ignore if just one of the six wheels is unstable
+                bOneUnstable = True;
+                continue;
+            }
+            if (!bNoMessage && PlayerController(Controller) != None)
+                PlayerController(Controller).ReceiveLocalizedMessage(class'UT3DeployMessage', 1);
+            return false;
+        }
+    }
+    return true;
+}
+
+simulated function DrawHUD(Canvas C)
+{
+    local PlayerController PC;
+
+    Super.DrawHUD(C);
+
+    // don't draw if we are dead, scoreboard is visible, etc
+    PC = PlayerController(Controller);
+    if (Health < 1 || PC == None || PC.myHUD == None || PC.MyHUD.bShowScoreboard || !IsInState('Undeployed'))
+        return;
+
+    // draw deploy tooltip
+    if (bDrawCanDeployTooltip)
+        class'UT3HudOverlay'.static.DrawToolTip(C, PC, "Jump", C.ClipX * 0.5, C.ClipY * 0.92, DeployIconCoords);
+}
+
+// GEm: Disable beeping on alt fire (beep on rise instead)
+function VehicleFire(bool bWasAltFire)
+{
+    Super(ONSWheeledCraft).VehicleFire(bWasAltFire);
+}
+
+function AltFire(optional float F)
+{
+    local PlayerController PC;
+
+    PC = PlayerController(Controller);
+    if (PC == None)
+        return;
+
+    bWeaponIsAltFiring = true;
+    PC.ToggleZoomWithMax(0.5);
+}
+
+function ClientVehicleCeaseFire(bool bWasAltFire)
+{
+    local PlayerController PC;
+
+    if (!bWasAltFire)
+    {
+        Super.ClientVehicleCeaseFire(bWasAltFire);
+        return;
+    }
+
+    PC = PlayerController(Controller);
+    if (PC == None)
+        return;
+
+    bWeaponIsAltFiring = false;
+    PC.StopZoom();
+}
+
+simulated function ClientKDriverLeave(PlayerController PC)
+{
+    Super.ClientKDriverLeave(PC);
+
+    bWeaponIsAltFiring = false;
+    PC.EndZoom();
+}
+
+auto state UnDeployed
+{
+    function Deploy()
+    {
+        bBotDeploy = true;
+    }
+
+    function ChooseFireAt(Actor A)
+    {
+        local Bot B;
+
+        B = Bot(Controller);
+        if ( B == None || B.Squad == None || ONSPowerCore(B.Squad.SquadObjective) == None )
+        {
+            Fire(0);
+            return;
+        }
+
+        if ( ONSPowerCore(B.Squad.SquadObjective).LegitimateTargetOf(B) && CanAttack(B.Squad.SquadObjective) && CanDeploy())
+            bBotDeploy = true;
+        else
+            Fire(0);
+    }
+
+    function VehicleFire(bool bWasAltFire)
+    {
+        if (!bWasAltFire)
+            bWeaponIsFiring = True;
     }
 }
 
 state Deploying
 {
+    ignores ServerToggleDeploy;
+
 Begin:
     if (Controller != None)
     {
@@ -105,10 +254,60 @@ Begin:
     }
 }
 
-simulated function PostBeginPlay()
+state Deployed
 {
-    PlayAnim('InActiveStill', 1.0, 0.0);
-    super.PostBeginPlay();
+    function MayUndeploy()
+    {
+        ServerToggleDeploy();
+    }
+
+    function ServerToggleDeploy()
+    {
+        if (!IsFiring())
+            GotoState('Undeploying');
+    }
+
+    function bool IsDeployed()
+    {
+        return true;
+    }
+
+    function VehicleFire(bool bWasAltFire)
+    {
+        if (!bWasAltFire)
+            bWeaponIsFiring = True;
+    }
+}
+
+state UnDeploying
+{
+    ignores ServerToggleDeploy;
+
+Begin:
+    if (Controller != None)
+    {
+        if (PlayerController(Controller) != None)
+        {
+            PlayerController(Controller).ClientPlaySound(HideSound);
+            if (PlayerController(Controller).bEnableGUIForceFeedback)
+                PlayerController(Controller).ClientPlayForceFeedback(HideForce);
+        }
+        Weapons[1].bForceCenterAim = True;
+        Weapons[1].PlayAnim('UnDeploying');
+        PlayAnim('UnDeploying');
+        Sleep(6.666666);
+        bMovable = True;
+        SetPhysics(PHYS_Karma);
+        ServerPhysics = PHYS_Karma;
+        bStationary = False;
+        SetActiveWeapon(0);
+        TPCamLookat = UnDeployedTPCamLookat;
+        TPCamWorldOffset = UnDeployedTPCamWorldOffset;
+        FPCamPos = UnDeployedFPCamPos;
+        bEnableProximityViewShake = True;
+        bDeployed = False;
+        GotoState('UnDeployed');
+    }
 }
 
 //=============================================================================
@@ -249,4 +448,7 @@ defaultproperties
     ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Leviathan.Sounds.A_Vehicle_Leviathan_Collide01'
     ExplosionSounds = ()
     ExplosionSounds(0) = Sound'UT3A_Vehicle_Leviathan.Sounds.A_Vehicle_Leviathan_Explode'
+
+    MaxDeploySpeed = 15.0
+    DeployIconCoords = (X1=0,Y1=670,X2=154,Y2=96)
 }
