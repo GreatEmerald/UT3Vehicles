@@ -46,7 +46,7 @@ class UT3Leviathan extends ONSMobileAssaultStation;
 //=============================================================================
 
 var bool bBotDeploy; // delayed bot deploy flag
-var float LastDeployStartTime, LastDeployCheckTime, LastDeployAttempt;
+var float /*LastDeployStartTime,*/ LastDeployCheckTime, LastDeployAttempt;
 var bool bDrawCanDeployTooltip;
 var() float MaxDeploySpeed;
 var IntBox DeployIconCoords;
@@ -78,11 +78,11 @@ simulated function Tick(float DeltaTime)
             Rise = 1; // handbrake to quickly slow down
         }
         ServerToggleDeploy();
-        if (bBotDeploy && LastDeployStartTime == Level.TimeSeconds)
+        /*if (bBotDeploy && LastDeployStartTime == Level.TimeSeconds)
         {
             bBotDeploy = False;
             Rise = 0;
-        }
+        }*/
         LastDeployAttempt = Level.TimeSeconds;
     }
     if (IsLocallyControlled() && IsHumanControlled() && Level.TimeSeconds - LastDeployCheckTime > 0.25)
@@ -115,7 +115,11 @@ simulated function FixFenderRotation(name BoneToSet, name BoneToCopy, byte i)
 function ServerToggleDeploy()
 {
     if (CanDeploy())
+    {
+        bBotDeploy = false;
+        Rise = 0;
         GotoState('Deploying');
+    }
 }
 
 simulated function bool CanDeploy(optional bool bNoMessage)
@@ -231,7 +235,7 @@ auto state UnDeployed
             return;
         }
 
-        if ( ONSPowerCore(B.Squad.SquadObjective).LegitimateTargetOf(B) && CanAttack(B.Squad.SquadObjective) && CanDeploy())
+        if (ONSPowerCore(B.Squad.SquadObjective).LegitimateTargetOf(B) && CanAttack(B.Squad.SquadObjective))
             bBotDeploy = true;
         else
             Fire(0);
@@ -251,13 +255,14 @@ state Deploying
 Begin:
     if (Controller != None)
     {
+        //LastDeployStartTime = Level.TimeSeconds;
         SetPhysics(PHYS_None);
         ServerPhysics = PHYS_None;
         bMovable = False;
         bStationary = True;
+        PlaySound(DeploySound, SLOT_None, TransientSoundVolume*6.666667,, TransientSoundRadius/2.0,, false);
         if (PlayerController(Controller) != None)
         {
-            PlayerController(Controller).ClientPlaySound(DeploySound);
             if (PlayerController(Controller).bEnableGUIForceFeedback)
                 PlayerController(Controller).ClientPlayForceFeedback(DeployForce);
         }
@@ -308,9 +313,10 @@ state UnDeploying
 Begin:
     if (Controller != None)
     {
+        //LastDeployStartTime = Level.TimeSeconds;
+        PlaySound(HideSound, SLOT_None, TransientSoundVolume*3.0,, TransientSoundRadius/2.0,, false);
         if (PlayerController(Controller) != None)
         {
-            PlayerController(Controller).ClientPlaySound(HideSound);
             if (PlayerController(Controller).bEnableGUIForceFeedback)
                 PlayerController(Controller).ClientPlayForceFeedback(HideForce);
         }

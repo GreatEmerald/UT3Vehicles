@@ -55,7 +55,7 @@ var float ShieldRecharge;
 
 var float ShieldAvailableTime;
 
-var name EnterAnim, LeaveAnim;
+var name EnterAnim, LeaveAnim, ArmBone;
 
 
 /**
@@ -151,20 +151,31 @@ function DriverLeft()
 
 function KDriverEnter(Pawn P)
 {
+    local int AnimSlot;
+
     Super.KDriverEnter(P);
-    log(self@"KDriverEnter");
+
+    // GEm: Desyncs due to rotation, perhaps the turret bone should be connected to Base
     if (UT3LeviathanTurretWeapon(Gun) != None)
-        VehicleBase.PlayAnim(EnterAnim, 1.0, 0.0, UT3LeviathanTurretWeapon(Gun).SkinSlot);
+    {
+        AnimSlot = UT3LeviathanTurretWeapon(Gun).SkinSlot-1;
+        VehicleBase.AnimBlendParams(AnimSlot, 1.0, , , ArmBone);
+        VehicleBase.PlayAnim(EnterAnim, 1.0, 0.0, AnimSlot);
+    }
 }
 
 function bool KDriverLeave(bool bForceLeave)
 {
     local bool bResult;
+    local int AnimSlot;
 
     bResult = Super.KDriverLeave(bForceLeave);
-    log(self@"KDriverLeave");
     if (bResult && UT3LeviathanTurretWeapon(Gun) != None)
-        VehicleBase.PlayAnim(LeaveAnim, 1.0, 0.0, UT3LeviathanTurretWeapon(Gun).SkinSlot);
+    {
+        AnimSlot = UT3LeviathanTurretWeapon(Gun).SkinSlot-1;
+        VehicleBase.AnimBlendParams(AnimSlot, 1.0, , , ArmBone);
+        VehicleBase.PlayAnim(LeaveAnim, 1.0, 0.0, AnimSlot);
+    }
 
     return bResult;
 }

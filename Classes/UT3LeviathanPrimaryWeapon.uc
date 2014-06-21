@@ -43,7 +43,7 @@ defaultproperties
 {
     FireSoundClass = Sound'UT3A_Vehicle_Leviathan.Sounds.A_Vehicle_Leviathan_CannonFire01'
 
-    Mesh = SkeletalMesh'UT3VH_Leviathan_Anims.Leviathan_MainTurret'
+    Mesh = SkeletalMesh'UT3VH_Leviathan_Anims.Leviathan_MainTurreta'
     RedSkin = Shader'UT3LeviathanTex.Levi1.LeviathanSkin1'
     BlueSkin = Shader'UT3LeviathanTex.Levi1.LeviathanSkin1Blue'
     YawBone = "MainTurretYaw"
