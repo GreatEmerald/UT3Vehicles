@@ -54,4 +54,5 @@ defaultproperties
     CameraBone = "Lt_Front_Turret_Barrel"
     EnterAnim = "lt_front_turret_deplying"
     LeaveAnim = "lt_front_turret_undeplyed"
+    ArmBone = "Lt_Front_TurretArm1"
 }
