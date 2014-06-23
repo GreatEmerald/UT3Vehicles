@@ -120,6 +120,11 @@ function ServerToggleDeploy()
         Rise = 0;
         GotoState('Deploying');
     }
+    else if (IsHumanControlled())
+    {
+        bBotDeploy = false;
+        Rise = 0;
+    }
 }
 
 simulated function bool CanDeploy(optional bool bNoMessage)
@@ -250,17 +255,18 @@ auto state UnDeployed
 
 state Deploying
 {
-    ignores ServerToggleDeploy;
+    ignores ServerToggleDeploy, Fire;
 
 Begin:
     if (Controller != None)
     {
         //LastDeployStartTime = Level.TimeSeconds;
+        StopWeaponFiring();
         SetPhysics(PHYS_None);
         ServerPhysics = PHYS_None;
         bMovable = False;
         bStationary = True;
-        PlaySound(DeploySound, SLOT_None, TransientSoundVolume*6.666667,, TransientSoundRadius/2.0,, false);
+        PlaySound(DeploySound, SLOT_None, TransientSoundVolume*3.0,, TransientSoundRadius/2.0,, false);
         if (PlayerController(Controller) != None)
         {
             if (PlayerController(Controller).bEnableGUIForceFeedback)
@@ -290,7 +296,7 @@ state Deployed
 
     function ServerToggleDeploy()
     {
-        if (!IsFiring())
+        if (!bWeaponIsFiring && !UT3LeviathanPrimaryWeapon(Weapons[1]).bCurrentlyFiring)
             GotoState('Undeploying');
     }
 
@@ -308,12 +314,13 @@ state Deployed
 
 state UnDeploying
 {
-    ignores ServerToggleDeploy;
+    ignores ServerToggleDeploy, Fire;
 
 Begin:
     if (Controller != None)
     {
         //LastDeployStartTime = Level.TimeSeconds;
+        StopWeaponFiring();
         PlaySound(HideSound, SLOT_None, TransientSoundVolume*3.0,, TransientSoundRadius/2.0,, false);
         if (PlayerController(Controller) != None)
         {
@@ -479,4 +486,6 @@ defaultproperties
 
     MaxDeploySpeed = 15.0
     DeployIconCoords = (X1=0,Y1=670,X2=154,Y2=96)
+
+    HeadlightCoronaMaterial = None
 }

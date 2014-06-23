@@ -51,8 +51,9 @@ defaultproperties
     VehiclePositionString="in a Leviathan Stinger turret"
     VehicleNameString="Leviathan Stinger Turret"
 
-    CameraBone = "Lt_Rear_Turret_Barrel"
     EnterAnim = "lt_rear_turret_deplying"
     LeaveAnim = "lt_rear_turret_undeplyed"
     ArmBone = "Lt_Rear_TurretArm1"
+    CameraBone = "Lt_Rear_Turret_Barrel"
+    //TPCamWorldOffset = (X=40.0,Y=80.0,Z=100.0)
 }

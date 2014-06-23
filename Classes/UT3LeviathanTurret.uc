@@ -180,6 +180,20 @@ function bool KDriverLeave(bool bForceLeave)
     return bResult;
 }
 
+simulated function PostBeginPlay()
+{
+    PlayAnim('InActiveStill', 1.0, 0.0);
+    super.PostBeginPlay();
+}
+
+simulated function vector GetCameraLocationStart()
+{
+    if (Gun != None)
+        return Gun.GetBoneCoords(Gun.WeaponFireAttachmentBone).Origin;
+    else
+        return Super.GetCameraLocationStart();
+}
+
 
 //=============================================================================
 // Default values

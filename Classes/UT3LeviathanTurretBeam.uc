@@ -51,8 +51,9 @@ defaultproperties
     VehiclePositionString="in a Leviathan beam turret"
     VehicleNameString="Leviathan Beam Turret"
 
-    CameraBone = "Lt_Front_Turret_Barrel"
     EnterAnim = "lt_front_turret_deplying"
     LeaveAnim = "lt_front_turret_undeplyed"
     ArmBone = "Lt_Front_TurretArm1"
+    CameraBone = "Lt_Front_Turret_Barrel"
+    //TPCamWorldOffset = (X=-40.0,Y=-80.0,Z=100.0)
 }

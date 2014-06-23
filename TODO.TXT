@@ -1,9 +1,9 @@
 * Scorpion: Make use of all the animations?
-* Leviathan: Turret cameras
+* Leviathan: Use collision mesh
 * Cicada: should not be able to rotate guns instantly
 * Paladin: Can shoot itself in the foot
 * Manta et al: Can shoot itself in the foot
- * Can tanks?
+ + Can tanks?
 * Manta: Cannot enter from the back
 * SPMA: The AI never deploys cameras
 * Goliath: Treads rotate too slow
