@@ -39,6 +39,30 @@
 
 class UT3LeviathanPrimaryWeapon extends ONSMASCannon;
 
+var bool bCurrentlyFiring;
+
+simulated state InstantFireMode
+{
+ImplodeExplode:
+    bCurrentlyFiring = true;
+    Sleep(0.8);
+    if (Level.NetMode != NM_DedicatedServer)
+        Spawn(class'ONSMASCannonImplosionEffect',,, GHitLocation, rotator(GHitNormal));
+    Sleep(2.3);
+    Explosion(DamageRadius*0.125);
+    Sleep(0.5);
+    Explosion(DamageRadius*0.300);
+    Sleep(0.2);
+    Explosion(DamageRadius*0.475);
+    Sleep(0.2);
+    Explosion(DamageRadius*0.650);
+    Sleep(0.2);
+    Explosion(DamageRadius*0.825);
+    Sleep(0.2);
+    Explosion(DamageRadius*1.000);
+    bCurrentlyFiring = false;
+}
+
 defaultproperties
 {
     FireSoundClass = Sound'UT3A_Vehicle_Leviathan.Sounds.A_Vehicle_Leviathan_CannonFire01'
