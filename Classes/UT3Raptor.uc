@@ -373,4 +373,6 @@ defaultproperties
     //IdleSound=sound'UT3Vehicles.RAPTOR.RaptorEngine'
     //StartUpSound=sound'UT3Vehicles.RAPTOR.RaptorTakeOff'
     //ShutDownSound=sound'UT3Vehicles.RAPTOR.RaptorLand'
+
+    EntryRadius = 230.0
 }

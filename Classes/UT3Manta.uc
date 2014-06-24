@@ -1,12 +1,43 @@
-/******************************************************************************
-UT3Manta
-
-Creation date: 2008-05-02 20:50
-Last change: $Id$
-Copyright (c) 2008, Wormbo and GreatEmerald
-Copyright (c) 2012, 100GPing100
-Copyright (c) 2014, GreatEmerald
-******************************************************************************/
+/*
+ * Copyright © 2008 Wormbo
+ * Copyright © 2012 100GPing100
+ * Copyright © 2008, 2014 GreatEmerald
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are
+ * met:
+ *
+ *     (1) Redistributions of source code must retain the above copyright
+ *     notice, this list of conditions and the following disclaimer.
+ *
+ *     (2) Redistributions in binary form must reproduce the above copyright
+ *     notice, this list of conditions and the following disclaimers in
+ *     the documentation and/or other materials provided with the
+ *     distribution.
+ *
+ *     (3) The name of the author may not be used to
+ *     endorse or promote products derived from this software without
+ *     specific prior written permission.
+ *
+ *     (4) The use, modification and redistribution of this software must
+ *     be made in compliance with the additional terms and restrictions
+ *     provided by the Unreal Tournament 2004 End User License Agreement.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+ * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT,
+ * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+ * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ *
+ * This software is not supported by Atari, S.A., Epic Games, Inc. or any
+ * of such parties' affiliates and subsidiaries.
+ */
 
 class UT3Manta extends ONSHoverBike;
 
@@ -26,15 +57,15 @@ var array<UT3MantaBlade> Blades;
 //
 function PostBeginPlay()
 {
-	Super.PostBeginPlay();
+    Super.PostBeginPlay();
 
-	// Spawn the blades and attach them to the manta.
-	Blades[0] = Spawn(class'UT3MantaBlade');
-	AttachToBone(Blades[0], 'Blade_rt');
-	Blades[1] = Spawn(class'UT3MantaBlade');
-	AttachToBone(Blades[1], 'Blade_lt');
+    // Spawn the blades and attach them to the manta.
+    Blades[0] = Spawn(class'UT3MantaBlade');
+    AttachToBone(Blades[0], 'Blade_rt');
+    Blades[1] = Spawn(class'UT3MantaBlade');
+    AttachToBone(Blades[1], 'Blade_lt');
 
-	ToggleBlades(false);
+    ToggleBlades(false);
 }
 
 //
@@ -42,14 +73,14 @@ function PostBeginPlay()
 //
 function DrivingStatusChanged()
 {
-	Super.DrivingStatusChanged();
+    Super.DrivingStatusChanged();
 
-	ToggleBlades(Driver != None);
+    ToggleBlades(Driver != None);
 
-	if (Driver == None) // The default value is set by the mutator.
-		bCanBeBaseForPawns = default.bCanBeBaseForPawns;
-	else
-		bCanBeBaseForPawns = false;
+    if (Driver == None) // The default value is set by the mutator.
+        bCanBeBaseForPawns = default.bCanBeBaseForPawns;
+    else
+        bCanBeBaseForPawns = false;
 }
 
 //
@@ -57,9 +88,9 @@ function DrivingStatusChanged()
 //
 function Tick(float DeltaTime)
 {
-	if (Driver != None) // Just in case.
-		Ailerons(DeltaTime);
-	EmeraldTick(DeltaTime); // Renamed it.
+    if (Driver != None) // Just in case.
+        Ailerons(DeltaTime);
+    EmeraldTick(DeltaTime); // Renamed it.
 }
 
 //
@@ -67,13 +98,13 @@ function Tick(float DeltaTime)
 //
 function ToggleBlades(bool OnOff)
 {
-	if (OnOff) { // On.
-		Blades[0].Skins[0] = Blades[0].BladesOnTex;
-		Blades[1].Skins[0] = Blades[1].BladesOnTex;
-	} else { // Off.
-		Blades[0].Skins[0] = Blades[0].BladesOffTex;
-		Blades[1].Skins[0] = Blades[1].BladesOffTex;
-	}
+    if (OnOff) { // On.
+        Blades[0].Skins[0] = Blades[0].BladesOnTex;
+        Blades[1].Skins[0] = Blades[1].BladesOnTex;
+    } else { // Off.
+        Blades[0].Skins[0] = Blades[0].BladesOffTex;
+        Blades[1].Skins[0] = Blades[1].BladesOffTex;
+    }
 }
 
 //
@@ -81,21 +112,21 @@ function ToggleBlades(bool OnOff)
 //
 function Ailerons(float DeltaTime)
 {
-	// 45° = 8192 RUU
-	local Rotator AileronsRotation;
+    // 45° = 8192 RUU
+    local Rotator AileronsRotation;
 
-	// 1000 = The velocity at wich the angle is of 45º
-	AileronsRotation.Pitch = 8192 * (Velocity.Z / 1000) - Rotation.Pitch;
-	AileronsRotation.Yaw = 0;
-	AileronsRotation.Roll = 0;
+    // 1000 = The velocity at wich the angle is of 45º
+    AileronsRotation.Pitch = 8192 * (Velocity.Z / 1000) - Rotation.Pitch;
+    AileronsRotation.Yaw = 0;
+    AileronsRotation.Roll = 0;
 
-	if (AileronsRotation.Pitch > 8192)
-		AileronsRotation.Pitch = 8192;
-	else if (AileronsRotation.Pitch < -8192)
-		AileronsRotation.Pitch = -8192;
+    if (AileronsRotation.Pitch > 8192)
+        AileronsRotation.Pitch = 8192;
+    else if (AileronsRotation.Pitch < -8192)
+        AileronsRotation.Pitch = -8192;
 
-	SetBoneRotation('Aileron_Rt', AileronsRotation, 0, 1);
-	SetBoneRotation('Aileron_Lt', AileronsRotation, 0, 1);
+    SetBoneRotation('Aileron_Rt', AileronsRotation, 0, 1);
+    SetBoneRotation('Aileron_Lt', AileronsRotation, 0, 1);
 }
 
 //
@@ -103,10 +134,10 @@ function Ailerons(float DeltaTime)
 //
 function Destroyed()
 {
-	Blades[0].Destroy();
-	Blades[1].Destroy();
+    Blades[0].Destroy();
+    Blades[1].Destroy();
 
-	Super.Destroyed();
+    Super.Destroyed();
 }
 // @100GPing100
 //======END======
@@ -134,7 +165,7 @@ simulated function CheckJumpDuck()
         PlaySound(JumpSound,,1.0);
 
         if (Role == ROLE_Authority)
-           DoBikeJump = !DoBikeJump;
+        DoBikeJump = !DoBikeJump;
 
         if(Level.NetMode != NM_DedicatedServer)
         {
@@ -169,14 +200,14 @@ simulated function CheckJumpDuck()
         }
     }
     else
-       bHoldingDuck = False;
+    bHoldingDuck = False;
 }
 
 simulated function EmeraldTick(float DeltaTime)
 {
-  Super.Tick(DeltaTime);
-  if (!bHoldingDuck && DuckEffect!=None) {
-      DuckEffect.Destroy();
+Super.Tick(DeltaTime);
+if (!bHoldingDuck && DuckEffect!=None) {
+    DuckEffect.Destroy();
     }
 }
 
@@ -234,11 +265,11 @@ defaultproperties
     UprightDamping=20.000000  //The manual says it doesn't do anything
     PitchTorqueMax=9.0  //18 is a bit too over the top  //13.5 as well
     RollTorqueMax=25.0
-    /*DriverWeapons(0)=(WeaponClass=class'UT3MantaPlasmaGun',WeaponBone=PlasmaGunAttachment);
-    IdleSound=sound'UT3Manta.Sounds.Engine';
-    StartUpSound=sound'UT3Vehicles.Manta.MantaEnter'
-    ShutDownSound=sound'UT3Vehicles.Manta.MantaLeave'
-    JumpSound=sound'UT3Vehicles.Manta.MantaJump'
-    DuckSound=sound'UT3Vehicles.Manta.MantaDuck'*/
     HornSounds(1)=sound'ONSVehicleSounds-S.Horns.LaCuchachaHorn'
+
+    EntryRadius = 160.0
+
+    HeadlightCoronaOffset=()
+    HeadlightCoronaOffset(0)=(X=40.0,Y=0.0,Z=-30.0)
+    HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
 }

@@ -56,6 +56,57 @@ simulated function SetTeam(byte T)
     }
 }
 
+// GEm: Add a weapon offset
+simulated function InitEffects()
+{
+    // don't even spawn on server
+    if (Level.NetMode == NM_DedicatedServer)
+        return;
+
+    if ( (FlashEmitterClass != None) && (FlashEmitter == None) )
+    {
+        FlashEmitter = Spawn(FlashEmitterClass);
+        FlashEmitter.SetDrawScale(DrawScale);
+        if (WeaponFireAttachmentBone == '')
+            FlashEmitter.SetBase(self);
+        else
+            AttachToBone(FlashEmitter, WeaponFireAttachmentBone);
+
+        FlashEmitter.SetRelativeLocation(WeaponFireOffset * vect(1,0,0) + WeaponOffset);
+    }
+
+    if (AmbientEffectEmitterClass != none && AmbientEffectEmitter == None)
+    {
+        AmbientEffectEmitter = spawn(AmbientEffectEmitterClass, self,, WeaponFireLocation, WeaponFireRotation);
+        if (WeaponFireAttachmentBone == '')
+            AmbientEffectEmitter.SetBase(self);
+        else
+            AttachToBone(AmbientEffectEmitter, WeaponFireAttachmentBone);
+
+        AmbientEffectEmitter.SetRelativeLocation(WeaponFireOffset * vect(1,0,0) + WeaponOffset);
+    }
+}
+
+simulated function CalcWeaponFire()
+{
+    local coords WeaponBoneCoords;
+    local vector CurrentFireOffset;
+
+    // Calculate fire offset in world space
+    WeaponBoneCoords = GetBoneCoords(WeaponFireAttachmentBone);
+    CurrentFireOffset = (WeaponFireOffset * vect(1,0,0)) + (DualFireOffset * vect(0,1,0)) + WeaponOffset;
+
+    // Calculate rotation of the gun
+    WeaponFireRotation = rotator(vector(CurrentAim) >> Rotation);
+
+    // Calculate exact fire location
+    WeaponFireLocation = WeaponBoneCoords.Origin + (CurrentFireOffset >> WeaponFireRotation);
+
+    // Adjust fire rotation taking dual offset into account
+    if (bDualIndependantTargeting)
+        WeaponFireRotation = rotator(CurrentHitLocation - WeaponFireLocation);
+}
+
 //=============================================================================
 // Default values
 //=============================================================================
@@ -65,16 +116,16 @@ defaultproperties
     ProjectileClass  = Class'UT3LeviathanBolt'
     FireInterval     = 0.3
     DrawScale        = 0.6
-    RelativeLocation = (Z=-10)
+    //RelativeLocation = (Z=-10)
 
     Mesh = SkeletalMesh'UT3VH_Leviathan_Anims.LeviathanDriverTurretOnly'
     RedSkin = Shader'UT3LeviathanTex.Levi2.LeviathanSkin2'
     BlueSkin = Shader'UT3LeviathanTex.Levi2.LeviathanSkin2Blue'
     YawBone = "DriverTurretYaw"
     PitchBone = "DriverTurretPitch"
-    // GEm: TODO: Two barrels!
     WeaponFireAttachmentBone = "DriverTurret_Tip"
-    DualFireOffset = 11.0
+    DualFireOffset = 6.0
+    WeaponOffset = (X=0.0,Y=-6.0,Z=0.0)
 
     FireSoundClass = Sound'UT3A_Vehicle_Leviathan.SoundCues.A_Vehicle_Leviathan_TurretFire'
 }
