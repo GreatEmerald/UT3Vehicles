@@ -53,6 +53,8 @@ var IntBox DeployIconCoords;
 
 var float OldWheelPitch[2];
 
+var Material RedSkinB[2], BlueSkinB[2];
+
 replication
 {
     reliable if (Role < ROLE_Authority)
@@ -345,6 +347,44 @@ Begin:
     }
 }
 
+simulated event TeamChanged()
+{
+    local int i;
+
+    Super(SVehicle).TeamChanged();
+
+    if (Team == 0 && RedSkin != None)
+    {
+        Skins[0] = RedSkin;
+        Skins[1] = RedSkinB[0];
+        Skins[2] = RedSkinB[1];
+        Skins[3] = RedSkinB[1];
+        Skins[4] = RedSkinB[1];
+        Skins[5] = RedSkinB[1];
+    }
+    else if (Team == 1 && BlueSkin != None)
+    {
+        Skins[0] = BlueSkin;
+        Skins[1] = BlueSkinB[0];
+        Skins[2] = BlueSkinB[1];
+        Skins[3] = BlueSkinB[1];
+        Skins[4] = BlueSkinB[1];
+        Skins[5] = BlueSkinB[1];
+    }
+
+    if (Level.NetMode != NM_DedicatedServer && Team <= 2 && SpawnOverlay[0] != None && SpawnOverlay[1] != None)
+        SetOverlayMaterial(SpawnOverlay[Team], 1.5, True);
+
+    for (i = 0; i < Weapons.Length; i++)
+        Weapons[i].SetTeam(Team);
+
+    if (Level.NetMode != NM_DedicatedServer)
+    {
+        for(i = 0; i < HeadlightCorona.Length; i++)
+            HeadlightCorona[i].ChangeTeamTint(Team);
+    }
+}
+
 //=============================================================================
 // Default values
 //=============================================================================
@@ -376,9 +416,12 @@ defaultproperties
     // GEm: TODO: Two skins!
     RedSkin = Shader'UT3LeviathanTex.Levi1.LeviathanSkin1'
     BlueSkin = Shader'UT3LeviathanTex.Levi1.LeviathanSkin1Blue'
+    RedSkinB(0) = Shader'UT3LeviathanTex.Levi2.LeviathanSkin2'
+    BlueSkinB(0) = Shader'UT3LeviathanTex.Levi2.LeviathanSkin2Blue'
+    RedSkinB(1) = Shader'UT3LeviathanTex.LeviTurret.TurretSkin'
+    BlueSkinB(1) = Shader'UT3LeviathanTex.LeviTurret.TurretSkinBlue'
 
-    // GEm: The Leviathan is insane. It has 5 wheels. 5.
-        Begin Object Class=SVehicleWheel Name=RtRWheel
+    Begin Object Class=SVehicleWheel Name=RtRWheel
         BoneName="Rt_Rear_Tire"
         BoneOffset=(X=0.0,Y=40.0,Z=0.0)
         WheelRadius=90

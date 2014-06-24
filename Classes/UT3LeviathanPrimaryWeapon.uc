@@ -41,6 +41,8 @@ class UT3LeviathanPrimaryWeapon extends ONSMASCannon;
 
 var bool bCurrentlyFiring;
 
+var Material RedSkinB, BlueSkinB;
+
 simulated state InstantFireMode
 {
 ImplodeExplode:
@@ -63,6 +65,24 @@ ImplodeExplode:
     bCurrentlyFiring = false;
 }
 
+simulated function SetTeam(byte T)
+{
+    Team = T;
+    if (T == 0 && RedSkin != None)
+    {
+        Skins[0] = RedSkin;
+        Skins[1] = RedSkinB;
+        // GEm: TODO: Replication
+        RepSkin = RedSkin;
+    }
+    else if (T == 1 && BlueSkin != None)
+    {
+        Skins[0] = BlueSkin;
+        Skins[1] = BlueSkinB;
+        RepSkin = BlueSkin;
+    }
+}
+
 defaultproperties
 {
     FireSoundClass = Sound'UT3A_Vehicle_Leviathan.Sounds.A_Vehicle_Leviathan_CannonFire01'
@@ -70,9 +90,9 @@ defaultproperties
     Mesh = SkeletalMesh'UT3VH_Leviathan_Anims.Leviathan_MainTurreta'
     RedSkin = Shader'UT3LeviathanTex.Levi1.LeviathanSkin1'
     BlueSkin = Shader'UT3LeviathanTex.Levi1.LeviathanSkin1Blue'
+    RedSkinB = Shader'UT3LeviathanTex.Levi2.LeviathanSkin2'
+    BlueSkinB = Shader'UT3LeviathanTex.Levi2.LeviathanSkin2Blue'
     YawBone = "MainTurretYaw"
     PitchBone = "MainTurretPitch"
-    // GEm: TODO: Two barrels!
     WeaponFireAttachmentBone = "MainTurretPitch"
-    //GunnerAttachmentBone = "SecondaryTurret_YawLift"
 }
