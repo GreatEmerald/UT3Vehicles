@@ -1,4 +1,3 @@
-* Scorpion: Make use of all the animations?
 * Cicada: should not be able to rotate guns instantly
 * Paladin: Can shoot itself in the foot
  + Can tanks?
@@ -8,9 +7,10 @@
 * Add hoverboards
 * Split off UT3HUD
 
-* Scorpion: Add limits to when you can boost and eject
 * Cicada: Mesh parts do not animate
 * Raptor: No landing sequence
 * Paladin: Weird physics when running into one
 + Check materials
 * Leviathan: Create a collision mesh
+* Scorpion: Add a Denied! announcement
+* Scorpion: Make AI use self-destruct

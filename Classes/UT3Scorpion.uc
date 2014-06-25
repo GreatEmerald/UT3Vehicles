@@ -42,7 +42,7 @@
 class UT3Scorpion extends EONSScorpion;
 
 var IntBox BoostIconCoords, EjectIconCoords;
-var float LastBoostAttempt;
+var float LastBoostAttempt, MinBoostSpeed;
 
 event KImpact(actor other, vector pos, vector impactVel, vector impactNorm) //Modified so we would have control over when we detonate
 {
@@ -73,7 +73,8 @@ simulated function DrawHUD(Canvas C)
 
     // don't draw if we are dead, scoreboard is visible, etc
     PC = PlayerController(Controller);
-    if (Health < 1 || PC == None || PC.myHUD == None || PC.MyHUD.bShowScoreboard )
+    if (Health < 1 || PC == None || PC.myHUD == None || PC.MyHUD.bShowScoreboard
+        || VSize(Velocity) < MinBoostSpeed || !bVehicleOnGround)
         return;
 
     // draw tooltips
@@ -92,7 +93,9 @@ simulated function Tick(float DT)
 
     Super(ONSWheeledCraft).Tick(DT);
 
-    if (Role == ROLE_Authority && IsHumanControlled() && Rise > 0 && Level.TimeSeconds - LastBoostAttempt > 1)
+    if (Role == ROLE_Authority && IsHumanControlled() && Rise > 0
+        && VSize(Velocity) >= MinBoostSpeed && bVehicleOnGround
+        && Level.TimeSeconds - LastBoostAttempt > 1)
     {
         Boost();
         LastBoostAttempt = Level.TimeSeconds;
@@ -318,10 +321,109 @@ function VehicleCeaseFire(bool bWasAltFire)
         Super.VehicleCeaseFire(bWasAltFire);
 }
 
-//=======================
-// @100GPing100
-// @100GPing100
-//==========END==========
+function SuperEjectDriver()
+{
+    local Pawn OldPawn;
+    local Vector EjectVel;
+
+    OldPawn = Driver;
+    KDriverLeave(True);
+    if (OldPawn == None)
+        return;
+
+    EjectVel = VRand();
+    EjectVel.Z = 0.0;
+    EjectVel = (Normal(EjectVel) * 0.2 + vect(0.00,0.00,1.00)) * EjectMomentum;
+    OldPawn.Velocity = EjectVel;
+    OldPawn.SpawnTime = Level.TimeSeconds;
+    OldPawn.PlayTeleportEffect(False,False);
+}
+
+// GEm: Don't hurt the instigator
+simulated function HurtRadius( float DamageAmount, float DamageRadius, class<DamageType> DamageType, float Momentum, vector HitLocation )
+{
+    local actor Victims;
+    local float damageScale, dist;
+    local vector dir;
+
+    if( bHurtEntry )
+        return;
+
+    bHurtEntry = true;
+    foreach VisibleCollidingActors( class 'Actor', Victims, DamageRadius, HitLocation )
+    {
+        // don't let blast damage affect fluid - VisibleCollisingActors doesn't really work for them - jag
+        if( (Victims != self) && (Victims != Instigator) && (Victims.Role == ROLE_Authority) && (!Victims.IsA('FluidSurfaceInfo')) )
+        {
+            dir = Victims.Location - HitLocation;
+            dist = FMax(1,VSize(dir));
+            dir = dir/dist;
+            damageScale = 1 - FMax(0,(dist - Victims.CollisionRadius)/DamageRadius);
+            Victims.TakeDamage
+            (
+                damageScale * DamageAmount,
+                Instigator,
+                Victims.Location - 0.5 * (Victims.CollisionHeight + Victims.CollisionRadius) * dir,
+                (damageScale * Momentum * dir),
+                DamageType
+            );
+            if (Instigator != None && Vehicle(Victims) != None && Vehicle(Victims).Health > 0)
+                Vehicle(Victims).DriverRadiusDamage(DamageAmount, DamageRadius, Instigator.Controller, DamageType, Momentum, HitLocation);
+        }
+    }
+    bHurtEntry = false;
+}
+
+// GEm: Take 150% damage while boosting, 200% damage while detonating
+// GEm: TODO: Add Denied! announcement
+function TakeDamage (int Damage, Pawn instigatedBy, Vector HitLocation, Vector Momentum, Class<DamageType> DamageType)
+{
+    if ( bBoost && (instigatedBy != None) && (instigatedBy != self) )
+    {
+        if (Driver == None)
+            Damage *= 2.0;
+        else
+            Damage *= 1.5;
+    }
+    Super(ONSRV).TakeDamage(Damage,instigatedBy,HitLocation,Momentum,DamageType);
+}
+
+simulated function EnableAfterburners(bool bEnable)
+{
+    if (bEnable)
+    {
+        SteerSpeed *= 0.2;
+        if (Level.NetMode != NM_DedicatedServer)
+        {
+            AnimBlendParams(1, 1.0, , , 'Booster_Main2');
+            PlayAnim('boosters_out', 1.0, 0.0, 1);
+            Afterburner[0] = Spawn(AfterburnerClass[Team],self,,Location + (AfterburnerOffset[0] >> Rotation));
+            Afterburner[0].SetBase(self);
+            Afterburner[0].SetRelativeRotation(AfterburnerRotOffset[0]);
+            Afterburner[1] = Spawn(AfterburnerClass[Team],self,,Location + (AfterburnerOffset[1] >> Rotation));
+            Afterburner[1].SetBase(self);
+            Afterburner[1].SetRelativeRotation(AfterburnerRotOffset[1]);
+        }
+    }
+    else
+    {
+        SteerSpeed /= 0.2;
+        if (Level.NetMode != NM_DedicatedServer)
+        {
+            if (Afterburner[0] != None)
+            {
+                Afterburner[0].Destroy();
+            }
+            if (Afterburner[1] != None)
+            {
+                Afterburner[1].Destroy();
+            }
+            AnimBlendParams(1, 1.0, , , 'Booster_Main2');
+            PlayAnim('boosters_in', 1.0, 0.0, 1);
+        }
+    }
+    bAfterburnersOn = bEnable;
+}
 
 //=============================================================================
 // Default values
@@ -409,8 +511,6 @@ defaultproperties
     //BlueSkin=Shader'VMVehicles-TX.RVGroup.RVChassisFinalBLUE'
     //DriverWeapons(0)=(WeaponClass=Class'UT3ScorpionTurret',WeaponBone="ChainGunAttachment")
     bHasAltFire=False
-    BoostForce=1800.000000
-    SelfDestructDamage=600
     GroundSpeed=950.0000
     bHasHandBrake=False //GE: Override for the space bar?
     BoostSound=Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_EjectReadyBeep'
@@ -436,4 +536,15 @@ defaultproperties
     BrakeLightMaterial=Material'EpicParticles.FlickerFlare'
 
     HeadlightProjectorMaterial=None
+
+    BoostRechargeTime = 5.0
+    AfterburnerOffset(0) = (X=-70.0,Y=-14.0,Z=20.0)
+    AfterburnerOffset(1) = (X=-70.0,Y=14.0,Z=20.0)
+    BoostForce = 1800.0
+    MinBoostSpeed = 900.0
+    bAllowAirControl = false
+    SelfDestructDamage = 600.0
+    SelfDestructDamageRadius = 600.0
+    SelfDestructMomentum = 20000
+    SteerSpeed=200.00
 }
