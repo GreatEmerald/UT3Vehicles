@@ -1,0 +1,2 @@
+Vehicle=(ClassName=EONS-Scorpion_BETA3.EONSScorpion,FriendlyName=EONS-Scorpion_BETA3.EONSScorpion.VehicleNameString,FallbackName="EONS Scorpion",FallbackDesc="EONS Scorpion")
+Vehicle=(ClassName=EONS-Scorpion_BETA3.EONSStrider,FriendlyName=EONS-Scorpion_BETA3.EONSStrider.VehicleNameString,FallbackName="EONS Strider",FallbackDesc="EONS Strider")
