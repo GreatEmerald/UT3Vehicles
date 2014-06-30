@@ -39,8 +39,8 @@
 
 class UT3MantaPlasmaProjectile extends ONSHoverBikePlasmaProjectile;
 
-// GEm: Don't hurt the instigator
-simulated function HurtRadius( float DamageAmount, float DamageRadius, class<DamageType> DamageType, float Momentum, vector HitLocation )
+// GEm: Don't hurt the instigator, but only applicable if we have radius
+/*simulated function HurtRadius( float DamageAmount, float DamageRadius, class<DamageType> DamageType, float Momentum, vector HitLocation )
 {
     local actor Victims;
     local float damageScale, dist;
@@ -100,11 +100,12 @@ simulated function HurtRadius( float DamageAmount, float DamageRadius, class<Dam
     }
 
     bHurtEntry = false;
-}
+}*/
 
 defaultproperties
 {
     Damage = 36.0
+    DamageRadius = 0.0
     MomentumTransfer = 4000.0
     LifeSpan = 1.6
 }

@@ -38,8 +38,8 @@
  */
 class UT3RaptorProjBlue extends ONSAttackCraftPlasmaProjectileBlue;
 
-// GEm: Don't hurt the instigator
-simulated function HurtRadius( float DamageAmount, float DamageRadius, class<DamageType> DamageType, float Momentum, vector HitLocation )
+// GEm: Don't hurt the instigator? It does hurt, but as if the radius was super small
+/*simulated function HurtRadius( float DamageAmount, float DamageRadius, class<DamageType> DamageType, float Momentum, vector HitLocation )
 {
     local actor Victims;
     local float damageScale, dist;
@@ -99,7 +99,7 @@ simulated function HurtRadius( float DamageAmount, float DamageRadius, class<Dam
     }
 
     bHurtEntry = false;
-}
+}*/
 
 defaultproperties
 {

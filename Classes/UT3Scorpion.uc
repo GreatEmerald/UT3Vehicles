@@ -42,7 +42,7 @@
 class UT3Scorpion extends EONSScorpion;
 
 var IntBox BoostIconCoords, EjectIconCoords;
-var float LastBoostAttempt, MinBoostSpeed;
+var float LastBoostAttempt, MinBoostSpeed, MinEjectSpeed;
 
 event KImpact(actor other, vector pos, vector impactVel, vector impactNorm) //Modified so we would have control over when we detonate
 {
@@ -53,7 +53,7 @@ event KImpact(actor other, vector pos, vector impactVel, vector impactNorm) //Mo
 //         ImpactVel = vect(0,0,0);
         Super(ONSRV).KImpact(Other, Pos, ImpactVel, ImpactNorm);
     }
-    if (VSize(impactVel) > 1000 && bImminentDestruction)
+    if (VSize(impactVel) > MinEjectSpeed && bImminentDestruction)
     {
         ImpactVel /= 100;
         if (Other != None && Other.IsA('ONSPRV'))
@@ -74,14 +74,14 @@ simulated function DrawHUD(Canvas C)
     // don't draw if we are dead, scoreboard is visible, etc
     PC = PlayerController(Controller);
     if (Health < 1 || PC == None || PC.myHUD == None || PC.MyHUD.bShowScoreboard
-        || VSize(Velocity) < MinBoostSpeed || !bVehicleOnGround)
+        || !bVehicleOnGround)
         return;
 
     // draw tooltips
     // GEm: FIXME: UT3HudOverlay should be in UT3HUD.u (used by both UT3Style and UT3Vehicles)
-    if (BoostCount > 0 && !bBoost) //GE: BoostCount > 0 == bReadyToBoost ;)
+    if (VSize(Velocity) >= MinBoostSpeed && BoostCount > 0 && !bBoost) //GE: BoostCount > 0 == bReadyToBoost ;)
         class'UT3HudOverlay'.static.DrawToolTip(C, PC, "Jump", C.ClipX*0.5, C.ClipY * 0.92, BoostIconCoords);
-    else
+    else if (VSize(Velocity) >= MinEjectSpeed)
         class'UT3HudOverlay'.static.DrawToolTip(C, PC, "Jump", C.ClipX*0.5, C.ClipY * 0.92, EjectIconCoords);
 }
 
@@ -94,8 +94,7 @@ simulated function Tick(float DT)
     Super(ONSWheeledCraft).Tick(DT);
 
     if (Role == ROLE_Authority && IsHumanControlled() && Rise > 0
-        && VSize(Velocity) >= MinBoostSpeed && bVehicleOnGround
-        && Level.TimeSeconds - LastBoostAttempt > 1)
+        && bVehicleOnGround && Level.TimeSeconds - LastBoostAttempt > 1)
     {
         Boost();
         LastBoostAttempt = Level.TimeSeconds;
@@ -234,7 +233,7 @@ function Boost()
     //log("UT3: Entering Boost!");
     //log("UT3: BoostRechargeTime: "@BoostRechargeTime);
     //log("UT3: BoostRechargeCounter: "@BoostRechargeCounter);
-    if (BoostCount > 0 && !bBoost)
+    if (VSize(Velocity) >= MinBoostSpeed && BoostCount > 0 && !bBoost)
     {
         //log("UT3: Boosting!");
         BoostRechargeCounter=0;
@@ -242,7 +241,7 @@ function Boost()
         bBoost = true;
         BoostCount--;
     }
-    else
+    else if (VSize(Velocity) >= MinEjectSpeed)
     {
         //log("UT3: Kamikadze!");
         bImminentDestruction = true;
@@ -541,7 +540,8 @@ defaultproperties
     AfterburnerOffset(0) = (X=-70.0,Y=-14.0,Z=20.0)
     AfterburnerOffset(1) = (X=-70.0,Y=14.0,Z=20.0)
     BoostForce = 1800.0
-    MinBoostSpeed = 900.0
+    MinBoostSpeed = 700.0 // GEm: Originally 900, but it feels too much in comparison
+    MinEjectSpeed = 1000.0
     bAllowAirControl = false
     SelfDestructDamage = 600.0
     SelfDestructDamageRadius = 600.0
