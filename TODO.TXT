@@ -1,6 +1,4 @@
 * Cicada: should not be able to rotate guns instantly
-* Paladin: Can shoot itself in the foot
- + Can tanks?
 * SPMA: The AI never deploys cameras
 * Goliath: Treads rotate too slow
 * Merge mutators into two

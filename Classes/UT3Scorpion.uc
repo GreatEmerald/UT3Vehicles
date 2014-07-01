@@ -42,7 +42,8 @@
 class UT3Scorpion extends EONSScorpion;
 
 var IntBox BoostIconCoords, EjectIconCoords;
-var float LastBoostAttempt, MinBoostSpeed, MinEjectSpeed;
+var float LastBoostAttempt, SpeedAtBoost;
+var() float MinEjectSpeed;
 
 event KImpact(actor other, vector pos, vector impactVel, vector impactNorm) //Modified so we would have control over when we detonate
 {
@@ -74,15 +75,15 @@ simulated function DrawHUD(Canvas C)
     // don't draw if we are dead, scoreboard is visible, etc
     PC = PlayerController(Controller);
     if (Health < 1 || PC == None || PC.myHUD == None || PC.MyHUD.bShowScoreboard
-        || !bVehicleOnGround)
+        || VSize(Velocity) <= 0)
         return;
 
     // draw tooltips
     // GEm: FIXME: UT3HudOverlay should be in UT3HUD.u (used by both UT3Style and UT3Vehicles)
-    if (VSize(Velocity) >= MinBoostSpeed && BoostCount > 0 && !bBoost) //GE: BoostCount > 0 == bReadyToBoost ;)
+    if (Gear > 1 && BoostCount > 0 && !bBoost) //GE: BoostCount > 0 == bReadyToBoost ;)
         class'UT3HudOverlay'.static.DrawToolTip(C, PC, "Jump", C.ClipX*0.5, C.ClipY * 0.92, BoostIconCoords);
-    else if (VSize(Velocity) >= MinEjectSpeed)
-        class'UT3HudOverlay'.static.DrawToolTip(C, PC, "Jump", C.ClipX*0.5, C.ClipY * 0.92, EjectIconCoords);
+    else if ((Velocity dot Vector(Rotation)) >= MinEjectSpeed)
+        class'UT3HudOverlay'.static.DrawToolTip(C, PC, "Use", C.ClipX*0.5, C.ClipY * 0.92, EjectIconCoords);
 }
 
 simulated function Tick(float DT)
@@ -94,7 +95,7 @@ simulated function Tick(float DT)
     Super(ONSWheeledCraft).Tick(DT);
 
     if (Role == ROLE_Authority && IsHumanControlled() && Rise > 0
-        && bVehicleOnGround && Level.TimeSeconds - LastBoostAttempt > 1)
+        && Level.TimeSeconds - LastBoostAttempt > 1 && Gear > 1)
     {
         Boost();
         LastBoostAttempt = Level.TimeSeconds;
@@ -233,20 +234,21 @@ function Boost()
     //log("UT3: Entering Boost!");
     //log("UT3: BoostRechargeTime: "@BoostRechargeTime);
     //log("UT3: BoostRechargeCounter: "@BoostRechargeCounter);
-    if (VSize(Velocity) >= MinBoostSpeed && BoostCount > 0 && !bBoost)
+    if (BoostCount > 0 && !bBoost)
     {
         //log("UT3: Boosting!");
         BoostRechargeCounter=0;
         PlaySound(BoostSound, SLOT_Misc, 128,,,64); //Boost sound Pitch 160
         bBoost = true;
         BoostCount--;
+        SpeedAtBoost = Velocity dot Vector(Rotation);
     }
-    else if (VSize(Velocity) >= MinEjectSpeed)
+    /*else if ((Velocity dot Vector(Rotation)) >= MinEjectSpeed)
     {
         //log("UT3: Kamikadze!");
         bImminentDestruction = true;
         PlaySound(BoostReadySound, SLOT_Misc, 128,,,160);
-    }
+    }*/
 }
 
 /*function VehicleFire(bool bWasAltFire)
@@ -338,6 +340,18 @@ function SuperEjectDriver()
     OldPawn.PlayTeleportEffect(False,False);
 }
 
+function bool KDriverLeave(bool bForceLeave)
+{
+    if (Role == ROLE_Authority && IsHumanControlled() && !bForceLeave && bBoost
+        && (Velocity dot Vector(Rotation) >= MinEjectSpeed))
+    {
+        bImminentDestruction = true;
+        PlaySound(BoostReadySound, SLOT_Misc, 128,,,160);
+        return false;
+    }
+    return Super.KDriverLeave(bForceLeave);
+}
+
 // GEm: Don't hurt the instigator
 simulated function HurtRadius( float DamageAmount, float DamageRadius, class<DamageType> DamageType, float Momentum, vector HitLocation )
 {
@@ -424,6 +438,16 @@ simulated function EnableAfterburners(bool bEnable)
     bAfterburnersOn = bEnable;
 }
 
+simulated event KApplyForce(out Vector Force, out Vector Torque)
+{
+    Super(ONSRV).KApplyForce(Force, Torque);
+    if (bBoost)
+    {
+        Force += Vector(Rotation);
+        Force += Normal(Force) * FMax(BoostForce * FMin(SpeedAtBoost/700.0, 1.0), 1.0);
+    }
+}
+
 //=============================================================================
 // Default values
 //=============================================================================
@@ -453,7 +477,7 @@ defaultproperties
         WheelRadius = 20; //27
         //SuspensionTravel = 40;
         bPoweredWheel = true;
-        bHandbrakeWheel = true;
+        //bHandbrakeWheel = true;
     End Object
     Begin Object Class=SVehicleWheel Name=LRWheel
         BoneName = "B_L_Tire";
@@ -468,7 +492,7 @@ defaultproperties
         WheelRadius = 20;
         //SuspensionTravel = 0;
         bPoweredWheel = true;
-        bHandbrakeWheel = true;
+        //bHandbrakeWheel = true;
     End Object
     Begin Object Class=SVehicleWheel Name=RFWheel
         BoneName = "F_R_Tire";
@@ -540,8 +564,7 @@ defaultproperties
     AfterburnerOffset(0) = (X=-70.0,Y=-14.0,Z=20.0)
     AfterburnerOffset(1) = (X=-70.0,Y=14.0,Z=20.0)
     BoostForce = 1800.0
-    MinBoostSpeed = 700.0 // GEm: Originally 900, but it feels too much in comparison
-    MinEjectSpeed = 1000.0
+    MinEjectSpeed = 700.0 // GEm: Originally 900, but it feels too much in comparison
     bAllowAirControl = false
     SelfDestructDamage = 600.0
     SelfDestructDamageRadius = 600.0
