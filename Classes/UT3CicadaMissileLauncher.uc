@@ -189,4 +189,8 @@ defaultproperties
     PitchBone = Rt_Gun_Pitch
     YawBone = Rt_Gun_Yaw
     WeaponFireAttachmentBone = Rt_Gun_Pitch
+    RotationsPerSecond = 0.5
+    YawStartConstraint=-5000
+    YawEndConstraint=5000
+    bInstantRotation = false
 }

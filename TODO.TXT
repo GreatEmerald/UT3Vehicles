@@ -1,7 +1,4 @@
-* Cicada: should not be able to rotate guns instantly
 * SPMA: The AI never deploys cameras
-* Goliath: Treads rotate too slow
-* Merge mutators into two
 * Add hoverboards
 * Split off UT3HUD
 
