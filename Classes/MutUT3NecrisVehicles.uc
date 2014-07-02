@@ -38,7 +38,7 @@
  * of such parties' affiliates and subsidiaries.
  */
 
-class MutUT3Vehicles extends Mutator;
+class MutUT3NecrisVehicles extends Mutator;
 
 //var bool bHasInteraction; //GE: True if a player owns an Interaction object
 
@@ -57,15 +57,15 @@ function bool CheckReplacement(Actor Other, out byte bSuperRelevant)
             Factory.VehicleClass = class'UT3Leviathan';
             break;
         case class'ONSAttackCraft':
-            Factory.VehicleClass = class'UT3Raptor';
+            Factory.VehicleClass = class'UT3Fury';
             break;
 
 
         case class'ONSArtillery':
-            Factory.VehicleClass = class'UT3HellfireSPMA';
+            Factory.VehicleClass = class'UT3Nightshade';
             break;
         case class'ONSDualAttackCraft':
-            Factory.VehicleClass = class'UT3Cicada';
+            Factory.VehicleClass = class'UT3Fury';
             break;
         case class'ONSShockTank':
             Factory.VehicleClass = class'UT3Paladin';
@@ -77,10 +77,10 @@ function bool CheckReplacement(Actor Other, out byte bSuperRelevant)
             Factory.VehicleClass = class'UT3Goliath';
             break;
         case class'ONSHoverBike':
-            Factory.VehicleClass = class'UT3Manta';
+            Factory.VehicleClass = class'UT3Viper';
             break;
         case class'ONSPRV':
-            Factory.VehicleClass = class'UT3Hellbender';
+            Factory.VehicleClass = class'UT3Stealthbender';
             break;
         }
     }
@@ -119,8 +119,8 @@ GEm: No they don't, they use Rise and KDriverLeave you dummy
 
 defaultproperties
 {
-    FriendlyName = "UT3 Vehicles"
-    Description  = "Replaces UT2004 vehicles with versions similar to their UT3 Axon counterparts."
+    FriendlyName = "UT3 Necris Vehicles (experimental)"
+    Description  = "Replaces UT2004 vehicles with versions similar to their UT3 Necris counterparts. This is just a preview, they are not yet ready for prime time."
     GroupName    = "VehicleArena"
     //RemoteRole=ROLE_SimulatedProxy //GE: Needed for Interactions.
     //bAlwaysRelevant=true           //GE: Needed for Interactions.
