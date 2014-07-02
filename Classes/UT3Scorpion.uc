@@ -44,6 +44,7 @@ class UT3Scorpion extends EONSScorpion;
 var IntBox BoostIconCoords, EjectIconCoords;
 var float LastBoostAttempt, SpeedAtBoost;
 var() float MinEjectSpeed;
+var int AirBoost;
 
 event KImpact(actor other, vector pos, vector impactVel, vector impactNorm) //Modified so we would have control over when we detonate
 {
@@ -82,7 +83,7 @@ simulated function DrawHUD(Canvas C)
     // GEm: FIXME: UT3HudOverlay should be in UT3HUD.u (used by both UT3Style and UT3Vehicles)
     if (Gear > 1 && BoostCount > 0 && !bBoost) //GE: BoostCount > 0 == bReadyToBoost ;)
         class'UT3HudOverlay'.static.DrawToolTip(C, PC, "Jump", C.ClipX*0.5, C.ClipY * 0.92, BoostIconCoords);
-    else if ((Velocity dot Vector(Rotation)) >= MinEjectSpeed)
+    else if (bBoost && (Velocity dot Vector(Rotation)) >= MinEjectSpeed)
         class'UT3HudOverlay'.static.DrawToolTip(C, PC, "Use", C.ClipX*0.5, C.ClipY * 0.92, EjectIconCoords);
 }
 
@@ -242,6 +243,7 @@ function Boost()
         bBoost = true;
         BoostCount--;
         SpeedAtBoost = Velocity dot Vector(Rotation);
+        AirBoost = int(!bVehicleOnGround);
     }
     /*else if ((Velocity dot Vector(Rotation)) >= MinEjectSpeed)
     {
@@ -441,10 +443,15 @@ simulated function EnableAfterburners(bool bEnable)
 simulated event KApplyForce(out Vector Force, out Vector Torque)
 {
     Super(ONSRV).KApplyForce(Force, Torque);
-    if (bBoost)
+    // GEm: In UT3 it boosts in the air as well, but increasing force causes antigrav in UT2004
+    if (bBoost && (bVehicleOnGround || AirBoost > 0))
     {
         Force += Vector(Rotation);
         Force += Normal(Force) * FMax(BoostForce * FMin(SpeedAtBoost/700.0, 1.0), 1.0);
+        if (AirBoost > 0)
+            AirBoost++;
+        if (AirBoost > 6)
+            AirBoost = 0;
     }
 }
 
