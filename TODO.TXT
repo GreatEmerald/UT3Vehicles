@@ -1,5 +1,6 @@
 * SPMA: The AI never deploys cameras
-* Add hoverboards
+* Scorpion et al: change DirtSlip sounds
+* Improve hoverboards
 * Split off UT3HUD
 
 * Cicada: Mesh parts do not animate
