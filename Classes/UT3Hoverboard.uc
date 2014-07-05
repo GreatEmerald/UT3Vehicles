@@ -106,6 +106,7 @@ var () Vector			TrailOffset[2];
 var () Rotator		TrailRotOffset[2];
 
 var() float MaxAirForce; // GEm: How fast we accelerate in air, not the armed forces, dummy!
+var float OldVelocityZ;
 
 //==================================================
 
@@ -294,6 +295,16 @@ simulated function Tick(float DeltaTime)
 
     Super.Tick(DeltaTime);
 
+    // GEm: Kill adding force if speed is above 1200 (doesn't affect gravity, woo)
+    if (VSize(Velocity) >= 1200.0)
+        MaxThrustForce = 0.0;
+    else
+        MaxThrustForce = default.MaxThrustForce;
+        //Old -3000 New 0
+    if (OldVelocityZ < Velocity.Z-(0.5 * MaxFallSpeed))
+        TakeFallingDamage();
+    OldVelocityZ = Velocity.Z;
+
     JumpCountdown -= DeltaTime;
 
     CheckJumpDuck();
@@ -389,6 +400,34 @@ simulated function Tick(float DeltaTime)
         //log("Driver hit, ejecting");
         EjectDriver();
     }
+}
+
+function TakeFallingDamage()
+{
+    local float Shake, EffectiveSpeed;
+
+    if (OldVelocityZ < -0.5 * MaxFallSpeed)
+    {
+        if ( Role == ROLE_Authority )
+        {
+            MakeNoise(1.0);
+            if (OldVelocityZ < -1 * MaxFallSpeed)
+            {
+                EffectiveSpeed = OldVelocityZ;
+                if ( TouchingWaterVolume() )
+                    EffectiveSpeed = FMin(0, EffectiveSpeed + 100);
+                if ( EffectiveSpeed < -1 * MaxFallSpeed )
+                    TakeDamage(-100 * (EffectiveSpeed + MaxFallSpeed)/MaxFallSpeed, None, Location, vect(0,0,0), class'Fell');
+            }
+        }
+        if ( Controller != None )
+        {
+            Shake = FMin(1, -1 * OldVelocityZ/MaxFallSpeed);
+            Controller.DamageShake(Shake);
+        }
+    }
+    else if (OldVelocityZ < -1.4 * JumpZ)
+        MakeNoise(0.5);
 }
 
 simulated function float ChargeBar()
@@ -515,8 +554,7 @@ event TakeDamage (int Damage, Pawn EventInstigator, vector HitLocation, vector M
     //Eject driver after suffering any damage.
     if (Controller != None && Driver != None)
     {
-        if ( !Self.Controller.bGodMode && EventInstigator != None
-            && (EventInstigator.GetTeamNum() != Driver.GetTeamNum() || EventInstigator == Driver)
+        if (!Self.Controller.bGodMode && (EventInstigator == None || (EventInstigator.GetTeamNum() != Driver.GetTeamNum() || EventInstigator == Driver))
             && Damage > 0 )
         {
             Driver.TakeDamage(Damage, EventInstigator, HitLocation, Momentum, DamageType);
@@ -934,7 +972,7 @@ defaultproperties
      GroundSpeed=700.000000
 
      Begin Object Class=KarmaParamsRBFull Name=KParams0
-         kMaxSpeed=1200.000000          //Max Speed: was 1050
+         kMaxSpeed=12000.0 // GEm: Around 3000 is the falling speed off the Torlan tower, 1200 is the fall damage threshold
          KInertiaTensor(0)=1.300000
          KInertiaTensor(3)=3.000000
          KInertiaTensor(5)=3.500000
