@@ -105,6 +105,7 @@ var Emitter				TrailEmitter[2];
 var () Vector			TrailOffset[2];
 var () Rotator		TrailRotOffset[2];
 
+var() float MaxAirForce; // GEm: How fast we accelerate in air, not the armed forces, dummy!
 
 //==================================================
 
@@ -285,11 +286,11 @@ simulated function Tick(float DeltaTime)
     local actor HitActor;
     local Emitter JumpEffect;
     local KarmaParams kp;
-    local int    gravity;
+    //local int    gravity;
     local rotator MyRotator;
     local float MyVelocity, Multiplier;
 
-    gravity = -1;
+    //gravity = -1;
 
     Super.Tick(DeltaTime);
 
@@ -418,7 +419,8 @@ simulated function CheckJumpDuck()
     }
 
     // If we are on the ground, and press Rise, and we not currently in the middle of a jump, start a new one.
-    if (JumpCountdown <= 0.0 && Rise > 0 && bOnGround && (!bHoldingDuck || bDuckReleased)
+    if (JumpCountdown <= 0.0 && bOnGround
+        && ((Rise > 0 && !bHoldingDuck) || (Rise >= 0 && bDuckReleased))
         && Level.TimeSeconds - JumpDelay >= LastJumpTime)
     {
         PlaySound(JumpSound,,1.0);
@@ -437,6 +439,7 @@ simulated function CheckJumpDuck()
            Rise = 0;
 
         LastJumpTime = Level.TimeSeconds;
+        bDuckReleased = false;
     }
     else if (Rise < 0 && bOnGround)
     {
@@ -445,6 +448,7 @@ simulated function CheckJumpDuck()
             bHoldingDuck = true;
             DriveAnim = 'Crouch';
             Driver.LoopAnim(DriveAnim, , 0.25);
+            Driver.SetCollisionSize(Driver.default.CollisionRadius, Driver.CrouchHeight);
         }
 
         bDuckReleased = false;
@@ -464,6 +468,7 @@ simulated function CheckJumpDuck()
 
             DriveAnim = 'Crouch';
             Driver.LoopAnim(DriveAnim, , 0.25);
+            Driver.SetCollisionSize(Driver.default.CollisionRadius, Driver.CrouchHeight);
 
             if ( AIController(Controller) != None )
                 Rise = 0;
@@ -473,10 +478,14 @@ simulated function CheckJumpDuck()
     }
     else
     {
-       bHoldingDuck = False;
-       bDuckReleased = true;
-       DriveAnim = default.DriveAnim;
-       Driver.LoopAnim(DriveAnim, , 0.25);
+        if (bOnGround && bHoldingDuck
+            && Driver.SetCollisionSize(Driver.default.CollisionRadius, Driver.default.CollisionHeight))
+        {
+            bHoldingDuck = False;
+            bDuckReleased = true;
+            DriveAnim = default.DriveAnim;
+            Driver.LoopAnim(DriveAnim, , 0.25);
+        }
     }
 }
 
@@ -488,11 +497,6 @@ simulated function KApplyForce(out vector Force, out vector Torque)
     if (bDriving && JumpCountdown > 0.0)
     {
         Force += vect(0,0,1) * JumpForceMag;
-    }
-
-    if (bDriving && bHoldingDuck)
-    {
-        Force += vect(0,0,-1) * DuckForceMag;
     }
 }
 
@@ -515,17 +519,13 @@ event TakeDamage (int Damage, Pawn EventInstigator, vector HitLocation, vector M
             && (EventInstigator.GetTeamNum() != Driver.GetTeamNum() || EventInstigator == Driver)
             && Damage > 0 )
         {
+            Driver.TakeDamage(Damage, EventInstigator, HitLocation, Momentum, DamageType);
             EjectDriver();
             return;
         }
     }
     else
-    {
-        Damage *= 0.5;
-        Momentum *= 0.5;
-    }
-
-    Super.TakeDamage(Damage, EventInstigator, HitLocation, Momentum, DamageType);
+        return;
 }
 
 
@@ -547,7 +547,7 @@ function KDriverEnter (Pawn P)
 {
     Super.KDriverEnter(P); // calls the normal function
 
-    SetCollision(, true);
+    SetCollision(true, true);
 
     DriverHealth = P.Health;
     BikeDustOffsetTemp[0] = BikeDustOffset[0];
@@ -562,6 +562,8 @@ function KDriverEnter (Pawn P)
 function bool KDriverLeave (bool bForceLeave)
 {
     DriverHealth = 0;
+    if (Driver != None) // GEm: Prevent exploits
+        Driver.SetCollisionSize(Driver.default.CollisionRadius, Driver.default.CollisionHeight);
 
     if (Driver != None)
        Driver.bCanPickupInventory=Driver.default.bCanPickupInventory;
@@ -622,18 +624,27 @@ event KImpact(actor Other, vector Pos, vector ImpactVel, vector ImpactNorm)
 // GEm: TODO: Should suspend the player for a bit
 function EjectDriver()
 {
-   local Pawn	OldPawn;
-   local vector	EjectVel;
+    local Pawn	OldPawn;
+    local vector	EjectVel;
+    local Inventory I;
 
-   OldPawn = Driver;
+    if (xPawn(Driver) != None)
+    {
+        // GEm: Only eject if not wearing a Shieldbelt
+        for (I=Driver.Inventory; !I.IsA('UT3ArmorShieldbelt') && I != None; I = I.Inventory);
+        if (I.IsA('UT3ArmorShieldbelt') || xPawn(Driver).ShieldStrength > xPawn(Driver).SmallShieldStrength)
+            return;
+    }
 
-   KDriverLeave( true );
+    OldPawn = Driver;
 
-   if ( OldPawn == None )
-      return;
+    KDriverLeave( true );
 
-   EjectVel = Velocity;
-   OldPawn.Velocity = Velocity;
+    if ( OldPawn == None )
+        return;
+
+    EjectVel = Velocity;
+    OldPawn.Velocity = Velocity;
 }
 
 // GEm: Don't do any damage on dying
@@ -838,15 +849,16 @@ defaultproperties
      BikeDustOffset(1)=(X=-30.000000,Z=10.000000)
      BikeDustTraceDistance=100.000000
 
-     HoverSoftness=0.000000
-     HoverPenScale=0.08
-     HoverCheckDist=50.000000
+     HoverSoftness=0.0 // GEm: Controls amortisation. We don't need that at all.
+     HoverPenScale=2.0 // GEm: Controls how well the board follows land curves. High values create "bounciness".
+     HoverCheckDist=50.0
 
      UprightStiffness=400.000000
      UprightDamping=300.000000
 
      MaxThrustForce=40.000000                     //20.000
      LongDamping=0.020000
+     MaxAirForce=10.0
 
      MaxStrafeForce=2.000000
      LatDamping=0.100000
@@ -906,7 +918,7 @@ defaultproperties
      ImpactDamageMult=0.00008
 
      jumpMult=1000
-     bDuckReleased=True
+     bDuckReleased=false
 
      bDriverHoldsFlag=true
      bCanCarryFlag=true
