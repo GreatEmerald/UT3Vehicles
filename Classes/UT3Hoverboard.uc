@@ -71,7 +71,8 @@ var()   array<vector>                   BikeDustOffset;
 var()   float                           BikeDustTraceDistance;
 
 var()   Sound                           JumpSound;
-var()   Sound                           DuckSound;
+var()   Sound                           AltFireSound;
+var() Sound WaterDisruptSound;
 
 // Force Feedback
 var()   string                          JumpForce;
@@ -86,12 +87,12 @@ var     bool                            DoBikeDuck;
 var     bool                            OldDoBikeDuck;
 var     bool                            bHoldingDuck;
 var     bool                            bOverWater;
+var     bool                            bWasOverWater;
 
 // Variables below by gel
 var()	array<vector>	         BikeDustOffsetTemp;
 var     int                  jumpMult;       // Multiplier for the jump (int b/c i don't know how to compare floats accurately)
 var     bool                 bDuckReleased;
-var     bool                 bPlayDuckSound;
 
 //Other
 var bool bAttachedDriver;
@@ -105,8 +106,11 @@ var Emitter				TrailEmitter[2];
 var () Vector			TrailOffset[2];
 var () Rotator		TrailRotOffset[2];
 
-var() float MaxAirForce; // GEm: How fast we accelerate in air, not the armed forces, dummy!
+var() float MaxGroundSpeed, MaxWaterSpeed;
+var float MaxMovementSpeed;
 var float OldVelocityZ;
+var vector EnterVelocity;
+var float WaterCounter;
 
 //==================================================
 
@@ -248,18 +252,18 @@ simulated event DrivingStatusChanged()
             }
 
         // Create trail emitters.
-		    if (TrailEmitter[0] == None)
-		    {
-           TrailEmitter[0] = spawn(TrailClass[Team], self,, Location + (TrailOffset[0] >> Rotation) );
-		       TrailEmitter[0].SetBase(self);
-		       TrailEmitter[0].SetRelativeRotation(TrailRotOffset[0]);
-		    }
+        if (TrailEmitter[0] == None)
+        {
+            TrailEmitter[0] = spawn(TrailClass[Team], self,, Location + (TrailOffset[0] >> Rotation) );
+            TrailEmitter[0].SetBase(self);
+            TrailEmitter[0].SetRelativeRotation(TrailRotOffset[0]);
+        }
         if (TrailEmitter[1] == None)
-		    {
-           TrailEmitter[1] = spawn(TrailClass[Team], self,, Location + (TrailOffset[1] >> Rotation) );
-		       TrailEmitter[1].SetBase(self);
-		       TrailEmitter[1].SetRelativeRotation(TrailRotOffset[1]);
-		    }
+        {
+            TrailEmitter[1] = spawn(TrailClass[Team], self,, Location + (TrailOffset[1] >> Rotation) );
+            TrailEmitter[1].SetBase(self);
+            TrailEmitter[1].SetRelativeRotation(TrailRotOffset[1]);
+        }
     }
     else
     {
@@ -295,12 +299,32 @@ simulated function Tick(float DeltaTime)
 
     Super.Tick(DeltaTime);
 
-    // GEm: Kill adding force if speed is above 1200 (doesn't affect gravity, woo)
-    if (VSize(Velocity) >= 1200.0)
+    // Check for water
+    WaterCounter += DeltaTime;
+    if (WaterCounter > 0.1/HoverPenScale)
+        bOverWater = false;
+    kp = KarmaParams(KParams);
+    for(i=0;i<kp.Repulsors.Length;i++)
+    {
+        if (kp.Repulsors[i].bRepulsorOnWater)
+        {
+            bOverWater = true;
+            WaterCounter = 0.0;
+            break;
+        }
+    }
+    if (bOverWater && !bWasOverWater)
+        GoOnWater();
+    else if (!bOverWater && bWasOverWater)
+        GoOffWater();
+    bWasOverWater = bOverWater;
+
+    // GEm: Kill adding force if speed is above threshold (doesn't affect gravity, woo)
+    if (VSize(Velocity) >= MaxMovementSpeed)
         MaxThrustForce = 0.0;
     else
         MaxThrustForce = default.MaxThrustForce;
-        //Old -3000 New 0
+    // GEm: Needs to play some nice animation
     if (OldVelocityZ < Velocity.Z-(0.5 * MaxFallSpeed))
         TakeFallingDamage();
     OldVelocityZ = Velocity.Z;
@@ -342,18 +366,6 @@ simulated function Tick(float DeltaTime)
 
         if( !bDropDetail )
         {
-            // Check for water
-            bOverWater = false;
-            kp = KarmaParams(KParams);
-            for(i=0;i<kp.Repulsors.Length;i++)
-            {
-                if (kp.Repulsors[i].bRepulsorOnWater)
-                {
-                    bOverWater = true;
-                    break;
-                }
-            }
-
             for(i=0; i<BikeDust.Length; i++)
             {
                 BikeDust[i].bDustActive = false;
@@ -369,11 +381,6 @@ simulated function Tick(float DeltaTime)
                 }
                 else
                 {
-                    if (bOverWater)
-                        BikeDust[i].SetDustColor(Level.WaterDustColor);
-                    else
-                        BikeDust[i].SetDustColor(Level.DustColor);
-
                     HitDist = VSize(HitLocation - TraceStart);
 
                     BikeDust[i].SetLocation( HitLocation + 10*HitNormal);
@@ -381,13 +388,16 @@ simulated function Tick(float DeltaTime)
                     BikeDustLastNormal[i] = Normal( 3*BikeDustLastNormal[i] + HitNormal );
                     BikeDust[i].SetRotation( Rotator(BikeDustLastNormal[i]) );
 
-                    BikeDust[i].UpdateHoverDust(true, HitDist/BikeDustTraceDistance);
+                    BikeDust[i].UpdateHoverDust(!bOverWater, HitDist/BikeDustTraceDistance);
 
                     // If dust is just turning on, set OldLocation to current Location to avoid spawn interpolation.
                     if(!BikeDust[i].bDustActive)
                         BikeDust[i].OldLocation = BikeDust[i].Location;
 
-                    BikeDust[i].bDustActive = true;
+                    if (bOverWater)
+                        BikeDust[i].bDustActive = false;
+                    else
+                        BikeDust[i].bDustActive = true;
                 }
             }
         }
@@ -397,8 +407,10 @@ simulated function Tick(float DeltaTime)
 
     if (DriverHealth > Self.Driver.Health)
     {
-        //log("Driver hit, ejecting");
-        EjectDriver();
+        if (DriverHealth >= Self.Driver.Health+10)
+            EjectDriver();
+        else
+            DriverHealth = Self.Driver.Health;
     }
 }
 
@@ -458,7 +470,7 @@ simulated function CheckJumpDuck()
     }
 
     // If we are on the ground, and press Rise, and we not currently in the middle of a jump, start a new one.
-    if (JumpCountdown <= 0.0 && bOnGround
+    if (JumpCountdown <= 0.0 && bOnGround && !bOverWater
         && ((Rise > 0 && !bHoldingDuck) || (Rise >= 0 && bDuckReleased))
         && Level.TimeSeconds - JumpDelay >= LastJumpTime)
     {
@@ -491,7 +503,6 @@ simulated function CheckJumpDuck()
         }
 
         bDuckReleased = false;
-        bPlayDuckSound = false;
         jumpMult += 15;
 
         if (jumpMult > 1500)
@@ -528,6 +539,18 @@ simulated function CheckJumpDuck()
     }
 }
 
+// GEm: Also needs some repulsor visual effect
+simulated function GoOnWater()
+{
+    MaxMovementSpeed = MaxWaterSpeed;
+    PlaySound(WaterDisruptSound, , 1.0);
+}
+
+simulated function GoOffWater()
+{
+    MaxMovementSpeed = MaxGroundSpeed;
+}
+
 
 simulated function KApplyForce(out vector Force, out vector Torque)
 {
@@ -536,6 +559,11 @@ simulated function KApplyForce(out vector Force, out vector Torque)
     if (bDriving && JumpCountdown > 0.0)
     {
         Force += vect(0,0,1) * JumpForceMag;
+    }
+    if (VSize(EnterVelocity) != 0.0)
+    {
+        Force += EnterVelocity;
+        EnterVelocity = vect(0.0,0.0,0.0);
     }
 }
 
@@ -558,7 +586,8 @@ event TakeDamage (int Damage, Pawn EventInstigator, vector HitLocation, vector M
             && Damage > 0 )
         {
             Driver.TakeDamage(Damage, EventInstigator, HitLocation, Momentum, DamageType);
-            EjectDriver();
+            // GEm: Let driver health code determine this
+            //EjectDriver();
             return;
         }
     }
@@ -583,6 +612,8 @@ event Touch( Actor Other )
 
 function KDriverEnter (Pawn P)
 {
+    EnterVelocity = P.Velocity;
+
     Super.KDriverEnter(P); // calls the normal function
 
     SetCollision(true, true);
@@ -688,6 +719,23 @@ function EjectDriver()
 // GEm: Don't do any damage on dying
 function VehicleExplosion(vector MomentumNormal, float PercentMomentum);
 
+function AltFire(optional float F)
+{
+    MaxYawRate = 0.1;
+    PlaySound(AltFireSound, , 1.0);
+    bWeaponIsAltFiring = true;
+}
+
+function VehicleCeaseFire(bool bWasAltFire)
+{
+    Super.VehicleCeaseFire(bWasAltFire);
+
+    if (bWasAltFire)
+    {
+        MaxYawRate = default.MaxYawRate;
+        bWeaponIsAltFiring = false;
+    }
+}
 
 //==================================================
 
@@ -794,204 +842,208 @@ simulated function UpdatePrecacheMaterials()
 
 defaultproperties
 {
-     VehiclePositionString="on a hoverboard"
-     VehicleNameString="UT3 Hoverboard"
+    VehiclePositionString="on a hoverboard"
+    VehicleNameString="UT3 Hoverboard"
 
-     Mesh=Mesh'UT3Hoverboard'
-     DrawScale3D=(X=1.2,Y=1.2,Z=1.2)
-     Skins(0)=Material'EONSLocustTex.UT3HoverboardGrey'
-     RedSkin=Material'EONSLocustTex.UT3HoverboardGrey'
-     BlueSkin=Material'EONSLocustTex.UT3HoverboardGrey'
+    Mesh=Mesh'UT3Hoverboard'
+    DrawScale3D=(X=1.2,Y=1.2,Z=1.2)
+    Skins(0)=Material'EONSLocustTex.UT3HoverboardGrey'
+    RedSkin=Material'EONSLocustTex.UT3HoverboardGrey'
+    BlueSkin=Material'EONSLocustTex.UT3HoverboardGrey'
 
-     TrailClass(0)=class'EONSLocustThrusterEffectRed'
-     TrailClass(1)=class'EONSLocustThrusterEffectBlue'
-     TrailOffset(0)=(X=25.000000,Y=0.000000,Z=2.000000)
-     TrailOffset(1)=(X=-25.000000,Y=0.000000,Z=6.000000)
-     TrailRotOffset(0)=(Pitch=15000)   //Pitch=16384
-     TrailRotOffset(1)=(Pitch=15000)
+    TrailClass(0)=class'EONSLocustThrusterEffectRed'
+    TrailClass(1)=class'EONSLocustThrusterEffectBlue'
+    TrailOffset(0)=(X=25.000000,Y=0.000000,Z=2.000000)
+    TrailOffset(1)=(X=-25.000000,Y=0.000000,Z=6.000000)
+    TrailRotOffset(0)=(Pitch=15000)   //Pitch=16384
+    TrailRotOffset(1)=(Pitch=15000)
 
-     DriveAnim="Idle_Biggun"
-     DrivePos=(X=0.000000,Y=0.000000,Z=65.000000)
-     DriveRot=(Yaw=6000)
+    DriveAnim="Idle_Biggun"
+    DrivePos=(X=0.000000,Y=0.000000,Z=65.000000)
+    DriveRot=(Yaw=6000)
 
-     HealthMax=1.000000
-     Health=1
-     LinkHealMult=1.000000
+    HealthMax=1.000000
+    Health=1
+    LinkHealMult=1.000000
 
-     DriverDamageMult=1.0
-     MomentumMult=2.0
-     CollisionHeight=1.0
-     MinRunOverSpeed=100000
+    DriverDamageMult=1.0
+    MomentumMult=2.0
+    CollisionHeight=1.0
+    MinRunOverSpeed=100000
 
-     DestroyedVehicleMesh=StaticMesh'EONSLocustSM.UT3HoverboardSM'
-     DestructionEffectClass=class'Onslaught.ONSSmallVehicleExplosionEffect'
-     DisintegrationEffectClass=class'Onslaught.ONSVehicleExplosionEffect'
-     DisintegrationHealth=-25
+    DestroyedVehicleMesh=StaticMesh'EONSLocustSM.UT3HoverboardSM'
+    DestructionEffectClass=class'Onslaught.ONSSmallVehicleExplosionEffect'
+    DisintegrationEffectClass=class'Onslaught.ONSVehicleExplosionEffect'
+    DisintegrationHealth=-25
 
-     HornSounds(0)=Sound'ONSVehicleSounds-S.Horns.Horn02'
-     HornSounds(1)=Sound'ONSVehicleSounds-S.Horns.La_Cucharacha_Horn'
+    HornSounds(0)=Sound'ONSVehicleSounds-S.Horns.Horn02'
+    HornSounds(1)=Sound'ONSVehicleSounds-S.Horns.La_Cucharacha_Horn'
 
-     // GEm: Should make sure none of the below ever happen
-     //RanOverDamageType=class'DamTypeEONSLocustHeadshot'
-     //CrushedDamageType=class'DamTypeEONSLocustPancake'
+    // GEm: Should make sure none of the below ever happen
+    //RanOverDamageType=class'DamTypeEONSLocustHeadshot'
+    //CrushedDamageType=class'DamTypeEONSLocustPancake'
 
-     IdleSound=Sound'ONSVehicleSounds-S.Flying05'                //UT3GenericHum1   UT3HoverboardAmbient1   //IdleSound=Sound'ONSBoardSounds-S.Idle'  ONSVehicleSounds-S.HoverBikeIdle
-     StartUpSound=Sound'UT3A_Vehicle_Hoverboard.WAV.A_Vehicle_Hoverboard_EngineStart01'
-     ShutDownSound=Sound'UT3A_Vehicle_Hoverboard.WAV.A_Vehicle_Hoverboard_EngineStop01' //HoverboardWater1 //Sound'ONSVehicleSounds-S.HoverBikeJump04'    //ShutDownSound=Sound'ONSBoardSounds-S.Shutdown'
-     JumpSound=Sound'UT3A_Vehicle_Hoverboard.WAV.UT3HoverboardSweepThunk1'
-     DuckSound=Sound'UT3A_Vehicle_Hoverboard.WAV.UT3HoverboardSplunk1'
-     MaxPitchSpeed=1200.000000
-     SoundVolume=255
-     SoundRadius=600.000000
+    IdleSound=Sound'UT3A_Vehicle_Hoverboard.WAV.A_Vehicle_HoverBoard_Engine01'
+    StartUpSound=Sound'UT3A_Vehicle_Hoverboard.SoundCues.A_Vehicle_Hoverboard_EngineStartCue'
+    ShutDownSound=Sound'UT3A_Vehicle_Hoverboard.SoundCues.A_Vehicle_HoverBoard_EngineStopCue'
+    JumpSound=Sound'UT3A_Vehicle_Hoverboard.SoundCues.A_Vehicle_HoverBoard_JumpCue'
+    AltFireSound=Sound'UT3A_Vehicle_Hoverboard.WAV.A_Vehicle_Hoverboard_GrappleFail01'
+    WaterDisruptSound=Sound'UT3A_Vehicle_Hoverboard.WAV.A_Vehicle_Hoverboard_WaterDisrupt01'
+    MaxPitchSpeed=1200.000000
+    SoundVolume=255
+    SoundRadius=600.000000
 
-     StartUpForce="HoverBikeStartUp"
-     ShutDownForce="HoverBikeShutDown"
-     JumpForce="HoverBikeJump"
+    StartUpForce="HoverBikeStartUp"
+    ShutDownForce="HoverBikeShutDown"
+    JumpForce="HoverBikeJump"
 
-     FPCamPos=(Z=50.000000)
-     TPCamDistance=500.000000
-     TPCamLookat=(X=0.000000,Z=0.000000)
-     TPCamWorldOffset=(Z=120.000000)
+    FPCamPos=(Z=50.000000)
+    TPCamDistance=500.000000
+    TPCamLookat=(X=0.000000,Z=0.000000)
+    TPCamWorldOffset=(Z=120.000000)
 
-     bShowDamageOverlay=True
-     bDrawDriverInTP=True
-     bDrawMeshInFP=True
-     bTurnInPlace=True
-     bScriptedRise=True
-     bHasAltFire=False
-     bCanStrafe=True
-     bShowChargingBar=True
-     bCanFlip=True
-     bDriverCollideActors=True
+    bShowDamageOverlay=True
+    bDrawDriverInTP=True
+    bDrawMeshInFP=True
+    bTurnInPlace=True
+    bScriptedRise=True
+    bHasAltFire=False
+    bCanStrafe=True
+    bShowChargingBar=True
+    bCanFlip=True
+    bDriverCollideActors=True
 
-     MaxViewYaw=16000
-     MaxViewPitch=16000
+    MaxViewYaw=16000
+    MaxViewPitch=16000
 
-     ExitPositions(0)=(Z=60.000000)
-     ExitPositions(1)=(Z=60.000000)
-     ExitPositions(2)=(Z=60.000000)
-     ExitPositions(3)=(Z=60.000000)
-     ExitPositions(4)=(Z=60.000000)
-     ExitPositions(5)=(Z=60.000000)
-     ExitPositions(6)=(Z=60.000000)
-     ExitPositions(7)=(Z=60.000000)
+    ExitPositions(0)=(Z=60.000000)
+    ExitPositions(1)=(Z=60.000000)
+    ExitPositions(2)=(Z=60.000000)
+    ExitPositions(3)=(Z=60.000000)
+    ExitPositions(4)=(Z=60.000000)
+    ExitPositions(5)=(Z=60.000000)
+    ExitPositions(6)=(Z=60.000000)
+    ExitPositions(7)=(Z=60.000000)
 
-     EntryPosition=(X=0,Y=0,Z=0)
-     EntryRadius=140.0
+    EntryPosition=(X=0,Y=0,Z=0)
+    EntryRadius=140.0
 
-     ThrusterOffsets(0)=(X=50.000000,Z=10.000000)
-     ThrusterOffsets(1)=(X=-50.000000,Z=10.000000)
-     ThrusterOffsets(2)=(Z=0.000000)
+    ThrusterOffsets(0)=(X=50.000000,Z=10.000000)
+    ThrusterOffsets(1)=(X=-50.000000,Z=10.000000)
+    ThrusterOffsets(2)=(Z=0.000000)
 
-     BikeDustOffset(0)=(X=30.000000,Z=10.000000)
-     BikeDustOffset(1)=(X=-30.000000,Z=10.000000)
-     BikeDustTraceDistance=100.000000
+    BikeDustOffset(0)=(X=30.000000,Z=10.000000)
+    BikeDustOffset(1)=(X=-30.000000,Z=10.000000)
+    BikeDustTraceDistance=100.000000
 
-     HoverSoftness=0.0 // GEm: Controls amortisation. We don't need that at all.
-     HoverPenScale=2.0 // GEm: Controls how well the board follows land curves. High values create "bounciness".
-     HoverCheckDist=50.0
+    HoverSoftness=0.0 // GEm: Controls amortisation. We don't need that at all.
+    HoverPenScale=2.0 // GEm: Controls how well the board follows land curves. High values create "bounciness".
+    HoverCheckDist=50.0
 
-     UprightStiffness=400.000000
-     UprightDamping=300.000000
+    UprightStiffness=400.000000
+    UprightDamping=300.000000
 
-     MaxThrustForce=40.000000                     //20.000
-     LongDamping=0.020000
-     MaxAirForce=10.0
+    MaxThrustForce=40.000000                     //20.000
+    LongDamping=0.020000
 
-     MaxStrafeForce=2.000000
-     LatDamping=0.100000
+    MaxStrafeForce=2.000000
+    LatDamping=0.100000
 
-     TurnTorqueFactor=1000.000000
-     TurnTorqueMax=150.000000                     //50
-     TurnDamping=30.000000                        //15, 30.000
-     MaxYawRate=12.000000                         //6, 3.5
+    TurnTorqueFactor=1000.000000
+    TurnTorqueMax=150.000000                     //50
+    TurnDamping=30.000000                        //15, 30.000
+    MaxYawRate=12.000000                         //6, 3.5
 
-     PitchTorqueFactor=250.000000
-     PitchTorqueMax=10.000000
-     PitchDamping=30.000000
+    PitchTorqueFactor=250.000000
+    PitchTorqueMax=10.000000
+    PitchDamping=30.000000
 
-     RollTorqueTurnFactor=550.000000
-     RollTorqueStrafeFactor=400.000000
-     RollTorqueMax=15.000000
-     RollDamping=10.000000
+    RollTorqueTurnFactor=550.000000
+    RollTorqueStrafeFactor=400.000000
+    RollTorqueMax=15.000000
+    RollDamping=10.000000
 
-     StopThreshold=200.000000
-     VehicleMass=2.0
+    StopThreshold=200.000000
+    VehicleMass=2.0
 
-     JumpDuration=0.100000
-     JumpForceMag=224.000000
-     JumpDelay=1.500000
-     DuckForceMag=224.000000
+    JumpDuration=0.100000
+    JumpForceMag=224.000000
+    JumpDelay=1.500000
+    DuckForceMag=224.000000
 
-     //
+    //
 
-     ImpactDamageSounds=()
-     ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Hoverboard.WAV.A_Vehicle_Hoverboard_Collide01'
-     ImpactDamageSounds(1) = Sound'UT3A_Vehicle_Hoverboard.WAV.A_Vehicle_Hoverboard_Collide02'
+    ImpactDamageSounds=()
+    ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Hoverboard.WAV.A_Vehicle_Hoverboard_Collide01'
+    ImpactDamageSounds(1) = Sound'UT3A_Vehicle_Hoverboard.WAV.A_Vehicle_Hoverboard_Collide02'
 
-     NoEntryTexture=Texture'HUDContent.NoEntry'
-     TeamBeaconTexture=Texture'ONSInterface-TX.HealthBar'
-     TeamBeaconBorderMaterial=Material'InterfaceContent.BorderBoxD'
+    NoEntryTexture=Texture'HUDContent.NoEntry'
+    TeamBeaconTexture=Texture'ONSInterface-TX.HealthBar'
+    TeamBeaconBorderMaterial=Material'InterfaceContent.BorderBoxD'
 
-     StolenAnnouncement=None                        //
-     StolenSound=None                               //sound'ONSVehicleSounds-S.CarAlarm01'
+    StolenAnnouncement=None                        //
+    StolenSound=None                               //sound'ONSVehicleSounds-S.CarAlarm01'
 
-     CrosshairColor=(R=0,G=255,B=0,A=255)
-     CrosshairX=32
-     CrosshairY=32
-     CrosshairTexture=Texture'ONSInterface-TX.MineLayerReticle' //Texture'ONSInterface-TX.tankBarrelAligned'
-     VehicleIcon=(Material=Texture'AS_FX_TX.HUD.TrackedVehicleIcon',X=0,Y=0,SizeX=64,SizeY=64)
+    CrosshairColor=(R=0,G=255,B=0,A=255)
+    CrosshairX=32
+    CrosshairY=32
+    CrosshairTexture=Texture'ONSInterface-TX.MineLayerReticle' //Texture'ONSInterface-TX.tankBarrelAligned'
+    VehicleIcon=(Material=Texture'AS_FX_TX.HUD.TrackedVehicleIcon',X=0,Y=0,SizeX=64,SizeY=64)
 
-     bTeamLocked=True
-     bZeroPCRotOnEntry=false
-     bSetPCRotOnPossess=false
-     bSpecialHUD=True
+    bTeamLocked=True
+    bZeroPCRotOnEntry=false
+    bSetPCRotOnPossess=false
+    bSpecialHUD=True
 
-     //
+    //
 
-     DestructionLinearMomentum=(Min=62000.000000,Max=100000.000000)
-     DestructionAngularMomentum=(Min=25.000000,Max=75.000000)
-     DamagedEffectScale=0.500000
-     DamagedEffectOffset=(X=28.000000,Y=-10.000000,Z=10.000000)
-     ImpactDamageMult=0.00008
+    DestructionLinearMomentum=(Min=62000.000000,Max=100000.000000)
+    DestructionAngularMomentum=(Min=25.000000,Max=75.000000)
+    DamagedEffectScale=0.500000
+    DamagedEffectOffset=(X=28.000000,Y=-10.000000,Z=10.000000)
+    ImpactDamageMult=0.00008
 
-     jumpMult=1000
-     bDuckReleased=false
+    jumpMult=1000
+    bDuckReleased=false
 
-     bDriverHoldsFlag=true
-     bCanCarryFlag=true
-     FlagBone="trail2"
-     FlagOffset=(Z=45.000000)
-     FlagRotation=(Yaw=32768)
+    bDriverHoldsFlag=true
+    bCanCarryFlag=true
+    FlagBone="trail2"
+    FlagOffset=(Z=45.000000)
+    FlagRotation=(Yaw=32768)
 
-     ObjectiveGetOutDist=10.000000
-     bTraceWater=True
-     MaxDesireability=0.5
+    ObjectiveGetOutDist=10.000000
+    bTraceWater=True
+    MaxDesireability=0.5
 
-     MeleeRange=-200.000000
-     GroundSpeed=700.000000
+    MeleeRange=-200.000000
+    GroundSpeed=700.000000
 
-     Begin Object Class=KarmaParamsRBFull Name=KParams0
-         kMaxSpeed=12000.0 // GEm: Around 3000 is the falling speed off the Torlan tower, 1200 is the fall damage threshold
-         KInertiaTensor(0)=1.300000
-         KInertiaTensor(3)=3.000000
-         KInertiaTensor(5)=3.500000
-         KLinearDamping=0.150000
-         KAngularDamping=0.000000
-         KStartEnabled=True
-         bHighDetailOnly=False
-         bClientOnly=False
-         bKDoubleTickRate=True
-         bKStayUpright=True
-         bKAllowRotate=True
-         bDestroyOnWorldPenetrate=True
-         bDoSafetime=True
-         KFriction=0.500000
-         KImpactThreshold=700.000000
-     End Object
-     KParams=KarmaParamsRBFull'KParams0'
+    MaxGroundSpeed=900.0
+    MaxWaterSpeed=300.0
+    MaxMovementSpeed=900.0
 
-     bEjectDriver = true
+    Begin Object Class=KarmaParamsRBFull Name=KParams0
+        kMaxSpeed=12000.0 // GEm: Around 3000 is the falling speed off the Torlan tower, 1200 is the fall damage threshold
+        KInertiaTensor(0)=1.300000
+        KInertiaTensor(3)=3.000000
+        KInertiaTensor(5)=3.500000
+        KLinearDamping=0.150000
+        KAngularDamping=0.000000
+        KStartEnabled=True
+        bHighDetailOnly=False
+        bClientOnly=False
+        bKDoubleTickRate=True
+        bKStayUpright=True
+        bKAllowRotate=True
+        bDestroyOnWorldPenetrate=True
+        bDoSafetime=True
+        KFriction=0.500000
+        KImpactThreshold=700.000000
+    End Object
+    KParams=KarmaParamsRBFull'KParams0'
 
-     bBlockActors = false // GEm: This is so we don't instantly die, KDriverEnter unsets this
+    bEjectDriver = true
+
+    bBlockActors = false // GEm: This is so we don't instantly die, KDriverEnter unsets this
 }
