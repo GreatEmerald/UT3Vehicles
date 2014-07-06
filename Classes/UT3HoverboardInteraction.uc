@@ -39,6 +39,8 @@
 
 class UT3HoverboardInteraction extends Interaction;
 
+var float LastCallTime;
+
 function bool KeyEvent(EInputKey Key, EInputAction Action, FLOAT Delta )
 {
     local array<EInputKey> Keys;
@@ -50,10 +52,11 @@ function bool KeyEvent(EInputKey Key, EInputAction Action, FLOAT Delta )
     Keys = GetKeyBindNum("SwitchWeapon 10", ViewportOwner.Actor);
     for (i = 0; i < Keys.length; i++)
     {
-        if (Action == IST_Press && Key == Keys[i] && LocalPawn != None
-            && LocalPawn.Health > 0)
+        if (Action == IST_Press && Key == Keys[i]
+            && LocalPawn != None && LocalPawn.Health > 0)
         {
-            if (Vehicle(LocalPawn) == None)
+            if (Vehicle(LocalPawn) == None && !LocalPawn.PhysicsVolume.bWaterVolume
+                && ViewportOwner.Actor.Level.TimeSeconds > LastCallTime + 1.0)
             {
                 // GEm: Spawn a hoverboard and autoenter it
                 NewHoverboard = LocalPawn.Spawn(class'UT3Hoverboard');
@@ -61,7 +64,10 @@ function bool KeyEvent(EInputKey Key, EInputAction Action, FLOAT Delta )
                     NewHoverboard.TryToDrive(LocalPawn);
             }
             else if (UT3Hoverboard(LocalPawn) != None)
+            {
                 UT3Hoverboard(LocalPawn).KDriverLeave(false);
+                LastCallTime = ViewportOwner.Actor.Level.TimeSeconds;
+            }
         }
     }
 
