@@ -37,47 +37,27 @@
  * of such parties' affiliates and subsidiaries.
  */
 
-class MutUT3Hoverboards extends Mutator;
+class UT3RagdollDummy extends RagdollMadnessPawn;
 
-var bool bHasInteraction; //GE: True if a player owns an Interaction object
-
-simulated function Tick(float DeltaTime)
+function Touch(Actor Other)
 {
-    local PlayerController PC;
-
-    //UEWiki: If the player has an interaction already, exit function.
-    if (bHasInteraction || !Level.Game.bAllowVehicles)
-        Return;
-    PC = Level.GetLocalPlayerController();
-
-    //UEWiki: Run a check to see whether this mutator should create an interaction for the player
-    if ( PC != None && !PC.PlayerReplicationInfo.bIsSpectator )
-    {
-        PC.Player.InteractionMaster.AddInteraction(string(class'UT3HoverboardInteraction'), PC.Player); //UEWiki: Create the interaction
-        bHasInteraction = True; //UEWiki: Set the variable so this lot isn't called again
-    }
+    Super(Pawn).Touch(Other);
 }
 
-function ModifyPlayer(Pawn Other)
+/*function Died (Controller Killer, Class<DamageType> DamageType, Vector HitLocation)
 {
-    local KarmaParams KP;
-    local RagdollInventory RI;
-    if(xPawn(Other) != none)
-    {
-        RI = Spawn(class'UT3RagdollInventory', Other);
-        RI.GiveTo(Other);
-        KP = KarmaParams(Other.KParams);
-        if(KP != none)
-            KP.bClientOnly = false;
-    }
-    Super.ModifyPlayer(Other);
+    log(self@"Died:"@Killer@DamageType@HitLocation@Physics@Controller@MyPawn);
+    Super.Died(Killer, DamageType, HitLocation);
 }
+
+simulated function Destroyed ()
+{
+    log(self@"Destroyed:"@Physics@Controller@MyPawn@MyPawn.Physics@MyPawn.Health@Level.TimeSeconds);
+    Super.Destroyed();
+}*/
 
 defaultproperties
 {
-    FriendlyName = "UT3 Hoverboards"
-    Description = "Allows using hoverboards in vehicular gametypes (press the translocator button to mount)."
-    GroupName = "Translocator"
-    RemoteRole = ROLE_SimulatedProxy //GE: Needed for Interactions.
-    bAlwaysRelevant = true           //GE: Needed for Interactions.
+    RagdollHitKOTime = 0.0
+    bHeadView = false
 }

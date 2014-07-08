@@ -112,6 +112,9 @@ var float OldVelocityZ;
 var vector EnterVelocity;
 var float WaterCounter;
 
+var class<DamageType> LastDamageType;
+var vector LastHitLocation;
+
 //==================================================
 
 
@@ -405,12 +408,13 @@ simulated function Tick(float DeltaTime)
 
     // Spin Attack - Removed
 
-    if (DriverHealth > Self.Driver.Health)
+    // GEm: Somehow this makes an Accessed None on an Excessive Joints Error, weird
+    if (!bDeleteMe && Self.Driver != None && Self.Driver.Health > 0 && DriverHealth > Self.Driver.Health)
     {
-        if (DriverHealth >= Self.Driver.Health+10)
-            EjectDriver();
-        else
-            DriverHealth = Self.Driver.Health;
+        if (DriverHealth >= Self.Driver.Health+10){
+            //log(self@"Tick: Health watchdog eject when old health"@DriverHealth@"new health"@Driver.Health);
+            EjectDriver();}
+        DriverHealth = Self.Driver.Health;
     }
 }
 
@@ -578,6 +582,14 @@ event TakeDamage (int Damage, Pawn EventInstigator, vector HitLocation, vector M
     //   Damage *= 0;
     //   Momentum *= 0;
     //}
+    local Pawn OldPawn;
+
+    //log(self@"TakeDamage: Health"@Driver.Health@"Damage"@Damage@"Instigator"@EventInstigator@"Momentum"@Momentum@"Damage Type"@DamageType);
+
+    OldPawn = Driver;
+
+    // GEm: Take momentum but not damage
+    Super.TakeDamage(0, EventInstigator, HitLocation, Momentum, DamageType);
 
     //Eject driver after suffering any damage.
     if (Controller != None && Driver != None)
@@ -585,14 +597,18 @@ event TakeDamage (int Damage, Pawn EventInstigator, vector HitLocation, vector M
         if (!Self.Controller.bGodMode && (EventInstigator == None || (EventInstigator.GetTeamNum() != Driver.GetTeamNum() || EventInstigator == Driver))
             && Damage > 0 )
         {
-            Driver.TakeDamage(Damage, EventInstigator, HitLocation, Momentum, DamageType);
-            // GEm: Let driver health code determine this
-            //EjectDriver();
-            return;
+            if (EventInstigator != None && EventInstigator.GetTeamNum() != Driver.GetTeamNum()
+                && Damage < Driver.Health) // GEm: Don't bother ejecting if the driver's dead meat anyway
+            {
+                EjectDriver();
+                OldPawn.TakeDamage(Damage, EventInstigator, HitLocation, Momentum, DamageType);
+            }
+            else
+                Driver.TakeDamage(Damage, EventInstigator, HitLocation, Momentum, DamageType);
+            LastDamageType = DamageType;
+            LastHitLocation = HitLocation;
         }
     }
-    else
-        return;
 }
 
 
@@ -640,6 +656,9 @@ function bool KDriverLeave (bool bForceLeave)
     if ( PlayerReplicationInfo != None && PlayerReplicationInfo.HasFlag != None)
         Driver.HoldFlag(PlayerReplicationInfo.HasFlag);
 
+    if (Driver != None)
+        Driver.Velocity = Velocity;
+
     return Super.KDriverLeave(bForceLeave);
 }
 
@@ -683,27 +702,20 @@ event KImpact(actor Other, vector Pos, vector ImpactVel, vector ImpactNorm)
         ImpactTicksLeft = ImpactDamageTicks;
 
         // if we hit a solid object going too fast eject the driver
-        if ( Other != None && !ClassIsChildOf(Other.class, class'TerrainInfo') && Vsize(ImpactVel) > 8000)      //2000
-           EjectDriver();
+        if ( Other != None && !ClassIsChildOf(Other.class, class'TerrainInfo') && Vsize(ImpactVel) > 8000){      //2000
+            //log(self@"KImpact: Ejecting due to impact, health"@Driver.Health);
+           EjectDriver();}
     }
 }
 
 
 // New Eject
-// GEm: TODO: Should suspend the player for a bit
 function EjectDriver()
 {
     local Pawn	OldPawn;
     local vector	EjectVel;
-    local Inventory I;
-
-    if (xPawn(Driver) != None)
-    {
-        // GEm: Only eject if not wearing a Shieldbelt
-        for (I=Driver.Inventory; !I.IsA('UT3ArmorShieldbelt') && I != None; I = I.Inventory);
-        if (I.IsA('UT3ArmorShieldbelt') || xPawn(Driver).ShieldStrength > xPawn(Driver).SmallShieldStrength)
-            return;
-    }
+    //local UT3HoverboardRagdolliser HR;
+    local UT3RagdollInventory RI;
 
     OldPawn = Driver;
 
@@ -714,6 +726,17 @@ function EjectDriver()
 
     EjectVel = Velocity;
     OldPawn.Velocity = Velocity;
+
+    /*HR = Spawn(class'UT3HoverboardRagdolliser', OldPawn);
+    if (HR != None)
+        HR.Ragdollise(LastDamageType, LastHitLocation);*/
+
+    if (xPawn(OldPawn) != None)
+        OldPawn.PlaySound(xPawn(OldPawn).GetSound(EST_LandGrunt), SLOT_Interact);
+
+    RI = UT3RagdollInventory(OldPawn.FindInventoryType(class'UT3RagdollInventory'));
+    if (RI != None)
+        RI.StartRagdoll(class'UT3RagdollInventory'.default.FeignDeathLimit, true);
 }
 
 // GEm: Don't do any damage on dying
@@ -908,7 +931,7 @@ defaultproperties
     bTurnInPlace=True
     bScriptedRise=True
     bHasAltFire=False
-    bCanStrafe=True
+    bCanStrafe=false
     bShowChargingBar=True
     bCanFlip=True
     bDriverCollideActors=True
@@ -967,9 +990,8 @@ defaultproperties
     VehicleMass=2.0
 
     JumpDuration=0.100000
-    JumpForceMag=224.000000
-    JumpDelay=1.500000
-    DuckForceMag=224.000000
+    JumpForceMag=160.0
+    JumpDelay=1.000000
 
     //
 
