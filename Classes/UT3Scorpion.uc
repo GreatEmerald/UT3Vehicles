@@ -455,6 +455,60 @@ simulated event KApplyForce(out Vector Force, out Vector Torque)
     }
 }
 
+// GEm: Gosh darn it Epic and your hardcoded classes
+simulated event DrivingStatusChanged()
+{
+    local int i;
+    local Coords WheelCoords;
+
+    Super(ONSVehicle).DrivingStatusChanged();
+
+    if (bDriving && Level.NetMode != NM_DedicatedServer && !bDropDetail)
+    {
+        Dust.length = Wheels.length;
+        for(i=0; i<Wheels.Length; i++)
+            if (Dust[i] == None)
+            {
+                // Create wheel dust emitters.
+                WheelCoords = GetBoneCoords(Wheels[i].BoneName);
+                Dust[i] = spawn(class'UT3WheelSlipEffect', self,, WheelCoords.Origin + ((vect(0,0,-1) * Wheels[i].WheelRadius) >> Rotation));
+                Dust[i].SetBase(self);
+                Dust[i].SetDirtColor( Level.DustColor );
+            }
+
+        if(bMakeBrakeLights)
+        {
+            for(i=0; i<2; i++)
+                if (BrakeLight[i] == None)
+                {
+                    BrakeLight[i] = spawn(class'ONSBrakelightCorona', self,, Location + (BrakeLightOffset[i] >> Rotation) );
+                    BrakeLight[i].SetBase(self);
+                    BrakeLight[i].SetRelativeRotation( rot(0,32768,0) ); // Point lights backwards.
+                    BrakeLight[i].Skins[0] = BrakeLightMaterial;
+                }
+        }
+    }
+    else
+    {
+        if (Level.NetMode != NM_DedicatedServer)
+        {
+            for(i=0; i<Dust.Length; i++)
+                Dust[i].Destroy();
+
+            Dust.Length = 0;
+
+            if(bMakeBrakeLights)
+            {
+                for(i=0; i<2; i++)
+                    if (BrakeLight[i] != None)
+                        BrakeLight[i].Destroy();
+            }
+        }
+
+        TurnDamping = 0.0;
+    }
+}
+
 //=============================================================================
 // Default values
 //=============================================================================
