@@ -1,6 +1,5 @@
 * SPMA: The AI never deploys cameras
 * Scorpion et al: change DirtSlip sounds
-* Improve hoverboards
 * Split off UT3HUD
 
 * Cicada: Mesh parts do not animate
@@ -10,3 +9,7 @@
 * Leviathan: Create a collision mesh
 * Scorpion: Add a Denied! announcement
 * Scorpion: Make AI use self-destruct
+* Hoverboard: Make the dummy roll around and the pawn collide to counter Karma's Excessive Joint Error
+* Hoverboard: Make AI use them
+* Hoverboard: Add more animations
+* Hoverboard: Add towing

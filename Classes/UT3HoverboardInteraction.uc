@@ -52,7 +52,7 @@ function bool KeyEvent(EInputKey Key, EInputAction Action, FLOAT Delta )
     Keys = GetKeyBindNum("SwitchWeapon 10", ViewportOwner.Actor);
     for (i = 0; i < Keys.length; i++)
     {
-        if (Action == IST_Press && Key == Keys[i]
+        if (Action == IST_Press && Key == Keys[i] && RagdollMadnessPawn(LocalPawn) == None
             && LocalPawn != None && LocalPawn.Health > 0)
         {
             if (Vehicle(LocalPawn) == None && !LocalPawn.PhysicsVolume.bWaterVolume
