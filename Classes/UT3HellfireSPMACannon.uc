@@ -54,12 +54,15 @@ var rotator TargetRotation;
 
 var bool bCanFire;
 
+var Projectile LastProjectile;
+
 
 /**
  Filter fire attempts so player needs to launch and deploy a camera first.
  */
 event bool AttemptFire(Controller C, bool bAltFire)
 {
+    log(self@"AttemptFire by"@C@C.GetTeamNum()@bAltFire@"and MortarCamera"@MortarCamera);
     if (MortarCamera == None || MortarCamera.bShotDown) {
         // always fire camera first
         return Super(ONSWeapon).AttemptFire(C, True);
@@ -81,6 +84,12 @@ function Tick(float DeltaTime)
     else if (bCanFire && FireCountdown > AltFireInterval) {
         bCanFire = False;
     }
+
+    // GEm: Watchdog, makes sure to undeploy if there are no targets
+    if (LastCanAttackTime > 0.0 && Level.TimeSeconds - LastCanAttackTime > 5.0){
+        log(self@Instigator.Controller.GetTeamNum()@"Tick: Watchdog attempt to undeploy");
+        BotTryUndeploy();
+        LastCanAttackTime = Level.TimeSeconds;}
 }
 
 
@@ -220,38 +229,75 @@ function bool CanAttack(Actor Other)
     local bool bResult;
     local rotator FireRotation;
 
-    if (Instigator == None || Other == None)
-        return false;
+    //log(self@Instigator.Controller.GetTeamNum()@"CanAttack"@Other$": --------");
 
     B = Bot(Instigator.Controller);
-    if (B != None && Level.TimeSeconds - UT3HellfireSPMA(Instigator).StartDrivingTime < 1)
-        return false;
 
-    if (!Other.IsStationary() && (VSize(Other.Velocity) > 1000 || Pawn(Other) != None && Pawn(Other).GroundSpeed > 1000))
-        return false; // too fast, could probably attack but likely wouldn't hit
+    //log("Bot mission:"@B.GoalString);
+
+    if (Instigator == None || B == None){
+        //log("FALSE, no instigator!");
+        return false;}
+
+    if (Other == None)
+    {
+        //log("SCREW IT, we lost targets");
+        BotTryUndeploy();
+        return false;
+    }
+
+    if (B != None && Level.TimeSeconds - UT3HellfireSPMA(Instigator).StartDrivingTime < 1){
+        //log("FALSE, just started driving!");
+        BotTryUndeploy();
+        return false;}
+
+    if (!Other.IsStationary() && (VSize(Other.Velocity) > 1000 || Pawn(Other) != None && Pawn(Other).GroundSpeed > 1000)){
+        //log("FALSE, target is too fast!");
+        BotTryUndeploy();
+        return false;} // too fast, could probably attack but likely wouldn't hit
 
     CalcWeaponFire();
     bResult = GetFireDirection(Other.Location, FireRotation, WeaponCharge); // can assign WeaponCharge directly for bots
+    //log("There is line of sight:"@bResult);
     if (bResult && MortarCamera != None) {
+        //log("Camera already deployed... Ha, as if!");
         // make sure can really see enemy via camera...
-        if (!FastTrace(Other.Location, MortarCamera.Location))
-            bResult = False;
+        if (!FastTrace(Other.Location, MortarCamera.Location)){
+            //log("FALSE, there is actually no line of sight!");
+            bResult = False;}
         // ...and shot trajectory is not obstructed
-        else if (!TestTrajectory(Other.Location, FireRotation, false))
-            bResult = False;
+        else if (!TestTrajectory(Other.Location, FireRotation, false)){
+            //log("FALSE, there is line of sight but something is blocking it!");
+            bResult = False;}
     }
 
     if (bResult) {
+        //log("TRUE, all good and prepare to fire!");
         UT3HellfireSPMA(Instigator).CannonAim = FireRotation;
         LastCanAttackTime = Level.TimeSeconds;
     }
-    else if (Level.TimeSeconds - LastCanAttackTime > 5.0 && B != None && !B.Squad.IsDefending(B) && UT3HellfireSPMA(Instigator).IsDeployed()) {
-        // no good targets and bot doesn't defend, undeploy
-        UT3HellfireSPMA(Instigator).bBotDeploy = True;
-    }
+    else
+        BotTryUndeploy();
+    //log(self@Instigator.Controller.GetTeamNum()@"---------- CanAttack"@bResult);
     return bResult;
 }
 
+function BotTryUndeploy(optional bool bForce)
+{
+    local Bot B;
+
+    B = Bot(Instigator.Controller);
+
+    log(self@Instigator.Controller.GetTeamNum()@"BotTryUndeploy: Enemy"@B.Enemy);
+
+    if ((bForce || Level.TimeSeconds - LastCanAttackTime > 5.0) && B != None && (bForce || !B.Squad.IsDefending(B))
+        && UT3HellfireSPMA(Instigator) != None && UT3HellfireSPMA(Instigator).IsDeployed())
+    {
+        UT3HellfireSPMA(Instigator).bBotDeploy = True;
+        LastCanAttackTime = Level.TimeSeconds;
+        log(self@Instigator.Controller.GetTeamNum()@"BotTryUndeploy successful");
+    }
+}
 
 function byte BestMode()
 {
@@ -261,11 +307,13 @@ function byte BestMode()
 
 function AllowCameraLaunch()
 {
-    Super.AllowCameraLaunch();
+    //Super.AllowCameraLaunch();
+    LastCameraLaunch = Level.TimeSeconds - CameraLaunchWait;
 
     if (Instigator != None && PlayerController(Instigator.Controller) != None && PlayerController(Instigator.Controller).ViewTarget == MortarCamera) {
         PlayerController(Instigator.Controller).SetViewTarget(Instigator);
     }
+    log(self@Instigator.Controller.GetTeamNum()@"AllowCameraLaunch: camera destroyed at"@Level.TimeSeconds);
     MortarCamera = None;
 }
 
@@ -363,6 +411,7 @@ function Projectile SpawnProjectile(class<Projectile> ProjClass, bool bAltFire)
         }
         else
         {
+            LastProjectile = P;
             if (ONSMortarCamera(P) != None) {
                 P.Velocity = SetMuzzleVelocity(StartLocation, TargetLoc,0.25);
                 ONSMortarCamera(P).TargetZ = TargetLoc.Z;
@@ -372,12 +421,15 @@ function Projectile SpawnProjectile(class<Projectile> ProjClass, bool bAltFire)
             WeaponFireRotation = Rotator(P.Velocity);
             ONSArtillery(Owner).bAltFocalPoint = true;
             ONSArtillery(Owner).AltFocalPoint = StartLocation + P.Velocity;
+            PredictTargetLocation(VSize(P.Velocity), vector(WeaponFireRotation));
         }
         if (ONSMortarCamera(P) == None) {
+            log(self@Instigator.Controller.GetTeamNum()@"SpawnProjectile: priming shell"@P@"with my camera"@MortarCamera@"Landing in"@PredicatedTimeToImpact);
             if (MortarCamera != None) {
                 ONSMortarShell(P).StartTimer(FMax(0.6 * PredicatedTimeToImpact, 0.85 * PredicatedTimeToImpact - 0.7));
                 ShellSoundMarker = Spawn(class'UT3HellfireSPMAIncomingSound',,, PredictedTargetLocation + vect(0,0,400));
                 ShellSoundMarker.StartTimer(PredicatedTimeToImpact);
+                LastCanAttackTime = Level.TimeSeconds;
             }
             else
                 P.LifeSpan = 2.0;
@@ -403,27 +455,34 @@ function Projectile SpawnProjectile(class<Projectile> ProjClass, bool bAltFire)
             CameraAttempts = 0;
             LastCameraLaunch = Level.TimeSeconds;
             MortarCamera = ONSMortarCamera(P);
+            log(self@Instigator.Controller.GetTeamNum()@"SpawnProjectile: fired a camera"@MortarCamera@LastCameraLaunch);
             if (ONSArtillery(Owner) != None)
                 ONSArtillery(Owner).MortarCamera = MortarCamera;
         }
         else
             MortarShell = ONSMortarShell(P);
     }
-    else if ( AIController(Instigator.Controller) != None )
+    if (AIController(Instigator.Controller) != None)
     {
-        bFailed = ONSMortarCamera(P) == None;
-        if ( !bFailed )
+        // GEm: If we failed to spawn a camera or are firing cameras in a row (enemies keep shooting them down or they run into trees)
+        if (P == None || (ONSMortarCamera(P) != None && ONSMortarCamera(LastProjectile) != None))
+            bFailed = true;
+        // GEm: This is actually based on code from the original class. You know what fails? That code. Very much.
+        if ( bFailed )
         {
-            // allow 2 tries
+            // allow 3 tries
             CameraAttempts++;
-            bFailed = ( CameraAttempts > 1 );
+            bFailed = ( CameraAttempts > 2 );
         }
 
-        if (bFailed) {
+        if (bFailed)
+        {
             CameraAttempts = 0;
             LastCameraLaunch = Level.TimeSeconds;
-            if (MortarCamera != None)
-                MortarCamera.ShotDown();
+            log(self@Instigator.Controller.GetTeamNum()@"SpawnProjectile: Camera disabled due to too many attempts");
+            /*if (MortarCamera != None)
+                MortarCamera.ShotDown();*/
+            BotTryUndeploy(true);
         }
     }
     return P;
