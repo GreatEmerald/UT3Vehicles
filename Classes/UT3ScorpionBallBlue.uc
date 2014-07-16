@@ -122,7 +122,7 @@ simulated function ProcessTouch (Actor Other, vector HitLocation) //GE: For refl
     }
 }
 
-/*simulated function Timer() //GE: This function gives us some odd warnings
+simulated function Timer() //GE: This function gives us some odd warnings
 {
     //local Vehicle Other;
     local Controller C, NextC;
@@ -136,52 +136,52 @@ simulated function ProcessTouch (Actor Other, vector HitLocation) //GE: For refl
     //Instead of using ForEach VisibleCollidingActors, lets traverse the Controller List, it may be faster    //ForEach VisibleCollidingActors(class'Vehicle',Other,FlyingDamageRadius)
     while (C != None)
     {
-       NextC = C.NextController;
+        NextC = C.NextController;
 
-       //If the controller's pawn is a vehicle (that isn't the vehicle shooting this projectile) of a certain type,
-       //isn't dead, isn't on our team, is within the range of being struck, and has a clear path to being zapped
-       //then zap it.
-       if ( C.Pawn != None && Vehicle(C.Pawn) != None && C.Pawn != Instigator && C.Pawn.Health > 0 && !C.SameTeamAs(Instigator.Controller) && VSize(C.Pawn.Location - Self.Location) < FlyingDamageRadius && FastTrace(C.Pawn.Location, Self.Location) && (Vehicle(C.Pawn).IsA('ONSHoverBike') || Vehicle(C.Pawn).IsA('ONSAttackCraft') || Vehicle(C.Pawn).IsA('ONSDualAttackCraft') || Vehicle(C.Pawn).IsA('ONSHoverCraft') ) )
-       {
-          if ( Role == ROLE_Authority )
-			    {
-			       if (C.Pawn.Health < 100 && C.Pawn.Health > 25)
-			       {
-                TempDamage = Max(1,(C.Pawn.Health - 25));
-                C.Pawn.TakeDamage( TempDamage, Instigator, C.Pawn.Location, Normal(Location-C.Pawn.Location), MyDamageType);
-                Vehicle(C.Pawn).DriverRadiusDamage( (TempDamage/3)+Rand(10), DamageRadius, Instigator.Controller, MyDamageType, MomentumTransfer, (C.Pawn.Location + VRand()*30) ); //We may need to change Hitlocation to Other.Location
-                Vehicle(C.Pawn).EjectDriver();
-                bZap = true;
-             }
-             else
-             {
-				        C.Pawn.TakeDamage(Damage, Instigator, C.Pawn.Location, Normal(Location-C.Pawn.Location), MyDamageType);
-                Vehicle(C.Pawn).DriverRadiusDamage( (Damage/3)+Rand(10), DamageRadius, Instigator.Controller, MyDamageType, MomentumTransfer, C.Pawn.Location );
-                bZap = true;
-             }
+        //If the controller's pawn is a vehicle (that isn't the vehicle shooting this projectile) of a certain type,
+        //isn't dead, isn't on our team, is within the range of being struck, and has a clear path to being zapped
+        //then zap it.
+        if ( C.Pawn != None && Vehicle(C.Pawn) != None && Instigator != None && C.Pawn != Instigator && C.Pawn.Health > 0 && !C.SameTeamAs(Instigator.Controller) && VSize(C.Pawn.Location - Location) < FlyingDamageRadius && FastTrace(C.Pawn.Location, Location) && (Vehicle(C.Pawn).IsA('ONSHoverBike') || Vehicle(C.Pawn).IsA('ONSAttackCraft') || Vehicle(C.Pawn).IsA('ONSDualAttackCraft') || Vehicle(C.Pawn).IsA('ONSHoverCraft') ) )
+        {
+            if ( Role == ROLE_Authority )
+            {
+                if (C.Pawn.Health < 100 && C.Pawn.Health > 25)
+                {
+                    TempDamage = Max(1,(C.Pawn.Health - 25));
+                    C.Pawn.TakeDamage( TempDamage, Instigator, C.Pawn.Location, Normal(Location-C.Pawn.Location), MyDamageType);
+                    Vehicle(C.Pawn).DriverRadiusDamage( (TempDamage/3)+Rand(10), DamageRadius, Instigator.Controller, MyDamageType, MomentumTransfer, (C.Pawn.Location + VRand()*30) ); //We may need to change Hitlocation to Other.Location
+                    Vehicle(C.Pawn).EjectDriver();
+                    bZap = true;
+                }
+                else
+                {
+                    C.Pawn.TakeDamage(Damage, Instigator, C.Pawn.Location, Normal(Location-C.Pawn.Location), MyDamageType);
+                    Vehicle(C.Pawn).DriverRadiusDamage( (Damage/3)+Rand(10), DamageRadius, Instigator.Controller, MyDamageType, MomentumTransfer, C.Pawn.Location );
+                    bZap = true;
+                }
 
-             //Log("Applying damage to nearby vehicle: "$(FlyingDamageRadius-(VSize(Location-Other.Location))) * Default.FlyingDamage/FlyingDamageRadius);
-          }
+                //Log("Applying damage to nearby vehicle: "$(FlyingDamageRadius-(VSize(Location-Other.Location))) * Default.FlyingDamage/FlyingDamageRadius);
+            }
 
-          //Once this projectile has zapped something, draw the zap and then the projectile goes away.
-          if (bZap)
-          {
-             HitEmitter = spawn(HitEmitterClass,,, Self.Location, rotator(C.Pawn.Location - Self.Location));
-				     if (HitEmitter != None)
-					      HitEmitter.mSpawnVecA = C.Pawn.Location;
-					   C.Pawn.PlaySound(ImpactSound,,4*TransientSoundVolume);
-             Self.Destroy();
-          }
-       }
+            //Once this projectile has zapped something, draw the zap and then the projectile goes away.
+            if (bZap)
+            {
+                HitEmitter = spawn(HitEmitterClass,,, Location, rotator(C.Pawn.Location - Location));
+                if (HitEmitter != None)
+                    HitEmitter.mSpawnVecA = C.Pawn.Location;
+                C.Pawn.PlaySound(ImpactSound,,4*TransientSoundVolume);
+                Destroy();
+            }
+        }
 
-       C = NextC;
-	  }
+        C = NextC;
+    }
 
-	  if (Velocity.Z > -1000)
-	  {
-       Velocity.Z -= 60;
-	  }
-}   */
+    if (Velocity.Z > -1000)
+    {
+        Velocity.Z -= 60;
+    }
+}
 
 DefaultProperties
 {

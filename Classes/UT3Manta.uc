@@ -98,6 +98,9 @@ function Tick(float DeltaTime)
 //
 function ToggleBlades(bool OnOff)
 {
+    if (Blades.length < 2 || Blades[0] == None || Blades[1] == None)
+        return;
+
     if (OnOff) { // On.
         Blades[0].Skins[0] = Blades[0].BladesOnTex;
         Blades[1].Skins[0] = Blades[1].BladesOnTex;
