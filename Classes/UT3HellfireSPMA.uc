@@ -219,7 +219,7 @@ simulated function Tick(float DeltaTime)
                     }
                     if (ObjectiveTarget != None && (!ObjectiveTarget.LegitimateTargetOf(Bot(Controller)) || !Weapons[ActiveWeapon].CanAttack(ObjectiveTarget)))
                     {
-                        log(self@Instigator.Controller.GetTeamNum()@"Tick: Camera disabled: ObjectiveTarget"@ObjectiveTarget@!ObjectiveTarget.LegitimateTargetOf(Bot(Controller))@"(and see CanAttack above)");
+                        //log(self@Instigator.Controller.GetTeamNum()@"Tick: Camera disabled: ObjectiveTarget"@ObjectiveTarget@!ObjectiveTarget.LegitimateTargetOf(Bot(Controller))@"(and see CanAttack above)");
                         MortarCamera.ShotDown();
                         Weapons[ActiveWeapon].FireCountDown = Weapons[ActiveWeapon].AltFireInterval;
                     }
@@ -231,7 +231,7 @@ simulated function Tick(float DeltaTime)
                 {
                     // no target, retry later
                     // GEm: Rather wait around a bit, the cannon watchdog will decide to move eventually if we continue not having targets
-                    log(self@Instigator.Controller.GetTeamNum()@"Tick: Camera disabled: No targets");
+                    //log(self@Instigator.Controller.GetTeamNum()@"Tick: Camera disabled: No targets");
                     bAltFocalPoint = false;
                     //MortarCamera.ShotDown();
                     //Weapons[ActiveWeapon].FireCountDown = Weapons[ActiveWeapon].AltFireInterval;
@@ -330,8 +330,8 @@ function bool CanAttack(Actor Other)
     }
 
     bResult = Super.CanAttack(Other);
-    if (ActiveWeapon == 1)
-        log(self@Weapons[ActiveWeapon]@"CanAttack"@Other@bResult@"Bot orders"@Bot(Instigator.Controller).GoalString);
+    /*if (ActiveWeapon == 1)
+        log(self@Weapons[ActiveWeapon]@"CanAttack"@Other@bResult@"Bot orders"@Bot(Instigator.Controller).GoalString);*/
     return bResult;
 }
 
@@ -503,7 +503,7 @@ simulated function SetVehicleUndeployed()
 simulated function SetVehicleUndeploying()
 {
     Weapons[1].bForceCenterAim = True;
-    log(self@Instigator.Controller.GetTeamNum()@"SetVehicleUndeploying: Camera disabled"@MortarCamera);
+    //log(self@Instigator.Controller.GetTeamNum()@"SetVehicleUndeploying: Camera disabled"@MortarCamera);
     if (MortarCamera != None)
         MortarCamera.ShotDown();
 }
@@ -522,17 +522,17 @@ function BotRetryTarget()
 
     if (BotTarget != None && CanAttack(BotTarget))
     {
-        log(self@Instigator.Controller.GetTeamNum()@"BotRetryTarget: resuming firing at"@BotTarget);
+        //log(self@Instigator.Controller.GetTeamNum()@"BotRetryTarget: resuming firing at"@BotTarget);
         ChooseFireAt(BotTarget);
     }
     else if (B.Enemy != None && CanAttack(B.Enemy))
     {
-        log(self@Instigator.Controller.GetTeamNum()@"BotRetryTarget: Lost orginal target, but found new:"@B.Enemy);
+        //log(self@Instigator.Controller.GetTeamNum()@"BotRetryTarget: Lost orginal target, but found new:"@B.Enemy);
         ChooseFireAt(B.Enemy);
     }
     else
     {
-        log(self@Instigator.Controller.GetTeamNum()@"BotRetryTarget: Lost target, welp, that was wasted time...");
+        //log(self@Instigator.Controller.GetTeamNum()@"BotRetryTarget: Lost target, welp, that was wasted time...");
         bBotDeploy = true;
     }
 
@@ -564,7 +564,7 @@ function VehicleFire(bool bWasAltFire)
             bWasAltFire = false;
         }
         else {
-            log(self@Instigator.Controller.GetTeamNum()@"VehicleFire: No AI controller, Camera disabled");
+            //log(self@Instigator.Controller.GetTeamNum()@"VehicleFire: No AI controller, Camera disabled");
             MortarCamera.ShotDown();
             return;
         }
@@ -594,7 +594,7 @@ function Died(Controller Killer, class<DamageType> damageType, vector HitLocatio
 {
     bMovable = True;
     SetPhysics(PHYS_Karma); // ONSVehicle expects PHYS_Karma when dying
-    log(self@Instigator.Controller.GetTeamNum()@"Died: Camera disabled"@MortarCamera);
+    //log(self@Instigator.Controller.GetTeamNum()@"Died: Camera disabled"@MortarCamera);
     if (MortarCamera != None)
         MortarCamera.ShotDown();
 
@@ -693,7 +693,7 @@ state Deploying
 
 simulated event Destroyed()
 {
-    log(self@Instigator.Controller.GetTeamNum()@"Destroyed: Camera disabled"@MortarCamera);
+    //log(self@Instigator.Controller.GetTeamNum()@"Destroyed: Camera disabled"@MortarCamera);
     if (MortarCamera != None)
         MortarCamera.ShotDown();
 
@@ -708,7 +708,7 @@ simulated event Destroyed()
 
 function DriverLeft()
 {
-    log(self@"DriverLeft: Camera disabled"@MortarCamera);
+    //log(self@"DriverLeft: Camera disabled"@MortarCamera);
     if (MortarCamera != None)
         MortarCamera.ShotDown();
 
@@ -801,16 +801,16 @@ simulated event SVehicleUpdateParams()
 
 function TakeDamage(int Damage, Pawn instigatedBy, Vector Hitlocation, Vector Momentum, class<DamageType> DamageType)
 {                            //Make sure you don't hurt yourself with a combo
-    if (InstigatedBy != self)
+    if (InstigatedBy != self || DamageType == VehicleDrowningDamType)
         Super.TakeDamage(Damage, instigatedBy, Hitlocation, Momentum, damageType);
 }
 
-function ChooseFireAt(Actor A)
+/*function ChooseFireAt(Actor A)
 {
     if (ActiveWeapon == 1)
         log(self@Instigator.Controller.GetTeamNum()@"ChooseFireAt"@A);
     Super.ChooseFireAt(A);
-}
+}*/
 
 
 //=============================================================================

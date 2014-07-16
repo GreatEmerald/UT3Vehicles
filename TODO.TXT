@@ -1,10 +1,8 @@
-* SPMA: The AI never deploys cameras
-* Scorpion et al: change DirtSlip sounds
 * Split off UT3HUD
 
 * Cicada: Mesh parts do not animate
 * Raptor: No landing sequence
-* Paladin: Weird physics when running into one
+* Paladin, SPMA: Weird physics when running into one
 + Check materials
 * Leviathan: Create a collision mesh
 * Scorpion: Add a Denied! announcement
@@ -13,3 +11,5 @@
 * Hoverboard: Make AI use them
 * Hoverboard: Add more animations
 * Hoverboard: Add towing
+* SPMA: Defenders love throwing cameras instead of shells
+* SPMA: Weird collision

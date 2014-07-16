@@ -408,13 +408,12 @@ simulated function Tick(float DeltaTime)
 
     // Spin Attack - Removed
 
-    // GEm: Somehow this makes an Accessed None on an Excessive Joints Error, weird
-    if (!bDeleteMe && Self.Driver != None && Self.Driver.Health > 0 && DriverHealth > Self.Driver.Health)
+    if (Driver != None && Driver.Health > 0 && DriverHealth > Driver.Health)
     {
-        if (DriverHealth >= Self.Driver.Health+10){
+        if (DriverHealth >= Driver.Health+10){
             //log(self@"Tick: Health watchdog eject when old health"@DriverHealth@"new health"@Driver.Health);
             EjectDriver();}
-        DriverHealth = Self.Driver.Health;
+        DriverHealth = Driver.Health;
     }
 }
 
@@ -594,7 +593,7 @@ event TakeDamage (int Damage, Pawn EventInstigator, vector HitLocation, vector M
     //Eject driver after suffering any damage.
     if (Controller != None && Driver != None)
     {
-        if (!Self.Controller.bGodMode && (EventInstigator == None || (EventInstigator.GetTeamNum() != Driver.GetTeamNum() || EventInstigator == Driver))
+        if (!Controller.bGodMode && (EventInstigator == None || (EventInstigator.GetTeamNum() != Driver.GetTeamNum() || EventInstigator == Driver))
             && Damage > 0 )
         {
             if (EventInstigator != None && EventInstigator.GetTeamNum() != Driver.GetTeamNum()
@@ -615,14 +614,14 @@ event TakeDamage (int Damage, Pawn EventInstigator, vector HitLocation, vector M
 event Bump(actor Other)
 {
    if (xPawn(Other) != None)
-      Self.Velocity = vect(0,0,0);
+      Velocity = vect(0,0,0);
 }
 
 
 event Touch( Actor Other )
 {
     if ( xPawn(Other) != none )
-       Self.Velocity = vect(0,0,0);
+       Velocity = vect(0,0,0);
 }
 
 

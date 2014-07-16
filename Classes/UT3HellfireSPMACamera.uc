@@ -72,7 +72,7 @@ simulated function Destroyed()
     if (Trajectory != None)
         Trajectory.Destroy();
 
-    log(self@Instigator.Controller.GetTeamNum()@"Destroyed");
+    //log(self@Instigator.Controller.GetTeamNum()@"Destroyed");
     Super.Destroyed();
 }
 
@@ -104,7 +104,7 @@ simulated function DeployCamera()
 {
     if (bShotDown) {
         // can't deploy if already disconnected
-        log(self@Instigator.Controller.GetTeamNum()@"DeployCamera: Trying to deploy but already shot down");
+        //log(self@Instigator.Controller.GetTeamNum()@"DeployCamera: Trying to deploy but already shot down");
         return;
     }
     bDeployed = True;
@@ -134,7 +134,7 @@ simulated function Tick(float DeltaTime)
     local vector HitLocation, HitNormal;
 
     if (bShotDown || UT3HellfireSPMA(Instigator) == None || UT3HellfireSPMA(Instigator).Driver == None) {
-        log(self@Instigator.Controller.GetTeamNum()@"Tick: shooting down"@!bShotDown@"because Instigator"@UT3HellfireSPMA(Instigator)@"Driver"@UT3HellfireSPMA(Instigator).Driver);
+        //log(self@Instigator.Controller.GetTeamNum()@"Tick: shooting down"@!bShotDown@"because Instigator"@UT3HellfireSPMA(Instigator)@"Driver"@UT3HellfireSPMA(Instigator).Driver);
         if (!bShotDown)
             ShotDown();
         Disable('Tick');
@@ -182,9 +182,9 @@ simulated function Tick(float DeltaTime)
 
     if (!bDeployed) {
         if (Instigator != None && AIController(Instigator.Controller) != None && NextAIDeployCheck <= Level.TimeSeconds) {
-        log(self@"Tick: AI is testing camera!");
+        //log(self@"Tick: AI is testing camera!");
             if (Instigator.Controller.Target != None && FastTrace(Instigator.Controller.Target.Location)) {
-                log(self@"Tick: deploying camera!");
+                //log(self@"Tick: deploying camera!");
                 Deploy();
             }
             else {
@@ -267,7 +267,7 @@ simulated function bool SpecialCalcView(out Actor ViewActor, out vector CameraLo
 
 simulated function ShotDown()
 {
-    log(self@Instigator.Controller.GetTeamNum()@"ShotDown");
+    //log(self@Instigator.Controller.GetTeamNum()@"ShotDown");
     if (Instigator != None && PlayerController(Instigator.Controller) != None && PlayerController(Instigator.Controller).ViewTarget == Self) {
         if (Instigator.Controller.Pawn != None) {
             PlayerController(Instigator.Controller).bBehindView = Instigator.Controller.Pawn.PointOfView();
@@ -317,11 +317,11 @@ simulated function PostNetReceive()
 }
 
 // GEm: DEBUG
-function TakeDamage(int Damage, Pawn instigatedBy, Vector hitlocation, Vector momentum, class<DamageType> damageType)
+/*function TakeDamage(int Damage, Pawn instigatedBy, Vector hitlocation, Vector momentum, class<DamageType> damageType)
 {
     log(self@Instigator.Controller.GetTeamNum()@"TakeDamage from"@instigatedBy);
     Super.TakeDamage(Damage, instigatedBy, hitlocation, momentum, damageType);
-}
+}*/
 
 //=============================================================================
 // Default values
