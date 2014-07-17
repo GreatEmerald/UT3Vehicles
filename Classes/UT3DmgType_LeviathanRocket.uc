@@ -1,5 +1,4 @@
 /*
- * Copyright © 2007 Wormbo
  * Copyright © 2014 GreatEmerald
  *
  * Redistribution and use in source and binary forms, with or without
@@ -38,19 +37,32 @@
  * of such parties' affiliates and subsidiaries.
  */
 
-class UT3LeviathanRocket extends UT3RocketProj; //GE: From RocketProj to UT3RocketProj
+class UT3DmgType_LeviathanRocket extends VehicleDamageType;
 
 
-//=============================================================================
-// Default values
-//=============================================================================
+static function GetHitEffects(out class<xEmitter> HitEffects[4], int VictimHealth )
+{
+    HitEffects[0] = class'HitSmoke';
+
+    if( VictimHealth <= 0 )
+        HitEffects[1] = class'HitFlameBig';
+    else if ( FRand() < 0.8 )
+        HitEffects[1] = class'HitFlame';
+}
 
 defaultproperties
 {
-    Damage       =   80.0
-    DamageRadius =  180.0
-    Speed        = 5000.0
-    MaxSpeed     = 5000.0
-    MomentumTransfer=50000.000000
-    MyDamageType = class'UT3DmgType_LeviathanRocket'
+    DeathString="%k rained fire down upon %o."
+    MaleSuicide="%o blew up."
+    FemaleSuicide="%o blew up."
+
+    VehicleClass=class'UT3LeviathanTurretRocket'
+    bDetonatesGoop=true
+    KDamageImpulse=20000
+    VehicleMomentumScaling=2.0
+    VehicleDamageScaling=1.5
+    bThrowRagdoll=true
+    GibPerterbation=0.15
+    bFlaming=true
+    bDelayedDamage=true
 }

@@ -1,12 +1,44 @@
-/******************************************************************************
-UT3LeviathanShockBall
+/*
+ * Copyright © 2007, 2009 Wormbo
+ * Copyright © 2009, 2014 GreatEmerald
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are
+ * met:
+ *
+ *     (1) Redistributions of source code must retain the above copyright
+ *     notice, this list of conditions and the following disclaimer.
+ *
+ *     (2) Redistributions in binary form must reproduce the above copyright
+ *     notice, this list of conditions and the following disclaimers in
+ *     the documentation and/or other materials provided with the
+ *     distribution.
+ *
+ *     (3) The name of the author may not be used to
+ *     endorse or promote products derived from this software without
+ *     specific prior written permission.
+ *
+ *     (4) The use, modification and redistribution of this software must
+ *     be made in compliance with the additional terms and restrictions
+ *     provided by the Unreal Tournament 2004 End User License Agreement.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+ * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT,
+ * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+ * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ *
+ * This software is not supported by Atari, S.A., Epic Games, Inc. or any
+ * of such parties' affiliates and subsidiaries.
+ */
 
-Creation date: 2007-12-30 18:03
-Last change: $Id$
-Copyright (c) 2007 and 2009, Wormbo and GreatEmerald
-******************************************************************************/
-
-class UT3LeviathanShockBall extends UT3ShockBall; //GE: I'll just set it to UT3ShockBall.
+class UT3LeviathanShockBall extends ShockProjectile;
 
 
 //=============================================================================
@@ -18,44 +50,44 @@ var bool bCanHitShields;
 
 simulated function Explode(vector HitLocation, vector HitNormal)
 {
-	SuperExplosion();
+    SuperExplosion();
 }
 
 
 simulated function ProcessTouch (Actor Other, vector HitLocation)
 {
-	if (bCanHitShields || UT3LeviathanShield(Other) == None) {
-		Super.ProcessTouch(Other, HitLocation);
-	}
+    if (bCanHitShields || UT3LeviathanShield(Other) == None) {
+        Super.ProcessTouch(Other, HitLocation);
+    }
 }
 
 
 simulated function Timer()
 {
-	bCanHitShields = True;
+    bCanHitShields = True;
 }
 
 
 function SuperExplosion()
 {
-	local Actor HitActor, ExpFX;
-	local vector HitLocation, HitNormal;
+    local Actor HitActor, ExpFX;
+    local vector HitLocation, HitNormal;
 
-	HurtRadius(Damage, DamageRadius, MyDamageType, MomentumTransfer, Location);
+    HurtRadius(Damage, DamageRadius, MyDamageType, MomentumTransfer, Location);
 
-	ExpFX = Spawn(class'ONSPRVComboEffect');
-	if (Level.NetMode == NM_DedicatedServer) {
-		if (ExpFX != None)
-			ExpFX.LifeSpan = 0.25;
-	}
-	else if (EffectIsRelevant(Location,false)) {
-		HitActor = Trace(HitLocation, HitNormal, Location - vect(0,0,120), Location,false);
-		if (HitActor != None)
-			Spawn(class'ComboDecal', self,, HitLocation, rotator(vect(0,0,-1)));
-	}
-	PlaySound(ComboSound, SLOT_None, 1.0,, 800);
-	DestroyTrails();
-	Destroy();
+    ExpFX = Spawn(class'ONSPRVComboEffect');
+    if (Level.NetMode == NM_DedicatedServer) {
+        if (ExpFX != None)
+            ExpFX.LifeSpan = 0.25;
+    }
+    else if (EffectIsRelevant(Location,false)) {
+        HitActor = Trace(HitLocation, HitNormal, Location - vect(0,0,120), Location,false);
+        if (HitActor != None)
+            Spawn(class'ComboDecal', self,, HitLocation, rotator(vect(0,0,-1)));
+    }
+    PlaySound(ComboSound, SLOT_None, 1.0,, 800);
+    DestroyTrails();
+    Destroy();
 }
 
 
@@ -65,8 +97,16 @@ function SuperExplosion()
 
 defaultproperties
 {
-	Speed            =   1500.0
-	MaxSpeed         =   1500.0
-	Damage           =    120.0
-	DamageRadius     =    300.0
+    Speed            =   1500.0
+    MaxSpeed         =   1500.0
+    Damage           =    120.0
+    DamageRadius     =    300.0
+    ComboDamage=215
+    ComboSound=Sound'UT3Weapons.ShockRifle.ShockCombo'
+    MomentumTransfer=70000.0
+    MyDamageType=class'UT3DmgType_LeviathanShockBall'
+
+    AmbientSound=Sound'UT3Weapons.ShockRifle.ShockRifleAltAmb'
+    ImpactSound=Sound'UT3Weapons.ShockRifle.ShockBallImpact'
+    LifeSpan=8.000000
 }

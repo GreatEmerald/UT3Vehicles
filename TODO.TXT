@@ -13,3 +13,4 @@
 * Hoverboard: Add towing
 * SPMA: Defenders love throwing cameras instead of shells
 * SPMA: Weird collision
+* SPMA: The AI is a bit too good at what it does (aim fuzziness + longer delays?)

@@ -1,5 +1,4 @@
 /*
- * Copyright © 2007 Wormbo
  * Copyright © 2014 GreatEmerald
  *
  * Redistribution and use in source and binary forms, with or without
@@ -38,19 +37,15 @@
  * of such parties' affiliates and subsidiaries.
  */
 
-class UT3LeviathanRocket extends UT3RocketProj; //GE: From RocketProj to UT3RocketProj
-
-
-//=============================================================================
-// Default values
-//=============================================================================
+class UT3DmgType_LeviathanShockBall extends DamTypePRVCombo;
 
 defaultproperties
 {
-    Damage       =   80.0
-    DamageRadius =  180.0
-    Speed        = 5000.0
-    MaxSpeed     = 5000.0
-    MomentumTransfer=50000.000000
-    MyDamageType = class'UT3DmgType_LeviathanRocket'
+    DeathString="%k electrified %o."
+    MaleSuicide="%o recieved too large of a shock."
+    FemaleSuicide="%o recieved too large of a shock."
+
+    VehicleMomentumScaling=0.25
+    VehicleDamageScaling=0.25
+    VehicleClass=class'UT3LeviathanTurretShock'
 }
