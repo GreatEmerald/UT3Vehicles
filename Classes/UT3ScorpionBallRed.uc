@@ -149,14 +149,17 @@ simulated function Timer() //GE: This function gives us some odd warnings
                 {
                     TempDamage = Max(1,(C.Pawn.Health - 25));
                     C.Pawn.TakeDamage( TempDamage, Instigator, C.Pawn.Location, Normal(Location-C.Pawn.Location), MyDamageType);
-                    Vehicle(C.Pawn).DriverRadiusDamage( (TempDamage/3)+Rand(10), DamageRadius, Instigator.Controller, MyDamageType, MomentumTransfer, (C.Pawn.Location + VRand()*30) ); //We may need to change Hitlocation to Other.Location
-                    Vehicle(C.Pawn).EjectDriver();
+                    if (C.Pawn != None)
+                        Vehicle(C.Pawn).DriverRadiusDamage( (TempDamage/3)+Rand(10), DamageRadius, Instigator.Controller, MyDamageType, MomentumTransfer, (C.Pawn.Location + VRand()*30) ); //We may need to change Hitlocation to Other.Location
+                    if (C.Pawn != None)
+                        Vehicle(C.Pawn).EjectDriver();
                     bZap = true;
                 }
                 else
                 {
                     C.Pawn.TakeDamage(Damage, Instigator, C.Pawn.Location, Normal(Location-C.Pawn.Location), MyDamageType);
-                    Vehicle(C.Pawn).DriverRadiusDamage( (Damage/3)+Rand(10), DamageRadius, Instigator.Controller, MyDamageType, MomentumTransfer, C.Pawn.Location );
+                    if (C.Pawn != None)
+                        Vehicle(C.Pawn).DriverRadiusDamage( (Damage/3)+Rand(10), DamageRadius, Instigator.Controller, MyDamageType, MomentumTransfer, C.Pawn.Location );
                     bZap = true;
                 }
 
@@ -167,9 +170,12 @@ simulated function Timer() //GE: This function gives us some odd warnings
             if (bZap)
             {
                 HitEmitter = spawn(HitEmitterClass,,, Location, rotator(C.Pawn.Location - Location));
-                if (HitEmitter != None)
-                    HitEmitter.mSpawnVecA = C.Pawn.Location;
-                C.Pawn.PlaySound(ImpactSound,,4*TransientSoundVolume);
+                if (C.Pawn != None)
+                {
+                    if (HitEmitter != None)
+                        HitEmitter.mSpawnVecA = C.Pawn.Location;
+                    C.Pawn.PlaySound(ImpactSound,,4*TransientSoundVolume);
+                }
                 Destroy();
             }
         }

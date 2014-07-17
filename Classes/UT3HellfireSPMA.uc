@@ -186,7 +186,8 @@ simulated function Tick(float DeltaTime)
 
         if (IsLocallyControlled() && IsHumanControlled())
         {
-            if (!MortarCamera.bShotDown && PlayerController(Controller).ViewTarget != MortarCamera)
+            if (!MortarCamera.bShotDown
+                && PlayerController(Controller) != None && PlayerController(Controller).ViewTarget != MortarCamera)
             {
                 PlayerController(Controller).SetViewTarget(MortarCamera);
                 PlayerController(Controller).bBehindView = False;
@@ -208,7 +209,7 @@ simulated function Tick(float DeltaTime)
             if (IsLocallyControlled() && !IsHumanControlled())
             {
                 // AI-controlled
-                if (Controller.Target != None)
+                if (Controller != None && Controller.Target != None)
                 {
                     if (MortarCamera.bDeployed)
                     {
