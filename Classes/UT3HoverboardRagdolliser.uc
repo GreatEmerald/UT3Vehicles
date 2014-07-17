@@ -84,7 +84,7 @@ simulated function Destroyed()
     }
     if ( NewPawn == None )
     {
-        log("UT3HoverboardRagdolliser: Could not spawn player of type "$Puppeteer.PawnClass);
+        warn("UT3HoverboardRagdolliser: Could not spawn player of type "$Puppeteer.PawnClass);
         Puppeteer.GotoState('Dead');
         if ( PlayerController(Puppeteer) != None )
             PlayerController(Puppeteer).ClientGotoState('Dead','Begin');

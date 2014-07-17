@@ -162,7 +162,7 @@ function Destroyed()
         if (Instigator.Health > 0)
         {
             // GEm: Inventory is killed due to parent pawn getting axed in Karma's Excessive Joint Error. Needs a rewrite to fix.
-            log(self@"Destroyed: They are trying to kill me while I have a pawn to puppeteer! Bail out!!!");
+            warn(self@"Destroyed: Karma killed the ragdoll and took the player with it!");
             bForcedRagdoll = false;
             EndRagdoll();
         }
