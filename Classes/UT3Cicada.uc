@@ -41,6 +41,7 @@
 class UT3Cicada extends ONSDualAttackCraft;
 
 var(Sound) sound TargetLockSound;
+var() rotator TrailEffectRotation;
 
 //=======================
 // @100GPing100
@@ -66,6 +67,40 @@ function AnimateVehicle()
 }
 simulated function DrivingStatusChanged()
 {
+
+    local vector RotX, RotY, RotZ;
+    local int i;
+
+    super(ONSChopperCraft).DrivingStatusChanged();
+
+    if (bDriving && Level.NetMode != NM_DedicatedServer && !bDropDetail)
+    {
+        GetAxes(Rotation,RotX,RotY,RotZ);
+
+        if (TrailEffects.Length == 0)
+        {
+            TrailEffects.Length = TrailEffectPositions.Length;
+
+            for(i=0;i<TrailEffects.Length;i++)
+                if (TrailEffects[i] == None)
+                {
+                    TrailEffects[i] = spawn(TrailEffectClass, self,, Location + (TrailEffectPositions[i] >> Rotation) );
+                    TrailEffects[i].SetBase(self);
+                    TrailEffects[i].SetRelativeRotation( TrailEffectRotation );
+                }
+        }
+    }
+    else
+    {
+        if (Level.NetMode != NM_DedicatedServer)
+        {
+            for(i=0;i<TrailEffects.Length;i++)
+               TrailEffects[i].Destroy();
+
+            TrailEffects.Length = 0;
+        }
+    }
+
     /* Animations list:
     ActiveStill [2]
     GetIn [90]
@@ -73,7 +108,7 @@ simulated function DrivingStatusChanged()
     Idle [201]
     InActiveStill [2]
     */
-    Super.DrivingStatusChanged();
+
     if (Driver == None)
     {
         PlayAnim('GetOut', 1.0, 0.2);
@@ -218,4 +253,7 @@ defaultproperties
     ImpactDamageSounds=()
     ImpactDamageSounds(0)=Sound'UT3A_Vehicle_Cicada.SoundCues.A_Vehicle_Cicada_Collide'
     //PassengerWeapons(0)=(WeaponPawnClass=Class'UT3CicadaTurretPawn',WeaponBone="GatlingGunAttach")
+    TrailEffectRotation=(Yaw=32768)
+    TrailEffectPositions(0)=(X=-53,Y=-33,Z=63)
+    TrailEffectPositions(1)=(X=-53,Y=33,Z=63)
 }

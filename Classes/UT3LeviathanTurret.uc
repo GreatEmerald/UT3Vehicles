@@ -180,11 +180,12 @@ function bool KDriverLeave(bool bForceLeave)
     return bResult;
 }
 
-simulated function PostBeginPlay()
+/*simulated function PostBeginPlay()
 {
-    PlayAnim('InActiveStill', 1.0, 0.0);
+    // GEm: The following puts the weapons too close to the base vehicle...
+    UT3LeviathanTurretWeapon(Gun).PlayAnim('InActiveStill', 1.0, 0.0);
     super.PostBeginPlay();
-}
+}*/
 
 simulated function vector GetCameraLocationStart()
 {
