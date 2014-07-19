@@ -1,4 +1,4 @@
-Copyright © 2008-2010, 2013 GreatEmerald
+Copyright © 2008-2010, 2013, 2014 GreatEmerald
 Copyright © 2007-2009 Wormbo
 Copyright © 2010 100GPing100
 
