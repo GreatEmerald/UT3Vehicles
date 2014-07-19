@@ -1,5 +1,3 @@
-* Split off UT3HUD
-
 * Cicada: Mesh parts do not animate
 * Raptor: No landing sequence
 * Paladin, SPMA: Weird physics when running into one
