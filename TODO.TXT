@@ -1,6 +1,7 @@
 * Cicada: Mesh parts do not animate
 * Raptor: No landing sequence
 * Paladin, SPMA: Weird physics when running into one
+* Paladin: Add static mesh collision (or more boxes)
 + Check materials
 * Leviathan: Create a collision mesh
 * Scorpion: Add a Denied! announcement
@@ -9,6 +10,12 @@
 * Hoverboard: Make AI use them
 * Hoverboard: Add more animations
 * Hoverboard: Add towing
+* Hoverboard: Test on blue
+* Hoverboard: Low-FPS situations over water don't work well (get better way to check for being over water?)
 * SPMA: Defenders love throwing cameras instead of shells
 * SPMA: Weird collision
 * SPMA: The AI is a bit too good at what it does (aim fuzziness + longer delays?)
+* SPMA: Multi-camera watchguard doesn't seem to work as well as it should
+* SPMA: Check animations when deployed and exiting
+* SPMA: Weird AVRIL lock-on point and collision
+
