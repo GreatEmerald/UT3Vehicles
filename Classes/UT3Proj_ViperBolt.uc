@@ -1,6 +1,6 @@
 /*
- * Copyright © 2012 100GPing100
- * Copyright © 2014 GreatEmerald
+ * Copyright Â© 2012 100GPing100
+ * Copyright Â© 2014 GreatEmerald
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -79,10 +79,9 @@ simulated function ProcessTouch(Actor Other, vector HitLocation)
 {
     if (Other != Instigator && (Vehicle(Instigator) == None || Vehicle(Instigator).Driver != Other))
     {
-    	TextToSpeech("TAKE THAT!", 1.0);
 	    Other.TakeDamage(Damage, Instigator, HitLocation, Normal(Velocity) * MomentumTransfer, MyDamageType);
 		Explode(HitLocation, Normal(HitLocation-Other.Location));
-	}
+    }
 }
 
 
