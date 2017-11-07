@@ -508,9 +508,9 @@ defaultproperties
 
     DistantFireSound  = Sound'DistantBooms.DistantSPMA'
     ReadyToFireSound  = Sound'WeaponSounds.BaseGunTech.BSeekLost1'
-    FireSoundClass    = Sound'SPMACannonFire'
+    FireSoundClass    = Sound'UT3SPMA.SPMACannonFire'
     FireInterval      = 3.5
-    AltFireSoundClass = Sound'SPMACannonFire'
+    AltFireSoundClass = Sound'UT3SPMA.SPMACannonFire'
     AltFireInterval   = 1.5
     ProjectileClass        = class'UT3HellfireSPMAShell'
     AltFireProjectileClass = class'UT3HellfireSPMACamera'

@@ -96,7 +96,7 @@ defaultproperties
     Damage       = 220.0
     DamageRadius = 500.0
 
-    ImpactSound  = Sound'SPMAShellFragmentExplode'
+    ImpactSound  = Sound'UT3SPMA.SPMAShellFragmentExplode'
     AmbientSound = None
     TransientSoundRadius = 500.0
 
