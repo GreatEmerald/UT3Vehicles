@@ -1,7 +1,7 @@
 /*
- * Copyright © 2008-2009 Wormbo
- * Copyright © 2008-2009, 2014 GreatEmerald
- * Copyright © 2012 100GPing100
+ * Copyright Â© 2008-2009 Wormbo
+ * Copyright Â© 2008-2009, 2014 GreatEmerald
+ * Copyright Â© 2012 100GPing100
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -44,7 +44,7 @@ class UT3Raptor extends ONSAttackCraft;
 
 //===========================
 // @100GPing100
-#exec obj load file=../Animations/UT3RaptorAnims.ukx
+#exec obj load file=../Animations/UT3VH_Raptor_Anims.ukx
 #exec obj load file=../Textures/UT3RaptorTex.utx
 
 /* Wing's rotation rate. */
@@ -127,7 +127,7 @@ function Tick(float DeltaTime)
 //
 function Wings(float DeltaTime)
 {
-    // 90° = 16384 RUU
+    // 90Â° = 16384 RUU
     if (OutputThrust > 0 && WingsRotation.Pitch < 16384)
     {
         WingsRotation.Pitch += WingsRPS * DeltaTime * 100;
@@ -166,7 +166,7 @@ function Rudders(float DeltaTime)
     NewDriverYaw.Yaw = DriverViewYaw;
     DriverViewYaw = Normalize(NewDriverYaw).Yaw;
 
-    // 3000 = The angle at which the angle of the rudders is of 30°
+    // 3000 = The angle at which the angle of the rudders is of 30Â°
     NewRotation.Yaw = RudderYawContraint * (Rotation.Yaw - DriverViewYaw) / 3000;
 
     // Limit the angle.
@@ -308,8 +308,8 @@ defaultproperties
     DriverWeapons[0] = (WeaponClass=class'UT3RaptorWeapon',WeaponBone="rt_gun")
     DriverWeapons[1] = (WeaponClass=class'UT3RaptorWeaponLeft',WeaponBone="left_gun")
 
-    WingsRPS = 182; // 182 ~= 1°
-    RudderYawContraint = 2048 // 30° ~= 5461 RUU
+    WingsRPS = 182; // 182 ~= 1Â°
+    RudderYawContraint = 2048 // 30Â° ~= 5461 RUU
 
     // Sounds.
     IdleSound = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_EngineLoop01';
