@@ -431,15 +431,17 @@ defaultproperties
     GroundSpeed=700.000000
     SoundVolume=255
 
-    HeadlightCoronaOffset(0)=(X=62,Y=22,Z=42)
-    HeadlightCoronaOffset(1)=(X=62,Y=-22,Z=42)
-    HeadlightCoronaOffset(2)=(X=62,Y=20,Z=33)
-    HeadlightCoronaOffset(3)=(X=62,Y=-20,Z=33)
+    DrawScale=1.0
+    CollisionRadius=219
+    HeadlightCoronaOffset(0)=(X=77.5,Y=27.5,Z=52.5)
+    HeadlightCoronaOffset(1)=(X=77.5,Y=-27.5,Z=52.5)
+    HeadlightCoronaOffset(2)=(X=77.5,Y=25,Z=41)
+    HeadlightCoronaOffset(3)=(X=77.5,Y=-25,Z=41)
     HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
-    HeadlightCoronaMaxSize=75
+    HeadlightCoronaMaxSize=94
     HeadlightProjectorMaterial=None
 
-    BrakeLightOffset(0)=(X=-110,Y=34,Z=51)
-    BrakeLightOffset(1)=(X=-110,Y=-34,Z=51)
+    BrakeLightOffset(0)=(X=-137.5,Y=42.5,Z=64)
+    BrakeLightOffset(1)=(X=-137.5,Y=-42.5,Z=64)
     BrakeLightMaterial=Material'EpicParticles.FlickerFlare'
 }

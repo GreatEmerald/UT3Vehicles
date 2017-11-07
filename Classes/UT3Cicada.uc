@@ -48,7 +48,7 @@ var() rotator TrailEffectRotation;
 /* Holds the name of the animation currently being played. */
 var string CurrentAnim;
 
-#exec obj load file=..\Animations\UT3CicadaAnims.ukx
+#exec obj load file=..\Animations\UT3VH_Cicada_Anims.ukx
 #exec obj load file=..\Textures\UT3CicadaTex.utx
 
 function Tick(float DeltaTime)

@@ -334,7 +334,7 @@ defaultproperties
     MaxTargetRange = 10240.0
     Speed = 4000.0
 
-    ImpactSound       = Sound'SPMAShellFragmentExplode'
+    ImpactSound       = Sound'UT3SPMA.SPMAShellFragmentExplode'
     bOrientToVelocity = True
     bAlwaysRelevant   = True
     TransientSoundRadius = 500.0
