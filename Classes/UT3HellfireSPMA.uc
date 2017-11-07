@@ -46,7 +46,7 @@ class UT3HellfireSPMA extends ONSArtillery;
 // Inports
 //=============================================================================
 
-#exec obj load file=UT3SPMA.uax
+//#exec obj load file=UT3SPMA.uax
 //#exec obj load file=../Animations/UT3SPMAAnims.ukx
 
 
@@ -913,14 +913,14 @@ defaultproperties
     MaxDeploySpeed = 100.0
     DeployTime     = 2.1
     UndeployTime   = 2.0
-    DeploySound    = Sound'SPMADeploy'
-    UndeploySound  = Sound'SPMADeploy'
+    DeploySound    = Sound'UT3SPMA.SPMADeploy'
+    UndeploySound  = Sound'UT3SPMA.SPMADeploy'
 
     SoundVolume    = 255
     SoundRadius    = 300
-    IdleSound      = Sound'SPMAEngineIdle'
-    StartUpSound   = Sound'SPMAEngineStart'
-    ShutDownSound  = Sound'SPMAEngineStop'
+    IdleSound      = Sound'UT3SPMA.SPMAEngineIdle'
+    StartUpSound   = Sound'UT3SPMA.SPMAEngineStart'
+    ShutDownSound  = Sound'UT3SPMA.SPMAEngineStop'
 
     bDrawDriverInTP = false
     DriverDamageMult = 0.0
