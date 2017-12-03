@@ -820,6 +820,9 @@ function TakeDamage(int Damage, Pawn instigatedBy, Vector Hitlocation, Vector Mo
 
 defaultproperties
 {
+    Health = 800
+    HealthMax = 800
+
     /* 100GPing100 BEGIN */
 
     Mesh = SkeletalMesh'UT3VH_SPMA_Anims.SK_VH_SPMA';
