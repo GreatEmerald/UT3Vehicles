@@ -455,6 +455,36 @@ simulated event KApplyForce(out Vector Force, out Vector Torque)
     }
 }
 
+function DriverLeft()
+{
+    GoToState('');
+    PlayAnim('hatch_open', 1.0, 0.1);
+
+    Super.DriverLeft();
+}
+
+event PostBeginPlay()
+{
+    PlayAnim('hatch_open_Idle', 1.0, 0.0);
+
+    super.PostBeginPlay();
+}
+
+event KDriverEnter(Pawn P)
+{
+    GoToState('Idle');
+
+    super.KDriverEnter(P);
+}
+
+simulated state Idle
+{
+    Begin:
+    PlayAnim('hatch_close', 1.0, 0.0);
+    FinishAnim();
+    LoopAnim('Idle', 1.0, 0.0);
+}
+
 // GEm: Gosh darn it Epic and your hardcoded classes
 simulated event DrivingStatusChanged()
 {
