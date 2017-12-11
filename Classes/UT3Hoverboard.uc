@@ -1011,7 +1011,7 @@ defaultproperties
     CrosshairTexture=Texture'ONSInterface-TX.MineLayerReticle' //Texture'ONSInterface-TX.tankBarrelAligned'
     VehicleIcon=(Material=Texture'AS_FX_TX.HUD.TrackedVehicleIcon',X=0,Y=0,SizeX=64,SizeY=64)
 
-    bTeamLocked=True
+    bTeamLocked=False
     bZeroPCRotOnEntry=false
     bSetPCRotOnPossess=false
     bSpecialHUD=True
