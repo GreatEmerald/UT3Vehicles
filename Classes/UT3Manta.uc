@@ -1,7 +1,7 @@
 /*
- * Copyright © 2008 Wormbo
- * Copyright © 2012 100GPing100
- * Copyright © 2008, 2014 GreatEmerald
+ * Copyright Â© 2008 Wormbo
+ * Copyright Â© 2012 100GPing100
+ * Copyright Â© 2008, 2014 GreatEmerald
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -115,10 +115,10 @@ function ToggleBlades(bool OnOff)
 //
 function Ailerons(float DeltaTime)
 {
-    // 45° = 8192 RUU
+    // 45Â° = 8192 RUU
     local Rotator AileronsRotation;
 
-    // 1000 = The velocity at wich the angle is of 45º
+    // 1000 = The velocity at wich the angle is of 45Âº
     AileronsRotation.Pitch = 8192 * (Velocity.Z / 1000) - Rotation.Pitch;
     AileronsRotation.Yaw = 0;
     AileronsRotation.Roll = 0;
@@ -267,7 +267,8 @@ defaultproperties
     UprightStiffness=450.000000 //The manual says it doesn't do anything
     UprightDamping=20.000000  //The manual says it doesn't do anything
     PitchTorqueMax=9.0  //18 is a bit too over the top  //13.5 as well
-    RollTorqueMax=25.0
+    RollTorqueMax=10.0 //25.0 //12.5 default 2004 value
+	RollDamping=20.0
     HornSounds(1)=sound'ONSVehicleSounds-S.Horns.LaCuchachaHorn'
 
     EntryRadius = 160.0
