@@ -632,6 +632,7 @@ defaultproperties
     //IdleSound=sound'UT3Vehicles.SCORPION.ScorpionEngine'
     StartUpSound=sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_Start01'
     ShutDownSound=sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_Stop01'
+    DamagedEffectFireDamagePerSec=0.95 //0.75 is UT2004 default
     RanOverDamageType=class'DamTypeRVRoadkill'
     CrushedDamageType=class'DamTypeRVPancake'
     SelfDestructDamageType=class'UT3ScorpionSDDamage'
