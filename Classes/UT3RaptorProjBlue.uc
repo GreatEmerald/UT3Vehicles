@@ -103,7 +103,9 @@ class UT3RaptorProjBlue extends ONSAttackCraftPlasmaProjectileBlue;
 
 defaultproperties
 {
-    Damage = 20.0 //GE: We're weaker! Hooray!
+    Damage = 28.0 //20.0 //GE: We're weaker! Hooray!
+    Speed=2000
+    MaxSpeed=12500
     AccelerationMagnitude = 20000 //GE: And slower!
     MomentumTransfer = 4000.0
     LifeSpan = 1.6
