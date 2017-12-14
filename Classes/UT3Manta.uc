@@ -1,7 +1,7 @@
 /*
- * Copyright © 2008 Wormbo
- * Copyright © 2012 100GPing100
- * Copyright © 2008, 2014 GreatEmerald
+ * Copyright Â© 2008 Wormbo
+ * Copyright Â© 2012 100GPing100
+ * Copyright Â© 2008, 2014 GreatEmerald
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -115,10 +115,10 @@ function ToggleBlades(bool OnOff)
 //
 function Ailerons(float DeltaTime)
 {
-    // 45° = 8192 RUU
+    // 45Â° = 8192 RUU
     local Rotator AileronsRotation;
 
-    // 1000 = The velocity at wich the angle is of 45º
+    // 1000 = The velocity at wich the angle is of 45Âº
     AileronsRotation.Pitch = 8192 * (Velocity.Z / 1000) - Rotation.Pitch;
     AileronsRotation.Yaw = 0;
     AileronsRotation.Roll = 0;
@@ -245,6 +245,7 @@ defaultproperties
     ShutDownSound = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Stop01';
     JumpSound = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Jump';
     DuckSound = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Crouch';
+    ImpactDamageMult = 0.00001 //0.0003
     ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Collide01';
     ImpactDamageSounds(1) = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Collide02';
     ImpactDamageSounds(2) = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Collide01';
