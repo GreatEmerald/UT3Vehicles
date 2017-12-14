@@ -156,8 +156,8 @@ defaultproperties
     FireSoundClass=sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_TurretFire01'
     //BeamEffectClass=class'ShockBeamEffect'//'ONSChargeBeamEffect'
     FireInterval=0.5
-    DamageMin=180
-    DamageMax=180
+    DamageMin=85 //180
+    DamageMax=85 //180
     Momentum=75000
     MaxHoldTime=3.0
     //MinDamageScale=1.0
@@ -169,5 +169,6 @@ defaultproperties
     ChargingSound=None
     ChargedLoop=None
     bHoldingFire=True
+    bInstantRotation=False
 }
 
