@@ -50,5 +50,8 @@ defaultproperties
     WeaponFireAttachmentBone=SecondaryTurretBarrel
     FireSoundClass = Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_BallFire01'
     AltFireSoundClass = Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_BeamFire01'
+    PitchUpLimit=16000
+    PitchDownLimit=59200
+	bInstantRotation=False
     ProjectileClass = class'UT3HBShockBall'
 }
