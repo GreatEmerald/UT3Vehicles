@@ -929,8 +929,8 @@ defaultproperties
     DriverDamageMult = 0.0
     TreadVelocityScale = 30.0
 
-    HeadlightCoronaOffset(0)=(X=195,Y=85,Z=70)
-    HeadlightCoronaOffset(1)=(X=195,Y=-85,Z=70)
+    HeadlightCoronaOffset(0)=(X=213,Y=85,Z=43) //(X=195,Y=85,Z=70)
+    HeadlightCoronaOffset(1)=(X=213,Y=-85,Z=43) //(X=195,Y=-85,Z=70)
     HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
     HeadlightCoronaMaxSize=75
     HeadlightProjectorMaterial=None
