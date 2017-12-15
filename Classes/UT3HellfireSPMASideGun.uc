@@ -143,4 +143,6 @@ defaultproperties
     FireSoundClass    = Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_BallFire01'
     AltFireSoundClass = Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_BeamFire01'
     ProjectileClass   = class'UT3HellfireSPMAShockBall'
+    bInstantRotation=false
+    RotateSound=sound'UT3SPMA.A_Vehicle_SPMA_TurretRotate01'
 }
