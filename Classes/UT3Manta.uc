@@ -235,6 +235,7 @@ defaultproperties
     VehiclePositionString = "in a UT3 Manta";
 
     // Movement.
+    GroundSpeed = 1500 //UT2004 default is 2000 UT3 default is 1500
     MaxPitchSpeed = 2000;
     HoverCheckDist = 155;
     AirControl = 1.5;
