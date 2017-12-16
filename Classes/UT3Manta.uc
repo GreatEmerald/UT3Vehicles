@@ -223,9 +223,10 @@ simulated function CheckJumpDuck()
 simulated function EmeraldTick(float DeltaTime)
 {
 Super.Tick(DeltaTime);
+Guns();
 if (!bHoldingDuck && DuckEffect!=None) {
-    DuckEffect.Destroy();
-    }
+DuckEffect.Destroy();
+}
 }
 
 //=============================================================================
