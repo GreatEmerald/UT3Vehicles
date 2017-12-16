@@ -104,9 +104,7 @@ class UT3MantaPlasmaProjectile extends ONSHoverBikePlasmaProjectile;
 
 defaultproperties
 {
-    Speed=3000 //500 default 2004 //2000 default ut3
-    MaxSpeed=8000 //default is 7000 in both games
-    AccelerationMagnitude=17000 //default is 16000 in both games
+    Speed=2000 //500 default 2004 //2000 default ut3
     Damage = 36.0
     DamageRadius = 0.0
     MomentumTransfer = 4000.0
