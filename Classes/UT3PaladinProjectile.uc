@@ -11,4 +11,5 @@ DefaultProperties
    Damage=200.000000             //GE: Everything increased!!
    DamageRadius=450.000000
    MomentumTransfer=200000.000000
+   ComboSound=sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Explode01'
 }
