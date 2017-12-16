@@ -432,7 +432,7 @@ defaultproperties
     SoundVolume=255
     TransRatio=0.18 //0.11
     
-	DrawScale=0.9
+    DrawScale=0.9
     
     CollisionRadius=219
     HeadlightCoronaOffset(0)=(X=68.5,Y=24.5,Z=47.5) //(X=77.5,Y=27.5,Z=52.5)
@@ -442,10 +442,10 @@ defaultproperties
     HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
     HeadlightCoronaMaxSize=82
 
-	HeadlightProjectorOffset=(X=78.0,Y=0,Z=50.5) //(X=82.5,Y=0,Z=55.5)
-	HeadlightProjectorRotation=(Yaw=0,Pitch=-1000,Roll=0)
-	HeadlightProjectorMaterial=Texture'VMVehicles-TX.NewPRVGroup.PRVProjector'
-	HeadlightProjectorScale=0.40 //0.65
+    HeadlightProjectorOffset=(X=78.0,Y=0,Z=50.5) //(X=82.5,Y=0,Z=55.5)
+    HeadlightProjectorRotation=(Yaw=0,Pitch=-1000,Roll=0)
+    HeadlightProjectorMaterial=Texture'VMVehicles-TX.NewPRVGroup.PRVProjector'
+    HeadlightProjectorScale=0.40 //0.65
     //HeadlightProjectorMaterial=None
 
     BrakeLightOffset(0)=(X=-124.5,Y=36.5,Z=58) //(X=-137.5,Y=42.5,Z=64)
