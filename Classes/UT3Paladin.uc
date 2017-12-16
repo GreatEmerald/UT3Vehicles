@@ -1,7 +1,7 @@
 /*
- * Copyright © 2008-2009 Wormbo
- * Copyright © 2008-2009, 2014 GreatEmerald
- * Copyright © 2012 100GPing100
+ * Copyright Â© 2008-2009 Wormbo
+ * Copyright Â© 2008-2009, 2014 GreatEmerald
+ * Copyright Â© 2012 100GPing100
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -126,7 +126,7 @@ defaultproperties
         BoneRollAxis=AXIS_Y
         BoneSteerAxis=AXIS_Z
         SupportBoneAxis=AXIS_X
-        SteerType=VST_Fixed
+        SteerType=VST_Steered //VST_Fixed
     End Object
     Begin Object Class=SVehicleWheel Name=RWheel3
         BoneName = "RtTire03";
@@ -139,7 +139,7 @@ defaultproperties
         BoneRollAxis=AXIS_Y
         BoneSteerAxis=AXIS_Z
         SupportBoneAxis=AXIS_X
-        SteerType=VST_Fixed
+        SteerType=VST_Inverted //VST_Fixed
     End Object
     Begin Object Class=SVehicleWheel Name=RWheel4
         BoneName = "RtTire04";
@@ -178,7 +178,7 @@ defaultproperties
         BoneRollAxis=AXIS_Y
         BoneSteerAxis=AXIS_Z
         SupportBoneAxis=AXIS_X
-        SteerType=VST_Fixed
+        SteerType=VST_Steered //VST_Fixed
     End Object
     Begin Object Class=SVehicleWheel Name=LWheel3
         BoneName = "LtTire03";
@@ -191,7 +191,7 @@ defaultproperties
         BoneRollAxis=AXIS_Y
         BoneSteerAxis=AXIS_Z
         SupportBoneAxis=AXIS_X
-        SteerType=VST_Fixed
+        SteerType=VST_Inverted //VST_Fixed
     End Object
     Begin Object Class=SVehicleWheel Name=LWheel4
         BoneName = "LtTire04";
