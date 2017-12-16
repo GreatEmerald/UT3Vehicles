@@ -443,7 +443,6 @@ defaultproperties
     HeadlightCoronaMaxSize=82
 
     HeadlightProjectorOffset=(X=78.0,Y=0,Z=50.5) //(X=82.5,Y=0,Z=55.5)
-    HeadlightProjectorRotation=(Yaw=0,Pitch=-1000,Roll=0)
     HeadlightProjectorMaterial=Texture'VMVehicles-TX.NewPRVGroup.PRVProjector'
     HeadlightProjectorScale=0.40 //0.65
     //HeadlightProjectorMaterial=None
