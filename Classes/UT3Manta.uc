@@ -268,7 +268,7 @@ defaultproperties
     UprightDamping=20.000000  //The manual says it doesn't do anything
     PitchTorqueMax=9.0  //18 is a bit too over the top  //13.5 as well
     RollTorqueMax=10.0 //25.0 //12.5 default 2004 value
-	RollDamping=20.0
+    RollDamping=20.0
     HornSounds(1)=sound'ONSVehicleSounds-S.Horns.LaCuchachaHorn'
 
     EntryRadius = 160.0
