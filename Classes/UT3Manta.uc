@@ -263,7 +263,8 @@ defaultproperties
 
     VehicleNameString = "UT3 Manta"
 
-    MaxYawRate=3.0
+    MaxYawRate=5.0 //3.0
+    TurnTorqueMax=180.0
     UprightStiffness=450.000000 //The manual says it doesn't do anything
     UprightDamping=20.000000  //The manual says it doesn't do anything
     PitchTorqueMax=9.0  //18 is a bit too over the top  //13.5 as well
