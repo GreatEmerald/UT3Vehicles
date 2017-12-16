@@ -177,6 +177,9 @@ defaultproperties
     FireSoundClass = Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Fire01';
     FireImpact = Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_FireImpact01';
     //RotateSound=sound'ONSBPSounds.ShockTank.TurretHorizontal'
+    RotationsPerSecond=0.68 //0.18
+	PitchUpLimit=9900
+    PitchDownLimit=57500
 
     YawBone=Turret_Yaw
     PitchBone=Cannon_Pitch
