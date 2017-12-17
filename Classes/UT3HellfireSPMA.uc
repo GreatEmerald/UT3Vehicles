@@ -924,6 +924,18 @@ defaultproperties
     IdleSound      = Sound'UT3SPMA.SPMAEngineIdle'
     StartUpSound   = Sound'UT3SPMA.SPMAEngineStart'
     ShutDownSound  = Sound'UT3SPMA.SPMAEngineStop'
+    ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Collide01';
+    ImpactDamageSounds(1) = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Collide01';
+    ImpactDamageSounds(2) = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Collide01';
+    ImpactDamageSounds(3) = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Collide01';
+    ImpactDamageSounds(4) = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Collide01';
+    ImpactDamageSounds(5) = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Collide01';
+    ImpactDamageSounds(6) = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Collide01';
+    ExplosionSounds(0) = Sound'UT3SPMA.A_Vehicle_SPMA_Explode01';
+    ExplosionSounds(1) = Sound'UT3SPMA.A_Vehicle_SPMA_Explode01';
+    ExplosionSounds(2) = Sound'UT3SPMA.A_Vehicle_SPMA_Explode01';
+    ExplosionSounds(3) = Sound'UT3SPMA.A_Vehicle_SPMA_Explode01';
+    ExplosionSounds(4) = Sound'UT3SPMA.A_Vehicle_SPMA_Explode01';
 
     bDrawDriverInTP = false
     DriverDamageMult = 0.0
