@@ -142,6 +142,20 @@ function Destroyed()
 
     Super.Destroyed();
 }
+
+// Animates the guns depending on the driver's view.
+//
+function Guns()
+{
+    local Rotator GunsRotation;
+
+    GunsRotation.Pitch = -DriverViewPitch;
+    //GunsRotation.Yaw = -DriverViewYaw;
+	
+    SetBoneRotation('Barrel_rt', GunsRotation, 0, 1);
+    SetBoneRotation('Barrel_lt', GunsRotation, 0, 1);
+}
+
 // @100GPing100
 //======END======
 
@@ -209,8 +223,9 @@ simulated function CheckJumpDuck()
 simulated function EmeraldTick(float DeltaTime)
 {
 Super.Tick(DeltaTime);
+Guns();
 if (!bHoldingDuck && DuckEffect!=None) {
-    DuckEffect.Destroy();
+    DuckEffect.Destroy();   
     }
 }
 
