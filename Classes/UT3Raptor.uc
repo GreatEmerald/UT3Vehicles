@@ -315,6 +315,7 @@ defaultproperties
     IdleSound = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_EngineLoop01';
     StartUpSound = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Start01';
     ShutDownSound = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Stop01';
+    ImpactDamageMult = 0.00003 //0.0003
     ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Collide01';
     ImpactDamageSounds(1) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Collide02';
     ImpactDamageSounds(2) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Collide01';
