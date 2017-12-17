@@ -252,7 +252,7 @@ defaultproperties
     YawBone = 'rt_gun'
     WeaponFireAttachmentBone = 'rt_gun';
     WeaponFireOffset = 115.0 //95.0
-    DualFireOffset = 41.0 //15.0
+    DualFireOffset = 37.0 //15.0
     // @100GPing100
     //============EDN============
     FireInterval    = 0.2
