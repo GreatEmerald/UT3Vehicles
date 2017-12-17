@@ -248,6 +248,9 @@ defaultproperties
     IdleSound=Sound'UT3A_Vehicle_Cicada.Sounds.A_Vehicle_Cicada_EngineLoop02'
     StartUpSound=Sound'UT3A_Vehicle_Cicada.Sounds.A_Vehicle_Cicada_Start01'
     ShutDownSound=Sound'UT3A_Vehicle_Cicada.Sounds.A_Vehicle_Cicada_Stop01'//8/10
+    DamagedEffectHealthSmokeFactor=0.65 //0.5 def UT2004
+    DamagedEffectHealthFireFactor=0.38 //0.25 def UT2004
+    DamagedEffectFireDamagePerSec=0.95 //0.75 def UT2004
     ExplosionSounds=()
     ExplosionSounds(0)=Sound'UT3A_Vehicle_Cicada.Sounds.A_Vehicle_Cicada_Explode02'
     ImpactDamageSounds=()
