@@ -928,6 +928,12 @@ defaultproperties
     bDrawDriverInTP = false
     DriverDamageMult = 0.0
     TreadVelocityScale = 30.0
+    SteerSpeed=40 //110
+	TurnDamping=50 //35
+	bHasHandbrake=False //true
+	ChangeUpPoint=90000
+    MomentumMult=0.3 //2.0
+    bDoStuntInfo=False //true
 
     HeadlightCoronaOffset(0)=(X=195,Y=85,Z=70)
     HeadlightCoronaOffset(1)=(X=195,Y=-85,Z=70)
