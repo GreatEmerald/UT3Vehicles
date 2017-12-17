@@ -343,6 +343,7 @@ defaultproperties
         KLinearDamping=0.05
         KAngularDamping=0.05
         KImpactThreshold=500
+        kMaxSpeed=1050.0
         bKNonSphericalInertia=True
         bHighDetailOnly=False
         bClientOnly=False
