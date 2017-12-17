@@ -514,6 +514,7 @@ defaultproperties
     AltFireInterval   = 1.5
     ProjectileClass        = class'UT3HellfireSPMAShell'
     AltFireProjectileClass = class'UT3HellfireSPMACamera'
+    RotateSound=sound'UT3SPMA.SPMACannonRotate'
 
     Mesh                     = SkeletalMesh'UT3VH_SPMA_Anims.SPMA_MainTurret'
     RedSkin                  = Shader'UT3SPMATex.Body.RedSkin'
