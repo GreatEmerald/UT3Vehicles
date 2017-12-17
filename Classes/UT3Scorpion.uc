@@ -652,9 +652,9 @@ defaultproperties
     BrakeLightMaterial=Material'EpicParticles.FlickerFlare'
 	
     HeadlightProjectorOffset=(X=69,Y=0,Z=20) //(X=90,Y=0,Z=7)
-	HeadlightProjectorRotation=(Yaw=0,Pitch=-1000,Roll=0)
-	HeadlightProjectorMaterial=Texture'VMVehicles-TX.RVGroup.RVProjector'
-	HeadlightProjectorScale=0.3
+    HeadlightProjectorRotation=(Yaw=0,Pitch=-1000,Roll=0)
+    HeadlightProjectorMaterial=Texture'VMVehicles-TX.RVGroup.RVProjector'
+    HeadlightProjectorScale=0.3
 
     BoostRechargeTime = 5.0
     AfterburnerOffset(0) = (X=-70.0,Y=-14.0,Z=20.0)
