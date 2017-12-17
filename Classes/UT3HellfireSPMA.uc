@@ -925,8 +925,8 @@ defaultproperties
     StartUpSound   = Sound'UT3SPMA.SPMAEngineStart'
     ShutDownSound  = Sound'UT3SPMA.SPMAEngineStop'
     DamagedEffectHealthSmokeFactor=0.65 //0.5
-	DamagedEffectHealthFireFactor=0.37 //0.25
-	DamagedEffectFireDamagePerSec=0.95 //0.75
+    DamagedEffectHealthFireFactor=0.39 //0.25
+    DamagedEffectFireDamagePerSec=0.95 //0.75
 
     bDrawDriverInTP = false
     DriverDamageMult = 0.0
