@@ -226,7 +226,7 @@ defaultproperties
     Mesh = SkeletalMesh'UT3MantaAnims.Manta';
     RedSkin = Shader'UT3MantaTex.MantaSkin';
     BlueSkin = Shader'UT3MantaTex.MantaSkinBlue';
-    DrivePos = (X=-70,Y=0.0,Z=50.0);
+    DrivePos = (X=-67,Y=0.0,Z=64.0); //DrivePos = (X=-70,Y=0.0,Z=50.0)
 
     // Damage.
     DriverWeapons(0)=(WeaponClass=class'UT3MantaPlasmaGun',WeaponBone=barrel_rt);
@@ -235,11 +235,11 @@ defaultproperties
     VehiclePositionString = "in a UT3 Manta";
 
     // Movement.
-    GroundSpeed = 1500 //UT2004 def 2000, UT3 def 1500
+    GroundSpeed = 1500 //UT2004 default is 2000 UT3 default is 1500
     MaxPitchSpeed = 2000;
     HoverSoftness=0.15 //0.09 def UT2004
-	HoverPenScale=1.35 //1.0 def UT2004
-	HoverCheckDist=165; //155 GE //150.0 def UT2004
+	  HoverPenScale=1.35 //1.0 def UT2004
+	  HoverCheckDist=165; //155 GE //150.0 def UT2004
     AirControl = 1.5;
 
 	MaxStrafeForce=27 //20 def UT2004
@@ -294,7 +294,8 @@ defaultproperties
 
     VehicleNameString = "UT3 Manta"
 
-    MaxYawRate=3.0
+    MaxYawRate=5.0 //3.0
+    TurnTorqueMax=180.0
     UprightStiffness=450.000000 //The manual says it doesn't do anything
     UprightDamping=20.000000  //The manual says it doesn't do anything
     PitchTorqueMax=9.0  //18 is a bit too over the top  //13.5 as well
@@ -308,19 +309,19 @@ defaultproperties
 
     ExitPositions(0)=(X=0,Y=160,Z=30)
     ExitPositions(1)=(X=0,Y=-160,Z=30)
-	ExitPositions(2)=(X=160,Y=0,Z=30)
-	ExitPositions(3)=(X=-160,Y=0,Z=30)
-	ExitPositions(4)=(X=-160,Y=0,Z=-30)
-	ExitPositions(5)=(X=160,Y=0,Z=-30)
-	ExitPositions(6)=(X=0,Y=160,Z=-30)
-	ExitPositions(7)=(X=0,Y=-160,Z=-30)
+	  ExitPositions(2)=(X=160,Y=0,Z=30)
+	  ExitPositions(3)=(X=-160,Y=0,Z=30)
+	  ExitPositions(4)=(X=-160,Y=0,Z=-30)
+	  ExitPositions(5)=(X=160,Y=0,Z=-30)
+	  ExitPositions(6)=(X=0,Y=160,Z=-30)
+	  ExitPositions(7)=(X=0,Y=-160,Z=-30)
 
     HeadlightCoronaOffset=()
     HeadlightCoronaOffset(0)=(X=40.0,Y=0.0,Z=-30.0)
     HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
     
     HeadlightProjectorOffset=(X=43,Y=0,Z=-30)
-	HeadlightProjectorRotation=(Yaw=0,Pitch=-1000,Roll=0)
-	HeadlightProjectorMaterial=Texture'VMVehicles-TX.RVGroup.RVProjector'
-	HeadlightProjectorScale=0.3
+	  HeadlightProjectorRotation=(Yaw=0,Pitch=-1000,Roll=0)
+	  HeadlightProjectorMaterial=Texture'VMVehicles-TX.RVGroup.RVProjector'
+	  HeadlightProjectorScale=0.3
 }
