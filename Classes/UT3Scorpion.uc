@@ -239,7 +239,7 @@ function Boost()
     {
         //log("UT3: Boosting!");
         BoostRechargeCounter=0;
-        PlaySound(BoostSound, SLOT_Misc, 128,,,64); //Boost sound Pitch 160
+        PlaySound(BoostSound, SLOT_Misc, 128,,,); //Boost sound Pitch 160
         bBoost = true;
         BoostCount--;
         SpeedAtBoost = Velocity dot Vector(Rotation);
@@ -348,7 +348,7 @@ function bool KDriverLeave(bool bForceLeave)
         && (Velocity dot Vector(Rotation) >= MinEjectSpeed))
     {
         bImminentDestruction = true;
-        PlaySound(BoostReadySound, SLOT_Misc, 128,,,160);
+        PlaySound(BoostReadySound, SLOT_Misc, 128,,,);
         return false;
     }
     return Super.KDriverLeave(bForceLeave);
