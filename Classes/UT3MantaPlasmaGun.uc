@@ -114,4 +114,7 @@ defaultproperties
 
     DualFireOffset = 20.0
     WeaponOffset = (X=0.0,Y=-15.0,Z=0.0)
+    
+    PitchUpLimit=5500
+    PitchDownLimit=57000
 }
