@@ -107,6 +107,7 @@ defaultproperties
     Speed=2000 //500 default 2004 //2000 default ut3
     Damage = 36.0
     DamageRadius = 0.0
-    MomentumTransfer = 4000.0
+    MomentumTransfer = 20000.0 //4000.0
     LifeSpan = 1.6
+    MyDamageType = class'UT3DmgType_MantaPlasma'
 }
