@@ -1,5 +1,6 @@
 /*
  * Copyright © 2009, 2014 GreatEmerald
+ * Copyright © 2012-2017 Luís 'zeluisping' Guimarães <zeluis.100@gmail.com>
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -58,8 +59,6 @@ function ProximityExplosion() //Instant shock combo
     SetTimer(0.1, false);
 }
 
-//===============
-// @100GPing100
 simulated function PostNetBeginPlay()
 {
     Super(ONSWeapon).PostNetBeginPlay();
@@ -163,27 +162,24 @@ function rotator SmoothRotate(float YawDelta, float PitchDelta, rotator CurrentR
 
     return Aim;
 }
-// @100GPing100
-//======END======
 
 defaultproperties
 {
-    //===============
-    // @100GPing100
-    Mesh = SkeletalMesh'UT3VH_Paladin_Anims.PaladinWeaponOnly';
-    RedSkin = Shader'UT3PaladinTex.Paladin.PaladinSkin';
-    BlueSkin = Shader'UT3PaladinTex.Paladin.PaladinSkinBlue';
+    Mesh=SkeletalMesh'UT3VH_Paladin_Anims.PaladinWeaponOnly';
+    RedSkin=Shader'UT3PaladinTex.Paladin.PaladinSkin';
+    BlueSkin=Shader'UT3PaladinTex.Paladin.PaladinSkinBlue';
 
-    FireSoundClass = Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Fire01';
-    FireImpact = Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_FireImpact01';
+    FireSoundClass=Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Fire01';
+    FireImpact=Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_FireImpact01';
     //RotateSound=sound'ONSBPSounds.ShockTank.TurretHorizontal'
-
+    RotationsPerSecond=0.68 //0.18
+	PitchUpLimit=9900
+    PitchDownLimit=57500
+	
     YawBone=Turret_Yaw
     PitchBone=Cannon_Pitch
     ShieldPitchBone=Shield_Pitch
     WeaponFireAttachmentBone=CannonBarrel
-    // @100GPing100
-    //======END======
 
 
     MaxShieldHealth=1200.000000    //GE: Exact Copy-Paste of the UT3 code
