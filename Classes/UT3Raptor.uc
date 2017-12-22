@@ -299,9 +299,18 @@ defaultproperties
     Mesh = SkeletalMesh'UT3VH_Raptor_Anims.SK_VH_Raptor';
     RedSkin = Shader'UT3RaptorTex.RaptorSkin';
     BlueSkin = Shader'UT3RaptorTex.RaptorSkinBlue';
-
-    TrailEffectPositions(0) = (X=-105,Y=-35,Z=-15);
-    TrailEffectPositions(1) = (X=-105,Y=35,Z=-15);
+    
+    TrailEffectPositions(0) = (X=-94,Y=-32,Z=-13); //(X=-105,Y=-35,Z=-15)
+    TrailEffectPositions(1) = (X=-94,Y=32,Z=-13);  //(X=-105,Y=35,Z=-15)
+    
+    StreamerEffectOffset(0)=(X=-219,Y=-35,Z=57);
+    StreamerEffectOffset(1)=(X=-219,Y=35,Z=57);
+    StreamerEffectOffset(2)=(X=-52,Y=-24,Z=142);
+    StreamerEffectOffset(3)=(X=-52,Y=24,Z=142);
+    StreamerOpacityRamp=(Min=1200.000000,Max=1600.000000)
+    StreamerOpacityChangeRate=1.0
+    StreamerOpacityMax=0.7
+    StreamerEffectClass=class'Onslaught.ONSAttackCraftStreamer'
 
     VehiclePositionString = "in a UT3 Raptor";
 
@@ -316,6 +325,9 @@ defaultproperties
     StartUpSound = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Start01';
     ShutDownSound = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Stop01';
     ImpactDamageMult = 0.00003 //0.0003
+    DamagedEffectHealthSmokeFactor=0.65 //0.5
+    DamagedEffectHealthFireFactor=0.38 //0.25
+    DamagedEffectFireDamagePerSec=0.95 //0.75
     ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Collide01';
     ImpactDamageSounds(1) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Collide02';
     ImpactDamageSounds(2) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Collide01';
@@ -370,10 +382,60 @@ defaultproperties
     //RollDamping=15.050000        //Decreased here.
     MaxRandForce=14.000000
     RandForceInterval=0.625000  Somewhat decreased */
-    GroundSpeed=2500            //We are faster now! This should be a true option.
-    //IdleSound=sound'UT3Vehicles.RAPTOR.RaptorEngine'
-    //StartUpSound=sound'UT3Vehicles.RAPTOR.RaptorTakeOff'
-    //ShutDownSound=sound'UT3Vehicles.RAPTOR.RaptorLand'
+    GroundSpeed=2000               //2500//We are faster now! This should be a true option.
+    
+    MaxThrustForce=70.0
+    
+    MaxRiseForce=70.0
+    UpDamping=0.16
+    
+    MaxStrafeForce=40.0
+    LatDamping=0.14
+    
+    PitchTorqueMax=10.0
+    RollTorqueMax=35.0
+    
+    MomentumMult=0.400000 //? HDm to GE: Feels right on everything except Rocket Launcher has more force than it should on the Raptor
+    
+    ExitPositions(0)=(X=0,Y=-165,Z=25)
+    ExitPositions(1)=(X=0,Y=165,Z=25)
+
+    HeadlightCoronaOffset(0)=(X=142,Y=0,Z=-12)
+    HeadlightCoronaOffset(1)=(X=140,Y=-0,Z=-42)
+    HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
+    HeadlightCoronaMaxSize=60
+    
+    HeadlightProjectorOffset=(X=142.0,Y=0,Z=-10.5) //(X=82.5,Y=0,Z=55.5)
+    HeadlightProjectorRotation=(Yaw=0,Pitch=-1000,Roll=0)
+    HeadlightProjectorMaterial=Texture'VMVehicles-TX.NewPRVGroup.PRVProjector'
+    HeadlightProjectorScale=0.40 //0.65
 
     EntryRadius = 230.0
+    
+        Begin Object Class=KarmaParamsRBFull Name=KParams0
+        KStartEnabled=True
+        KFriction=0.5
+        KLinearDamping=0.0
+        KAngularDamping=0.0
+        KImpactThreshold=300
+        KMaxSpeed=2500
+        bKNonSphericalInertia=True
+        bHighDetailOnly=False
+        bClientOnly=False
+        bKDoubleTickRate=True
+        bKStayUpright=True
+        bKAllowRotate=True
+        KInertiaTensor(0)=1.0
+        KInertiaTensor(1)=0.0
+        KInertiaTensor(2)=0.0
+        KInertiaTensor(3)=3.0
+        KInertiaTensor(4)=0.0
+        KInertiaTensor(5)=3.5
+        KCOMOffset=(X=-0.25,Y=0.0,Z=0.0)
+        KActorGravScale=0.0
+        bDestroyOnWorldPenetrate=True
+        bDoSafetime=True
+        Name="KParams0"
+    End Object
+    KParams=KarmaParams'KParams0'
 }
