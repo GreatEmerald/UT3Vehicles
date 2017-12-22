@@ -343,6 +343,7 @@ defaultproperties
         KLinearDamping=0.05
         KAngularDamping=0.05
         KImpactThreshold=500
+        kMaxSpeed=1050.0
         bKNonSphericalInertia=True
         bHighDetailOnly=False
         bClientOnly=False
@@ -415,33 +416,68 @@ defaultproperties
     //============EDN============
 
     //MaxSteerAngleCurve=(Points=((OutVal=50.000000),,)) @100GPing100: Causes crash.
-    SteerSpeed=220.000000
+    SteerSpeed=200.000000 //110.0 def UT2004
     PassengerWeapons(1)=()
     IdleSound=Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_EngineIdle01'
     StartUpSound=Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_EngineStart01'
     ShutDownSound=Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_EngineStop01'
+    DamagedEffectHealthSmokeFactor=0.65 //0.5
+    DamagedEffectHealthFireFactor=0.39 //0.25
+    DamagedEffectFireDamagePerSec=0.95 //0.75
+    ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_Collide03';
+    ImpactDamageSounds(1) = Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_Collide04';
+    ImpactDamageSounds(2) = Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_Collide03';
+    ImpactDamageSounds(3) = Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_Collide04';
+    ImpactDamageSounds(4) = Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_Collide03';
+    ImpactDamageSounds(5) = Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_Collide04';
+    ImpactDamageSounds(6) = Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_Collide03';
+    ExplosionSounds(0) = Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_Explode01';
+    ExplosionSounds(1) = Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_Explode01';
+    ExplosionSounds(2) = Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_Explode01';
+    ExplosionSounds(3) = Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_Explode01';
+    ExplosionSounds(4) = Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_Explode01';
     EntryRadius=300.000000
     TPCamWorldOffset=(Z=200.000000)
+    MomentumMult=0.400000 //1.0  //HDm to GE: 0.4 feels right but Rocket and AVRiL force are reversed with each other
     MomentumMult=1.000000
     bDrawDriverInTP=False
     DriverDamageMult=0.000000
     VehiclePositionString="in a Hellbender"
     VehicleNameString="UT3 Hellbender"
     HornSounds(0)=Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_Horn01'
-    GroundSpeed=700.000000
+    GroundSpeed=800.000000 //700
     SoundVolume=255
 
-    DrawScale=1.0
-    CollisionRadius=219
-    HeadlightCoronaOffset(0)=(X=77.5,Y=27.5,Z=52.5)
-    HeadlightCoronaOffset(1)=(X=77.5,Y=-27.5,Z=52.5)
-    HeadlightCoronaOffset(2)=(X=77.5,Y=25,Z=41)
-    HeadlightCoronaOffset(3)=(X=77.5,Y=-25,Z=41)
-    HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
-    HeadlightCoronaMaxSize=94
-    HeadlightProjectorMaterial=None
+    TransRatio=0.15 //0.11
+    EngineBrakeFactor=0.0002 //0.0001 def
+    MaxBrakeTorque=20.5 //20.0
+    EngineInertia=0.01
+    WheelInertia=0.01
+    ChassisTorqueScale=0.82 //0.7
 
-    BrakeLightOffset(0)=(X=-137.5,Y=42.5,Z=64)
-    BrakeLightOffset(1)=(X=-137.5,Y=-42.5,Z=64)
+    DrawScale=0.95
+
+    CollisionRadius=219
+    
+    ExitPositions(0)=(X=0,Y=-165,Z=50)
+    ExitPositions(1)=(X=0,Y=165,Z=50)
+    ExitPositions(2)=(X=0,Y=-165,Z=-50)
+    ExitPositions(3)=(X=0,Y=165,Z=-50)
+    
+    HeadlightCoronaOffset(0)=(X=72.5,Y=27.5,Z=49.5) //(X=77.5,Y=27.5,Z=52.5)
+    HeadlightCoronaOffset(1)=(X=72.5,Y=-27.5,Z=49.5)
+    HeadlightCoronaOffset(2)=(X=72.5,Y=25,Z=38)
+    HeadlightCoronaOffset(3)=(X=72.5,Y=-25,Z=38)
+    //HeadlightCoronaMaterial=Material'UT3VehicleEffects.EFlareOY'
+    HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
+    HeadlightCoronaMaxSize=82
+    
+    HeadlightProjectorOffset=(X=72.0,Y=0,Z=46.5) //(X=82.5,Y=0,Z=55.5)
+    HeadlightProjectorRotation=(Yaw=0,Pitch=-1000,Roll=0)
+    HeadlightProjectorMaterial=Texture'VMVehicles-TX.NewPRVGroup.PRVProjector'
+    HeadlightProjectorScale=0.40 //0.65
+
+    BrakeLightOffset(0)=(X=-130.5,Y=38.5,Z=60) //(X=-137.5,Y=42.5,Z=64)
+    BrakeLightOffset(1)=(X=-130.5,Y=-38.5,Z=60)
     BrakeLightMaterial=Material'EpicParticles.FlickerFlare'
 }
