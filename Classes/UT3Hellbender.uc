@@ -436,8 +436,8 @@ defaultproperties
     ExplosionSounds(2) = Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_Explode01';
     ExplosionSounds(3) = Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_Explode01';
     ExplosionSounds(4) = Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_Explode01';
-    EntryRadius=300.000000
-    TPCamWorldOffset=(Z=200.000000)
+    EntryPosition=(X=0,Y=0,Z=0)
+    EntryRadius=180.0  //300.000000
     MomentumMult=0.400000 //1.0  //HDm to GE: 0.4 feels right but Rocket and AVRiL force are reversed with each other
     MomentumMult=1.000000
     bDrawDriverInTP=False
@@ -459,18 +459,27 @@ defaultproperties
 
     CollisionRadius=219
     
-    ExitPositions(0)=(X=0,Y=-165,Z=50)
-    ExitPositions(1)=(X=0,Y=165,Z=50)
-    ExitPositions(2)=(X=0,Y=-165,Z=-50)
-    ExitPositions(3)=(X=0,Y=165,Z=-50)
+    //ExitPositions(0)=(X=0,Y=-165,Z=50)
+    //ExitPositions(1)=(X=0,Y=165,Z=50)
+    //ExitPositions(2)=(X=0,Y=-165,Z=-50)
+    //ExitPositions(3)=(X=0,Y=165,Z=-50)
     
-    HeadlightCoronaOffset(0)=(X=72.5,Y=27.5,Z=49.5) //(X=77.5,Y=27.5,Z=52.5)
-    HeadlightCoronaOffset(1)=(X=72.5,Y=-27.5,Z=49.5)
-    HeadlightCoronaOffset(2)=(X=72.5,Y=25,Z=38)
-    HeadlightCoronaOffset(3)=(X=72.5,Y=-25,Z=38)
-    //HeadlightCoronaMaterial=Material'UT3VehicleEffects.EFlareOY'
-    HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
-    HeadlightCoronaMaxSize=82
+    ExitPositions(0)=(X=-10,Y=-160,Z=50)  //Left
+    ExitPositions(1)=(X=-10,Y=160,Z=50)   //Right
+    ExitPositions(2)=(X=-10,Y=-160,Z=-50) //Left Below
+    ExitPositions(3)=(X=-10,Y=160,Z=-50)  //Right Below
+    
+    FPCamPos=(X=-10,Y=28,Z=135)
+    TPCamLookat=(X=10,Y=0,Z=0)
+    TPCamWorldOffset=(X=0,Y=0,Z=190)  //TPCamWorldOffset=(Z=200.000000)
+    
+    HeadlightCoronaOffset(0)=(X=72.5,Y=26.5,Z=49.5) //(X=77.5,Y=27.5,Z=52.5)
+    HeadlightCoronaOffset(1)=(X=72.5,Y=-26.5,Z=49.5)
+    HeadlightCoronaOffset(2)=(X=72.5,Y=25,Z=39)
+    HeadlightCoronaOffset(3)=(X=72.5,Y=-25,Z=39)
+    HeadlightCoronaMaterial=Material'EpicParticles.FlashFlare1'
+    //HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
+    HeadlightCoronaMaxSize=50 //82 works with EFlareOY but FlashFlare is huge
     
     HeadlightProjectorOffset=(X=72.0,Y=0,Z=46.5) //(X=82.5,Y=0,Z=55.5)
     HeadlightProjectorRotation=(Yaw=0,Pitch=-1000,Roll=0)
