@@ -34,7 +34,8 @@ defaultproperties
 	Damage=100
 	DamageRadius=300
 	MomentumTransfer=4000
-	
+	LifeSpan=4.0
+        MyDamageType=class'UT3DmgType_LeviathanBolt'
 	DrawType   = DT_StaticMesh
 	StaticMesh = StaticMesh'WeaponStaticMesh.FlakChunk'
 }
