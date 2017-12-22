@@ -924,17 +924,79 @@ defaultproperties
     IdleSound      = Sound'UT3SPMA.SPMAEngineIdle'
     StartUpSound   = Sound'UT3SPMA.SPMAEngineStart'
     ShutDownSound  = Sound'UT3SPMA.SPMAEngineStop'
-
+    DamagedEffectHealthSmokeFactor=0.65 //0.5
+    DamagedEffectHealthFireFactor=0.39 //0.25
+    DamagedEffectFireDamagePerSec=0.95 //0.75
+    ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Collide01';
+    ImpactDamageSounds(1) = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Collide01';
+    ImpactDamageSounds(2) = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Collide01';
+    ImpactDamageSounds(3) = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Collide01';
+    ImpactDamageSounds(4) = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Collide01';
+    ImpactDamageSounds(5) = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Collide01';
+    ImpactDamageSounds(6) = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Collide01';
+    ExplosionSounds(0) = Sound'UT3SPMA.A_Vehicle_SPMA_Explode01';
+    ExplosionSounds(1) = Sound'UT3SPMA.A_Vehicle_SPMA_Explode01';
+    ExplosionSounds(2) = Sound'UT3SPMA.A_Vehicle_SPMA_Explode01';
+    ExplosionSounds(3) = Sound'UT3SPMA.A_Vehicle_SPMA_Explode01';
+    ExplosionSounds(4) = Sound'UT3SPMA.A_Vehicle_SPMA_Explode01';
     bDrawDriverInTP = false
     DriverDamageMult = 0.0
     TreadVelocityScale = 30.0
 
-    HeadlightCoronaOffset(0)=(X=195,Y=85,Z=70)
-    HeadlightCoronaOffset(1)=(X=195,Y=-85,Z=70)
-    HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
-    HeadlightCoronaMaxSize=75
-    HeadlightProjectorMaterial=None
+    ChassisTorqueScale=1.2 //1.25
+    MaxBrakeTorque=25.0 //20.0
+    SteerSpeed=70 //110
+    TurnDamping=50 //35
+    HandbrakeThresh=9000000
+    MinBrakeFriction=6.5  //4.0
+    EngineBrakeRPMScale=0.008
+    TransRatio=0.18
+    ChangeUpPoint=105000
+    
+    MomentumMult=0.1 //2.0
+    bDoStuntInfo=False //true
+    
+        Begin Object Class=KarmaParamsRBFull Name=KParams0
+        KStartEnabled=True
+        KFriction=0.5
+        KLinearDamping=0.05
+        KAngularDamping=0.05
+        KImpactThreshold=500
+        KMaxSpeed=1000
+        bKNonSphericalInertia=True
+        bHighDetailOnly=False
+        bClientOnly=False
+        bKDoubleTickRate=True
+        KInertiaTensor(0)=1.0
+        KInertiaTensor(1)=0.0
+        KInertiaTensor(2)=0.0
+        KInertiaTensor(3)=3.0
+        KInertiaTensor(4)=0.0
+        KInertiaTensor(5)=3.5
+        KCOMOffset=(X=1.5,Y=0.0,Z=-0.5)
+        bDestroyOnWorldPenetrate=True
+        bDoSafetime=True
+        Name="KParams0"
+    End Object
+    KParams=KarmaParams'KParams0'
+    
+    ExitPositions(0)=(X=50,Y=-165,Z=30)
+    ExitPositions(1)=(X=50,Y=165,Z=30)
+    ExitPositions(2)=(X=50,Y=-165,Z=-30)
+    ExitPositions(3)=(X=50,Y=165,Z=-30)
 
+    //HeadlightCoronaOffset(0)=(X=213,Y=85,Z=43) //(X=195,Y=85,Z=70)
+    //HeadlightCoronaOffset(1)=(X=213,Y=-85,Z=43) //(X=195,Y=-85,Z=70)
+    //HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
+    //HeadlightCoronaMaxSize=75
+    HeadlightCoronaMaterial=None
+
+    //HeadlightProjectorOffset=(X=290,Y=0,Z=40)
+    //HeadlightProjectorRotation=(Yaw=0,Pitch=-1500,Roll=0)
+    //HeadlightProjectorMaterial=Texture'VMVehicles-TX.NewPRVGroup.PRVProjector'
+    //HeadlightProjectorScale=0.65
+    HeadlightProjectorMaterial=None
+    
     BrakeLightOffset(0)=(X=-145,Y=37,Z=55)
     BrakeLightOffset(1)=(X=-145,Y=-37,Z=55)
     BrakeLightMaterial=Material'EpicParticles.FlickerFlare'
