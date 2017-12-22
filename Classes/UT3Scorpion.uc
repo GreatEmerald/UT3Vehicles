@@ -691,7 +691,8 @@ defaultproperties
 
     HeadlightCoronaOffset(0)=(X=65,Y=33,Z=20)
     HeadlightCoronaOffset(1)=(X=65,Y=-33,Z=20)
-    HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
+    HeadlightCoronaMaterial=Material'EpicParticles.FlashFlare1'
+    //HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
     HeadlightCoronaMaxSize=65
 
     HeadlightProjectorOffset=(X=69,Y=0,Z=20) //(X=90,Y=0,Z=7)
@@ -720,5 +721,7 @@ defaultproperties
     ExitPositions(1)=(X=0,Y=150,Z=50)
     ExitPositions(2)=(X=0,Y=-150,Z=-50)
     ExitPositions(3)=(X=0,Y=150,Z=-50)
+    
+    FPCamPos=(X=-60,Y=0,Z=80)
     
 }
