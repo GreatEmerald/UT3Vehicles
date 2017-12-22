@@ -308,23 +308,40 @@ defaultproperties
     
     HornSounds(1)=sound'ONSVehicleSounds-S.Horns.LaCuchachaHorn'
     
-    ExitPositions(0)=(X=0,Y=160,Z=30)
-    ExitPositions(1)=(X=0,Y=-160,Z=30)
-    ExitPositions(2)=(X=160,Y=0,Z=30)
-    ExitPositions(3)=(X=-160,Y=0,Z=30)
-    ExitPositions(4)=(X=-160,Y=0,Z=-30)
-    ExitPositions(5)=(X=160,Y=0,Z=-30)
-    ExitPositions(6)=(X=0,Y=160,Z=-30)
-    ExitPositions(7)=(X=0,Y=-160,Z=-30)
+    //ExitPositions(0)=(X=0,Y=160,Z=30)
+    //ExitPositions(1)=(X=0,Y=-160,Z=30)
+    //ExitPositions(2)=(X=160,Y=0,Z=30)
+    //ExitPositions(3)=(X=-160,Y=0,Z=30)
+    //ExitPositions(4)=(X=-160,Y=0,Z=-30)
+    //ExitPositions(5)=(X=160,Y=0,Z=-30)
+    //ExitPositions(6)=(X=0,Y=160,Z=-30)
+    //ExitPositions(7)=(X=0,Y=-160,Z=-30)
+    
+    ExitPositions(0)=(X=-70,Y=140,Z=30)   //Right
+    ExitPositions(1)=(X=-70,Y=-140,Z=30)  //Left
+    ExitPositions(2)=(X=150,Y=0,Z=30)   //Front
+    ExitPositions(3)=(X=-150,Y=0,Z=30)  //Rear
+    ExitPositions(4)=(X=-150,Y=0,Z=-30) //Rear Below
+    ExitPositions(5)=(X=150,Y=0,Z=-30)  //Front Below
+    ExitPositions(6)=(X=-70,Y=140,Z=-30)  //Right Below
+    ExitPositions(7)=(X=-70,Y=-140,Z=-30) //Left Below
     
     EntryRadius = 160.0
 
+    bDrawMeshInFP=True
+    
+    FPCamPos=(X=63,Y=0,Z=-5)
+    TPCamLookat=(X=70,Y=0,Z=0)
+    TPCamWorldOffset=(X=0,Y=0,Z=60)
+    TPCamDistance=0
+
     HeadlightCoronaOffset=()
     HeadlightCoronaOffset(0)=(X=40.0,Y=0.0,Z=-30.0)
-    HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
+    HeadlightCoronaMaterial=Material'EpicParticles.FlashFlare1'
+    //HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
     
-    HeadlightProjectorOffset=(X=43,Y=0,Z=-30)
+    HeadlightProjectorOffset=(X=35,Y=0,Z=-30)
     HeadlightProjectorRotation=(Yaw=0,Pitch=-1000,Roll=0)
     HeadlightProjectorMaterial=Texture'VMVehicles-TX.RVGroup.RVProjector'
-    HeadlightProjectorScale=0.3
+    HeadlightProjectorScale=0.02
 }
