@@ -112,9 +112,9 @@ defaultproperties
     TransientSoundVolume=0.4
     ProjectileClass=class'UT3MantaPlasmaProjectile'
 
-    DualFireOffset = 20.0
-    WeaponOffset = (X=0.0,Y=-15.0,Z=0.0)
+    DualFireOffset = 17.0
+    WeaponOffset = (X=0.0,Y=-16.0,Z=0.0)
     
     PitchUpLimit=5500
-    PitchDownLimit=57000
+    PitchDownLimit=59000
 }
