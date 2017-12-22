@@ -404,6 +404,7 @@ defaultproperties
     PassengerWeapons(3) = (WeaponPawnClass=class'UT3LeviathanTurretShock',WeaponBone="RT_Rear_TurretYaw")
 
     CollisionHeight=100.0
+    GroundSpeed=600
     LSDFactor=1.000000
     ChassisTorqueScale=0.200000
     MaxSteerAngleCurve=(Points=((OutVal=30.000000),(InVal=1500.000000,OutVal=20.000000)))
@@ -411,6 +412,30 @@ defaultproperties
     //EngineBrakeFactor=0.020000
     MaxBrakeTorque=8.000000
     //StopThreshold=500.000000
+
+    Begin Object Class=KarmaParamsRBFull Name=KParams0
+        KStartEnabled=True
+        KFriction=0.5
+        KLinearDamping=0.05
+        KAngularDamping=0.05
+        KImpactThreshold=500
+        bKNonSphericalInertia=True
+        bHighDetailOnly=False
+        bClientOnly=False
+        bKDoubleTickRate=True
+        KInertiaTensor(0)=1.260000
+        KInertiaTensor(1)=0
+        KInertiaTensor(2)=0
+        KInertiaTensor(3)=3.099998
+        KInertiaTensor(4)=0
+        KInertiaTensor(5)=4.499996
+        KMaxSpeed=850.0 //UT2004 def 650
+        KCOMOffset=(X=0,Y=0,Z=0)
+        bDestroyOnWorldPenetrate=True
+        bDoSafetime=True
+        Name="KParams0"
+    End Object
+    KParams=KarmaParams'KParams0'
 
     Mesh = SkeletalMesh'UT3VH_Leviathan_Anims.SK_VH_Leviathan'
     // GEm: TODO: Two skins!
@@ -522,13 +547,46 @@ defaultproperties
     IdleSound = Sound'UT3A_Vehicle_Leviathan.Sounds.A_Vehicle_Leviathan_EngineIdle'
     StartUpSound = Sound'UT3A_Vehicle_Leviathan.Sounds.A_Vehicle_Leviathan_EngineStart'
     ShutDownSound = Sound'UT3A_Vehicle_Leviathan.Sounds.A_Vehicle_Leviathan_EngineStop'
+    ImpactDamageMult = 0.00003 //0.0003
+    DamagedEffectHealthSmokeFactor=0.65 //0.5
+    DamagedEffectHealthFireFactor=0.39 //0.25
+    DamagedEffectFireDamagePerSec=0.95 //0.75
     ImpactDamageSounds = ()
     ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Leviathan.Sounds.A_Vehicle_Leviathan_Collide01'
     ExplosionSounds = ()
     ExplosionSounds(0) = Sound'UT3A_Vehicle_Leviathan.Sounds.A_Vehicle_Leviathan_Explode'
 
+    ExitPositions(0)=(X=90,Y=-320,Z=15)
+    ExitPositions(1)=(X=90,Y=320,Z=15)
+    ExitPositions(2)=(X=90,Y=-320,Z=-15)
+    ExitPositions(3)=(X=90,Y=320,Z=-15)
+
+    MomentumMult=0.0001
+
     MaxDeploySpeed = 15.0
     DeployIconCoords = (X1=0,Y1=670,X2=154,Y2=96)
 
-    HeadlightCoronaMaterial = None
+    TPCamLookat=(X=-160,Y=0,Z=200) //(X=-200,Y=0,Z=300) def UT2004
+    UnDeployedTPCamLookat=(X=-160,Y=0,Z=200)
+    UnDeployedTPCamWorldOffset=(X=0,Y=0,Z=200)
+    DeployedTPCamWorldOffset=(X=-60,Y=0,Z=470) //(X=0,Y=0,Z=800) def UT2004
+    DeployedTPCamLookat=(X=-60,Y=90,Z=0) //(X=100,Y=0,Z=0)
+    
+    FPCamPos=(X=70,Y=0,Z=260)
+    UnDeployedFPCamPos=(X=70,Y=0,Z=260)
+    DeployedFPCamPos=(X=-160,Y=0,Z=380)
+
+    HeadlightCoronaOffset(0)=(X=254,Y=70.5,Z=170)
+    HeadlightCoronaOffset(1)=(X=254,Y=-70.5,Z=170)
+    HeadlightCoronaOffset(2)=(X=254,Y=58,Z=170)
+    HeadlightCoronaOffset(3)=(X=254,Y=-58,Z=170)
+    HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
+    HeadlightCoronaMaxSize=50
+    
+    HeadlightProjectorOffset=(X=254.0,Y=0,Z=165)
+    HeadlightProjectorRotation=(Yaw=0,Pitch=-1000,Roll=0)
+    HeadlightProjectorMaterial=Texture'VMVehicles-TX.RVGroup.RVProjector'
+    HeadlightProjectorScale=0.16
+    
+    //HeadlightCoronaMaterial = None
 }
