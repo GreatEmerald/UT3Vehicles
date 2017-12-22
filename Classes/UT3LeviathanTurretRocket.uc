@@ -54,6 +54,7 @@ defaultproperties
     EnterAnim = "rt_front_turret_deplying"
     LeaveAnim = "rt_front_turret_undeplyed"
     ArmBone = "Rt_Front_TurretArm1"
+    CameraBone = "RT_Front_TurretPitch"
     //CameraBone = "Rt_Front_Turret_BarrelLt"
     //TPCamWorldOffset = (X=-40.0,Y=-80.0,Z=100.0)
     
