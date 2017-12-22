@@ -693,7 +693,7 @@ defaultproperties
     HeadlightCoronaOffset(1)=(X=65,Y=-33,Z=20)
     HeadlightCoronaMaterial=Material'EpicParticles.FlashFlare1'
     //HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
-    HeadlightCoronaMaxSize=65
+    HeadlightCoronaMaxSize=45 //65 looks good but probably too large with FlashFlare
 
     HeadlightProjectorOffset=(X=69,Y=0,Z=20) //(X=90,Y=0,Z=7)
     HeadlightProjectorRotation=(Yaw=0,Pitch=-1000,Roll=0)
