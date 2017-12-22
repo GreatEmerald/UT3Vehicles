@@ -160,4 +160,5 @@ defaultproperties
 
     WeaponFireOffset     = 40.0
     ShieldAttachmentBone = Object84
+    PitchDownLimit=55000
 }
