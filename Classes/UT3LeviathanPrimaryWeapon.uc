@@ -95,4 +95,6 @@ defaultproperties
     YawBone = "MainTurretYaw"
     PitchBone = "MainTurretPitch"
     WeaponFireAttachmentBone = "MainTurretPitch"
+    DamageType=class'UT3DmgType_LeviathanCannon'
+    RotationsPerSecond=0.22
 }
