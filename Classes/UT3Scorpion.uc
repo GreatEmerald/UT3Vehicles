@@ -239,7 +239,7 @@ function Boost()
     {
         //log("UT3: Boosting!");
         BoostRechargeCounter=0;
-        PlaySound(BoostSound, SLOT_Misc, 128,,,64); //Boost sound Pitch 160
+        PlaySound(BoostSound, SLOT_Misc, 128,,,); //Boost sound Pitch 160
         bBoost = true;
         BoostCount--;
         SpeedAtBoost = Velocity dot Vector(Rotation);
@@ -626,14 +626,38 @@ defaultproperties
     //DriverWeapons(0)=(WeaponClass=Class'UT3ScorpionTurret',WeaponBone="ChainGunAttachment")
     bHasAltFire=False
     GroundSpeed=950.0000
+    SteerSpeed=200.00 //200.00 //160 def
+    TurnDamping=10 //35 def
+    ChassisTorqueScale=0.45 //0.4
+    MaxBrakeTorque=22.0 //20 def
+    EngineBrakeFactor=0.001 //0.0001 def
+    TransRatio=0.18 //0.15 def UT2004
+    EngineInertia=0.008
+    WheelInertia=0.008
     bHasHandBrake=False //GE: Override for the space bar?
-    BoostSound=Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_EjectReadyBeep'
+    BoostSound=Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_EjectReadyBeepThrustStartMix'
+    //BoostSound=Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_EjectReadyBeep'
     BoostReadySound=None
+    IdleSound=sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_EngineLoop01'
     //IdleSound=sound'UT3Vehicles.SCORPION.ScorpionEngine'
     StartUpSound=sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_Start01'
     ShutDownSound=sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_Stop01'
+    SoundVolume=255
     DamagedEffectHealthSmokeFactor=0.65 //0.5
     DamagedEffectHealthFireFactor=0.373 //0.25
+    DamagedEffectFireDamagePerSec=0.95  //0.75
+    ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_Collide01';
+    ImpactDamageSounds(1) = Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_Collide02';
+    ImpactDamageSounds(2) = Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_Collide03';
+    ImpactDamageSounds(3) = Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_Collide04';
+    ImpactDamageSounds(4) = Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_Collide01';
+    ImpactDamageSounds(5) = Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_Collide02';
+    ImpactDamageSounds(6) = Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_Collide03';
+    ExplosionSounds(0) = Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_Explode02';
+    ExplosionSounds(1) = Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_Explode02';
+    ExplosionSounds(2) = Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_Explode02';
+    ExplosionSounds(3) = Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_Explode02';
+    ExplosionSounds(4) = Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_Explode02';
     RanOverDamageType=class'DamTypeRVRoadkill'
     CrushedDamageType=class'DamTypeRVPancake'
     SelfDestructDamageType=class'UT3ScorpionSDDamage'
@@ -641,17 +665,44 @@ defaultproperties
     EjectIconCoords = (X1=92,Y1=317,X2=50,Y2=50)
     DrivePos=(X=2.0,Y=0.0,Z=50.0)
 
+    Begin Object Class=KarmaParamsRBFull Name=KParams0
+        KStartEnabled=True
+        KFriction=0.5
+        KLinearDamping=0.05
+        KAngularDamping=0.05
+        KImpactThreshold=700
+        KMaxSpeed=2000
+        bKNonSphericalInertia=True
+        bHighDetailOnly=False
+        bClientOnly=False
+        bKDoubleTickRate=True
+        KInertiaTensor(0)=1.0
+        KInertiaTensor(1)=0.0
+        KInertiaTensor(2)=0.0
+        KInertiaTensor(3)=3.0
+        KInertiaTensor(4)=0.0
+        KInertiaTensor(5)=3.0
+        KCOMOffset=(X=-0.25,Y=0.0,Z=-0.4)
+        bDestroyOnWorldPenetrate=True
+        bDoSafetime=True
+        Name="KParams0"
+    End Object
+    KParams=KarmaParams'KParams0'
+
     HeadlightCoronaOffset(0)=(X=65,Y=33,Z=20)
     HeadlightCoronaOffset(1)=(X=65,Y=-33,Z=20)
     HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
     HeadlightCoronaMaxSize=65
 
+    HeadlightProjectorOffset=(X=69,Y=0,Z=20) //(X=90,Y=0,Z=7)
+    HeadlightProjectorRotation=(Yaw=0,Pitch=-1000,Roll=0)
+    HeadlightProjectorMaterial=Texture'VMVehicles-TX.RVGroup.RVProjector'
+    HeadlightProjectorScale=0.3
+
     bMakeBrakeLights=true
     BrakeLightOffset(0)=(X=-72,Y=2,Z=37)
     BrakeLightOffset(1)=(X=-72,Y=-2,Z=37)
     BrakeLightMaterial=Material'EpicParticles.FlickerFlare'
-
-    HeadlightProjectorMaterial=None
 
     BoostRechargeTime = 5.0
     AfterburnerOffset(0) = (X=-70.0,Y=-14.0,Z=20.0)
@@ -662,5 +713,12 @@ defaultproperties
     SelfDestructDamage = 600.0
     SelfDestructDamageRadius = 600.0
     SelfDestructMomentum = 20000
-    SteerSpeed=200.00
+    
+    MomentumMult=0.25 //?
+    
+    ExitPositions(0)=(X=0,Y=-150,Z=50)
+    ExitPositions(1)=(X=0,Y=150,Z=50)
+    ExitPositions(2)=(X=0,Y=-150,Z=-50)
+    ExitPositions(3)=(X=0,Y=150,Z=-50)
+    
 }
