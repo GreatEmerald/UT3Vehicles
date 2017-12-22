@@ -54,6 +54,16 @@ defaultproperties
     EnterAnim = "lt_front_turret_deplying"
     LeaveAnim = "lt_front_turret_undeplyed"
     ArmBone = "Lt_Front_TurretArm1"
-    CameraBone = "Lt_Front_Turret_Barrel"
-    //TPCamWorldOffset = (X=-40.0,Y=-80.0,Z=100.0)
+    //CameraBone = "Lt_Front_Turret_Barrel"
+    CameraBone = "LT_Front_TurretPitch"
+
+    ExitPositions(0)=(X=400,Y=-320,Z=140)
+    ExitPositions(1)=(X=500,Y=-80,Z=140)
+    ExitPositions(2)=(X=400,Y=-320,Z=100)
+    ExitPositions(3)=(X=500,Y=-80,Z=100)
+    
+    FPCamPos=(X=50,Y=0,Z=30)
+    TPCamLookAt=(X=-10,Y=0,Z=-30)
+    TPCamWorldOffset=(X=0.0,Y=0.0,Z=60.0)
+    TPCamDistance=30
 }
