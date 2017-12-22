@@ -9,7 +9,7 @@ class UT3LeviathanShieldEffectBlue extends Emitter;
 DefaultProperties
 {
     Begin Object Class=MeshEmitter Name=MeshEmitter18
-        StaticMesh=StaticMesh'AW-2k4XP.Weapons.ShockShield2'
+        StaticMesh=StaticMesh'UT3PaladinSM.PaladinShield' //'AW-2k4XP.Weapons.ShockShield2'
         UseParticleColor=True
         UseColorScale=True
         AutomaticInitialSpawning=False
@@ -18,7 +18,7 @@ DefaultProperties
         CoordinateSystem=PTCS_Relative
         MaxParticles=1
         UniformSize=false
-        StartSizeRange=(X=(Min=0.6,Max=0.6),Y=(Min=0.75,Max=0.75),Z=(Min=1.0,Max=1.0))
+        StartSizeRange=(X=(Min=0.7,Max=0.7),Y=(Min=1.0,Max=1.0),Z=(Min=1.0,Max=1.0)) //(X=(Min=0.6,Max=0.6),Y=(Min=0.75,Max=0.75),Z=(Min=1.,Max=1.0)
         InitialParticlesPerSecond=5000.0
         LifetimeRange=(Min=0.1,Max=0.1)
     End Object
