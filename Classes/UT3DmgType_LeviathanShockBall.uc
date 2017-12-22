@@ -46,6 +46,6 @@ defaultproperties
     FemaleSuicide="%o recieved too large of a shock."
 
     VehicleMomentumScaling=0.25
-    VehicleDamageScaling=0.25
+    VehicleDamageScaling=0.68 //0.25
     VehicleClass=class'UT3LeviathanTurretShock'
 }
