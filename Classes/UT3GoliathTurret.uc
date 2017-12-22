@@ -22,8 +22,12 @@ DefaultProperties
 	// @100GPing100
 	//======END======
 
-
-	Spread=0.03
-	DamageMin=18
-	DamageMax=18
+        PitchUpLimit=11000
+        WeaponFireOffset=30.0 //85.0
+        DualFireOffset=0.0
+        DamageType=class'UT3DmgType_GoliathMachineGun'
+        Spread=0.05  //0.03
+        DamageMin=16 //18
+        DamageMax=16 //18
+	AIInfo(0)=(bInstantHit=true,AimError=600)
 }
