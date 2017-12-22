@@ -410,7 +410,8 @@ defaultproperties
     HeadlightProjectorMaterial=Texture'VMVehicles-TX.NewPRVGroup.PRVProjector'
     HeadlightProjectorScale=0.40 //0.65
 
-    EntryRadius = 230.0
+    EntryPosition=(X=0,Y=0,Z=0)
+    EntryRadius = 220
     
         Begin Object Class=KarmaParamsRBFull Name=KParams0
         KStartEnabled=True
@@ -438,4 +439,9 @@ defaultproperties
         Name="KParams0"
     End Object
     KParams=KarmaParams'KParams0'
+    
+    bDrawMeshInFP=True
+    FPCamPos=(X=155,Y=0,Z=-40)
+    TPCamLookAt=(X=10.0,Y=0.0,Z=0)
+    TPCamWorldOffset=(X=0,Y=0,Z=130)
 }
