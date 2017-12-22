@@ -147,10 +147,10 @@ defaultproperties
     Spread       = 0.0675
     DamageMin    = 40
     DamageMax    = 40
-    DamageType   = class'DamTypeONSChainGun'
+    DamageType   = class'UT3DmgType_LeviathanShard'
     FireInterval = 0.1
 
-    FireSoundClass = Sound'UT3Weapons2.Stinger.StingerPrimaryAmb'
+    FireSoundClass = Sound'UT3Weapons2.Stinger.StingerPrimaryAmb' //HD to GE: This I believe needs to be Alt fire sound
     bAmbientFireSound=True
 
     mTracerInterval=0.06
