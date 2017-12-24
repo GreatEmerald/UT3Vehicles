@@ -330,10 +330,15 @@ defaultproperties
 
     bDrawMeshInFP=True
     
-    FPCamPos=(X=63,Y=0,Z=-5)
-    TPCamLookat=(X=70,Y=0,Z=0)
-    TPCamWorldOffset=(X=0,Y=0,Z=60)
-    TPCamDistance=0
+    FPCamPos=(X=65,Y=0,Z=-5)
+    
+    //Normal & Outsider Cam Settings
+    TPCamLookat=(X=60,Y=0,Z=0)
+    TPCamWorldOffset=(X=0,Y=0,Z=120)
+    
+    //Aerial View Mutator Cam Settings
+    //TPCamLookat=(X=70,Y=0,Z=0)
+    //TPCamWorldOffset=(X=0,Y=0,Z=35)
 
     HeadlightCoronaOffset=()
     HeadlightCoronaOffset(0)=(X=40.0,Y=0.0,Z=-30.0)
