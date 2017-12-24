@@ -42,6 +42,8 @@
 class UT3Manta extends ONSHoverBike;
 
 var Emitter DuckEffect;
+Var rotator ThighDriveL,ThighDriveR;
+var bool bAttachedDriver;
 
 //===============
 // @100GPing100
@@ -214,6 +216,40 @@ if (!bHoldingDuck && DuckEffect!=None) {
     }
 }
 
+simulated function AttachDriver(Pawn P)
+{
+    super.AttachDriver(P);
+    bAttachedDriver=true;
+
+    //P.SetBoneRotation('Bip01 R UpperArm',ArmDriveR);
+    ThighDriveL.Pitch=1800;
+    P.SetBoneRotation('Bip01 L Thigh',ThighDriveL);
+    //Right Thigh
+    ThighDriveR.Pitch=-1800;
+    P.SetBoneRotation('Bip01 R Thigh',ThighDriveR);
+}
+
+simulated function DetachDriver(Pawn P)
+{
+    P.SetBoneRotation('Bip01 Head');
+    P.SetBoneRotation('Bip01 Spine');
+    P.SetBoneRotation('Bip01 Spine1');
+    P.SetBoneRotation('Bip01 Spine2');
+    P.SetBoneRotation('Bip01 L Clavicle');
+    P.SetBoneRotation('Bip01 R Clavicle');
+    P.SetBoneRotation('Bip01 L UpperArm');
+    P.SetBoneRotation('Bip01 R UpperArm');
+    P.SetBoneRotation('Bip01 L ForeArm');
+    P.SetBoneRotation('Bip01 R ForeArm');
+    P.SetBoneRotation('Bip01 L Thigh');
+    P.SetBoneRotation('Bip01 R Thigh');
+    P.SetBoneRotation('Bip01 L Calf');
+    P.SetBoneRotation('Bip01 R Calf');
+    
+    bAttachedDriver=false;
+    Super.DetachDriver(P);
+}
+
 //=============================================================================
 // Default values
 //=============================================================================
@@ -332,12 +368,14 @@ defaultproperties
     
     FPCamPos=(X=65,Y=0,Z=-5)
     
-    //Normal & Outsider Cam Settings
-    TPCamLookat=(X=60,Y=0,Z=0)
-    TPCamWorldOffset=(X=0,Y=0,Z=120)
+    //Normal
+    TPCamDistance=300.000000  //NOTE: Be sure TO DELETE THIS LINE from USER.INI, it overrides this value and will be re-added to the ini as soon as you use the vehicle, all this does here is make it the starting distance
+    TPCamLookat=(X=-10,Y=0,Z=0)
+    TPCamWorldOffset=(X=0,Y=0,Z=100) //Z might need to be 110 or 120 for better upwards aim
     
-    //Aerial View Mutator Cam Settings
-    //TPCamLookat=(X=70,Y=0,Z=0)
+    //Aerial View
+    //TPCamDistance=300.000000
+    //TPCamLookat=(X=0,Y=0,Z=0)
     //TPCamWorldOffset=(X=0,Y=0,Z=35)
 
     HeadlightCoronaOffset=()
