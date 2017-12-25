@@ -470,8 +470,16 @@ defaultproperties
     ExitPositions(3)=(X=-10,Y=160,Z=-50)  //Right Below
     
     FPCamPos=(X=-10,Y=28,Z=135)
-    TPCamLookat=(X=10,Y=0,Z=0)
-    TPCamWorldOffset=(X=0,Y=0,Z=190)  //TPCamWorldOffset=(Z=200.000000)
+    
+    //Normal
+    TPCamDistance=375.000000
+    TPCamLookat=(X=0,Y=0,Z=0)
+    TPCamWorldOffset=(X=0,Y=0,Z=200)
+    
+    //Aerial View
+    //TPCamDistance=375.000000
+    //TPCamLookat=(X=-10,Y=0,Z=0)
+    //TPCamWorldOffset=(X=0,Y=0,Z=140)
     
     HeadlightCoronaOffset(0)=(X=72.5,Y=26.5,Z=49.5) //(X=77.5,Y=27.5,Z=52.5)
     HeadlightCoronaOffset(1)=(X=72.5,Y=-26.5,Z=49.5)
