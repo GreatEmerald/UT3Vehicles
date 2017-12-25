@@ -726,6 +726,16 @@ defaultproperties
     ExitPositions(6)=(X=150,Y=0,Z=-50)  //Front Below
     ExitPositions(7)=(X=-150,Y=0,Z=-50) //Rear Below
     
-    FPCamPos=(X=-60,Y=0,Z=80)
+    FPCamPos=(X=-60,Y=0,Z=70)
+    
+    //Normal
+    TPCamDistance=275.000000
+    TPCamLookat=(X=-20,Y=0,Z=0)
+    TPCamWorldOffset=(X=0,Y=0,Z= 150)
+    
+    //Aerial View
+    //TPCamDistance=275.000000
+    //TPCamLookat=(X=-10,Y=0,Z=0)
+    //TPCamWorldOffset=(X=0,Y=0,Z=50)
     
 }
