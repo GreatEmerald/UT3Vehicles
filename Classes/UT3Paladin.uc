@@ -1,7 +1,7 @@
 /*
- * Copyright © 2008-2009 Wormbo
- * Copyright © 2008-2009, 2014 GreatEmerald
- * Copyright © 2012 100GPing100
+ * Copyright Â© 2008-2009 Wormbo
+ * Copyright Â© 2008-2009, 2014 GreatEmerald
+ * Copyright Â© 2012 100GPing100
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -83,6 +83,9 @@ defaultproperties
     IdleSound = Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_EngineLoop01';
     StartUpSound = Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Start01';
     ShutDownSound = Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Stop01';
+    DamagedEffectHealthSmokeFactor=0.65 //0.5
+	DamagedEffectHealthFireFactor=0.37 //0.25
+	DamagedEffectFireDamagePerSec=0.95 //0.75
     ExplosionSounds(0) = Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Explode01';
     ExplosionSounds(1) = Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Explode02';
     ExplosionSounds(2) = Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Explode01';
