@@ -201,7 +201,7 @@ DefaultProperties
   CollisionHeight=30
   CollisionRadius=30
   ForceScale=10.0
-  //AmbientSound=Sound'UT3Vehicles.SCORPION.ScorpionBallAmb'
+  AmbientSound=None
   ImpactSound=Sound'UT3Weapons2.BioRifle.BioRifleExplode' // GEm: FIXME, should not depend on UT3Weapons2
   MyDamageType=class'UT3ScorpionBallDamage'
   ExplosionEmitterClass=class'ONSPlasmaHitBlue'
