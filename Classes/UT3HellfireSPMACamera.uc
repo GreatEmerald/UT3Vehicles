@@ -333,7 +333,8 @@ defaultproperties
     CVScale = 1.0
     MaxTargetRange = 10240.0
     Speed = 4000.0
-
+    DrawScale=0.3
+    AmbientSound      = Sound'UT3SPMA.SPMACameraAmbient'
     ImpactSound       = Sound'UT3SPMA.SPMAShellFragmentExplode'
     bOrientToVelocity = True
     bAlwaysRelevant   = True
