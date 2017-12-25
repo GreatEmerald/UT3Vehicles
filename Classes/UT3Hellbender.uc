@@ -454,7 +454,7 @@ defaultproperties
     EngineInertia=0.01
     WheelInertia=0.01
     ChassisTorqueScale=0.82 //0.7
-
+    WheelSuspensionOffset=5.0 //this one little value causes the Hellbender to sit lower like it should, unbeliveble we went crazy trying to solve it and all it needed was this
     DrawScale=0.95
 
     CollisionRadius=219
