@@ -244,7 +244,7 @@ defaultproperties
     MaxRandForce=2.0
     RandForceInterval=0.95
     RollTorqueMax=60 //100
-    RollTorqueStrafeFactor=130 /100
+    RollTorqueStrafeFactor=130 //100
     RollTorqueTurnFactor=250 //750
     RollDamping=100.0 //30.0
     PitchTorqueFactor=50.0 //200.0
@@ -268,8 +268,8 @@ defaultproperties
     ShutDownSound=Sound'UT3A_Vehicle_Cicada.Sounds.A_Vehicle_Cicada_Stop01'//8/10
     ImpactDamageMult = 0.00003 //0.0003
     DamagedEffectHealthSmokeFactor=0.65 //0.5
-    DamagedEffectHealthFireFactor=0.38 //0.25
-    DamagedEffectFireDamagePerSec=0.95 //0.75
+    DamagedEffectHealthFireFactor=0.40 //0.25
+    DamagedEffectFireDamagePerSec=2.0 //0.75
     ExplosionSounds=()
     ExplosionSounds(0)=Sound'UT3A_Vehicle_Cicada.Sounds.A_Vehicle_Cicada_Explode02'
     ImpactDamageSounds=()
