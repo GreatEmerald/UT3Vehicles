@@ -925,8 +925,8 @@ defaultproperties
     StartUpSound   = Sound'UT3SPMA.SPMAEngineStart'
     ShutDownSound  = Sound'UT3SPMA.SPMAEngineStop'
     DamagedEffectHealthSmokeFactor=0.65 //0.5
-    DamagedEffectHealthFireFactor=0.39 //0.25
-    DamagedEffectFireDamagePerSec=0.95 //0.75
+    DamagedEffectHealthFireFactor=0.40 //0.25
+    DamagedEffectFireDamagePerSec=2.0 //0.75
     ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Collide01';
     ImpactDamageSounds(1) = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Collide01';
     ImpactDamageSounds(2) = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Collide01';
@@ -956,7 +956,7 @@ defaultproperties
     MomentumMult=0.1 //2.0
     bDoStuntInfo=False //true
     
-        Begin Object Class=KarmaParamsRBFull Name=KParams0
+    Begin Object Class=KarmaParamsRBFull Name=KParams0
         KStartEnabled=True
         KFriction=0.5
         KLinearDamping=0.05
