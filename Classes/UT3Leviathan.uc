@@ -549,8 +549,8 @@ defaultproperties
     ShutDownSound = Sound'UT3A_Vehicle_Leviathan.Sounds.A_Vehicle_Leviathan_EngineStop'
     ImpactDamageMult = 0.00003 //0.0003
     DamagedEffectHealthSmokeFactor=0.65 //0.5
-    DamagedEffectHealthFireFactor=0.39 //0.25
-    DamagedEffectFireDamagePerSec=0.95 //0.75
+    DamagedEffectHealthFireFactor=0.40 //0.25
+    DamagedEffectFireDamagePerSec=2.0 //0.75
     ImpactDamageSounds = ()
     ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Leviathan.Sounds.A_Vehicle_Leviathan_Collide01'
     ExplosionSounds = ()
