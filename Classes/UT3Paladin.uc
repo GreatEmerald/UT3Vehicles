@@ -1,7 +1,7 @@
 /*
- * Copyright © 2008-2009 Wormbo
- * Copyright © 2008-2009, 2014 GreatEmerald
- * Copyright © 2012 100GPing100
+ * Copyright Â© 2008-2009 Wormbo
+ * Copyright Â© 2008-2009, 2014 GreatEmerald
+ * Copyright Â© 2012 100GPing100
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -218,12 +218,14 @@ defaultproperties
     //======END======
 
     VehicleNameString = "UT3 Paladin" //GE: UT3 Paladin...
-    SteerSpeed=90                     //Is steered more easily
+    ImpactDamageMult=0.0003 //0.0010
+    SteerSpeed=82                     //90 Is steered more easily
     ChassisTorqueScale=0.1            //Has a lower... setting of some kind
     MaxBrakeTorque=75.000000          //And another, but this time higher
     MaxSteerAngleCurve=(Points=((OutVal=20.000000),(InVal=700.000000,OutVal=15.000000)))//Again steered more easily
     //EngineBrakeFactor=0.100000       //This makes it extremely easy to flip and have an accident
     WheelInertia=0.750000             //Has more inertia
-    //GroundSpeed=1000.000000           //Is faster, GroundSpeed == deprecated?
+    GroundSpeed=700.000000           //1000 Is faster, GroundSpeed == deprecated?
+    ChangeUpPoint=2400 //2000
     //DriverWeapons(0)=(WeaponClass=class'UT3PaladinCannon',WeaponBone=CannonAttach);//Has a better shield
 }
