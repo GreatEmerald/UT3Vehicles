@@ -37,64 +37,25 @@
  * of such parties' affiliates and subsidiaries.
  */
 
-class UT3LeviathanPrimaryWeapon extends ONSMASCannon;
-
-var bool bCurrentlyFiring;
-
-var Material RedSkinB, BlueSkinB;
-
-simulated state InstantFireMode
-{
-ImplodeExplode:
-    bCurrentlyFiring = true;
-    Sleep(0.8);
-    if (Level.NetMode != NM_DedicatedServer)
-        Spawn(class'ONSMASCannonImplosionEffect',,, GHitLocation, rotator(GHitNormal));
-    Sleep(2.3);
-    Explosion(DamageRadius*0.125);
-    Sleep(0.5);
-    Explosion(DamageRadius*0.300);
-    Sleep(0.2);
-    Explosion(DamageRadius*0.475);
-    Sleep(0.2);
-    Explosion(DamageRadius*0.650);
-    Sleep(0.2);
-    Explosion(DamageRadius*0.825);
-    Sleep(0.2);
-    Explosion(DamageRadius*1.000);
-    bCurrentlyFiring = false;
-}
-
-simulated function SetTeam(byte T)
-{
-    Team = T;
-    if (T == 0 && RedSkin != None)
-    {
-        Skins[0] = RedSkin;
-        Skins[1] = RedSkinB;
-        // GEm: TODO: Replication
-        RepSkin = RedSkin;
-    }
-    else if (T == 1 && BlueSkin != None)
-    {
-        Skins[0] = BlueSkin;
-        Skins[1] = BlueSkinB;
-        RepSkin = BlueSkin;
-    }
-}
+class UT3DmgType_LeviathanCannon extends VehicleDamageType;
 
 defaultproperties
 {
-    FireSoundClass = Sound'UT3A_Vehicle_Leviathan.Sounds.A_Vehicle_Leviathan_CannonFire01'
+    DeathString="%o was VAPORIZED by %k!"
+    MaleSuicide="%o was VAPORIZED!"
+    FemaleSuicide="%o was VAPORIZED!"
+    VehicleDamageScaling=1.5
+    
+    bArmorStops=False
+    bNeverSevers=True
+    
+    
+    bKUseTearOffMomentum=True
+    KDeathUpKick=700
+    KDamageImpulse=20000
+    GibPerterbation=0.5
+    GibModifier=2.0
+    bLocationalHit=False
+    VehicleClass=class'UT3Leviathan'
 
-    Mesh = SkeletalMesh'UT3VH_Leviathan_Anims.Leviathan_MainTurreta'
-    RedSkin = Shader'UT3LeviathanTex.Levi1.LeviathanSkin1'
-    BlueSkin = Shader'UT3LeviathanTex.Levi1.LeviathanSkin1Blue'
-    RedSkinB = Shader'UT3LeviathanTex.Levi2.LeviathanSkin2'
-    BlueSkinB = Shader'UT3LeviathanTex.Levi2.LeviathanSkin2Blue'
-    YawBone = "MainTurretYaw"
-    PitchBone = "MainTurretPitch"
-    WeaponFireAttachmentBone = "MainTurretPitch"
-    DamageType=class'UT3DmgType_LeviathanCannon'
-    RotationsPerSecond=0.22
 }
