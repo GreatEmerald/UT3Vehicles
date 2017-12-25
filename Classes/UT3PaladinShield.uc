@@ -1,6 +1,6 @@
 /*
  * Copyright © 2014 GreatEmerald
- * Copyright © 2012-2017 Luís 'zeluisping' Guimarães <zeluis.100@gmail.com>
+ * Copyright © 2012 Luís 'zeluisping' Guimarães <zeluis.100@gmail.com>
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are

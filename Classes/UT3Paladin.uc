@@ -1,7 +1,8 @@
 /*
  * Copyright © 2008-2009 Wormbo
  * Copyright © 2008-2009, 2014 GreatEmerald
- * Copyright © 2012-2017 Luís 'zeluisping' Guimarães <zeluis.100@gmail.com>
+ * Copyright © 2012, 2017 Luís 'zeluisping' Guimarães <zeluis.100@gmail.com>
+ * Copyright © 2017 HellDragon-HK
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -261,7 +262,6 @@ defaultproperties
     End Object
     KParams=KarmaParams'KParams0'
     
-    HeadlightCoronaOffset=()
     HeadlightCoronaOffset(0)=(X=215.0,Y=34.5,Z=8.0)
     HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
     HeadlightCoronaMaxSize=92

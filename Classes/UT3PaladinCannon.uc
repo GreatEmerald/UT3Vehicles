@@ -1,6 +1,7 @@
 /*
  * Copyright © 2009, 2014 GreatEmerald
- * Copyright © 2012-2017 Luís 'zeluisping' Guimarães <zeluis.100@gmail.com>
+ * Copyright © 2012, 2017 Luís 'zeluisping' Guimarães <zeluis.100@gmail.com>
+ * Copyright © 2017 HellDragon-HK
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -173,9 +174,9 @@ defaultproperties
     FireImpact=Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_FireImpact01';
     //RotateSound=sound'ONSBPSounds.ShockTank.TurretHorizontal'
     RotationsPerSecond=0.68 //0.18
-	PitchUpLimit=9900
+    PitchUpLimit=9900
     PitchDownLimit=57500
-	
+    
     YawBone=Turret_Yaw
     PitchBone=Cannon_Pitch
     ShieldPitchBone=Shield_Pitch
