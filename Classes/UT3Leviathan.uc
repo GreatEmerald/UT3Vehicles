@@ -412,6 +412,7 @@ defaultproperties
     //EngineBrakeFactor=0.020000
     MaxBrakeTorque=8.000000
     //StopThreshold=500.000000
+    WheelSuspensionOffset=25.0
 
     Begin Object Class=KarmaParamsRBFull Name=KParams0
         KStartEnabled=True
