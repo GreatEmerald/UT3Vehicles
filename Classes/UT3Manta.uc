@@ -322,6 +322,7 @@ defaultproperties
     ShutDownSound = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Stop01';
     JumpSound = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Jump';
     DuckSound = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Crouch';
+    ImpactDamageMult = 0.00001 //0.0003
     DamagedEffectHealthSmokeFactor=0.65 //0.5
     DamagedEffectHealthFireFactor=0.40 //0.25 //.373 is what I had, I think 0.4 will be too much but we'll se
     DamagedEffectFireDamagePerSec=2.0  //0.75
