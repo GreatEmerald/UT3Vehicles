@@ -41,6 +41,7 @@
 
 class UT3Goliath extends ONSHoverTank;
 
+//var(ONSWheeledCraft) float ChassisTorqueScale; doesn't work yet
 
 //=====================
 // @100GPing100
@@ -96,10 +97,13 @@ defaultproperties
 	Health=900
 	HealthMax=900
 
-    IdleSound = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_EngineLoop01';
+    IdleSound = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_EngineLoop01RealTreadsMix';
+    //IdleSound = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_EngineLoop01';
     StartUpSound = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Start01';
     ShutDownSound = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Stop01';
-
+    DamagedEffectHealthSmokeFactor=0.65 //0.5
+    DamagedEffectHealthFireFactor=0.40 //0.25
+    DamagedEffectFireDamagePerSec=2.0 //0.75
     ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Collide01';
     ImpactDamageSounds(1) = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Collide01';
     ImpactDamageSounds(2) = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Collide01';
@@ -119,8 +123,54 @@ defaultproperties
 
 
     VehicleNameString = "UT3 Goliath"
-    MaxGroundSpeed=600.0
-    GroundSpeed=500
+    MaxGroundSpeed=900.0 //600.0
+    GroundSpeed=520 //500
+    MaxAirSpeed=900.0  //5000.0
+    MaxSteerTorque=70.0
+    ForwardDampFactor=0.13
+    //ChassisTorqueScale=5.0 compiles but is ignored in-game
     SoundVolume=255
-    MaxThrust=200.000000//GE: was 65, maybe the tank is too fast now?
+    MaxThrust=80.0 //GE val 200.000000//GE: was 65, maybe the tank is too fast now?
+    MaxDesireability=1.25
+    
+    MomentumMult=0.1 //0.3
+    
+    Begin Object Class=KarmaParamsRBFull Name=KParams0
+        KStartEnabled=True
+        KFriction=0.5
+        KLinearDamping=0
+        KAngularDamping=0
+        bKNonSphericalInertia=False
+        bHighDetailOnly=False
+        bClientOnly=False
+        bKDoubleTickRate=True
+        bKStayUpright=True
+        bKAllowRotate=True
+        kMaxSpeed=900.0  //800
+        KInertiaTensor(0)=1.3
+        KInertiaTensor(1)=0.0
+        KInertiaTensor(2)=0.0
+        KInertiaTensor(3)=4.0
+        KInertiaTensor(4)=0.0
+        KInertiaTensor(5)=4.5
+        KCOMOffset=(X=0.0,Y=0.0,Z=0.0)
+        bDestroyOnWorldPenetrate=True
+        bDoSafetime=True
+        Name="KParams0"
+    End Object
+    KParams=KarmaParams'KParams0'
+    
+    ExitPositions(0)=(X=0,Y=-200,Z=30)
+    ExitPositions(1)=(X=0,Y=200,Z=30)
+    
+    HeadlightCoronaOffset(0)=(X=167,Y=99.5,Z=34)
+    HeadlightCoronaOffset(1)=(X=167,Y=-99.5,Z=34)
+    HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
+    HeadlightCoronaMaxSize=115  //95 looks  good to me as well
+
+    HeadlightProjectorOffset=(X=167,Y=0,Z=34)
+    HeadlightProjectorRotation=(Yaw=0,Pitch=-1500,Roll=0)
+    //HeadlightProjectorMaterial=Texture'VMVehicles-TX.HoverTankGroup.TankProjector'
+    HeadlightProjectorMaterial=Texture'VMVehicles-TX.NewPRVGroup.PRVProjector'
+    HeadlightProjectorScale=0.80
 }
