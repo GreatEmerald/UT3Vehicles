@@ -563,7 +563,7 @@ defaultproperties
         BoneSteerAxis = AXIS_Z;
         SupportBoneAxis = AXIS_X;
         SteerType = VST_Fixed;
-        BoneOffset = (X=0.0,Y=20.0,Z=0.0);
+        BoneOffset = (X=0.0,Y=20.0,Z=-6.0);
 
         WheelRadius = 20; //27
         //SuspensionTravel = 40;
@@ -578,7 +578,7 @@ defaultproperties
         BoneSteerAxis = AXIS_Z;
         SupportBoneAxis = AXIS_X;
         SteerType = VST_Fixed;
-        BoneOffset = (X=0.0,Y=-20.0,Z=0.0);
+        BoneOffset = (X=0.0,Y=-20.0,Z=-6.0);
 
         WheelRadius = 20;
         //SuspensionTravel = 0;
@@ -593,7 +593,7 @@ defaultproperties
         BoneSteerAxis = AXIS_Z;
         SupportBoneAxis = AXIS_X;
         SteerType = VST_Steered;
-        BoneOffset = (X=0.0,Y=20.0,Z=0.0);
+        BoneOffset = (X=0.0,Y=20.0,Z=-6.0);
 
         WheelRadius = 20;
         //SuspensionTravel = 40;
@@ -607,7 +607,7 @@ defaultproperties
         BoneSteerAxis = AXIS_Z;
         SupportBoneAxis = AXIS_X;
         SteerType = VST_Steered;
-        BoneOffset = (X=0.0,Y=-20.0,Z=0.0);
+        BoneOffset = (X=0.0,Y=-20.0,Z=-6.0);
 
         WheelRadius = 20;
         //SuspensionTravel = 40;
@@ -634,6 +634,7 @@ defaultproperties
     TransRatio=0.18 //0.15 def UT2004
     EngineInertia=0.008
     WheelInertia=0.008
+    WheelSuspensionOffset=3.0
     bHasHandBrake=False //GE: Override for the space bar?
     BoostSound=Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_EjectReadyBeepThrustStartMix'
     //BoostSound=Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_EjectReadyBeep'
