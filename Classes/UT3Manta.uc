@@ -221,10 +221,8 @@ simulated function AttachDriver(Pawn P)
     super.AttachDriver(P);
     bAttachedDriver=true;
 
-    //P.SetBoneRotation('Bip01 R UpperArm',ArmDriveR);
     ThighDriveL.Pitch=1800;
     P.SetBoneRotation('Bip01 L Thigh',ThighDriveL);
-    //Right Thigh
     ThighDriveR.Pitch=-1800;
     P.SetBoneRotation('Bip01 R Thigh',ThighDriveR);
 }
