@@ -240,7 +240,25 @@ defaultproperties
     //==========END==========
     VehicleNameString = "UT3 Cicada"
 
-    GroundSpeed=2000
+    GroundSpeed=1600
+    MaxRandForce=2.0
+    RandForceInterval=0.95
+    RollTorqueMax=60 //100
+    RollTorqueStrafeFactor=130 //100
+    RollTorqueTurnFactor=250 //750
+    RollDamping=100.0 //30.0
+    PitchTorqueFactor=50.0 //200.0
+    PitchTorqueMax=20.0 //35.0
+    TurnTorqueFactor=600.0
+    TurnTorqueMax=220.0 //200.0
+    TurnDamping=65.0 //50.0
+    MaxYawRate=1.8 //1.5
+    MaxRiseForce=130.0 //200
+    UpDamping=0.08 //0.05
+    MaxStrafeForce=45.0 //65.0
+    LatDamping=0.08 //0.05
+    MaxThrustForce=80.0 //80.0
+    LongDamping=0.8 //0.3
     CollisionHeight=70.000000
     //DriverWeapons(0)=(WeaponClass=class'UT3CicadaMissileLauncher',WeaponBone=RightRLAttach);
     //DriverWeapons(1)=(WeaponClass=class'UT3CicadaMissileLauncher',WeaponBone=LeftRLAttach);
@@ -248,12 +266,34 @@ defaultproperties
     IdleSound=Sound'UT3A_Vehicle_Cicada.Sounds.A_Vehicle_Cicada_EngineLoop02'
     StartUpSound=Sound'UT3A_Vehicle_Cicada.Sounds.A_Vehicle_Cicada_Start01'
     ShutDownSound=Sound'UT3A_Vehicle_Cicada.Sounds.A_Vehicle_Cicada_Stop01'//8/10
+    ImpactDamageMult = 0.00003 //0.0003
+    DamagedEffectHealthSmokeFactor=0.65 //0.5
+    DamagedEffectHealthFireFactor=0.40 //0.25
+    DamagedEffectFireDamagePerSec=2.0 //0.75
     ExplosionSounds=()
     ExplosionSounds(0)=Sound'UT3A_Vehicle_Cicada.Sounds.A_Vehicle_Cicada_Explode02'
     ImpactDamageSounds=()
     ImpactDamageSounds(0)=Sound'UT3A_Vehicle_Cicada.SoundCues.A_Vehicle_Cicada_Collide'
     //PassengerWeapons(0)=(WeaponPawnClass=Class'UT3CicadaTurretPawn',WeaponBone="GatlingGunAttach")
+    
+    ExitPositions(0)=(X=80,Y=-200,Z=25)
+    ExitPositions(1)=(X=80,Y=200,Z=25)
+    ExitPositions(2)=(X=-220,Y=0,Z=25)
+    
     TrailEffectRotation=(Yaw=32768)
-    TrailEffectPositions(0)=(X=-53,Y=-33,Z=63)
-    TrailEffectPositions(1)=(X=-53,Y=33,Z=63)
+    TrailEffectPositions(0)=(X=-40,Y=-33,Z=90) //(X=-53,Y=-33,Z=63)
+    TrailEffectPositions(1)=(X=-40,Y=33,Z=90)
+    
+    MomentumMult=0.400000 //?
+    
+    HeadlightCoronaOffset(0)=(X=185,Y=0,Z=50.5)
+    HeadlightCoronaOffset(1)=(X=-29,Y=-0,Z=-36.5)
+    HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
+    HeadlightCoronaMaxSize=45
+
+    HeadlightProjectorOffset=(X=142.0,Y=0,Z=-10.5) //(X=82.5,Y=0,Z=55.5)
+    HeadlightProjectorRotation=(Yaw=0,Pitch=-1000,Roll=0)
+    HeadlightProjectorMaterial=Texture'VMVehicles-TX.NewPRVGroup.PRVProjector'
+    HeadlightProjectorScale=0.40 //0.65
+    
 }
