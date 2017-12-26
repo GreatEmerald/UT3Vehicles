@@ -1,7 +1,7 @@
 /*
- * Copyright © 2008-2009 Wormbo
- * Copyright © 2008-2009, 2014 GreatEmerald
- * Copyright © 2012 100GPing100
+ * Copyright Â© 2008-2009 Wormbo
+ * Copyright Â© 2008-2009, 2014 GreatEmerald
+ * Copyright Â© 2012 100GPing100
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -226,4 +226,5 @@ defaultproperties
     WheelInertia=0.750000             //Has more inertia
     //GroundSpeed=1000.000000           //Is faster, GroundSpeed == deprecated?
     //DriverWeapons(0)=(WeaponClass=class'UT3PaladinCannon',WeaponBone=CannonAttach);//Has a better shield
+    WheelSuspensionOffset=3.0 //Probably higher than it should be but with the collision issues it needs to be for now
 }
