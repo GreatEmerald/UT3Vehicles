@@ -73,7 +73,7 @@ function SuperExplosion()
     local Actor HitActor, ExpFX;
     local vector HitLocation, HitNormal;
 
-    HurtRadius(Damage, DamageRadius, MyDamageType, MomentumTransfer, Location);
+    HurtRadius(ComboDamage, DamageRadius, MyDamageType, MomentumTransfer, Location);
 
     ExpFX = Spawn(class'ONSPRVComboEffect');
     if (Level.NetMode == NM_DedicatedServer) {
