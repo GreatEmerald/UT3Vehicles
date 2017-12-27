@@ -2,7 +2,8 @@
 // UT3GoliathTurret.uc
 // I don't think the sounds will initially work...
 // GreatEmerald, 2008, 2014
-// Copyright (c) 2012, 100GPing100 (visuals + fixed sounds)
+// Copyright © 2012, 2017 Luís 'zeluisping' Guimarães <zeluis.100@gmail.com> (visuals + fixed sounds)
+// HellDragon 2017
 //-----------------------------------------------------------
 class UT3GoliathTurret extends ONSTankSecondaryTurret;
 
@@ -22,8 +23,12 @@ DefaultProperties
 	// @100GPing100
 	//======END======
 
-
-	Spread=0.03
-	DamageMin=18
-	DamageMax=18
+    PitchUpLimit=11000
+    WeaponFireOffset=30.0 //85.0
+    DualFireOffset=0.0
+    DamageType=class'UT3DmgType_GoliathMachineGun'
+    Spread=0.05  //0.03
+    DamageMin=16 //18
+    DamageMax=16 //18
+    AIInfo(0)=(bInstantHit=true,AimError=600)
 }
