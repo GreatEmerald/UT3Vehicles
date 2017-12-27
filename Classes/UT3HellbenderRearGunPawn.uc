@@ -1,5 +1,6 @@
 /*
  * Copyright © 2008, 2014 GreatEmerald
+ * Copyright © 2017 HellDragon (still don't feel right about it but here you go)
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -39,10 +40,96 @@
 
 class UT3HellbenderRearGunPawn extends ONSPRVRearGunPawn;
 
+Var rotator SpineDrive;
+Var rotator ThighDriveL,ThighDriveR;
+Var rotator CalfDriveL,CalfDriveR;
+Var rotator FootDriveL,FootDriveR;
+Var rotator ArmDriveL,ArmDriveR;
+Var rotator ForeArmDriveL, ForeArmDriveR;
+Var rotator NeckDrive;
+var bool bAttachedDriver;
+
+simulated function AttachDriver(Pawn P)
+{
+    super.AttachDriver(P);
+    bAttachedDriver=true;
+
+    NeckDrive.Yaw=4000;
+    P.SetBoneRotation('Bip01 Head',NeckDrive);
+    SpineDrive.Yaw=-8000;
+    P.SetBoneRotation('Bip01 Spine',SpineDrive);
+    //ArmDriveL.Yaw=-2000;
+    ArmDriveL.Pitch=-500;
+    P.SetBoneRotation('Bip01 L UpperArm',ArmDriveL);
+    //ArmDriveR.Yaw=-2000;
+    ArmDriveR.Pitch=-500;
+    P.SetBoneRotation('Bip01 R UpperArm',ArmDriveR);
+    ForeArmDriveL.Yaw=6000;
+    ForeArmDriveL.Pitch=2000;
+    ForeArmDriveL.Roll=-8000;
+    P.SetBoneRotation('Bip01 L ForeArm',ForeArmDriveL);
+    ForeArmDriveR.Yaw=5000;
+    //ForeArmDriveR.Pitch=3000;
+    ForeArmDriveR.Roll=3000;
+    P.SetBoneRotation('Bip01 R ForeArm',ForeArmDriveR);
+    ThighDriveL.Pitch=2000;
+    ThighDriveL.Yaw=7000;
+    P.SetBoneRotation('Bip01 L Thigh',ThighDriveL);
+    ThighDriveR.Pitch=-2000;
+    ThighDriveR.Yaw=7000;
+    P.SetBoneRotation('Bip01 R Thigh',ThighDriveR);
+    //CalfDriveL.Pitch=6500;
+    CalfDriveL.Yaw=-15000;
+    P.SetBoneRotation('Bip01 L Calf',CalfDriveL);
+    //CalfDriveR.Pitch=-6500;
+    CalfDriveR.Yaw=-15000;
+    P.SetBoneRotation('Bip01 R Calf',CalfDriveR);
+    //FootDriveL.Pitch=6500;
+    FootDriveL.Yaw=15000;
+    P.SetBoneRotation('Bip01 L Foot',FootDriveL);
+    //FootDriveR.Pitch=-6500;
+    FootDriveR.Yaw=15000;
+    P.SetBoneRotation('Bip01 R Foot',FootDriveR);
+}
+
+simulated function DetachDriver(Pawn P)
+{
+    P.SetBoneRotation('Bip01 Head');
+    P.SetBoneRotation('Bip01 Spine');
+    P.SetBoneRotation('Bip01 Spine1');
+    P.SetBoneRotation('Bip01 Spine2');
+    P.SetBoneRotation('Bip01 L Clavicle');
+    P.SetBoneRotation('Bip01 R Clavicle');
+    P.SetBoneRotation('Bip01 L UpperArm');
+    P.SetBoneRotation('Bip01 R UpperArm');
+    P.SetBoneRotation('Bip01 L ForeArm');
+    P.SetBoneRotation('Bip01 R ForeArm');
+    P.SetBoneRotation('Bip01 L Thigh');
+    P.SetBoneRotation('Bip01 R Thigh');
+    P.SetBoneRotation('Bip01 L Calf');
+    P.SetBoneRotation('Bip01 R Calf');
+    P.SetBoneRotation('Bip01 L Foot');
+    P.SetBoneRotation('Bip01 R Foot');
+    
+    bAttachedDriver=false;
+    Super.DetachDriver(P);
+}
+
 defaultproperties
 {
     GunClass = class'UT3HellbenderRearGun'
     CameraBone = MainTurretPitch
-    DrivePos = (X=-10,Z=77)
+    DrivePos=(X=2.500000,Z=67.000000)  //DrivePos=(X=-10.000000,Z=77.000000)
+    
+    FPCamPos=(X=-15.000000)
+    
+    //Normal
+    TPCamDistance=250.000000
+    TPCamLookat=(X=0,Y=0,Z=70)
+    TPCamWorldOffset=(X=0,Y=0,Z=50)
+    
+    //Aerial View Mutator Cam Settings
+    //TPCamLookAt=(X=-10,Y=0,Z=55)
+    //TPCamWorldOffset=(X=0,Y=0,Z=50)
 }
 
