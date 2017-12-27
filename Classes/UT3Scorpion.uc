@@ -2,6 +2,7 @@
  * Copyright © 2008, 2014 GreatEmerald
  * Copyright © 2008-2009 Wormbo
  * Copyright © 2012 100GPing100
+ * Copyright © 2017 HellDragon (Copyright seems too strong a word to me but if that's what you want)
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -45,6 +46,14 @@ var IntBox BoostIconCoords, EjectIconCoords;
 var float LastBoostAttempt, SpeedAtBoost;
 var() float MinEjectSpeed;
 var int AirBoost;
+Var rotator FootDriveL,FootDriveR;
+Var rotator ArmDriveL,ArmDriveR;
+Var rotator ForeArmDriveL, ForeArmDriveR;
+Var rotator ThighDriveL,ThighDriveR;
+Var rotator CalfDriveL,CalfDriveR;
+Var rotator SpineDrive;
+Var rotator NeckDrive;
+var bool bAttachedDriver;
 
 event KImpact(actor other, vector pos, vector impactVel, vector impactNorm) //Modified so we would have control over when we detonate
 {
@@ -539,12 +548,79 @@ simulated event DrivingStatusChanged()
     }
 }
 
+simulated function AttachDriver(Pawn P)
+{
+    super.AttachDriver(P);
+    bAttachedDriver=true;
+
+    ArmDriveL.Yaw=5000;
+    //ArmDriveL.Pitch=2000;
+    P.SetBoneRotation('Bip01 L UpperArm',ArmDriveL);
+    ArmDriveR.Yaw=5000;
+    //ArmDriveR.Pitch=-2000;
+    P.SetBoneRotation('Bip01 R UpperArm',ArmDriveR);
+    ForeArmDriveL.Yaw=3000;
+    //ForeArmDriveL.Pitch=7000;
+    ForeArmDriveL.Roll=12000;
+    P.SetBoneRotation('Bip01 L ForeArm',ForeArmDriveL);
+    //ForeArmDriveR.Yaw=8000;
+    //ForeArmDriveR.Pitch=-1000;
+    ForeArmDriveR.Roll=-12000;
+    P.SetBoneRotation('Bip01 R ForeArm',ForeArmDriveR);
+    ThighDriveL.Yaw=-10000;
+    ThighDriveL.Pitch=2000;
+    P.SetBoneRotation('Bip01 L Thigh',ThighDriveL);
+    ThighDriveR.Yaw=-10000;
+    ThighDriveR.Pitch=-2000;
+    P.SetBoneRotation('Bip01 R Thigh',ThighDriveR);
+    //CalfDriveL.Pitch=6500;
+    CalfDriveL.Yaw=3000;
+    P.SetBoneRotation('Bip01 L Calf',CalfDriveL);
+    //CalfDriveR.Pitch=-6500;
+    CalfDriveR.Yaw=3000;
+    P.SetBoneRotation('Bip01 R Calf',CalfDriveR);
+    SpineDrive.Yaw=2000; //-20000 with 4000 on Driver Rotate is decent
+    P.SetBoneRotation('Bip01 Spine',SpineDrive);
+    NeckDrive.Yaw=4000;
+    P.SetBoneRotation('Bip01 Head',NeckDrive);
+    FootDriveL.Yaw=8000;
+    P.SetBoneRotation('Bip01 L Foot',FootDriveL);
+    //FootDriveR.Pitch=-6500;
+    FootDriveR.Yaw=8000;
+    P.SetBoneRotation('Bip01 R Foot',FootDriveR);
+}
+
+simulated function DetachDriver(Pawn P)
+{
+    P.SetBoneRotation('Bip01 Head');
+    P.SetBoneRotation('Bip01 Spine');
+    P.SetBoneRotation('Bip01 Spine1');
+    P.SetBoneRotation('Bip01 Spine2');
+    P.SetBoneRotation('Bip01 L Clavicle');
+    P.SetBoneRotation('Bip01 R Clavicle');
+    P.SetBoneRotation('Bip01 L UpperArm');
+    P.SetBoneRotation('Bip01 R UpperArm');
+    P.SetBoneRotation('Bip01 L ForeArm');
+    P.SetBoneRotation('Bip01 R ForeArm');
+    P.SetBoneRotation('Bip01 L Thigh');
+    P.SetBoneRotation('Bip01 R Thigh');
+    P.SetBoneRotation('Bip01 L Calf');
+    P.SetBoneRotation('Bip01 R Calf');
+    P.SetBoneRotation('Bip01 L Foot');
+    P.SetBoneRotation('Bip01 R Foot');
+    
+    bAttachedDriver=false;
+    Super.DetachDriver(P);
+}
+
 //=============================================================================
 // Default values
 //=============================================================================
 
 defaultproperties
 {
+
+    //DrawScale=1.2 - UT3 Draw code template
     //=======================
     // @100GPing100
     Mesh = SkeletalMesh'UT3VH_Scorpion_Anims.SK_VH_Scorpion';
@@ -645,8 +721,8 @@ defaultproperties
     ShutDownSound=sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_Stop01'
     SoundVolume=255
     DamagedEffectHealthSmokeFactor=0.65 //0.5
-    DamagedEffectHealthFireFactor=0.373 //0.25
-    DamagedEffectFireDamagePerSec=0.95  //0.75
+    DamagedEffectHealthFireFactor=0.40 //0.25
+    DamagedEffectFireDamagePerSec=2.0  //0.75
     ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_Collide01';
     ImpactDamageSounds(1) = Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_Collide02';
     ImpactDamageSounds(2) = Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_Collide03';
@@ -664,7 +740,8 @@ defaultproperties
     SelfDestructDamageType=class'UT3ScorpionSDDamage'
     BoostIconCoords = (X1=2,Y1=843,X2=97,Y2=50)
     EjectIconCoords = (X1=92,Y1=317,X2=50,Y2=50)
-    DrivePos=(X=2.0,Y=0.0,Z=50.0)
+    DrivePos=(X=-20.0,Y=0.0,Z=60.0) //DrivePos=(X=2.0,Y=0.0,Z=50.0)  //A stock UT2004 character barely fits in here so the UT3 drawscale has to be right as I don't think they change size based on the vheicle's size from what I've seen of the turrets
+    DriveRot=(Pitch=8000) //4000 is decent to work with
 
     Begin Object Class=KarmaParamsRBFull Name=KParams0
         KStartEnabled=True
@@ -690,25 +767,35 @@ defaultproperties
     End Object
     KParams=KarmaParams'KParams0'
 
-    HeadlightCoronaOffset(0)=(X=65,Y=33,Z=20)
-    HeadlightCoronaOffset(1)=(X=65,Y=-33,Z=20)
+    HeadlightCoronaOffset(0)=(X=77,Y=39.0,Z=25)
+    HeadlightCoronaOffset(1)=(X=77,Y=-39.0,Z=25)
+    //Below are for original drawscale
+    //HeadlightCoronaOffset(0)=(X=65,Y=33,Z=20)
+    //HeadlightCoronaOffset(1)=(X=65,Y=-33,Z=20)
     HeadlightCoronaMaterial=Material'EpicParticles.FlashFlare1'
     //HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
     HeadlightCoronaMaxSize=45 //65 looks good but probably too large with FlashFlare
 
-    HeadlightProjectorOffset=(X=69,Y=0,Z=20) //(X=90,Y=0,Z=7)
+    HeadlightProjectorOffset=(X=75,Y=0,Z=25) //(X=90,Y=0,Z=7)
+    //HeadlightProjectorOffset=(X=69,Y=0,Z=20) //(X=90,Y=0,Z=7)
     HeadlightProjectorRotation=(Yaw=0,Pitch=-1000,Roll=0)
     HeadlightProjectorMaterial=Texture'VMVehicles-TX.RVGroup.RVProjector'
     HeadlightProjectorScale=0.3
 
     bMakeBrakeLights=true
-    BrakeLightOffset(0)=(X=-72,Y=2,Z=37)
-    BrakeLightOffset(1)=(X=-72,Y=-2,Z=37)
+    BrakeLightOffset(0)=(X=-86,Y=0,Z=45)
+    BrakeLightOffset(1)=(X=-92,Y=0,Z=42)
+    //Below are for original Drawscale
+    //BrakeLightOffset(0)=(X=-72,Y=2,Z=37)
+    //BrakeLightOffset(1)=(X=-72,Y=-2,Z=37)
     BrakeLightMaterial=Material'EpicParticles.FlickerFlare'
 
     BoostRechargeTime = 5.0
-    AfterburnerOffset(0) = (X=-70.0,Y=-14.0,Z=20.0)
-    AfterburnerOffset(1) = (X=-70.0,Y=14.0,Z=20.0)
+    AfterburnerOffset(0) = (X=-80.0,Y=-16.0,Z=21.0)
+    AfterburnerOffset(1) = (X=-80.0,Y=16.0,Z=21.0)
+    //Below are for original drawscale
+    //AfterburnerOffset(0) = (X=-70.0,Y=-14.0,Z=20.0)
+    //AfterburnerOffset(1) = (X=-70.0,Y=14.0,Z=20.0)
     BoostForce = 1800.0
     MinEjectSpeed = 700.0 // GEm: Originally 900, but it feels too much in comparison
     bAllowAirControl = false
@@ -727,14 +814,24 @@ defaultproperties
     ExitPositions(6)=(X=150,Y=0,Z=-50)  //Front Below
     ExitPositions(7)=(X=-150,Y=0,Z=-50) //Rear Below
     
-    FPCamPos=(X=-60,Y=0,Z=70)
-    
+    FPCamPos=(X=-70,Y=0,Z=105)  //FPCamPos=(X=-60,Y=0,Z=70) For original drawscale
+
     //Normal
-    TPCamDistance=275.000000
-    TPCamLookat=(X=-20,Y=0,Z=0)
-    TPCamWorldOffset=(X=0,Y=0,Z= 150)
+    TPCamDistance=250.000000
+    TPCamLookat=(X=-70,Y=0,Z=0) //X-40
+    TPCamWorldOffset=(X=0,Y=0,Z=140) //170-200 is better for aiming high up but to me it makes ground level aim feel awkward
+
+    //Normal for original drawscale
+    //TPCamDistance=275.000000
+    //TPCamLookat=(X=-20,Y=0,Z=0)
+    //TPCamWorldOffset=(X=0,Y=0,Z= 150)
     
     //Aerial View
+    //TPCamDistance=250.000000
+    //TPCamLookat=(X=-50,Y=0,Z=0)
+    //TPCamWorldOffset=(X=0,Y=0,Z=30)    
+    
+    //Aerial View for original drawscale
     //TPCamDistance=275.000000
     //TPCamLookat=(X=-10,Y=0,Z=0)
     //TPCamWorldOffset=(X=0,Y=0,Z=50)
