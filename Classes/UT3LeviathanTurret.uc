@@ -40,6 +40,7 @@
 
 class UT3LeviathanTurret extends ONSMASSideGunPawn abstract;
 
+#exec OBJ LOAD FILE="..\Sounds\UT3A_Vehicle_Leviathan.uax"
 
 //=============================================================================
 // Properties
@@ -161,6 +162,7 @@ function KDriverEnter(Pawn P)
         AnimSlot = UT3LeviathanTurretWeapon(Gun).SkinSlot-1;
         VehicleBase.AnimBlendParams(AnimSlot, 1.0, , , ArmBone);
         VehicleBase.PlayAnim(EnterAnim, 1.0, 0.0, AnimSlot);
+        PlaySound(Sound'UT3A_Vehicle_Leviathan.Sounds.A_Vehicle_Leviathan_TurretActivate', SLOT_None, 2.0);
     }
 }
 
@@ -175,6 +177,7 @@ function bool KDriverLeave(bool bForceLeave)
         AnimSlot = UT3LeviathanTurretWeapon(Gun).SkinSlot-1;
         VehicleBase.AnimBlendParams(AnimSlot, 1.0, , , ArmBone);
         VehicleBase.PlayAnim(LeaveAnim, 1.0, 0.0, AnimSlot);
+        PlaySound(Sound'UT3A_Vehicle_Leviathan.Sounds.A_Vehicle_Leviathan_TurretDeactivate', SLOT_None, 2.0);
     }
 
     return bResult;
@@ -207,5 +210,5 @@ defaultproperties
     ShieldDuration   = 4.0
     ShieldRecharge   = 5.0
     bDrawDriverInTP = true
-    DrivePos = (X=-7.0,Y=0.0,Z=65.0)
+    DrivePos = (X=-2.5,Y=0.0,Z=64.0) //(X=-7.0,Y=0.0,Z=65.0)
 }
