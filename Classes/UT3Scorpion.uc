@@ -574,10 +574,12 @@ simulated function AttachDriver(Pawn P)
     ThighDriveR.Pitch=-2000;
     P.SetBoneRotation('Bip01 R Thigh',ThighDriveR);
     //CalfDriveL.Pitch=6500;
-    CalfDriveL.Yaw=3000;
+    CalfDriveL.Yaw=2000;
+    CalfDriveL.Roll=14000;
     P.SetBoneRotation('Bip01 L Calf',CalfDriveL);
     //CalfDriveR.Pitch=-6500;
-    CalfDriveR.Yaw=3000;
+    CalfDriveR.Yaw=1000;
+    CalfDriveR.Roll=-14000;
     P.SetBoneRotation('Bip01 R Calf',CalfDriveR);
     SpineDrive.Yaw=2000; //-20000 with 4000 on Driver Rotate is decent
     P.SetBoneRotation('Bip01 Spine',SpineDrive);
