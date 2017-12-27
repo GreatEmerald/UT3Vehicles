@@ -620,7 +620,7 @@ simulated function DetachDriver(Pawn P)
 defaultproperties
 {
 
-    //DrawScale=1.2 - UT3 Draw code template
+    DrawScale=1.2
     //=======================
     // @100GPing100
     Mesh = SkeletalMesh'UT3VH_Scorpion_Anims.SK_VH_Scorpion';
