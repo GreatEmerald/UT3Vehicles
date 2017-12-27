@@ -343,6 +343,7 @@ defaultproperties
         KLinearDamping=0.05
         KAngularDamping=0.05
         KImpactThreshold=500
+        kMaxSpeed=1050.0
         bKNonSphericalInertia=True
         bHighDetailOnly=False
         bClientOnly=False
@@ -428,20 +429,26 @@ defaultproperties
     VehiclePositionString="in a Hellbender"
     VehicleNameString="UT3 Hellbender"
     HornSounds(0)=Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_Horn01'
-    GroundSpeed=700.000000
+    GroundSpeed=800.000000 //700
     SoundVolume=255
-
-    DrawScale=1.0
+    TransRatio=0.18 //0.11
+    
+    DrawScale=0.9
+    
     CollisionRadius=219
-    HeadlightCoronaOffset(0)=(X=77.5,Y=27.5,Z=52.5)
-    HeadlightCoronaOffset(1)=(X=77.5,Y=-27.5,Z=52.5)
-    HeadlightCoronaOffset(2)=(X=77.5,Y=25,Z=41)
-    HeadlightCoronaOffset(3)=(X=77.5,Y=-25,Z=41)
+    HeadlightCoronaOffset(0)=(X=68.5,Y=24.5,Z=47.5) //(X=77.5,Y=27.5,Z=52.5)
+    HeadlightCoronaOffset(1)=(X=68.5,Y=-24.5,Z=47.5)
+    HeadlightCoronaOffset(2)=(X=68.5,Y=22,Z=38) //(X=77.5,Y=-25,Z=41)
+    HeadlightCoronaOffset(3)=(X=68.5,Y=-22,Z=38)
     HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
-    HeadlightCoronaMaxSize=94
-    HeadlightProjectorMaterial=None
+    HeadlightCoronaMaxSize=82
 
-    BrakeLightOffset(0)=(X=-137.5,Y=42.5,Z=64)
-    BrakeLightOffset(1)=(X=-137.5,Y=-42.5,Z=64)
+    HeadlightProjectorOffset=(X=78.0,Y=0,Z=50.5) //(X=82.5,Y=0,Z=55.5)
+    HeadlightProjectorMaterial=Texture'VMVehicles-TX.NewPRVGroup.PRVProjector'
+    HeadlightProjectorScale=0.40 //0.65
+    //HeadlightProjectorMaterial=None
+
+    BrakeLightOffset(0)=(X=-124.5,Y=36.5,Z=58) //(X=-137.5,Y=42.5,Z=64)
+    BrakeLightOffset(1)=(X=-124.5,Y=-36.5,Z=58)
     BrakeLightMaterial=Material'EpicParticles.FlickerFlare'
 }
