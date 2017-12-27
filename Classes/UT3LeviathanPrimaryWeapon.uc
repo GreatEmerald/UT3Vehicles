@@ -1,5 +1,6 @@
 /*
  * Copyright © 2014 GreatEmerald
+ * Copyright © 2017 HellDragon
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -95,4 +96,6 @@ defaultproperties
     YawBone = "MainTurretYaw"
     PitchBone = "MainTurretPitch"
     WeaponFireAttachmentBone = "MainTurretPitch"
+    DamageType=class'UT3DmgType_LeviathanCannon'
+    RotationsPerSecond=0.22
 }
