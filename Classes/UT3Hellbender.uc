@@ -1,6 +1,7 @@
 /*
  * Copyright © 2008, 2014 GreatEmerald
  * Copyright © 2008-2009 Wormbo
+ * Copyright © 2017 HellDragon (still too strong a word but if you want it, here you go)
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -422,8 +423,8 @@ defaultproperties
     StartUpSound=Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_EngineStart01'
     ShutDownSound=Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_EngineStop01'
     DamagedEffectHealthSmokeFactor=0.65 //0.5
-    DamagedEffectHealthFireFactor=0.39 //0.25
-    DamagedEffectFireDamagePerSec=0.95 //0.75
+    DamagedEffectHealthFireFactor=0.40 //0.25
+    DamagedEffectFireDamagePerSec=2.0 //0.75
     ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_Collide03';
     ImpactDamageSounds(1) = Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_Collide04';
     ImpactDamageSounds(2) = Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_Collide03';
@@ -439,7 +440,6 @@ defaultproperties
     EntryPosition=(X=0,Y=0,Z=0)
     EntryRadius=180.0  //300.000000
     MomentumMult=0.400000 //1.0  //HDm to GE: 0.4 feels right but Rocket and AVRiL force are reversed with each other
-    MomentumMult=1.000000
     bDrawDriverInTP=False
     DriverDamageMult=0.000000
     VehiclePositionString="in a Hellbender"
@@ -455,7 +455,8 @@ defaultproperties
     WheelInertia=0.01
     ChassisTorqueScale=0.82 //0.7
     WheelSuspensionOffset=5.0 //this one little value causes the Hellbender to sit lower like it should, unbeliveble we went crazy trying to solve it and all it needed was this
-    DrawScale=0.95
+    //Drawscale=1.2 UT3 Draw template, collision needs to be updated with ukx
+    //DrawScale=0.95
 
     CollisionRadius=219
     
@@ -469,7 +470,7 @@ defaultproperties
     ExitPositions(2)=(X=-10,Y=-160,Z=-50) //Left Below
     ExitPositions(3)=(X=-10,Y=160,Z=-50)  //Right Below
     
-    FPCamPos=(X=-10,Y=28,Z=135)
+    FPCamPos=(X=0,Y=28,Z=135)
     
     //Normal
     TPCamDistance=375.000000
@@ -489,12 +490,12 @@ defaultproperties
     //HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
     HeadlightCoronaMaxSize=50 //82 works with EFlareOY but FlashFlare is huge
     
-    HeadlightProjectorOffset=(X=72.0,Y=0,Z=46.5) //(X=82.5,Y=0,Z=55.5)
+    HeadlightProjectorOffset=(X=70.0,Y=0,Z=49.5) //(X=82.5,Y=0,Z=55.5)
     HeadlightProjectorRotation=(Yaw=0,Pitch=-1000,Roll=0)
     HeadlightProjectorMaterial=Texture'VMVehicles-TX.NewPRVGroup.PRVProjector'
     HeadlightProjectorScale=0.40 //0.65
 
-    BrakeLightOffset(0)=(X=-130.5,Y=38.5,Z=60) //(X=-137.5,Y=42.5,Z=64)
-    BrakeLightOffset(1)=(X=-130.5,Y=-38.5,Z=60)
+    BrakeLightOffset(0)=(X=-131.5,Y=38.5,Z=60) //(X=-137.5,Y=42.5,Z=64)
+    BrakeLightOffset(1)=(X=-131.5,Y=-38.5,Z=60)
     BrakeLightMaterial=Material'EpicParticles.FlickerFlare'
 }
