@@ -406,6 +406,7 @@ defaultproperties
     ExitPositions(0)=(X=0,Y=-185,Z=30)
     ExitPositions(1)=(X=0,Y=185,Z=30)
     ExitPositions(3)=(X=300,Y=0,Z=40)
+    ExitPositions(4)=(X=20,Y=0,Z=110) 
 
     HeadlightCoronaOffset(0)=(X=182,Y=0,Z=-17)
     HeadlightCoronaOffset(1)=(X=180,Y=-0,Z=-55)
