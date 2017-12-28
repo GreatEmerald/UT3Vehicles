@@ -181,7 +181,7 @@ defaultproperties
     ProjectileClass=class'UT3CicadaRocket'
     AltFireProjectileClass=class'UT3CicadaRocket'
     LoadSound=sound'UT3A_Vehicle_Cicada.Sounds.A_Vehicle_Cicada_MissleLoad01'
-    FireSoundClass=Sound'UT3A_Vehicle_Cicada.Sounds.A_Vehicle_Cicada_MissleEject01'
+    FireSoundClass=Sound'UT3A_Vehicle_Cicada.SoundCues.A_Vehicle_Cicada_Fire'
     AltFireSoundClass=Sound'UT3A_Vehicle_Cicada.Sounds.A_Vehicle_Cicada_MissleEject01'
     Mesh = SkeletalMesh'UT3VH_Cicada_Anims.VH_Cicada_RightSideGun'
     RedSkin = Shader'UT3CicadaTex.CicadaSkin'
