@@ -281,7 +281,6 @@ defaultproperties
     //Aerial View
     //TPCamWorldOffset = (X=0,Y=0,Z=200);
     
-    HeadlightCoronaOffset=()
     HeadlightCoronaOffset(0)=(X=290.0,Y=47,Z=58.0)
     HeadlightCoronaMaterial=Material'EpicParticles.FlashFlare1'
     //HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
