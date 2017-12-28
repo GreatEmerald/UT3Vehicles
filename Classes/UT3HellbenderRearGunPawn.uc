@@ -1,6 +1,6 @@
 /*
  * Copyright © 2008, 2014 GreatEmerald
- * Copyright © 2017 HellDragon (still don't feel right about it but here you go)
+ * Copyright © 2017 HellDragon
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -58,10 +58,8 @@ simulated function AttachDriver(Pawn P)
     P.SetBoneRotation('Bip01 Head',NeckDrive);
     SpineDrive.Yaw=-8000;
     P.SetBoneRotation('Bip01 Spine',SpineDrive);
-    //ArmDriveL.Yaw=-2000;
     ArmDriveL.Pitch=-500;
     P.SetBoneRotation('Bip01 L UpperArm',ArmDriveL);
-    //ArmDriveR.Yaw=-2000;
     ArmDriveR.Pitch=-500;
     P.SetBoneRotation('Bip01 R UpperArm',ArmDriveR);
     ForeArmDriveL.Yaw=6000;
@@ -69,7 +67,6 @@ simulated function AttachDriver(Pawn P)
     ForeArmDriveL.Roll=-8000;
     P.SetBoneRotation('Bip01 L ForeArm',ForeArmDriveL);
     ForeArmDriveR.Yaw=5000;
-    //ForeArmDriveR.Pitch=3000;
     ForeArmDriveR.Roll=3000;
     P.SetBoneRotation('Bip01 R ForeArm',ForeArmDriveR);
     ThighDriveL.Pitch=2000;
@@ -78,16 +75,12 @@ simulated function AttachDriver(Pawn P)
     ThighDriveR.Pitch=-2000;
     ThighDriveR.Yaw=7000;
     P.SetBoneRotation('Bip01 R Thigh',ThighDriveR);
-    //CalfDriveL.Pitch=6500;
     CalfDriveL.Yaw=-15000;
     P.SetBoneRotation('Bip01 L Calf',CalfDriveL);
-    //CalfDriveR.Pitch=-6500;
     CalfDriveR.Yaw=-15000;
     P.SetBoneRotation('Bip01 R Calf',CalfDriveR);
-    //FootDriveL.Pitch=6500;
     FootDriveL.Yaw=15000;
     P.SetBoneRotation('Bip01 L Foot',FootDriveL);
-    //FootDriveR.Pitch=-6500;
     FootDriveR.Yaw=15000;
     P.SetBoneRotation('Bip01 R Foot',FootDriveR);
 }
