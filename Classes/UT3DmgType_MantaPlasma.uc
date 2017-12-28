@@ -1,5 +1,6 @@
 /*
  * Copyright © 2014 GreatEmerald
+ * Copyright © 2017 HellDragon
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -37,17 +38,14 @@
  * of such parties' affiliates and subsidiaries.
  */
 
-class UT3DmgType_MantaPlasma extends VehicleDamageType;
+class UT3DmgType_MantaPlasma extends DamTypeHoverBikePlasma;
 
 defaultproperties
 {
-	DeathString="%k's Manta eviscerated %o with hot plasma."
-	MaleSuicide="%o fried himself with his own Manta plasma blast."
-	FemaleSuicide="%o fried herself with her own Manta plasma blast."
-	FlashFog=(X=700.00000,Y=0.000000,Z=0.00000)
-	bDetonatesGoop=true
-	bDelayedDamage=true
+    DeathString="%k's Manta eviscerated %o with hot plasma."
+    MaleSuicide="%o fried himself with his own plasma blast."
+    FemaleSuicide="%o fried herself with her own plasma blast."
     VehicleDamageScaling=0.7
-	VehicleMomentumScaling=1.0
-	VehicleClass=class'UT3Manta'
+    VehicleMomentumScaling=1.0
+    VehicleClass=class'UT3Manta'
 }
