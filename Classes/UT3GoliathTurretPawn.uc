@@ -8,4 +8,9 @@ class UT3GoliathTurretPawn extends ONSTankSecondaryTurretPawn;
 DefaultProperties
 {
   GunClass=class'UT3GoliathTurret'
+  
+  FPCamPos=(X=-80,Y=0,Z=0)
+  
+  //Aerial View
+  TPCamWorldOffset=(X=0,Y=0,Z=90)
 }
