@@ -28,15 +28,14 @@ function Timer();
 
 defaultproperties
 {
-	Speed=1200
-	MaxSpeed=3500
-	AccelRate=20000.0
-	
-	Damage=100
-	DamageRadius=300
-	MomentumTransfer=4000
+        Speed=1200
+        MaxSpeed=3500
+        AccelRate=20000.0
+        Damage=100
+        DamageRadius=300
+        MomentumTransfer=4000
         LifeSpan=4.0
-	MyDamageType=class'UT3DmgType_LeviathanBolt'
-	DrawType   = DT_StaticMesh
-	StaticMesh = StaticMesh'WeaponStaticMesh.FlakChunk'
+        MyDamageType=class'UT3DmgType_LeviathanBolt'
+        DrawType   = DT_StaticMesh
+        StaticMesh = StaticMesh'WeaponStaticMesh.FlakChunk'
 }
