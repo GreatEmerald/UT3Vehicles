@@ -1,5 +1,6 @@
 /*
  * Copyright © 2014 GreatEmerald
+ * Copyright © 2017 HellDragon
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -37,13 +38,13 @@
  * of such parties' affiliates and subsidiaries.
  */
 
-class UT3DmgType_LeviathanBeam extends VehicleDamageType;
+class UT3DmgType_LeviathanBeam extends DamTypeTurretBeam;
 
 defaultproperties
 {
-    DeathString="%k's turret electrified %o."
-    MaleSuicide="%o somehow managed to shoot himself with a turret."
-    FemaleSuicide="%o somehow managed to shoot herself with a turret."
+    DeathString="%k's Leviathan Laser Turret blasted %o to bits."
+    MaleSuicide="%o somehow blasted himself to bits with a turret."
+    FemaleSuicide="%o somehow blasted herself to bits with a turret."
     
     
     VehicleMomentumScaling=2.0
