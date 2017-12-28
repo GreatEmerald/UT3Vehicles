@@ -1,6 +1,7 @@
 /*
  * Copyright © 2008, 2014 GreatEmerald
  * Copyright © 2008-2009 Wormbo
+ * Copyright © 2017 HellDragon
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -225,6 +226,9 @@ simulated function DrawHUD(Canvas Canvas) //GE: Lock-on sound
 
 defaultproperties
 {
+
+    //Drawscale = 1.3
+    
     //=======================
     // @100GPing100
     VehiclePositionString = "in a UT3 Cicada";
@@ -276,24 +280,42 @@ defaultproperties
     ImpactDamageSounds(0)=Sound'UT3A_Vehicle_Cicada.SoundCues.A_Vehicle_Cicada_Collide'
     //PassengerWeapons(0)=(WeaponPawnClass=Class'UT3CicadaTurretPawn',WeaponBone="GatlingGunAttach")
     
-    ExitPositions(0)=(X=80,Y=-200,Z=25)
-    ExitPositions(1)=(X=80,Y=200,Z=25)
-    ExitPositions(2)=(X=-220,Y=0,Z=25)
+    EntryRadius=300
+    EntryPosition=(X=40,Y=0,Z=0)
+    
+    ExitPositions(0)=(X=80,Y=-210,Z=25)
+    ExitPositions(1)=(X=80,Y=210,Z=25)
+    ExitPositions(2)=(X=330,Y=0,Z=35)
     
     TrailEffectRotation=(Yaw=32768)
-    TrailEffectPositions(0)=(X=-40,Y=-33,Z=90) //(X=-53,Y=-33,Z=63)
-    TrailEffectPositions(1)=(X=-40,Y=33,Z=90)
+    TrailEffectPositions(0)=(X=-63,Y=-42.5,Z=118) //(X=-53,Y=-33,Z=63)
+    TrailEffectPositions(1)=(X=-63,Y=42.5,Z=118)
     
     MomentumMult=0.400000 //?
     
-    HeadlightCoronaOffset(0)=(X=185,Y=0,Z=50.5)
-    HeadlightCoronaOffset(1)=(X=-29,Y=-0,Z=-36.5)
-    HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
+    bDrawMeshInFP=True
+    
+    //FPCamPos=(X=265,Y=0,Z=40) //Front Cam
+    FPCamPos=(X=40,Y=100,Z=80)  //Launcher Cam, I prefer this one but I encouarge trying both
+    
+    //Normal
+    TPCamDistance=600.000000
+    TPCamLookAt=(X=50.0,Y=0.0,Z=0)
+    TPCamWorldOffset=(Z=260)
+    
+    //Aerial View
+    //TPCamLookAt=(X=50.0,Y=0.0,Z=0)
+    //TPCamWorldOffset=(Z=250)
+    
+    HeadlightCoronaOffset=()
+    HeadlightCoronaOffset(0)=(X=243,Y=0,Z=67)
+    HeadlightCoronaMaterial=Material'EpicParticles.FlashFlare1'
+    //HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
     HeadlightCoronaMaxSize=45
 
-    HeadlightProjectorOffset=(X=142.0,Y=0,Z=-10.5) //(X=82.5,Y=0,Z=55.5)
+    HeadlightProjectorOffset=(X=240.0,Y=0,Z=67) //(X=82.5,Y=0,Z=55.5)
     HeadlightProjectorRotation=(Yaw=0,Pitch=-1000,Roll=0)
     HeadlightProjectorMaterial=Texture'VMVehicles-TX.NewPRVGroup.PRVProjector'
-    HeadlightProjectorScale=0.40 //0.65
+    HeadlightProjectorScale=0.20
     
 }
