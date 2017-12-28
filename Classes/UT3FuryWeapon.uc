@@ -1,0 +1,29 @@
+//-----------------------------------------------------------
+//
+//-----------------------------------------------------------
+class UT3FuryWeapon extends ONSAttackCraftGun;
+
+defaultproperties
+{
+     TeamProjectileClasses(0)=Class'UT3FuryPlasmaProjectileRed'
+     TeamProjectileClasses(1)=Class'UT3FuryPlasmaProjectileBlue'
+     MinAim=0.900000
+     YawBone="PlasmaGunBarrel"
+     PitchBone="PlasmaGunBarrel"
+     PitchUpLimit=18000
+     PitchDownLimit=49153
+     WeaponFireAttachmentBone="PlasmaGunBarrel"
+     DualFireOffset=50.000000
+     RotationsPerSecond=1.200000
+     FireInterval=0.200000
+     AltFireInterval=3.000000
+     FireSoundClass=Sound'ONSVehicleSounds-S.LaserSounds.Laser01'
+     AltFireSoundClass=Sound'ONSVehicleSounds-S.AVRiL.AvrilFire01'
+     FireForce="Laser01"
+     AltFireForce="Laser01"
+     ProjectileClass=Class'Onslaught.ONSAttackCraftPlasmaProjectileRed'
+     AltFireProjectileClass=Class'Onslaught.ONSAttackCraftMissle'
+     AIInfo(0)=(bLeadTarget=True,RefireRate=0.950000)
+     AIInfo(1)=(bLeadTarget=True,aimerror=400.000000,RefireRate=0.500000)
+     Mesh=SkeletalMesh'ONSWeapons-A.PlasmaGun'
+}
