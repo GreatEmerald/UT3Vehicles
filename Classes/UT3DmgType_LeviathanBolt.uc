@@ -1,5 +1,6 @@
 /*
  * Copyright © 2014 GreatEmerald
+ * Copyright © 2017 HellDragon
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -41,9 +42,9 @@ class UT3DmgType_LeviathanBolt extends VehicleDamageType;
 
 defaultproperties
 {
-    DeathString="%o rode %k's rocket into oblivion."
-    MaleSuicide="%o fired his rocket prematurely."
-    FemaleSuicide="%o fired her rocket prematurely."
+    DeathString="%o Leviathan filled %k's with plasma."
+    MaleSuicide="%o fried himself with his own plasma blast."
+    FemaleSuicide="%o herself with her own plasma blast."
 
     VehicleClass=class'UT3LeviathanTurretRocket'
     bDetonatesGoop=true
