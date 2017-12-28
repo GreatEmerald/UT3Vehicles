@@ -1,6 +1,6 @@
 /*
- * Copyright © 2012 100GPing100
- * Copyright © 2014 GreatEmerald
+ * Copyright Â© 2012 100GPing100
+ * Copyright Â© 2014 GreatEmerald
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -44,9 +44,9 @@ class UT3DmgType_ViperBolt extends WeaponDamageType
 DefaultProperties
 {
 	// Strings.
-	DeathString="%k kills %o with a Viper Gun.";
-	MaleSuicide="%o kills himself with his own Viper Gun.";
-	FemaleSuicide="%o kills herself with her own Viper Gun.";
+	DeathString="%k's Viper eviscerated %o with hot plasma.";
+	MaleSuicide="%o fried himself with his own plasma.";
+	FemaleSuicide="%o fried herself with her own plasma.";
 
 	// Vehicle.
 	VehicleMomentumScaling=1.0;
