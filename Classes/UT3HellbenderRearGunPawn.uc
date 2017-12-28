@@ -104,7 +104,6 @@ simulated function DetachDriver(Pawn P)
     P.SetBoneRotation('Bip01 L Foot');
     P.SetBoneRotation('Bip01 R Foot');
     
-    bAttachedDriver=false;
     Super.DetachDriver(P);
 }
 
