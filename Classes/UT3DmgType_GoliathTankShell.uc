@@ -1,5 +1,6 @@
 /*
  * Copyright © 2014 GreatEmerald
+ * Copyright © 2017 HellDragon
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -37,7 +38,7 @@
  * of such parties' affiliates and subsidiaries.
  */
 
-class UT3DmgType_GoliathTankShell extends VehicleDamageType;
+class UT3DmgType_GoliathTankShell extends DamTypeTankShell;
 
 defaultproperties
 {
@@ -45,12 +46,7 @@ defaultproperties
     MaleSuicide="%o fired his rocket prematurely."
     FemaleSuicide="%o fired her rocket prematurely."
     
-    bDetonatesGoop=true
     KDamageImpulse=8000
     VehicleMomentumScaling=1.5
-    bThrowRagdoll=true
-    GibPerterbation=0.15
-    bFlaming=true
-    bDelayedDamage=true
     VehicleClass=class'UT3Goliath'
 }
