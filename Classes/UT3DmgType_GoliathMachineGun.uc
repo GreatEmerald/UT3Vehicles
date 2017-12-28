@@ -1,5 +1,6 @@
 /*
  * Copyright © 2014 GreatEmerald
+ * Copyright © 2017 HellDragon
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -37,17 +38,14 @@
  * of such parties' affiliates and subsidiaries.
  */
 
-class UT3DmgType_GoliathMachineGun extends VehicleDamageType;
+class UT3DmgType_GoliathMachineGun extends DamTypeONSChainGun;
 
 defaultproperties
 {
-    bRagdollBullet=true
-    DeathString="%o was punctured by %k's minigun."
+    DeathString="%o was mowed down by %k's Goliath minigun turret."
     MaleSuicide="%o turned the minigun on himself."
     FemaleSuicide="%o turned the minigun on herself."
-    FlashFog=(X=600.00000,Y=0.000000,Z=0.00000)
     KDamageImpulse=700 //2000 def UT2004, 700 def UT3
     VehicleDamageScaling=0.6  //0.36 def UT2004, 0.5 def UT3
     VehicleClass=class'UT3GoliathTurretPawn'
-    bBulletHit=True
 }
