@@ -46,7 +46,7 @@ defaultproperties
     MaleSuicide="%o fried himself with his own plasma blast."
     FemaleSuicide="%o herself with her own plasma blast."
 
-    VehicleClass=class'UT3LeviathanTurretRocket'
+    VehicleClass=class'UT3LeviathanDriverWeapon'
     bDetonatesGoop=true
     KDamageImpulse=1000
     VehicleMomentumScaling=1.5
