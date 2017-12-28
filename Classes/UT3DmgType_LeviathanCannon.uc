@@ -1,5 +1,6 @@
 /*
  * Copyright © 2014 GreatEmerald
+ * Copyright © 2017 HellDragon
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -37,25 +38,18 @@
  * of such parties' affiliates and subsidiaries.
  */
 
-class UT3DmgType_LeviathanCannon extends VehicleDamageType;
+class UT3DmgType_LeviathanCannon extends DamTypeMASCannon;
 
 defaultproperties
 {
-    DeathString="%o was VAPORIZED by %k!"
-    MaleSuicide="%o was VAPORIZED!"
-    FemaleSuicide="%o was VAPORIZED!"
-    VehicleDamageScaling=1.5
-    
-    bArmorStops=False
-    bNeverSevers=True
-    
+    DeathString="%k's Leviathan had some last words for %o."
+    MaleSuicide="%o was taken out by his own Leviathan."
+    FemaleSuicide="%o was taken out by her own Leviathan."
+    VehicleDamageScaling=1.5    
     
     bKUseTearOffMomentum=True
     KDeathUpKick=700
     KDamageImpulse=20000
-    GibPerterbation=0.5
-    GibModifier=2.0
-    bLocationalHit=False
     VehicleClass=class'UT3Leviathan'
 
 }
