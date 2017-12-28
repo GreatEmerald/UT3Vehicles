@@ -1,9 +1,9 @@
-//-----------------------------------------------------------
-// UT3GoliathProjectile.uc
-// Yeap, it's here.
-// GreatEmerald, 2008
-// HellDragon (Just added the DmgType and changed Radius to UT3 value is all I've done here)
-//-----------------------------------------------------------
+/*-----------------------------------------------------------
+* UT3GoliathProjectile.uc
+* Yeap, it's here.
+* Copyright © 2014 GreatEmerald
+* Copyright © 2017 HellDragon
+*/-----------------------------------------------------------
 class UT3GoliathProjectile extends ONSRocketProjectile;
 
 DefaultProperties
