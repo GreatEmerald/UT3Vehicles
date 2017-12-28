@@ -1,5 +1,6 @@
 /*
  * Copyright © 2014 GreatEmerald
+ * Copyright © 2017 HellDragon
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -41,14 +42,12 @@ class UT3DmgType_LeviathanShard extends VehicleDamageType;
 
 defaultproperties
 {
-    bRagdollBullet=true
-    DeathString="%o was punctured by %k's minigun."
-    MaleSuicide="%o turned the minigun on himself."
-    FemaleSuicide="%o turned the minigun on herself."
+    DeathString="%k speared %o with a Leviathan Stinger Turret."
+    MaleSuicide="%o turned the Stinger Turret on himself."
+    FemaleSuicide="%o turned the Stinger Turret on herself."
     FlashFog=(X=600.00000,Y=0.000000,Z=0.00000)
     KDamageImpulse=2000
     VehicleMomentumScaling=0.5
     VehicleDamageScaling=0.5  //0.36 def UT2004, 0.5 def UT3
     VehicleClass=class'UT3LeviathanTurretStinger'
-    bBulletHit=True
 }
