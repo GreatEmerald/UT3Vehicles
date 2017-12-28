@@ -42,7 +42,7 @@
 
 class UT3Goliath extends ONSHoverTank;
 
-//var(ONSWheeledCraft) float ChassisTorqueScale; doesn't work yet
+//var(ONSWheeledCraft) float ChassisTorqueScale; //doesn't work yet
 
 //=====================
 // @100GPing100
@@ -168,6 +168,7 @@ defaultproperties
     
     ExitPositions(0)=(X=2,Y=-250,Z=30)
     ExitPositions(1)=(X=2,Y=250,Z=30)
+    ExitPositions(2)=(X=-100,Y=0,Z=200)
     
     FPCamPos=(X=-70,Y=0,Z=160)
     
