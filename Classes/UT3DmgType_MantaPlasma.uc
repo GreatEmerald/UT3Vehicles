@@ -41,9 +41,9 @@ class UT3DmgType_MantaPlasma extends VehicleDamageType;
 
 defaultproperties
 {
-	DeathString="%k's Manta filled %o with plasma."
-	MaleSuicide="%o fried himself with his own plasma blast."
-	FemaleSuicide="%o fried herself with her own plasma blast."
+	DeathString="%k's Manta eviscerated %o with hot plasma."
+	MaleSuicide="%o fried himself with his own Manta plasma blast."
+	FemaleSuicide="%o fried herself with her own Manta plasma blast."
 	FlashFog=(X=700.00000,Y=0.000000,Z=0.00000)
 	bDetonatesGoop=true
 	bDelayedDamage=true
