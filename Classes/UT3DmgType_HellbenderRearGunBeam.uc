@@ -4,8 +4,8 @@ class UT3DmgType_HellbenderRearGunBeam extends VehicleDamageType
 defaultproperties
 {
      VehicleClass=Class'UT3HellbenderRearGunPawn'
-     DeathString="%o was incinerated by %k's twin beams."
-     FemaleSuicide="%o somehow managed to shoot herself with a turret."
-     MaleSuicide="%o somehow managed to shoot himself with a turret."
+     DeathString="%o was disintegrated by %k's Hellbender turret beam."
+     FemaleSuicide="%o somehow managed to disintegrate herself with a Hellbender turret."
+     MaleSuicide="%o somehow managed to disintegrate himself with a Hellbender turret."
      VehicleDamageScaling=0.85
 }
