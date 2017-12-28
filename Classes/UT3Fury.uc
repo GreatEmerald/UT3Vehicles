@@ -1,7 +1,7 @@
 //============================================================
 // UT3 Fury
-// Credits: 100GPing100(José Luís)
-// Copytight José Luís, 2012
+// Credits: 100GPing100(JosÃ© LuÃ­s)
+// Copytight JosÃ© LuÃ­s, 2012
 // Contact: zeluis.100@gmail.com
 //============================================================
 class UT3Fury extends ONSAttackCraft;
@@ -81,7 +81,7 @@ DefaultProperties
 	BlueSkin=Shader'UT3FuryTex.Fury.FurySkin';
 	
 	// Damage.
-	DriverWeapons(0)=(WeaponClass=Class'Onslaught.ONSAttackCraftGun',WeaponBone="UpRt_Arm08")
+	DriverWeapons(0)=(WeaponClass=Class'UT3FuryWeapon',WeaponBone="UpRt_Arm08")
 	
 	// Misc
 	EntryPosition=(X=0,Y=0,Z=20);
