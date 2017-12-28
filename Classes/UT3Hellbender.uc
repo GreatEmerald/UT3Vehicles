@@ -420,6 +420,9 @@ defaultproperties
     IdleSound=Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_EngineIdle01'
     StartUpSound=Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_EngineStart01'
     ShutDownSound=Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_EngineStop01'
+    DamagedEffectHealthSmokeFactor=0.65 //0.5
+    DamagedEffectHealthFireFactor=0.39 //0.25
+    DamagedEffectFireDamagePerSec=0.95 //0.75
     EntryRadius=300.000000
     TPCamWorldOffset=(Z=200.000000)
     MomentumMult=1.000000
