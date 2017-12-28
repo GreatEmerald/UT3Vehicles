@@ -164,7 +164,7 @@ simulated function Tick(float DT)
         if (Victim != None && Victim.bBlockActors)
         {
             if (Victim.IsA('Pawn') && !Victim.IsA('Vehicle'))
-                Pawn(Victim).TakeDamage(1000, self, HitLocation, Velocity * 100, class'DamTypeONSRVBlade');
+                Pawn(Victim).TakeDamage(1000, self, HitLocation, Velocity * 100, class'UT3DmgType_ScorpionBlades');
             else
             {
                 bLeftArmBroke = True;
@@ -194,7 +194,7 @@ simulated function Tick(float DT)
         if (Victim != None && Victim.bBlockActors)
         {
             if (Victim.IsA('Pawn') && !Victim.IsA('Vehicle'))
-                Pawn(Victim).TakeDamage(1000, self, HitLocation, Velocity * 100, class'DamTypeONSRVBlade');
+                Pawn(Victim).TakeDamage(1000, self, HitLocation, Velocity * 100, class'UT3DmgType_ScorpionBlades');
             else
             {
                 bRightArmBroke = True;
@@ -554,17 +554,12 @@ simulated function AttachDriver(Pawn P)
     bAttachedDriver=true;
 
     ArmDriveL.Yaw=5000;
-    //ArmDriveL.Pitch=2000;
     P.SetBoneRotation('Bip01 L UpperArm',ArmDriveL);
     ArmDriveR.Yaw=5000;
-    //ArmDriveR.Pitch=-2000;
     P.SetBoneRotation('Bip01 R UpperArm',ArmDriveR);
     ForeArmDriveL.Yaw=3000;
-    //ForeArmDriveL.Pitch=7000;
     ForeArmDriveL.Roll=12000;
     P.SetBoneRotation('Bip01 L ForeArm',ForeArmDriveL);
-    //ForeArmDriveR.Yaw=8000;
-    //ForeArmDriveR.Pitch=-1000;
     ForeArmDriveR.Roll=-12000;
     P.SetBoneRotation('Bip01 R ForeArm',ForeArmDriveR);
     ThighDriveL.Yaw=-10000;
@@ -573,11 +568,9 @@ simulated function AttachDriver(Pawn P)
     ThighDriveR.Yaw=-10000;
     ThighDriveR.Pitch=-2000;
     P.SetBoneRotation('Bip01 R Thigh',ThighDriveR);
-    //CalfDriveL.Pitch=6500;
     CalfDriveL.Yaw=2000;
     CalfDriveL.Roll=14000;
     P.SetBoneRotation('Bip01 L Calf',CalfDriveL);
-    //CalfDriveR.Pitch=-6500;
     CalfDriveR.Yaw=1000;
     CalfDriveR.Roll=-14000;
     P.SetBoneRotation('Bip01 R Calf',CalfDriveR);
@@ -587,7 +580,6 @@ simulated function AttachDriver(Pawn P)
     P.SetBoneRotation('Bip01 Head',NeckDrive);
     FootDriveL.Yaw=8000;
     P.SetBoneRotation('Bip01 L Foot',FootDriveL);
-    //FootDriveR.Pitch=-6500;
     FootDriveR.Yaw=8000;
     P.SetBoneRotation('Bip01 R Foot',FootDriveR);
 }
@@ -611,7 +603,6 @@ simulated function DetachDriver(Pawn P)
     P.SetBoneRotation('Bip01 L Foot');
     P.SetBoneRotation('Bip01 R Foot');
     
-    bAttachedDriver=false;
     Super.DetachDriver(P);
 }
 
