@@ -423,6 +423,7 @@ defaultproperties
     IdleSound=Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_EngineIdle01'
     StartUpSound=Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_EngineStart01'
     ShutDownSound=Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_EngineStop01'
+    ImpactDamageMult = 0.00005
     DamagedEffectHealthSmokeFactor=0.65 //0.5
     DamagedEffectHealthFireFactor=0.40 //0.25
     DamagedEffectFireDamagePerSec=2.0 //0.75
@@ -456,20 +457,18 @@ defaultproperties
     WheelInertia=0.01
     ChassisTorqueScale=0.82 //0.7
     WheelSuspensionOffset=5.0 //this one little value causes the Hellbender to sit lower like it should, unbeliveble we went crazy trying to solve it and all it needed was this
+
     //Drawscale=1.2 UT3 Draw template, collision needs to be updated with ukx
-    //DrawScale=0.95
+
 
     CollisionRadius=219
     
-    //ExitPositions(0)=(X=0,Y=-165,Z=50)
-    //ExitPositions(1)=(X=0,Y=165,Z=50)
-    //ExitPositions(2)=(X=0,Y=-165,Z=-50)
-    //ExitPositions(3)=(X=0,Y=165,Z=-50)
     
     ExitPositions(0)=(X=-10,Y=-160,Z=50)  //Left
     ExitPositions(1)=(X=-10,Y=160,Z=50)   //Right
     ExitPositions(2)=(X=-10,Y=-160,Z=-50) //Left Below
     ExitPositions(3)=(X=-10,Y=160,Z=-50)  //Right Below
+    ExitPositions(4)=(X=10,Y=-5,Z=130)    //Roof
     
     FPCamPos=(X=0,Y=28,Z=135)
     
