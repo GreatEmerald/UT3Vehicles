@@ -807,14 +807,15 @@ defaultproperties
     
     MomentumMult=0.25 //?
     
-    ExitPositions(0)=(X=0,Y=-150,Z=50) //Left
-    ExitPositions(1)=(X=0,Y=150,Z=50)  //Right
+    ExitPositions(0)=(X=0,Y=-150,Z=50)  //Left
+    ExitPositions(1)=(X=0,Y=150,Z=50)   //Right
     ExitPositions(2)=(X=0,Y=-150,Z=-50) //Left Below
     ExitPositions(3)=(X=0,Y=150,Z=-50)  //Right Below
     ExitPositions(4)=(X=150,Y=0,Z=50)   //Front
-    ExitPositions(5)=(X=-150,Y=0,Z=50)  //Rear
+    ExitPositions(5)=(X=0,Y=0,Z=100)    //Roof
     ExitPositions(6)=(X=150,Y=0,Z=-50)  //Front Below
     ExitPositions(7)=(X=-150,Y=0,Z=-50) //Rear Below
+    ExitPositions(8)=(X=-150,Y=0,Z=50)  //Rear
     
     FPCamPos=(X=-70,Y=0,Z=105)  //FPCamPos=(X=-60,Y=0,Z=70) For original drawscale
 
