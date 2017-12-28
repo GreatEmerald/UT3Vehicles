@@ -286,6 +286,7 @@ defaultproperties
     ExitPositions(0)=(X=80,Y=-210,Z=25)
     ExitPositions(1)=(X=80,Y=210,Z=25)
     ExitPositions(2)=(X=330,Y=0,Z=35)
+    ExitPositions(3)=(X=90,Y=0,Z=160) 
     
     TrailEffectRotation=(Yaw=32768)
     TrailEffectPositions(0)=(X=-63,Y=-42.5,Z=118) //(X=-53,Y=-33,Z=63)
