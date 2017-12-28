@@ -75,11 +75,6 @@ defaultproperties
 
     DriverWeapons(0)=(WeaponClass=class'UT3PaladinCannon',WeaponBone="Turret_Yaw");
 
-    FPCamPos = (X=-30,Y=0,Z=120);
-    FPCamViewOffset = (X=-100,Y=0,Z=0);
-    TPCamWorldOffset = (X=0,Y=0,Z=200);
-    TPCamDistance = 575;
-
     VehiclePositionString = "in a UT3 Paladin";
     SteerBoneName="Body"
 
@@ -88,8 +83,8 @@ defaultproperties
     StartUpSound = Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Start01';
     ShutDownSound = Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Stop01';
     DamagedEffectHealthSmokeFactor=0.65 //0.5
-    DamagedEffectHealthFireFactor=0.39 //0.25
-    DamagedEffectFireDamagePerSec=0.95 //0.75
+    DamagedEffectHealthFireFactor=0.40 //0.25
+    DamagedEffectFireDamagePerSec=2.0 //0.75
     ExplosionSounds(0) = Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Explode02';
     ExplosionSounds(1) = Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Explode02';
     ExplosionSounds(2) = Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Explode02';
@@ -244,11 +239,6 @@ defaultproperties
     
     MomentumMult=0.1 //0.8
     
-    ExitPositions(0)=(X=0,Y=-250,Z=30)
-    ExitPositions(1)=(X=0,Y=250,Z=30)
-    ExitPositions(2)=(X=0,Y=-250,Z=-30)
-    ExitPositions(3)=(X=0,Y=250,Z=-30)
-    
     Begin Object Class=KarmaParamsRBFull Name=KParams0
         KStartEnabled=True
         KFriction=0.5
@@ -273,12 +263,31 @@ defaultproperties
     End Object
     KParams=KarmaParams'KParams0'
     
+    EntryPosition=(X=20,Y=0,Z=0)
+    EntryRadius=350.0
+    
+    ExitPositions(0)=(X=0,Y=-260,Z=50)
+    ExitPositions(1)=(X=0,Y=260,Z=50)
+    ExitPositions(2)=(X=0,Y=-260,Z=-50)
+    ExitPositions(3)=(X=0,Y=260,Z=-50)
+    ExitPositions(4)=(X=90,Y=0,Z=160)
+    
+    FPCamPos = (X=-55,Y=0,Z=170);
+    FPCamViewOffset = (X=0,Y=0,Z=0);
+    
+    TPCamWorldOffset = (X=0,Y=0,Z=220); //280 or more more aiming up without clipping but ground level aim feels awkward this way
+    TPCamDistance = 575;
+
+    //Aerial View
+    //TPCamWorldOffset = (X=0,Y=0,Z=200);
+    
     HeadlightCoronaOffset=()
-    HeadlightCoronaOffset(0)=(X=215.0,Y=34.5,Z=8.0)
-    HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
+    HeadlightCoronaOffset(0)=(X=290.0,Y=47,Z=58.0)
+    HeadlightCoronaMaterial=Material'EpicParticles.FlashFlare1'
+    //HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
     HeadlightCoronaMaxSize=92
     
-    HeadlightProjectorOffset=(X=200,Y=10,Z=8.0)
+    HeadlightProjectorOffset=(X=290,Y=10,Z=58.0)
     HeadlightProjectorRotation=(Yaw=0,Pitch=-1000,Roll=0)
     HeadlightProjectorMaterial=Texture'VMVehicles-TX.NewPRVGroup.PRVProjector'
     HeadlightProjectorScale=0.05
