@@ -1,7 +1,7 @@
 /*
- * Copyright © 2008, 2014 GreatEmerald
+ * Copyright © 2008, 2017 GreatEmerald
  * Copyright © 2008-2009 Wormbo
- * Copyright © 2017 HellDragon (still too strong a word but if you want it, here you go)
+ * Copyright © 2017 HellDragon
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -59,7 +59,7 @@ function AltFire(optional float F) //This is to remove the horn each time you fi
 function TakeDamage(int Damage, Pawn instigatedBy, Vector Hitlocation, Vector Momentum, class<DamageType> DamageType)
 {                            //Make sure you don't hurt yourself with a combo
     if (InstigatedBy == self && ClassIsChildOf(DamageType, class'DamTypeSkyMine'))
-    return;
+        return;
     Super.TakeDamage(Damage, instigatedBy, Hitlocation, Momentum, damageType);
 }
 
@@ -326,6 +326,9 @@ simulated event DrivingStatusChanged()
 
 defaultproperties
 {
+
+    Drawscale=1.0
+
     //===========================
     // @100GPing100
     Mesh = SkeletalMesh'UT3VH_Hellbender_Anims.SK_VH_Hellbender';
@@ -456,10 +459,7 @@ defaultproperties
     EngineInertia=0.01
     WheelInertia=0.01
     ChassisTorqueScale=0.82 //0.7
-    WheelSuspensionOffset=5.0 //this one little value causes the Hellbender to sit lower like it should, unbeliveble we went crazy trying to solve it and all it needed was this
-
-    //Drawscale=1.2 UT3 Draw template, collision needs to be updated with ukx
-
+    WheelSuspensionOffset=5.0 //HDm: Fixes the chassis sitting height in-game
 
     CollisionRadius=219
     
