@@ -2,6 +2,7 @@
  * Copyright © 2009 Wormbo
  * Copyright © 2013-2014 José Luís '100GPing100'
  * Copyright © 2013-2014 GreatEmerald
+ * Copyright © 2017 HellDragon
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -984,6 +985,7 @@ defaultproperties
     ExitPositions(1)=(X=50,Y=165,Z=30)
     ExitPositions(2)=(X=50,Y=-165,Z=-30)
     ExitPositions(3)=(X=50,Y=165,Z=-30)
+    ExitPositions(4)=(X=350,Y=0,Z=60)
 
     //HeadlightCoronaOffset(0)=(X=213,Y=85,Z=43) //(X=195,Y=85,Z=70)
     //HeadlightCoronaOffset(1)=(X=213,Y=-85,Z=43) //(X=195,Y=-85,Z=70)
@@ -997,7 +999,9 @@ defaultproperties
     //HeadlightProjectorScale=0.65
     HeadlightProjectorMaterial=None
     
-    BrakeLightOffset(0)=(X=-145,Y=37,Z=55)
-    BrakeLightOffset(1)=(X=-145,Y=-37,Z=55)
-    BrakeLightMaterial=Material'EpicParticles.FlickerFlare'
+    BrakeLightOffset(0)=(X=-190,Y=47,Z=72)
+    BrakeLightOffset(1)=(X=-190,Y=-47,Z=72)
+    BrakeLightMaterial=Material'EpicParticles.FlashFlare1'
+    //BrakeLightMaterial=Material'EpicParticles.FlickerFlare'
+    
 }
