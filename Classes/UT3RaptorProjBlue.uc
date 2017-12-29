@@ -101,6 +101,29 @@ class UT3RaptorProjBlue extends ONSAttackCraftPlasmaProjectileBlue;
     bHurtEntry = false;
 }*/
 
+simulated function Explode(vector HitLocation, vector HitNormal)
+{
+    local float MyDamage;
+    if ( LifeSpan < 1.0 )
+    {
+		MyDamage = 0.75 * Default.Damage;
+    }
+	else
+    {
+		MyDamage = Default.Damage * FMin(2.0, Square(MaxSpeed)/Square(Speed));
+    }
+
+    if ( Role == ROLE_Authority )
+        HurtRadius(MyDamage, DamageRadius, MyDamageType, MomentumTransfer, HitLocation );
+
+    if ( EffectIsRelevant(Location,false) )
+        Spawn(HitEffectClass,,, HitLocation + HitNormal*5, rotator(-HitNormal));
+
+    PlaySound(Sound'WeaponSounds.BioRifle.BioRifleGoo2');
+
+    Destroy();
+}
+
 defaultproperties
 {
     Damage = 28.0 //20.0 //GE: We're weaker! Hooray!
