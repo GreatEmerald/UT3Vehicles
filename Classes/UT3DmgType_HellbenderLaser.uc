@@ -4,8 +4,8 @@ class UT3DmgType_HellbenderLaser extends DamTypePRVLaser
 defaultproperties
 {
     VehicleClass=Class'UT3Hellbender'
-    DeathString="%o was disintegrated by %k's Hellbender laser beam."
-    FemaleSuicide="%o somehow managed to disintegrate herself with a laser beam."
-    MaleSuicide="%o somehow managed to disintegrate himself with a laser beam."
+    DeathString="%k's laser shocked %o."
+    FemaleSuicide="%o used her laser on herself."
+    MaleSuicide="%o used his laser on himself."
     KDamageImpulse=2000
 }
