@@ -42,9 +42,9 @@ class UT3DmgType_LeviathanBeam extends DamTypeTurretBeam;
 
 defaultproperties
 {
-    DeathString="%k's Leviathan Laser Turret blasted %o to bits."
-    MaleSuicide="%o somehow blasted himself to bits with a turret."
-    FemaleSuicide="%o somehow blasted herself to bits with a turret."
+    DeathString="%k blasted %o to bits."
+    MaleSuicide="%o  blasted himself to bits."
+    FemaleSuicide="%o blasted herself to bits."
     
     
     VehicleMomentumScaling=2.0
