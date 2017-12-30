@@ -45,8 +45,8 @@ DefaultProperties
 {
 	// Strings.
 	DeathString="%k's Viper eviscerated %o with hot plasma.";
-	MaleSuicide="%o fried himself with his own plasma.";
-	FemaleSuicide="%o fried herself with her own plasma.";
+	MaleSuicide="%o fired his gun prematurely.";
+	FemaleSuicide="%o fired her gun prematurely.";
 
 	// Vehicle.
 	VehicleMomentumScaling=1.0;
