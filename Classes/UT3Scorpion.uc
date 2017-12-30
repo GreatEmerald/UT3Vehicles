@@ -2,7 +2,7 @@
  * Copyright © 2008, 2014 GreatEmerald
  * Copyright © 2008-2009 Wormbo
  * Copyright © 2012 100GPing100
- * Copyright © 2017 HellDragon (Copyright seems too strong a word to me but if that's what you want)
+ * Copyright © 2017 HellDragon
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
