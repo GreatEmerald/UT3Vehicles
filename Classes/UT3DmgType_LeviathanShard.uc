@@ -42,9 +42,9 @@ class UT3DmgType_LeviathanShard extends VehicleDamageType;
 
 defaultproperties
 {
-    DeathString="%k speared %o with a Leviathan Stinger Turret."
-    MaleSuicide="%o turned the Stinger Turret on himself."
-    FemaleSuicide="%o turned the Stinger Turret on herself."
+    DeathString="%k speared %o."
+    MaleSuicide="%o died."
+    FemaleSuicide="%o died."
     FlashFog=(X=600.00000,Y=0.000000,Z=0.00000)
     KDamageImpulse=2000
     VehicleMomentumScaling=0.5
