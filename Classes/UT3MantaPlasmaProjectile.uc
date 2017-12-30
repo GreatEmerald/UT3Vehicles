@@ -1,5 +1,6 @@
 /*
  * Copyright © 2008, 2014 GreatEmerald
+ * Copyright © 2017, HellDragon
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -104,8 +105,11 @@ class UT3MantaPlasmaProjectile extends ONSHoverBikePlasmaProjectile;
 
 defaultproperties
 {
+    Speed=2000
+    MaxSpeed=7000
     Damage = 36.0
     DamageRadius = 0.0
-    MomentumTransfer = 4000.0
+    MomentumTransfer = 20000.000000 //4000.0
     LifeSpan = 1.6
+    MyDamageType=Class'UT3Vehicles.UT3DmgType_MantaPlasma'
 }
