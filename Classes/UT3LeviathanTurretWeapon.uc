@@ -1,6 +1,7 @@
 /*
  * Copyright © 2007 Wormbo
  * Copyright © 2014 GreatEmerald
+ * Copyright © 2017 HellDragon
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -161,4 +162,5 @@ defaultproperties
     WeaponFireOffset     = 40.0
     ShieldAttachmentBone = Object84
     PitchDownLimit=55000
+    PitchUpLimit=12000
 }
