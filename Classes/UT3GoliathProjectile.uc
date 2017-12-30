@@ -4,7 +4,8 @@
 * Copyright © 2014 GreatEmerald
 * Copyright © 2017 HellDragon
 */-----------------------------------------------------------
-class UT3GoliathProjectile extends ONSRocketProjectile;
+
+   class UT3GoliathProjectile extends ONSRocketProjectile;
 
 DefaultProperties
 {
