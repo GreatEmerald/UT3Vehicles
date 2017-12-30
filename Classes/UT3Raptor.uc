@@ -295,6 +295,9 @@ Test 4: 275 works well, although it still gives slight sinkness. But that's OK.
 
 defaultproperties
 {
+
+    Drawscale = 1.0
+
     //===========================
     // @100GPing100
     Mesh = SkeletalMesh'UT3VH_Raptor_Anims.SK_VH_Raptor';
@@ -344,8 +347,6 @@ defaultproperties
     // @100GPing100
     //============EDN============
     VehicleNameString = "UT3 Raptor"
-
-    //Drawscale = 1.3
 
     //DriverWeapons[0] = (WeaponClass=class'UT3RaptorWeapon',WeaponBone=PlasmaGunAttachment)
 
