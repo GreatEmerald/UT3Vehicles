@@ -572,7 +572,7 @@ defaultproperties
     TPCamDistance=980.000000
     TPCamLookat=(X=0,Y=0,Z=170) //(X=-200,Y=0,Z=300) def UT2004
     UnDeployedTPCamLookat=(X=0,Y=0,Z=170)
-    UnDeployedTPCamWorldOffset=(X=0,Y=0,Z=2000)
+    UnDeployedTPCamWorldOffset=(X=0,Y=0,Z=170)
     DeployedTPCamWorldOffset=(X=0,Y=0,Z=500) //(X=0,Y=0,Z=800) def UT2004
     DeployedTPCamLookat=(X=-60,Y=0,Z=0) //(X=100,Y=0,Z=0)
     
