@@ -68,6 +68,6 @@ defaultproperties
     FPCamPos=(X=50,Y=0,Z=50)
     TPCamLookAt=(X=-120,Y=0,Z=0)
     TPCamWorldOffset=(X=0.0,Y=0.0,Z=80.0)
-    TPCamDistance=130.000000
+    TPCamDistance=95.000000
     
 }
