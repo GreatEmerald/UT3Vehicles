@@ -1,10 +1,10 @@
 //-----------------------------------------------------------
 // UT3GoliathTurret.uc
 // I don't think the sounds will initially work...
-// GreatEmerald, 2008, 2014
+// Copyright © 2008, 2014, 2017 GreatEmerald
 // Copyright © 2012, 2017 Luís 'zeluisping' Guimarães <zeluis.100@gmail.com> (visuals + fixed sounds)
-// HellDragon 2017 (I guess it helps identify anything I changed if there's a question about it later)
-//-----------------------------------------------------------
+// Copyright © 2017 HellDragon 2017
+//------------------------------------------------------
 class UT3GoliathTurret extends ONSTankSecondaryTurret;
 
 DefaultProperties
