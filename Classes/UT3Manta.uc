@@ -1,6 +1,6 @@
 /*
  * Copyright © 2008 Wormbo
- * Copyright © 2012 100GPing100
+ * Copyright © 2012, 2017, 2018 Luís 'zeluisping' Guimarães (100GPing100)
  * Copyright © 2008, 2014 GreatEmerald
  * Copyright © 2018 HellDragon
  *
@@ -42,13 +42,13 @@
 
 class UT3Manta extends ONSHoverBike;
 
-var Emitter DuckEffect;
 
-//===============
-// @100GPing100
 /* Load the packages. */
 #exec obj load file=../Animations/UT3MantaAnims.ukx
 #exec obj load file=../Textures/UT3MantaTex.utx
+
+
+var Emitter DuckEffect;
 
 /* The spining blades. */
 var array<UT3MantaBlade> Blades;
@@ -89,9 +89,13 @@ function DrivingStatusChanged()
 //
 function Tick(float DeltaTime)
 {
-    if (Driver != None) // Just in case.
-        Ailerons(DeltaTime);
-    EmeraldTick(DeltaTime); // Renamed it.
+    super.Tick(DeltaTime);
+
+    Ailerons(DeltaTime);
+
+    if (!bHoldingDuck && DuckEffect != None) {
+        DuckEffect.Destroy();
+    }
 }
 
 //
@@ -143,8 +147,6 @@ function Destroyed()
 
     Super.Destroyed();
 }
-// @100GPing100
-//======END======
 
 simulated function CheckJumpDuck()
 {
@@ -207,13 +209,6 @@ simulated function CheckJumpDuck()
     bHoldingDuck = False;
 }
 
-simulated function EmeraldTick(float DeltaTime)
-{
-Super.Tick(DeltaTime);
-if (!bHoldingDuck && DuckEffect!=None) {
-    DuckEffect.Destroy();
-    }
-}
 
 simulated function AttachDriver(Pawn P)
 {
@@ -268,22 +263,19 @@ simulated function TeamChanged()
 //=============================================================================
 // Default values
 //=============================================================================
-
 defaultproperties
 {
-    //===============
-    // @100GPing100
     // Looks.
-    Mesh = SkeletalMesh'UT3MantaAnims.Manta';
-    RedSkin = Shader'UT3MantaTex.MantaSkin';
-    BlueSkin = Shader'UT3MantaTex.MantaSkinBlue';
-    DrivePos = (X=-67,Y=0.0,Z=64.0); //DrivePos = (X=-70,Y=0.0,Z=50.0)
+    Mesh=SkeletalMesh'UT3MantaAnims.Manta';
+    RedSkin=Shader'UT3MantaTex.MantaSkin';
+    BlueSkin=Shader'UT3MantaTex.MantaSkinBlue';
+    DrivePos=(X=-67,Y=0.0,Z=64.0); //DrivePos = (X=-70,Y=0.0,Z=50.0)
 
     // Damage.
     DriverWeapons(0)=(WeaponClass=class'UT3MantaPlasmaGun',WeaponBone=barrel_rt);
 
     // Strings.
-    VehiclePositionString = "in a UT3 Manta";
+    VehiclePositionString="in a UT3 Manta";
 
     // Movement.
     GroundSpeed = 1500 //UT2004 default is 2000 UT3 default is 1500
@@ -299,7 +291,6 @@ defaultproperties
     RollTorqueStrafeFactor=100.0 //50.0 def UT2004
         
     MaxStrafeForce=27 //20 def UT2004
-    LatDamping=0.2
     
     HoverSoftness=0.15 //0.09 def UT2004
     HoverPenScale=1.35 //1.0 def UT2004
@@ -353,9 +344,6 @@ defaultproperties
     ExplosionSounds(2) = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Explode01';
     ExplosionSounds(3) = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Explode01';
     ExplosionSounds(4) = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Explode01';
-    // @100GPing100
-    //======END======
-
 
     VehicleNameString = "UT3 Manta"
     
@@ -406,4 +394,7 @@ defaultproperties
     HeadlightProjectorRotation=(Yaw=0,Pitch=-1000,Roll=0)
     HeadlightProjectorMaterial=Texture'VMVehicles-TX.RVGroup.RVProjector'
     HeadlightProjectorScale=0.02
+
+    LongDamping=0.1
+    LatDamping=0.2
 }
