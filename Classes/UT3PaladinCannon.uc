@@ -166,6 +166,9 @@ function rotator SmoothRotate(float YawDelta, float PitchDelta, rotator CurrentR
 
 defaultproperties
 {
+
+    Drawscale = 1.0
+
     Mesh=SkeletalMesh'UT3VH_Paladin_Anims.PaladinWeaponOnly';
     RedSkin=Shader'UT3PaladinTex.Paladin.PaladinSkin';
     BlueSkin=Shader'UT3PaladinTex.Paladin.PaladinSkinBlue';
