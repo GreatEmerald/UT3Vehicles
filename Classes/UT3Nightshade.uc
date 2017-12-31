@@ -1,6 +1,6 @@
 /*
- * Copyright © 2012 100GPing100
- * Copyright © 2014 GreatEmerald
+ * Copyright ï¿½ 2012 100GPing100
+ * Copyright ï¿½ 2014 GreatEmerald
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -156,7 +156,7 @@ function bool NoObstacle()
 	else
 		return false;
 }
-/* » Type:
+/* ï¿½ Type:
  * 0: General message.
  * 1: Mine select message.
 */
@@ -514,7 +514,7 @@ simulated function PrevWeapon()
 }
 simulated function SwitchWeapon(byte F)
 {
-	if (F == SelectedMine)
+	if (F == SelectedMine || CurrentState != VS_Deployed)
 		return;
 	switch (F)
 	{
