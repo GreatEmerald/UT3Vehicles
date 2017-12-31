@@ -1,6 +1,6 @@
 //============================================================
 // UT3 Paladin Shield
-// Copyright (c) 2012, José Luís '100GPing100'
+// Copyright (c) 2012, JosÃ© LuÃ­s '100GPing100'
 // Copyright (c) 2014, GreatEmerald
 // Contact: zeluis.100@gmail.com
 //============================================================
@@ -20,9 +20,9 @@ simulated function SpawnHitEffect(byte TeamNum)
         if (ShockShieldEffect != None)
         {
             if (TeamNum == 1)
-                ShockShieldHitEffect = spawn(class'ONSShockTankShieldHitEffectBlue', self);
+                ShockShieldHitEffect = spawn(class'UT3PaladinShieldHitEffectBlue', self);
             else
-                ShockShieldHitEffect = spawn(class'ONSShockTankShieldHitEffectRed', self);
+                ShockShieldHitEffect = spawn(class'UT3PaladinShieldHitEffectRed', self);
         }
 
         if (ShockShieldHitEffect != None && Owner != None && ONSShockTankCannon(Owner) != None)
