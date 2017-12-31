@@ -395,6 +395,7 @@ defaultproperties
     VehicleNameString = "UT3 Leviathan"
 
     Health = 6500
+    HealthMax = 6500
 
     DriverWeapons(0) = (WeaponClass=class'UT3LeviathanDriverWeapon',WeaponBone="DriverTurretYaw")
     DriverWeapons(1)=(WeaponClass=class'UT3LeviathanPrimaryWeapon',WeaponBone="Base");
