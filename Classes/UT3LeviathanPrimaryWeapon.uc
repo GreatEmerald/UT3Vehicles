@@ -46,6 +46,7 @@ var Material RedSkinB, BlueSkinB;
 
 simulated state InstantFireMode
 {
+	
     function Explosion(float DamRad)
 	{
     	local actor Victims;
@@ -79,6 +80,27 @@ simulated state InstantFireMode
     		}
     	}
 	}
+	
+	function AltFire(Controller C)
+    {
+	}
+
+ImplodeExplode:
+    Sleep(0.8);
+    if (Level.NetMode != NM_DedicatedServer)
+        Spawn(class'ONSMASCannonImplosionEffect',,, GHitLocation, rotator(GHitNormal));
+    Sleep(2.3);
+    Explosion(DamageRadius*0.125);
+    Sleep(0.5);
+    Explosion(DamageRadius*0.300);
+    Sleep(0.2);
+    Explosion(DamageRadius*0.475);
+    Sleep(0.2);
+    Explosion(DamageRadius*0.650);
+    Sleep(0.2);
+    Explosion(DamageRadius*0.825);
+    Sleep(0.2);
+    Explosion(DamageRadius*1.000);
 }
 
 simulated function SetTeam(byte T)
@@ -113,4 +135,8 @@ defaultproperties
     WeaponFireAttachmentBone = "MainTurretPitch"
     DamageType=class'UT3DmgType_LeviathanCannon'
     RotationsPerSecond=0.22
+    DamageMin=250
+    DamageMax=250
+    DamageRadius=2000
+    Momentum=250000.0
 }
