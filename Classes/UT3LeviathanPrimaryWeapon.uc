@@ -86,6 +86,7 @@ simulated state InstantFireMode
 	}
 
 ImplodeExplode:
+    bCurrentlyFiring = true;
     Sleep(0.8);
     if (Level.NetMode != NM_DedicatedServer)
         Spawn(class'ONSMASCannonImplosionEffect',,, GHitLocation, rotator(GHitNormal));
@@ -101,6 +102,7 @@ ImplodeExplode:
     Explosion(DamageRadius*0.825);
     Sleep(0.2);
     Explosion(DamageRadius*1.000);
+    bCurrentlyFiring = false;
 }
 
 simulated function SetTeam(byte T)
