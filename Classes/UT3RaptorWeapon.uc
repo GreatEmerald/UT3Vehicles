@@ -2,6 +2,7 @@
  * Copyright © 2008-2009 Wormbo
  * Copyright © 2008-2009, 2014 GreatEmerald
  * Copyright © 2012 100GPing100
+ * Copyright © 2017 HellDragon
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -213,7 +214,7 @@ simulated function CalcWeaponFire()
 
     // Calculate fire offset in world space
     WeaponBoneCoords = GetBoneCoords(WeaponFireAttachmentBone);
-    CurrentFireOffset = (WeaponFireOffset * vect(1,0,0)) + (DualFireHack * vect(0,1,0));
+    CurrentFireOffset = (WeaponFireOffset * vect(250,0,-35)) + (DualFireHack * vect(0,1,0));
 
     // Calculate rotation of the gun
     WeaponFireRotation = rotator(vector(CurrentAim) >> Rotation);
@@ -251,8 +252,8 @@ defaultproperties
     PitchBone = 'rt_gun'
     YawBone = 'rt_gun'
     WeaponFireAttachmentBone = 'rt_gun';
-    WeaponFireOffset = 115.0 //95.0
-    DualFireOffset = 37.0 //15.0
+    WeaponFireOffset = 1.0 //95.0
+    DualFireOffset = 44.0 //15.0
     // @100GPing100
     //============EDN============
     FireInterval    = 0.2
