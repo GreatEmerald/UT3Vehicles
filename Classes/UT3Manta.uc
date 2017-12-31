@@ -228,7 +228,7 @@ defaultproperties
 
     // Movement.
     GroundSpeed=1500 //UT2004 default is 2000 UT3 default is 1500
-    MaxPitchSpeed=2000;
+    MaxPitchSpeed=4000;
     HoverCheckDist=155;
     AirControl=1.5;
 
