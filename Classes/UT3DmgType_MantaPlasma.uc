@@ -1,6 +1,6 @@
 /*
- * Copyright © 2012 100GPing100
  * Copyright © 2014 GreatEmerald
+ * Copyright © 2017 HellDragon
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -38,21 +38,14 @@
  * of such parties' affiliates and subsidiaries.
  */
 
-class UT3DmgType_ViperBolt extends WeaponDamageType
-	abstract;
+class UT3DmgType_MantaPlasma extends DamTypeHoverBikePlasma;
 
-DefaultProperties
+defaultproperties
 {
-	// Strings.
-	DeathString="%k's Viper eviscerated %o with hot plasma.";
-	MaleSuicide="%o fried himself with his own plasma.";
-	FemaleSuicide="%o fried herself with her own plasma.";
-
-	// Vehicle.
-	VehicleMomentumScaling=1.0;
-	VehicleDamageScaling=0.7;
-
-	// Misc.
-	WeaponClass=class'UT3Weap_ViperGun';
-	bCausesBlood=false;
+    DeathString="%k's Manta eviscerated %o with hot plasma."
+    MaleSuicide="%o fried himself with his own plasma blast."
+    FemaleSuicide="%o fried herself with her own plasma blast."
+    VehicleDamageScaling=0.7
+    VehicleMomentumScaling=1.0
+    VehicleClass=class'UT3Manta'
 }

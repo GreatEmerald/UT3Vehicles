@@ -73,7 +73,7 @@ function SuperExplosion()
     local Actor HitActor, ExpFX;
     local vector HitLocation, HitNormal;
 
-    HurtRadius(Damage, DamageRadius, MyDamageType, MomentumTransfer, Location);
+    HurtRadius(ComboDamage, DamageRadius, MyDamageType, MomentumTransfer, Location);
 
     ExpFX = Spawn(class'ONSPRVComboEffect');
     if (Level.NetMode == NM_DedicatedServer) {
@@ -99,9 +99,9 @@ defaultproperties
 {
     Speed            =   1500.0
     MaxSpeed         =   1500.0
-    Damage           =    120.0
-    DamageRadius     =    300.0
-    ComboDamage=215
+    Damage           =    45.0  //120.0
+    DamageRadius     =    128.0 //300.0
+    ComboDamage      =    120.0 //215
     ComboSound=Sound'UT3Weapons.ShockRifle.ShockCombo'
     MomentumTransfer=70000.0
     MyDamageType=class'UT3DmgType_LeviathanShockBall'

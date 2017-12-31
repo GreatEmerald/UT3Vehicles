@@ -769,16 +769,18 @@ simulated function AttachDriver(Pawn P)
 
     //Arms
     //LeftArm
-    ArmDriveL.Yaw=9000;
-    ArmDriveL.Pitch=-6000;
+    ArmDriveL.Yaw=5000; //9000;
+    ArmDriveL.Pitch=-4000;
     P.SetBoneRotation('Bip01 L UpperArm',ArmDriveL);
-    ForeArmDriveL.Roll=32678;
+    ForeArmDriveL.Yaw=10000; //3000;
+    ForeArmDriveL.Roll=-7000; //32678;
     P.SetBoneRotation('Bip01 L ForeArm',ForeArmDriveL);
     //RightArm
-    ArmDriveR.Yaw=9000;
-    ArmDriveR.Pitch=6000;
+    ArmDriveR.Yaw=4000; //9000;
+    ArmDriveR.Pitch=-2000; //6000;
     P.SetBoneRotation('Bip01 R UpperArm',ArmDriveR);
-    ForeArmDriveR.Yaw=3000;
+    ForeArmDriveR.Yaw=11000; //3000;
+    ForeArmDriveR.Pitch=1000; //3000;
     P.SetBoneRotation('Bip01 R ForeArm',ForeArmDriveR);
 }
 
@@ -881,7 +883,7 @@ defaultproperties
     TrailRotOffset(1)=(Pitch=15000)
 
     DriveAnim="Idle_Biggun"
-    DrivePos=(X=0.000000,Y=0.000000,Z=65.000000)
+    DrivePos=(X=0.000000,Y=0.000000,Z=61.000000)
     DriveRot=(Yaw=6000)
 
     HealthMax=1.000000
@@ -920,9 +922,21 @@ defaultproperties
     JumpForce="HoverBikeJump"
 
     FPCamPos=(Z=50.000000)
-    TPCamDistance=500.000000
-    TPCamLookat=(X=0.000000,Z=0.000000)
-    TPCamWorldOffset=(Z=120.000000)
+
+    //Normal
+    TPCamDistance=250.000000 //NOTE: Be sure TO DELETE THIS LINE from USER.INI as it overrides this value and wil be re-added to the ini as soon as you use the vehicle, all this does here is make it the starting distance
+    TPCamLookat=(X=10.000000,Z=0.000000)
+    TPCamWorldOffset=(Z=140.000000)
+
+    //Gears or Outsider Style
+    //TPCamDistance=150.000000
+    //TPCamLookat=(X=0.000000,Y=40.000000,Z=0.000000)  //Gears Style, more Y is needed for a true Gears style, 40 is more Outsider
+    //TPCamWorldOffset=(Z=100.000000)
+
+    //Aerial View
+    //TPCamDistance=200.000000
+    //TPCamLookat=(X=-10.000000,Z=0.000000)
+    //TPCamWorldOffset=(Z=50.000000)
 
     bShowDamageOverlay=True
     bDrawDriverInTP=True
@@ -986,7 +1000,7 @@ defaultproperties
     RollDamping=10.000000
 
     StopThreshold=200.000000
-    VehicleMass=2.0
+    VehicleMass=1.5 //2.0
 
     JumpDuration=0.100000
     JumpForceMag=160.0
