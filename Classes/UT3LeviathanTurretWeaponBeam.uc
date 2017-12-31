@@ -1,6 +1,7 @@
 /*
  * Copyright © 2007 Wormbo
  * Copyright © 2014 GreatEmerald
+ * Copyright © 2017 HellDragon
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -143,8 +144,9 @@ defaultproperties
     DamageMax    = 35
     Spread(0)    = 0
     Momentum     = 60000.0
-    DamageType   = class'DamTypeTurretBeam'
+    DamageType   = class'UT3DmgType_LeviathanBeam'
     FireInterval = 0.3
+    AIInfo(0)=(bInstantHit=true,AimError=600)
 
     FireSoundClass = Sound'UT3Weapons.ShockRifle.ShockRiflePrimary'
 
@@ -160,5 +162,5 @@ defaultproperties
     WeaponFireAttachmentBone = "Lt_Front_Turret_Barrel"
     GunnerAttachmentBone = "LT_Front_TurretPitch"
     ShieldAttachmentBone = "Lt_Front_Turret_Barrel"
-    DualFireOffset = 14.0
+    DualFireOffset = 11 //14.0
 }
