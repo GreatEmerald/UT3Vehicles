@@ -115,7 +115,7 @@ defaultproperties
 {
     ProjectileClass  = Class'UT3LeviathanBolt'
     FireInterval     = 0.3
-    DrawScale        = 0.6
+    DrawScale        = 1.0
     //RelativeLocation = (Z=-10)
 
     Mesh = SkeletalMesh'UT3VH_Leviathan_Anims.LeviathanDriverTurretOnly'
