@@ -254,10 +254,62 @@ simulated function DetachDriver(Pawn P)
 
 simulated function PostNetBeginPlay()
 {
+	local vector RotX, RotY, RotZ;
+	local KarmaParams kp;
+	local KRepulsor rep;
     local int i;
 
-    Super.PostNetBeginPlay();
-    
+    Super(SVehicle).PostNetBeginPlay();
+
+    GetAxes(Rotation,RotX,RotY,RotZ);
+
+	// Spawn and assign 'repulsors' to hold bike off the ground
+	kp = KarmaParams(KParams);
+	kp.Repulsors.Length = ThrusterOffsets.Length;
+
+	for(i=0;i<ThrusterOffsets.Length;i++)
+	{
+    	rep = spawn(class'KRepulsor', self,, Location + ThrusterOffsets[i].X * RotX + ThrusterOffsets[i].Y * RotY + ThrusterOffsets[i].Z * RotZ);
+    	rep.SetBase(self);
+    	rep.bHidden = True;
+    	rep.bRepulseWater = True;
+    	kp.Repulsors[i] = rep;
+	}
+    if (Role == ROLE_Authority)
+    {
+        // Spawn the Driver Weapons
+        for(i=0;i<DriverWeapons.Length;i++)
+        {
+            // Spawn Weapon
+            Weapons[i] = spawn(DriverWeapons[i].WeaponClass, self,, Location, rot(0,0,0));
+            AttachToBone(Weapons[i], DriverWeapons[i].WeaponBone);
+            if (!Weapons[i].bAimable)
+                Weapons[i].CurrentAim = rot(0,32768,0);
+        }
+
+    	if (ActiveWeapon < Weapons.length)
+    	{
+            PitchUpLimit = Weapons[ActiveWeapon].PitchUpLimit;
+            PitchDownLimit = Weapons[ActiveWeapon].PitchDownLimit;
+    	}
+
+        // Spawn the Passenger Weapons
+        for(i=0;i<PassengerWeapons.Length;i++)
+        {
+            // Spawn WeaponPawn
+            WeaponPawns[i] = spawn(PassengerWeapons[i].WeaponPawnClass, self,, Location);
+            WeaponPawns[i].AttachToVehicle(self, PassengerWeapons[i].WeaponBone);
+            if (!WeaponPawns[i].bHasOwnHealth)
+            	WeaponPawns[i].HealthMax = HealthMax;
+            WeaponPawns[i].ObjectiveGetOutDist = ObjectiveGetOutDist;
+        }
+    }
+
+	if(Level.NetMode != NM_DedicatedServer && Level.DetailMode > DM_Low && SparkEffectClass != None)
+	{
+		SparkEffect = spawn( SparkEffectClass, self,, Location);
+	}
+
 	if(Level.NetMode != NM_DedicatedServer && Level.bUseHeadlights && !(Level.bDropDetail || (Level.DetailMode == DM_Low)))
 	{
 		HeadlightCorona.Length = HeadlightCoronaOffset.Length;
@@ -271,7 +323,17 @@ simulated function PostNetBeginPlay()
 			HeadlightCorona[i].ChangeTeamTint(Team);
 			HeadlightCorona[i].MaxCoronaSize = HeadlightCoronaMaxSize * Level.HeadlightScaling;
 		}
-    }
+
+		if(HeadlightProjectorMaterial != None && Level.DetailMode == DM_SuperHigh)
+		{
+			HeadlightProjector = spawn( class'ONSHeadlightProjector', self,, Location + (HeadlightProjectorOffset >> Rotation) );
+			HeadlightProjector.SetBase(self);
+			HeadlightProjector.SetRelativeRotation( HeadlightProjectorRotation );
+			HeadlightProjector.ProjTexture = HeadlightProjectorMaterial;
+			HeadlightProjector.SetDrawScale(HeadlightProjectorScale);
+			HeadlightProjector.CullDistance	= ShadowCullDistance;
+		}
+	}
 
     SetTeamNum(Team);
 	TeamChanged();
