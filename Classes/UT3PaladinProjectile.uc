@@ -13,7 +13,7 @@ function SuperExplosion()
 
     HurtRadius(ComboDamage, ComboRadius, class'UT3DmgType_PaladinShockBall', ComboMomentumTransfer, Location ); //different class here
 
-    Spawn(class'ONSShockTankShockExplosion');
+        Spawn(class'ONSShockTankShockExplosion');
     if ( (Level.NetMode != NM_DedicatedServer) && EffectIsRelevant(Location,false) )
     {
         HitActor = Trace(HitLocation, HitNormal,Location - Vect(0,0,120), Location,false);
