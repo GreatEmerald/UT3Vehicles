@@ -6,7 +6,12 @@ The vehicles portion of the UT3Style mod for Unreal Tournament 2004.
 ## How to compile
 
 * Clone this git repository into the `UT2004` folder.
-* If not already, copy or link the contents of `Animations`, `Sounds`, `StaticMeshes`, `Textures` and `System` to their respective folders in `UT2004`. You also need to have the `UT3Common` package.
+* Download all the required binary dependencies. On Linux, you can do that automatically by running:
+```bash
+./FetchBinaries.sh
+```
+This will put binaries into the usual subdirectories one directory above the working directory. You can override that by setting environmental variables `TEXTURES_DIR`, `ANIMATIONS_DIR`, `SOUNDS_DIR`, `STATICMESHES_DIR` and `SYSTEM_DIR`. On Windows you should be able to run `FetchBinaries.cmd`, but this is to be implemented in the future.
+* Obtain and install the [`UT3Common` package](https://github.com/GreatEmerald/UT3Common).
 * Add to your `UT2004.ini` these lines, after the other `EditPackages` lines:
 ```ini
 EditPackages=RagdollMadness
