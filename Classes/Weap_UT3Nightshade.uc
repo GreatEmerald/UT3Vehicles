@@ -1,6 +1,6 @@
 /*
- * Copyright © 2012 100GPing100
- * Copyright © 2014 GreatEmerald
+ * Copyright ï¿½ 2012 100GPing100
+ * Copyright ï¿½ 2014 GreatEmerald
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -260,6 +260,7 @@ DefaultProperties
 	Momentum = 50000.0;
 	Damage = 120;
 	MinimumDamage = 5.0;
+	DamageType = Class'UT3DmgType_NightshadeBeam';
 
 	// Sound.
 	FireStart = Sound'UT3A_Vehicle_Nightshade.Sounds.A_Vehicle_Nightshade_FireStart01';
