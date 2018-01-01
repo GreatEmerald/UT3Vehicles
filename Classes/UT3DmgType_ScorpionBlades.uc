@@ -1,6 +1,6 @@
 /*
  * Copyright © 2014 GreatEmerald
- * Copyright © 2017 HellDragon
+ * Copyright © 2017-2018 HellDragon
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
