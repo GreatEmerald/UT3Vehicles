@@ -1,7 +1,7 @@
 /*
  * Copyright © 2008, 2014, 2017 GreatEmerald
  * Copyright © 2008-2009 Wormbo
- * Copyright © 2017 HellDragon
+ * Copyright © 2017-2018 HellDragon
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -339,7 +339,7 @@ defaultproperties
     MovementAnims(0) = "Idle"
 
     DriverWeapons(0)=(WeaponClass=Class'UT3HellbenderSideGun',WeaponBone="SecondaryTurretYaw")
-    PassengerWeapons(0)=(WeaponPawnClass=Class'UT3HellbenderRearGunPawn',WeaponBone="MainTurretYaw")
+    PassengerWeapons=((WeaponPawnClass=Class'UT3HellbenderRearGunPawn',WeaponBone="MainTurretYaw"))
 
     FlagBone = Hood;
 
@@ -423,7 +423,6 @@ defaultproperties
 
     //MaxSteerAngleCurve=(Points=((OutVal=50.000000),,)) @100GPing100: Causes crash.
     SteerSpeed=200.000000 //110.0 def UT2004
-    PassengerWeapons(1)=()
     IdleSound=Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_EngineIdle01'
     StartUpSound=Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_EngineStart01'
     ShutDownSound=Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_EngineStop01'
