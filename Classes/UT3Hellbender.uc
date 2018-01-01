@@ -320,6 +320,24 @@ simulated event DrivingStatusChanged()
     }
 }
 
+simulated function TeamChanged()
+{
+    local int i;
+
+    Super.TeamChanged();
+
+    if (Level.NetMode != NM_DedicatedServer)
+    {
+        for(i = 0; i < HeadlightCorona.Length; i++)
+        {
+            HeadlightCorona[i].LightSaturation = 0;
+            if (Team == 0)
+                HeadlightCorona[i].LightHue = 0;
+            if (Team == 1)
+                HeadlightCorona[i].LightHue = 175;
+        }
+    }
+}
 
 //=============================================================================
 // Default values
