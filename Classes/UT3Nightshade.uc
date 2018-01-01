@@ -100,6 +100,13 @@ var vector DeployedTPCamLookat;
 
 
 
+simulated function Destroyed() {
+	super.Destroyed();
+
+	if (ArmMine != none) {
+		ArmMine.Destroy();
+	}
+}
 simulated function bool SpecialCalcView(out actor ViewActor, out vector CameraLocation, out rotator CameraRotation)
 {
 	local PlayerController PC;
