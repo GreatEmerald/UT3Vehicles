@@ -43,8 +43,6 @@
 class UT3Manta extends ONSHoverBike;
 
 var Emitter DuckEffect;
-//Var rotator ThighDriveL,ThighDriveR;
-//var bool bAttachedDriver;
 
 //===============
 // @100GPing100
@@ -221,9 +219,7 @@ simulated function AttachDriver(Pawn P)
 {
     local rotator ThighDriveL,ThighDriveR;
     super.AttachDriver(P);
-    //bAttachedDriver=true;
 
-    
     ThighDriveL.Pitch=1800;
     P.SetBoneRotation('Bip01 L Thigh',ThighDriveL);
     ThighDriveR.Pitch=-1800;
