@@ -1,5 +1,5 @@
 /*
- * Copyright � 2012 100GPing100
+ * Copyright � 2012, 2017 Luís 'zeluisping' Guimarães (100GPing100)
  * Copyright � 2014 GreatEmerald
  *
  * Redistribution and use in source and binary forms, with or without
@@ -38,7 +38,7 @@
  * of such parties' affiliates and subsidiaries.
  */
 
-class Weap_UT3Nightshade extends ONSWeapon;
+class UT3Weap_NightshadeBeam extends ONSWeapon;
 
 
 /* The beam effect. */

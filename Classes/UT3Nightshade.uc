@@ -1,5 +1,5 @@
 /*
- * Copyright � 2012 100GPing100
+ * Copyright � 2012, 2017 Luís 'zeluisping' Guimarães (100GPing100)
  * Copyright � 2014 GreatEmerald
  *
  * Redistribution and use in source and binary forms, with or without
@@ -44,6 +44,7 @@ class UT3Nightshade extends ONSHoverBike;
 // Load packages.
 #exec obj load file=../Textures/UT3NightShadeTex.utx
 #exec obj load file=../Animations/UT3NightShadeAnims.ukx
+#exec obj load file=../Sounds/UT3A_Vehicle_Nightshade.uax
 
 
 /* The ammount of normal speed to have when cloaked. */
@@ -954,7 +955,7 @@ DefaultProperties
 
 	// Damage.
 	//DriverWeapons(0) = (WeaponClass=Class'Onslaught.ONSHoverBikePlasmaGun',WeaponBone="Turret_Pitch")
-	DriverWeapons(0) = (WeaponClass=Class'Weap_UT3Nightshade',WeaponBone="Base");
+	DriverWeapons(0) = (WeaponClass=Class'UT3Weap_NightshadeBeam',WeaponBone="Base");
 	Health = 600;
 	HealthMax = 600;
 	MeleeRange = -100;

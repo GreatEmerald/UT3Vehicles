@@ -1,6 +1,5 @@
 /*
- * Copyright © 2012 100GPing100
- * Copyright © 2014 GreatEmerald
+ * Copyright © 2017 Luís 'zeluisping' Guimarães (100GPing100)
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -47,7 +46,7 @@ DefaultProperties
 	MaleSuicide="%o shafted himself.";
 	FemaleSuicide="%o shafted herself.";
 
-	WeaponClass=class'Weap_UT3Nightshade';
+	WeaponClass=class'UT3Weap_NightshadeBeam';
 
 	bDetonatesGoop=true
     bCausesBlood=false
