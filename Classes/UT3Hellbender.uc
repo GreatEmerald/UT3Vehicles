@@ -1,5 +1,5 @@
 /*
- * Copyright © 2008, 2017 GreatEmerald
+ * Copyright © 2008, 2014, 2017 GreatEmerald
  * Copyright © 2008-2009 Wormbo
  * Copyright © 2017 HellDragon
  *
