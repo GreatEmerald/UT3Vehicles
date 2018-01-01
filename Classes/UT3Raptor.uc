@@ -2,7 +2,7 @@
  * Copyright © 2008-2009 Wormbo
  * Copyright © 2008-2009, 2014 GreatEmerald
  * Copyright © 2012 100GPing100
- * Copyright © 2017 HellDragon
+ * Copyright © 2017-2018 HellDragon
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -279,6 +279,24 @@ simulated event DrivingStatusChanged()
 // @100GPing100
 //============END============
 
+simulated function TeamChanged()
+{
+    local int i;
+
+    Super.TeamChanged();
+
+    if (Level.NetMode != NM_DedicatedServer)
+    {
+        for(i = 0; i < HeadlightCorona.Length; i++)
+        {
+            HeadlightCorona[i].LightSaturation = 0;
+            if (Team == 0)
+                HeadlightCorona[i].LightHue = 0;
+            if (Team == 1)
+                HeadlightCorona[i].LightHue = 175;
+        }
+    }
+}
 
 //=============================================================================
 // Default values
