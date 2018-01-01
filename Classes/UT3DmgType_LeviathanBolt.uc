@@ -42,7 +42,7 @@ class UT3DmgType_LeviathanBolt extends VehicleDamageType;
 
 defaultproperties
 {
-    DeathString="%o Leviathan filled %k's with plasma."
+    DeathString="%k's Leviathan filled %o with plasma."
     MaleSuicide="%o fried himself with his own plasma blast."
     FemaleSuicide="%o herself with her own plasma blast."
 
