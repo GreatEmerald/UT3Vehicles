@@ -382,7 +382,13 @@ simulated event TeamChanged()
     if (Level.NetMode != NM_DedicatedServer)
     {
         for(i = 0; i < HeadlightCorona.Length; i++)
-            HeadlightCorona[i].ChangeTeamTint(Team);
+        {
+            HeadlightCorona[i].LightSaturation = 0;
+            if (Team == 0)
+                HeadlightCorona[i].LightHue = 0;
+            if (Team == 1)
+                HeadlightCorona[i].LightHue = 175;
+        }
     }
 }
 
