@@ -2,6 +2,7 @@
  * Copyright © 2008 Wormbo
  * Copyright © 2012 100GPing100
  * Copyright © 2008, 2014 GreatEmerald
+ * Copyright © 2018 HellDragon
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -42,8 +43,8 @@
 class UT3Manta extends ONSHoverBike;
 
 var Emitter DuckEffect;
-Var rotator ThighDriveL,ThighDriveR;
-var bool bAttachedDriver;
+//Var rotator ThighDriveL,ThighDriveR;
+//var bool bAttachedDriver;
 
 //===============
 // @100GPing100
@@ -218,9 +219,11 @@ if (!bHoldingDuck && DuckEffect!=None) {
 
 simulated function AttachDriver(Pawn P)
 {
+    local rotator ThighDriveL,ThighDriveR;
     super.AttachDriver(P);
-    bAttachedDriver=true;
+    //bAttachedDriver=true;
 
+    
     ThighDriveL.Pitch=1800;
     P.SetBoneRotation('Bip01 L Thigh',ThighDriveL);
     ThighDriveR.Pitch=-1800;
@@ -244,7 +247,6 @@ simulated function DetachDriver(Pawn P)
     P.SetBoneRotation('Bip01 L Calf');
     P.SetBoneRotation('Bip01 R Calf');
     
-    bAttachedDriver=false;
     Super.DetachDriver(P);
 }
 
