@@ -42,6 +42,8 @@
 class UT3Manta extends ONSHoverBike;
 
 var Emitter DuckEffect;
+Var rotator ThighDriveL,ThighDriveR;
+var bool bAttachedDriver;
 
 //===============
 // @100GPing100
@@ -135,13 +137,14 @@ function Ailerons(float DeltaTime)
 //
 // On destruction, destroy the blades too.
 //
-function Destroyed()
-{
-    Blades[0].Destroy();
-    Blades[1].Destroy();
-
+simulated function Destroyed()
+{  
+     Blades[0].Destroy();
+     Blades[1].Destroy();
+   
     Super.Destroyed();
 }
+
 // @100GPing100
 //======END======
 
@@ -178,9 +181,10 @@ simulated function CheckJumpDuck()
         }
 
         if ( AIController(Controller) != None )
-            Rise = 0;
-
-        LastJumpTime = Level.TimeSeconds;
+        {    
+		    Rise = 0;
+            LastJumpTime = Level.TimeSeconds;
+		}
     }
     else if (DuckCountdown <= 0.0 && (Rise < 0 || bWeaponIsAltFiring))
     {
@@ -214,6 +218,65 @@ if (!bHoldingDuck && DuckEffect!=None) {
     }
 }
 
+simulated function AttachDriver(Pawn P)
+{
+    super.AttachDriver(P);
+    bAttachedDriver=true;
+
+    //P.SetBoneRotation('Bip01 R UpperArm',ArmDriveR);
+    ThighDriveL.Pitch=1800;
+    P.SetBoneRotation('Bip01 L Thigh',ThighDriveL);
+    //Right Thigh
+    ThighDriveR.Pitch=-1800;
+    P.SetBoneRotation('Bip01 R Thigh',ThighDriveR);
+}
+
+simulated function DetachDriver(Pawn P)
+{
+    P.SetBoneRotation('Bip01 Head');
+    P.SetBoneRotation('Bip01 Spine');
+    P.SetBoneRotation('Bip01 Spine1');
+    P.SetBoneRotation('Bip01 Spine2');
+    P.SetBoneRotation('Bip01 L Clavicle');
+    P.SetBoneRotation('Bip01 R Clavicle');
+    P.SetBoneRotation('Bip01 L UpperArm');
+    P.SetBoneRotation('Bip01 R UpperArm');
+    P.SetBoneRotation('Bip01 L ForeArm');
+    P.SetBoneRotation('Bip01 R ForeArm');
+    P.SetBoneRotation('Bip01 L Thigh');
+    P.SetBoneRotation('Bip01 R Thigh');
+    P.SetBoneRotation('Bip01 L Calf');
+    P.SetBoneRotation('Bip01 R Calf');
+    
+    bAttachedDriver=false;
+    Super.DetachDriver(P);
+}
+
+simulated function PostNetBeginPlay()
+{
+    local int i;
+
+    Super.PostNetBeginPlay();
+    
+	if(Level.NetMode != NM_DedicatedServer && Level.bUseHeadlights && !(Level.bDropDetail || (Level.DetailMode == DM_Low)))
+	{
+		HeadlightCorona.Length = HeadlightCoronaOffset.Length;
+
+		for(i=0; i<HeadlightCoronaOffset.Length; i++)
+		{
+			HeadlightCorona[i] = spawn( class'UT3HeadlightCorona', self,, Location + (HeadlightCoronaOffset[i] >> Rotation) );
+			HeadlightCorona[i].SetBase(self);
+			HeadlightCorona[i].SetRelativeRotation(rot(0,0,0));
+			HeadlightCorona[i].Skins[0] = HeadlightCoronaMaterial;
+			HeadlightCorona[i].ChangeTeamTint(Team);
+			HeadlightCorona[i].MaxCoronaSize = HeadlightCoronaMaxSize * Level.HeadlightScaling;
+		}
+    }
+
+    SetTeamNum(Team);
+	TeamChanged();
+}
+
 //=============================================================================
 // Default values
 //=============================================================================
@@ -235,11 +298,51 @@ defaultproperties
     VehiclePositionString = "in a UT3 Manta";
 
     // Movement.
-    GroundSpeed = 1500 //UT2004 default is 2000 UT3 default is 1500
+    GroundSpeed = 1500; //UT2004 default is 2000 UT3 default is 1500
     MaxPitchSpeed = 2000;
-    HoverCheckDist = 155;
     AirControl = 1.5;
+    MaxYawRate=5.0 //3.0;
+    TurnTorqueMax=180.0; //125.0 def UT2004
+    UprightStiffness=450.000000; //The manual says it doesn't do anything
+    UprightDamping=20.000000;  //The manual says it doesn't do anything
+    PitchTorqueMax=9.0;  //18 is a bit too over the top  //13.5 as well
+    RollTorqueMax=10.0;  //25.0 //12.5 default 2004 value
+    RollDamping=20.0;    //30.0 def UT2004
+    RollTorqueStrafeFactor=100.0; //50.0 def UT2004
+        
+    MaxStrafeForce=27; //20 def UT2004
+    LatDamping=0.2;
+    
+    HoverSoftness=0.15; //0.09 def UT2004
+    HoverPenScale=1.35; //1.0 def UT2004
+    HoverCheckDist=165; //155 //150.0 def UT2004
 
+    Begin Object Class=KarmaParamsRBFull Name=KParams0;
+        KStartEnabled=True;
+        KFriction=0.5;
+        KLinearDamping=0.15;
+        KAngularDamping=0.15; //0
+        KMaxSpeed=1800;  //?
+        bKNonSphericalInertia=False;
+        KImpactThreshold=700;
+        bHighDetailOnly=False;
+        bClientOnly=False;
+        bKDoubleTickRate=True;
+        bKStayUpright=True;
+        bKAllowRotate=True;
+        KInertiaTensor(0)=1.3;
+        KInertiaTensor(1)=0.0;
+        KInertiaTensor(2)=0.0;
+        KInertiaTensor(3)=4.0;
+        KInertiaTensor(4)=0.0;
+        KInertiaTensor(5)=4.5;
+        KCOMOffset=(X=0.0,Y=0.0,Z=0.0);
+        bDestroyOnWorldPenetrate=True;
+        bDoSafetime=True;
+        Name="KParams0";
+    End Object;
+    KParams=KarmaParams'KParams0';
+        
     // Sounds.
     IdleSound = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_EngineLoop01';
     StartUpSound = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Start01';
@@ -261,20 +364,55 @@ defaultproperties
     // @100GPing100
     //======END======
 
+    VehicleNameString = "UT3 Manta";
+    
+    MomentumMult=0.8; //?
+    
+    HornSounds(1)=sound'ONSVehicleSounds-S.Horns.LaCuchachaHorn';
+    
+    //ExitPositions(0)=(X=0,Y=160,Z=30);
+    //ExitPositions(1)=(X=0,Y=-160,Z=30);
+    //ExitPositions(2)=(X=160,Y=0,Z=30);
+    //ExitPositions(3)=(X=-160,Y=0,Z=30);
+    //ExitPositions(4)=(X=-160,Y=0,Z=-30);
+    //ExitPositions(5)=(X=160,Y=0,Z=-30);
+    //ExitPositions(6)=(X=0,Y=160,Z=-30);
+    //ExitPositions(7)=(X=0,Y=-160,Z=-30);
+    
+    ExitPositions(0)=(X=-70,Y=140,Z=30);   //Right
+    ExitPositions(1)=(X=-70,Y=-140,Z=30);  //Left
+    ExitPositions(2)=(X=150,Y=0,Z=30);   //Front
+    ExitPositions(3)=(X=-150,Y=0,Z=30);  //Rear
+    ExitPositions(4)=(X=-150,Y=0,Z=-30); //Rear Below
+    ExitPositions(5)=(X=150,Y=0,Z=-30);  //Front Below
+    ExitPositions(6)=(X=-70,Y=140,Z=-30);  //Right Below
+    ExitPositions(7)=(X=-70,Y=-140,Z=-30); //Left Below
+    
+    EntryRadius = 160.0;
 
-    VehicleNameString = "UT3 Manta"
+    bDrawMeshInFP=True;
+    
+    FPCamPos=(X=65,Y=0,Z=-5);
+    
+    //Normal & Outsider Cam Settings
+    TPCamDistance=300.000000;  //NOTE: Be sure TO DELETE THIS LINE from USER.INI, it overrides this value and will be re-added to the ini as soon as you use the vehicle, all this does here is make it the starting distance
+    TPCamLookat=(X=-10,Y=0,Z=0);
+    TPCamWorldOffset=(X=0,Y=0,Z=100); //Z might need to be 110 or 120 for better upwards aim
+    
+    //Aerial View Mutator Cam Settings
+    //TPCamDistance=300.000000;
+    //TPCamLookat=(X=0,Y=0,Z=0);
+    //TPCamWorldOffset=(X=0,Y=0,Z=35);
 
-    MaxYawRate=5.0 //3.0
-    TurnTorqueMax=180.0
-    UprightStiffness=450.000000 //The manual says it doesn't do anything
-    UprightDamping=20.000000  //The manual says it doesn't do anything
-    PitchTorqueMax=9.0  //18 is a bit too over the top  //13.5 as well
-    RollTorqueMax=25.0
-    HornSounds(1)=sound'ONSVehicleSounds-S.Horns.LaCuchachaHorn'
-
-    EntryRadius = 160.0
-
-    HeadlightCoronaOffset=()
-    HeadlightCoronaOffset(0)=(X=40.0,Y=0.0,Z=-30.0)
-    HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
+    HeadlightCoronaOffset=();
+    HeadlightCoronaOffset(0)=(X=40.0,Y=0.0,Z=-18.0);
+    HeadlightCoronaMaterial=Material'EpicParticles.FlashFlare1';
+    //HeadlightCoronaMaterial=none;
+    //HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY';
+    HeadlightCoronaMaxSize=30 //def UT2004 is 60;
+    
+    HeadlightProjectorOffset=(X=35,Y=0,Z=-30);
+    HeadlightProjectorRotation=(Yaw=0,Pitch=-1000,Roll=0);
+    HeadlightProjectorMaterial=Texture'VMVehicles-TX.RVGroup.RVProjector';
+    HeadlightProjectorScale=0.02;
 }
