@@ -1,6 +1,6 @@
 /*
  * Copyright © 2008, 2014 GreatEmerald
- * Copyright © 2017 HellDragon
+ * Copyright © 2018 HellDragon
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -40,19 +40,16 @@
 
 class UT3HellbenderRearGunPawn extends ONSPRVRearGunPawn;
 
-Var rotator SpineDrive;
-Var rotator ThighDriveL,ThighDriveR;
-Var rotator CalfDriveL,CalfDriveR;
-Var rotator FootDriveL,FootDriveR;
-Var rotator ArmDriveL,ArmDriveR;
-Var rotator ForeArmDriveL, ForeArmDriveR;
-Var rotator NeckDrive;
-var bool bAttachedDriver;
-
 simulated function AttachDriver(Pawn P)
 {
+    Local rotator SpineDrive;
+    Local rotator ThighDriveL,ThighDriveR;
+    Local rotator CalfDriveL,CalfDriveR;
+    Local rotator FootDriveL,FootDriveR;
+    Local rotator ArmDriveL,ArmDriveR;
+    Local rotator ForeArmDriveL, ForeArmDriveR;
+    Local rotator NeckDrive;
     super.AttachDriver(P);
-    bAttachedDriver=true;
 
     NeckDrive.Yaw=4000;
     P.SetBoneRotation('Bip01 Head',NeckDrive);
