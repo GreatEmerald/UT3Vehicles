@@ -2,7 +2,7 @@
  * Copyright © 2008, 2014 GreatEmerald
  * Copyright © 2008-2009 Wormbo
  * Copyright © 2012 100GPing100
- * Copyright © 2017 HellDragon
+ * Copyright © 2018 HellDragon
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -46,14 +46,6 @@ var IntBox BoostIconCoords, EjectIconCoords;
 var float LastBoostAttempt, SpeedAtBoost;
 var() float MinEjectSpeed;
 var int AirBoost;
-Var rotator FootDriveL,FootDriveR;
-Var rotator ArmDriveL,ArmDriveR;
-Var rotator ForeArmDriveL, ForeArmDriveR;
-Var rotator ThighDriveL,ThighDriveR;
-Var rotator CalfDriveL,CalfDriveR;
-Var rotator SpineDrive;
-Var rotator NeckDrive;
-var bool bAttachedDriver;
 
 event KImpact(actor other, vector pos, vector impactVel, vector impactNorm) //Modified so we would have control over when we detonate
 {
@@ -550,8 +542,14 @@ simulated event DrivingStatusChanged()
 
 simulated function AttachDriver(Pawn P)
 {
+    Local rotator FootDriveL,FootDriveR;
+    Local rotator ArmDriveL,ArmDriveR;
+    Local rotator ForeArmDriveL, ForeArmDriveR;
+    Local rotator ThighDriveL,ThighDriveR;
+    Local rotator CalfDriveL,CalfDriveR;
+    Local rotator SpineDrive;
+    Local rotator NeckDrive;
     super.AttachDriver(P);
-    bAttachedDriver=true;
 
     ArmDriveL.Yaw=5000;
     P.SetBoneRotation('Bip01 L UpperArm',ArmDriveL);
