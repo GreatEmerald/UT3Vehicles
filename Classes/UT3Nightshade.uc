@@ -381,38 +381,60 @@ function ChangeDeployState(VState NewState) {
 			break;
 	}
 }
-function Cloak(bool OnOff)
-{
+function Cloak(bool OnOff) {
 	/* byte Visibility
 	0   : Invisible.
 	128 : Normal.
 	255 : Higly visible.
 	*/
-	if (!OnOff)
-	{
-		// Uncloak.
-		if (Team == 0)
-		{
-			Skins[0] = Default.RedSkin;
-			Weapons[0].Skins[0] = Weapons[0].Default.RedSkin;
-		}
-		else
-		{
-			Skins[0] = Default.BlueSkin;
-			Weapons[0].Skins[0] = Weapons[0].Default.BlueSkin;
-		}
-		Visibility = Default.Visibility;
-		bDrawVehicleShadow = true;
-		KarmaParamsRBFull(KParams).KMaxSpeed = MaxVisibleSpeed;
-	}
-	else
-	{
+	local int i;
+
+	if (OnOff == true) {
 		// Cloak.
 		Skins[0] = CloakedSkin;
 		Weapons[0].Skins[0] = CloakedSkin;
 		Visibility = 0;
 		bDrawVehicleShadow = false;
 		KarmaParamsRBFull(KParams).KMaxSpeed = MaxVisibleSpeed * CloakedSpeedModifier;
+		
+		// Destroy dust effects
+		if (Level.NetMode == NM_DedicatedServer || BikeDust.length == 0) {
+			return;
+		}
+
+		for (i = 0; i < BikeDust.length; ++i) {
+			BikeDust[i].Destroy();
+		}
+		BikeDust.length = 0;
+
+		return;
+	}
+
+	// Uncloak.
+	if (Team == 0) {
+		Skins[0] = Default.RedSkin;
+		Weapons[0].Skins[0] = Weapons[0].Default.RedSkin;
+	} else {
+		Skins[0] = Default.BlueSkin;
+		Weapons[0].Skins[0] = Weapons[0].Default.BlueSkin;
+	}
+
+	Visibility = Default.Visibility;
+	bDrawVehicleShadow = true;
+	KarmaParamsRBFull(KParams).KMaxSpeed = MaxVisibleSpeed;
+
+	// Create dust effects
+	if (Level.NetMode == NM_DedicatedServer || BikeDust.length != 0 || bDropDetail || !bDriving) {
+		return;
+	}
+
+	BikeDust.length = BikeDustOffset.length;
+	BikeDustLastNormal.length = BikeDustOffset.length;
+	
+	for (i = 0; i < BikeDustOffset.length; ++i) {
+		BikeDust[i] = spawn(class'ONSHoverBikeHoverDust', self,, Location + (BikeDustOffset[i] >> Rotation));
+		BikeDust[i].SetDustColor(Level.DustColor);
+		BikeDustLastNormal[i] = vect(0,0,1);
 	}
 }
 simulated event DrivingStatusChanged()
@@ -891,7 +913,7 @@ DefaultProperties
 	CloakedSkin = FinalBlend'XEffectMat.Combos.InvisOverlayFB';
 	bDrawDriverInTP = False;
 	HeadlightCoronaMaxSize = 0.0;
-	BikeDustTraceDistance = 0.0;
+//	BikeDustTraceDistance = 0.0;
 	bAdjustDriversHead = false;
 	MineObjectClasses(0) = class'UT3SpiderMineObject';
 	MineObjectClasses(1) = class'UT3StasisFieldObject';
