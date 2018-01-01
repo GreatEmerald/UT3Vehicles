@@ -63,7 +63,7 @@ function TakeDamage(int Damage, Pawn instigatedBy, Vector Hitlocation, Vector Mo
     Super.TakeDamage(Damage, instigatedBy, Hitlocation, Momentum, damageType);
 }
 
-event bool IsVehicleEmpty() //Starting the removal of one seat - everywhere length-1
+/*event bool IsVehicleEmpty() //Starting the removal of one seat - everywhere length-1
 {
     local int i;
 
@@ -203,6 +203,7 @@ simulated function PostNetBeginPlay()
     SetTeamNum(Team);
     TeamChanged();
 }
+*/
 
 simulated function Tick(float DeltaTime)
 {
