@@ -16,9 +16,9 @@ function SuperExplosion()
     Spawn(class'ONSShockTankShockExplosion');
     if ( (Level.NetMode != NM_DedicatedServer) && EffectIsRelevant(Location,false) )
     {
-    HitActor = Trace(HitLocation, HitNormal,Location - Vect(0,0,120), Location,false);
-    if ( HitActor != None )
-    Spawn(class'ComboDecal',self,,HitLocation, rotator(vect(0,0,-1)));
+        HitActor = Trace(HitLocation, HitNormal,Location - Vect(0,0,120), Location,false);
+        if ( HitActor != None )
+        Spawn(class'ComboDecal',self,,HitLocation, rotator(vect(0,0,-1)));
     }
     PlaySound(ComboSound, SLOT_None,1.0,,800);
     DestroyTrails();
