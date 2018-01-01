@@ -283,7 +283,10 @@ function Tick(float DeltaTime)
 	CheckState();
 
 	if (CurrentState == VS_Deployed && PlayerController(Controller) != none) {
-		ShoulderRotation.Yaw = (Rotation - Controller.Rotation).Yaw % 65536; // make it [0;65536]
+		ShoulderRotation.Yaw = (Rotation - Controller.Rotation).Yaw % 65536;
+		if (ShoulderRotation.Yaw < 0) {
+			ShoulderRotation.Yaw += 65536;
+		}
 
 		if (ShoulderRotation.Yaw <= 32768 && ShoulderRotation.Yaw > 8192) {
 			ShoulderRotation.Yaw = 8192;
