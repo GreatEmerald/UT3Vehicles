@@ -922,6 +922,8 @@ DefaultProperties
 	MineObjectClasses(1) = class'UT3StasisFieldObject';
 	MineObjectClasses(2) = class'UT3EMPObject';
 	MineObjectClasses(3) = class'UT3ShieldObject';
+	BikeDustOffset=();
+	BikeDustOffset(0)=(X=25,Y=0,Z=10)
 
 	// HUD.
 	bShowChargingBar = false;
