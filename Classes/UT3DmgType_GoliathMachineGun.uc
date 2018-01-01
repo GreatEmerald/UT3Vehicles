@@ -46,6 +46,6 @@ defaultproperties
     MaleSuicide="%o turned the minigun on himself."
     FemaleSuicide="%o turned the minigun on herself."
     KDamageImpulse=700 //2000 def UT2004, 700 def UT3
-    VehicleDamageScaling=0.6  //0.36 def UT2004, 0.5 def UT3
+    VehicleDamageScaling=0.5  //0.36 def UT2004, 0.5 def UT3 but does 9 damage, only 8 in UT2004
     VehicleClass=class'UT3GoliathTurretPawn'
 }
