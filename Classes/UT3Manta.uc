@@ -292,6 +292,7 @@ defaultproperties
         
     MaxStrafeForce=27 //20 def UT2004
     LatDamping=0.2
+    LongDamping=0.1
     
     HoverSoftness=0.15 //0.09 def UT2004
     HoverPenScale=1.35 //1.0 def UT2004
