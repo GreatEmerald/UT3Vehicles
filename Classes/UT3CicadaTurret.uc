@@ -54,4 +54,5 @@ DefaultProperties
     PitchBone = MainTurret_Pitch
     YawBone = MainTurret_Yaw
     WeaponFireAttachmentBone = MainTurret_Pitch
+    DualFireOffset=30
 }
