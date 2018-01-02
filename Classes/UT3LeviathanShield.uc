@@ -62,7 +62,7 @@ simulated function ActivateShield(byte TeamNum)
 defaultproperties
 {
     DrawScale3D = (X=1.0,Y=1.0,Z=1.0)
-    PrePivot=(X=0,Y=0,Z=0) //WIP
+    PrePivot=(X=-70,Y=0.0,Z=-30)
     ShieldDeactivateSound = Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_ShieldOff01';
     ShieldAmbientSound = Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_ShieldAmbient01';
 }
