@@ -1,6 +1,7 @@
 /*
  * Copyright © 2007, 2009 Wormbo
  * Copyright © 2007, 2009, 2014 GreatEmerald
+ * Copyright © 2017 HellDragon
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -381,7 +382,13 @@ simulated event TeamChanged()
     if (Level.NetMode != NM_DedicatedServer)
     {
         for(i = 0; i < HeadlightCorona.Length; i++)
-            HeadlightCorona[i].ChangeTeamTint(Team);
+        {
+            HeadlightCorona[i].LightSaturation = 0;
+            if (Team == 0)
+                HeadlightCorona[i].LightHue = 0;
+            if (Team == 1)
+                HeadlightCorona[i].LightHue = 175;
+        }
     }
 }
 
@@ -394,6 +401,7 @@ defaultproperties
     VehicleNameString = "UT3 Leviathan"
 
     Health = 6500
+    HealthMax = 6500
 
     DriverWeapons(0) = (WeaponClass=class'UT3LeviathanDriverWeapon',WeaponBone="DriverTurretYaw")
     DriverWeapons(1)=(WeaponClass=class'UT3LeviathanPrimaryWeapon',WeaponBone="Base");
@@ -557,31 +565,34 @@ defaultproperties
     ExplosionSounds = ()
     ExplosionSounds(0) = Sound'UT3A_Vehicle_Leviathan.Sounds.A_Vehicle_Leviathan_Explode'
 
-    ExitPositions(0)=(X=90,Y=-320,Z=15)
-    ExitPositions(1)=(X=90,Y=320,Z=15)
-    ExitPositions(2)=(X=90,Y=-320,Z=-15)
-    ExitPositions(3)=(X=90,Y=320,Z=-15)
+    ExitPositions(0)=(X=90,Y=-330,Z=20)
+    ExitPositions(1)=(X=90,Y=330,Z=20)
+    ExitPositions(2)=(X=90,Y=-330,Z=-20)
+    ExitPositions(3)=(X=90,Y=330,Z=-20)
+    ExitPositions(4)=(X=230,Y=-90,Z=280)
 
     MomentumMult=0.0001
 
     MaxDeploySpeed = 15.0
     DeployIconCoords = (X1=0,Y1=670,X2=154,Y2=96)
 
-    TPCamLookat=(X=-160,Y=0,Z=200) //(X=-200,Y=0,Z=300) def UT2004
-    UnDeployedTPCamLookat=(X=-160,Y=0,Z=200)
-    UnDeployedTPCamWorldOffset=(X=0,Y=0,Z=200)
-    DeployedTPCamWorldOffset=(X=-60,Y=0,Z=470) //(X=0,Y=0,Z=800) def UT2004
-    DeployedTPCamLookat=(X=-60,Y=90,Z=0) //(X=100,Y=0,Z=0)
+    TPCamDistance=980.000000
+    TPCamLookat=(X=0,Y=0,Z=170) //(X=-200,Y=0,Z=300) def UT2004
+    UnDeployedTPCamLookat=(X=0,Y=0,Z=170)
+    UnDeployedTPCamWorldOffset=(X=0,Y=0,Z=170)
+    DeployedTPCamWorldOffset=(X=0,Y=0,Z=500) //(X=0,Y=0,Z=800) def UT2004
+    DeployedTPCamLookat=(X=-60,Y=0,Z=0) //(X=100,Y=0,Z=0)
     
-    FPCamPos=(X=70,Y=0,Z=260)
-    UnDeployedFPCamPos=(X=70,Y=0,Z=260)
-    DeployedFPCamPos=(X=-160,Y=0,Z=380)
+    FPCamPos=(X=100,Y=0,Z=330)
+    UnDeployedFPCamPos=(X=100,Y=0,Z=330)
+    DeployedFPCamPos=(X=-200,Y=0,Z=500)
 
-    HeadlightCoronaOffset(0)=(X=254,Y=70.5,Z=170)
-    HeadlightCoronaOffset(1)=(X=254,Y=-70.5,Z=170)
-    HeadlightCoronaOffset(2)=(X=254,Y=58,Z=170)
-    HeadlightCoronaOffset(3)=(X=254,Y=-58,Z=170)
-    HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
+    HeadlightCoronaOffset(0)=(X=318,Y=87,Z=212)
+    HeadlightCoronaOffset(1)=(X=318,Y=-87,Z=212)
+    HeadlightCoronaOffset(2)=(X=318,Y=72.5,Z=212)
+    HeadlightCoronaOffset(3)=(X=318,Y=-72.5,Z=212)
+    HeadlightCoronaMaterial=Material'EpicParticles.FlashFlare1'
+    //HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
     HeadlightCoronaMaxSize=50
     
     HeadlightProjectorOffset=(X=254.0,Y=0,Z=165)
@@ -589,5 +600,4 @@ defaultproperties
     HeadlightProjectorMaterial=Texture'VMVehicles-TX.RVGroup.RVProjector'
     HeadlightProjectorScale=0.16
     
-    //HeadlightCoronaMaterial = None
 }
