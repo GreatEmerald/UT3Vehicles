@@ -2,7 +2,7 @@
  * UT3 Paladin Shield
  * Copyright © 2014 GreatEmerald
  * Copyright © 2012 Luís 'zeluisping' Guimarães <zeluis.100@gmail.com>
- * Copyright © 2017 HellDragon
+ * Copyright © 2017-2018 HellDragon
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -108,4 +108,6 @@ DefaultProperties
 	ShieldActivateSound = Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_ShieldActivate01';
 	ShieldDeactivateSound = Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_ShieldOff01';
 	ShieldAmbientSound = Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_ShieldAmbient01';
+	DrawScale3D=(X=2.2,Y=2.2,Z=2.2)
+        PrePivot=(X=-70,Y=20.0,Z=-10)
 }
