@@ -15,7 +15,7 @@ DefaultProperties
 		MaxParticles=1
 		UniformSize=false
 		//StartSizeRange=(X=(Min=2.000000,Max=2.000000),Y=(Min=3.000000,Max=3.000000),Z=(Min=3.000000,Max=3.000000))
-		StartSizeRange=(X=(Min=4.000000,Max=4.000000),Y=(Min=2.0000000,Max=2.0000000),Z=(Min=2.000000,Max=2.000000))
+		StartSizeRange=(X=(Min=2.200000,Max=2.200000),Y=(Min=2.2000000,Max=2.2000000),Z=(Min=2.200000,Max=2.200000))
 		InitialParticlesPerSecond=5000.000000
 		LifetimeRange=(Min=0.100000,Max=0.100000)
 	End Object
