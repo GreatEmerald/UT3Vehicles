@@ -2,6 +2,7 @@
  * Copyright © 2008 Wormbo
  * Copyright © 2012 100GPing100
  * Copyright © 2014 GreatEmerald
+ * Copyright © 2017-2018 HellDragon
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -41,7 +42,7 @@
 
 class UT3Goliath extends ONSHoverTank;
 
-//var(ONSWheeledCraft) float ChassisTorqueScale; doesn't work yet
+//var(ONSWheeledCraft) float ChassisTorqueScale; //doesn't work yet
 
 //=====================
 // @100GPing100
@@ -74,7 +75,24 @@ simulated function SetupTreads()
 // @100GPing100
 //=========END=========
 
+simulated function TeamChanged()
+{
+    local int i;
 
+    Super.TeamChanged();
+
+    if (Level.NetMode != NM_DedicatedServer)
+    {
+        for(i = 0; i < HeadlightCorona.Length; i++)
+        {
+            HeadlightCorona[i].LightSaturation = 0;
+            if (Team == 0)
+                HeadlightCorona[i].LightHue = 0;
+            if (Team == 1)
+                HeadlightCorona[i].LightHue = 175;
+        }
+    }
+}
 
 //=============================================================================
 // Default values
@@ -82,6 +100,9 @@ simulated function SetupTreads()
 
 defaultproperties
 {
+
+    //Drawscale = 1.35
+
     //===============
     // @100GPing100
     Mesh = SkeletalMesh'UT3GoliathAnims.Goliath';
@@ -160,17 +181,27 @@ defaultproperties
     End Object
     KParams=KarmaParams'KParams0'
     
-    ExitPositions(0)=(X=0,Y=-200,Z=30)
-    ExitPositions(1)=(X=0,Y=200,Z=30)
+    EntryRadius=350.0
     
-    HeadlightCoronaOffset(0)=(X=167,Y=99.5,Z=34)
-    HeadlightCoronaOffset(1)=(X=167,Y=-99.5,Z=34)
-    HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
-    HeadlightCoronaMaxSize=115  //95 looks  good to me as well
+    ExitPositions(0)=(X=2,Y=-250,Z=30)
+    ExitPositions(1)=(X=2,Y=250,Z=30)
+    ExitPositions(2)=(X=-100,Y=0,Z=200)
+    
+    FPCamPos=(X=-70,Y=0,Z=160)
+    
+    //Aerial View
+    //TPCamWorldOffset=(X=0,Y=0,Z=200)
+    
+    HeadlightCoronaOffset(0)=(X=222,Y=135,Z=58)
+    HeadlightCoronaOffset(1)=(X=222,Y=-135,Z=58)
+    HeadlightCoronaMaterial=Material'EpicParticles.FlashFlare1'
+    //HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
+    HeadlightCoronaMaxSize=115  //95 looks good to me as well
 
-    HeadlightProjectorOffset=(X=167,Y=0,Z=34)
+    HeadlightProjectorOffset=(X=220,Y=0,Z=90)
     HeadlightProjectorRotation=(Yaw=0,Pitch=-1500,Roll=0)
     //HeadlightProjectorMaterial=Texture'VMVehicles-TX.HoverTankGroup.TankProjector'
     HeadlightProjectorMaterial=Texture'VMVehicles-TX.NewPRVGroup.PRVProjector'
     HeadlightProjectorScale=0.80
+    
 }
