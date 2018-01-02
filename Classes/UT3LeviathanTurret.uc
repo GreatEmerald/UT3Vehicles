@@ -49,13 +49,6 @@ class UT3LeviathanTurret extends ONSMASSideGunPawn abstract;
 
 var float ShieldDuration;
 var float ShieldRecharge;
-Var rotator FootDriveL,FootDriveR;
-Var rotator ArmDriveL,ArmDriveR;
-Var rotator ForeArmDriveL, ForeArmDriveR;
-Var rotator ThighDriveL,ThighDriveR;
-Var rotator CalfDriveL,CalfDriveR;
-Var rotator SpineDrive;
-var bool bAttachedDriver;
 
 //=============================================================================
 // Variables
@@ -207,8 +200,13 @@ simulated function vector GetCameraLocationStart()
 
 simulated function AttachDriver(Pawn P)
 {
+    Local rotator FootDriveL,FootDriveR;
+    Local rotator ArmDriveL,ArmDriveR;
+    Local rotator ForeArmDriveL, ForeArmDriveR;
+    Local rotator ThighDriveL,ThighDriveR;
+    Local rotator CalfDriveL,CalfDriveR;
+    Local rotator SpineDrive;
     super.AttachDriver(P);
-    bAttachedDriver=true;
 
     ArmDriveL.Yaw=-5000;
     ArmDriveL.Pitch=-4000;
