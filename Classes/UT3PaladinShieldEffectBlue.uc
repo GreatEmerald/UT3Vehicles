@@ -20,4 +20,5 @@ DefaultProperties
 		LifetimeRange=(Min=0.100000,Max=0.100000)
 	End Object
 	Emitters(0) = MeshEmitter18;
+	PrePivot=(X=-70,Y=20.0,Z=-10)
 }
