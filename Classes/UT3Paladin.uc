@@ -97,18 +97,10 @@ defaultproperties
     DamagedEffectHealthSmokeFactor=0.65 //0.5
     DamagedEffectHealthFireFactor=0.40 //0.25
     DamagedEffectFireDamagePerSec=2.00 //0.75
+    ExplosionSounds=()
     ExplosionSounds(0)=Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Explode02;
-    ExplosionSounds(1)=Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Explode02;
-    ExplosionSounds(2)=Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Explode02;
-    ExplosionSounds(3)=Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Explode02;
-    ExplosionSounds(4)=Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Explode02;
+    ImpactDamageSounds=()
     ImpactDamageSounds(0)=Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Collide01';
-    ImpactDamageSounds(1)=Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Collide01';
-    ImpactDamageSounds(2)=Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Collide01';
-    ImpactDamageSounds(3)=Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Collide01';
-    ImpactDamageSounds(4)=Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Collide01';
-    ImpactDamageSounds(5)=Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Collide01';
-    ImpactDamageSounds(6)=Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Collide01';
 
     //HornSounds(0)=sound'ONSBPSounds.ShockTank.PaladinHorn'
     //HornSounds(1)=sound'ONSVehicleSounds-S.Dixie_Horn'
