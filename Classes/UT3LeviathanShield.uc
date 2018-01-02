@@ -4,10 +4,13 @@ UT3LeviathanShield
 Creation date: 2007-12-30 13:23
 Last change: $Id$
 Copyright (c) 2007, Wormbo
+Copyright (c) 2014, GreatEmerald
+Copyright (c) 2018, HellDragon
 ******************************************************************************/
 
-class UT3LeviathanShield extends ONSShockTankShield;
+class UT3LeviathanShield extends UT3PaladinShield;
 
+#exec OBJ LOAD FILE="..\Sounds\UT3A_Vehicle_Paladin.uax"
 
 function TakeDamage(int Dam, Pawn instigatedBy, Vector hitlocation, Vector momentum, class<DamageType> damageType)
 {
@@ -43,7 +46,7 @@ simulated function ActivateShield(byte TeamNum)
 			else
 				ShockShieldEffect = Spawn(class'UT3LeviathanShieldEffectRed', self);
 			
-			PlaySound(Sound'ONSBPSounds.ShockTank.ShieldActivate', SLOT_None, 2.0);
+			PlaySound(Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_ShieldActivate01', SLOT_None, 2.0);
 		}
 		
 		if (ShockShieldEffect != None && Owner != None && UT3LeviathanTurretWeapon(Owner) != None)
@@ -58,5 +61,8 @@ simulated function ActivateShield(byte TeamNum)
 
 defaultproperties
 {
-	DrawScale3D = (X=0.6,Y=0.75,Z=1.0)
+    DrawScale3D = (X=1.0,Y=1.0,Z=1.0)
+    PrePivot=(X=0,Y=0,Z=0) //WIP
+    ShieldDeactivateSound = Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_ShieldOff01';
+    ShieldAmbientSound = Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_ShieldAmbient01';
 }
