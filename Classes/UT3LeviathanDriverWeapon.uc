@@ -115,7 +115,7 @@ defaultproperties
 {
     ProjectileClass  = Class'UT3LeviathanBolt'
     FireInterval     = 0.3
-    DrawScale        = 0.6
+    DrawScale        = 1.0
     //RelativeLocation = (Z=-10)
 
     Mesh = SkeletalMesh'UT3VH_Leviathan_Anims.LeviathanDriverTurretOnly'
@@ -124,8 +124,9 @@ defaultproperties
     YawBone = "DriverTurretYaw"
     PitchBone = "DriverTurretPitch"
     WeaponFireAttachmentBone = "DriverTurret_Tip"
-    DualFireOffset = 6.0
-    WeaponOffset = (X=0.0,Y=-6.0,Z=0.0)
+    DualFireOffset = 13.0 //6.0
+    WeaponOffset = (X=0.0,Y=-11.0,Z=0.0) //(X=0.0,Y=-6.0,Z=0.0)
+    RotationsPerSecond=0.40 //0.18
 
     FireSoundClass = Sound'UT3A_Vehicle_Leviathan.SoundCues.A_Vehicle_Leviathan_TurretFire'
 }
