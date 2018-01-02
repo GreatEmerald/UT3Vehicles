@@ -2,6 +2,7 @@
  * Copyright © 2008-2009 Wormbo
  * Copyright © 2008-2009, 2014 GreatEmerald
  * Copyright © 2012 100GPing100
+ * Copyright © 2017-2018 HellDragon
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -278,6 +279,24 @@ simulated event DrivingStatusChanged()
 // @100GPing100
 //============END============
 
+simulated function TeamChanged()
+{
+    local int i;
+
+    Super.TeamChanged();
+
+    if (Level.NetMode != NM_DedicatedServer)
+    {
+        for(i = 0; i < HeadlightCorona.Length; i++)
+        {
+            HeadlightCorona[i].LightSaturation = 0;
+            if (Team == 0)
+                HeadlightCorona[i].LightHue = 0;
+            if (Team == 1)
+                HeadlightCorona[i].LightHue = 175;
+        }
+    }
+}
 
 //=============================================================================
 // Default values
@@ -294,14 +313,17 @@ Test 4: 275 works well, although it still gives slight sinkness. But that's OK.
 
 defaultproperties
 {
+
+    Drawscale = 1.0
+
     //===========================
     // @100GPing100
     Mesh = SkeletalMesh'UT3VH_Raptor_Anims.SK_VH_Raptor';
     RedSkin = Shader'UT3RaptorTex.RaptorSkin';
     BlueSkin = Shader'UT3RaptorTex.RaptorSkinBlue';
     
-    TrailEffectPositions(0) = (X=-94,Y=-32,Z=-13); //(X=-105,Y=-35,Z=-15)
-    TrailEffectPositions(1) = (X=-94,Y=32,Z=-13);  //(X=-105,Y=35,Z=-15)
+    TrailEffectPositions(0) = (X=-120,Y=-42,Z=-19); //(X=-105,Y=-35,Z=-15)
+    TrailEffectPositions(1) = (X=-120,Y=42,Z=-19);  //(X=-105,Y=35,Z=-15)
     
     StreamerEffectOffset(0)=(X=-219,Y=-35,Z=57);
     StreamerEffectOffset(1)=(X=-219,Y=35,Z=57);
@@ -397,11 +419,16 @@ defaultproperties
     
     MomentumMult=0.400000 //? HDm to GE: Feels right on everything except Rocket Launcher has more force than it should on the Raptor
     
-    ExitPositions(0)=(X=0,Y=-165,Z=25)
-    ExitPositions(1)=(X=0,Y=165,Z=25)
+    EntryPosition=(X=0,Y=0,Z=0)
+    EntryRadius = 300
+    
+    ExitPositions(0)=(X=0,Y=-185,Z=30)
+    ExitPositions(1)=(X=0,Y=185,Z=30)
+    ExitPositions(3)=(X=300,Y=0,Z=40)
+    ExitPositions(4)=(X=20,Y=0,Z=110) 
 
-    HeadlightCoronaOffset(0)=(X=142,Y=0,Z=-12)
-    HeadlightCoronaOffset(1)=(X=140,Y=-0,Z=-42)
+    HeadlightCoronaOffset(0)=(X=182,Y=0,Z=-17)
+    HeadlightCoronaOffset(1)=(X=180,Y=-0,Z=-55)
     HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
     HeadlightCoronaMaxSize=60
     
@@ -409,9 +436,6 @@ defaultproperties
     HeadlightProjectorRotation=(Yaw=0,Pitch=-1000,Roll=0)
     HeadlightProjectorMaterial=Texture'VMVehicles-TX.NewPRVGroup.PRVProjector'
     HeadlightProjectorScale=0.40 //0.65
-
-    EntryPosition=(X=0,Y=0,Z=0)
-    EntryRadius = 220
     
     Begin Object Class=KarmaParamsRBFull Name=KParams0
         KStartEnabled=True
@@ -441,7 +465,15 @@ defaultproperties
     KParams=KarmaParams'KParams0'
     
     bDrawMeshInFP=True
-    FPCamPos=(X=155,Y=0,Z=-40)
-    TPCamLookAt=(X=10.0,Y=0.0,Z=0)
-    TPCamWorldOffset=(X=0,Y=0,Z=130)
+    FPCamPos=(X=205,Y=0,Z=-40)
+    
+    //Normal
+    TPCamDistance=500.000000
+    TPCamLookAt=(X=0.0,Y=0.0,Z=0)
+    TPCamWorldOffset=(X=0,Y=0,Z=150)
+    
+    //Aerial View
+    //TPCamLookAt=(X=10.0,Y=0.0,Z=0)
+    //TPCamWorldOffset=(X=0,Y=0,Z=130)
+    
 }
