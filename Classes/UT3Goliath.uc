@@ -1,6 +1,6 @@
 /*
  * Copyright © 2008 Wormbo
- * Copyright © 2012 100GPing100
+ * Copyright © 2012, 2017 Luís 'zeluisping' Guimarães <zeluis.100@gmail.com>
  * Copyright © 2014 GreatEmerald
  *
  * Redistribution and use in source and binary forms, with or without
@@ -41,13 +41,27 @@
 
 class UT3Goliath extends ONSHoverTank;
 
-//var(ONSWheeledCraft) float ChassisTorqueScale; doesn't work yet
 
-//=====================
-// @100GPing100
 #exec obj load file=../Animations/UT3GoliathAnims.ukx
 #exec obj load file=../Textures/UT3GoliathTex.utx
 
+
+//var(ONSWheeledCraft) float ChassisTorqueScale; doesn't work yet
+
+
+function Tick(float DeltaTime) {
+    local KarmaParamsRBFull KP;
+
+    KP = KarmaParamsRBFull(KParams);
+
+    if (Throttle == 0) {
+        KP.KLinearDamping = 1;
+    } else {
+        KP.KLinearDamping = 0;
+    }
+
+    super.Tick(DeltaTime);
+}
 
 simulated function SetupTreads()
 {
@@ -71,25 +85,19 @@ simulated function SetupTreads()
     }
     //local a;
 }
-// @100GPing100
-//=========END=========
-
 
 
 //=============================================================================
 // Default values
 //=============================================================================
-
 defaultproperties
 {
-    //===============
-    // @100GPing100
-    Mesh = SkeletalMesh'UT3GoliathAnims.Goliath';
-    RedSkin = Shader'UT3GoliathTex.Goliath.GoliathSkin';
-    BlueSkin = Shader'UT3GoliathTex.Goliath.GoliathSkinBlue';
+    Mesh=SkeletalMesh'UT3GoliathAnims.Goliath';
+    RedSkin=Shader'UT3GoliathTex.Goliath.GoliathSkin';
+    BlueSkin=Shader'UT3GoliathTex.Goliath.GoliathSkinBlue';
 
-    Skins(1) = Shader'UT3GoliathTex.GoliathWheels.GoliathWheelsSkin';
-    Skins(2) = Shader'UT3GoliathTex.GoliathWheels.GoliathWheelsSkin';
+    Skins(1)=Shader'UT3GoliathTex.GoliathWheels.GoliathWheelsSkin';
+    Skins(2)=Shader'UT3GoliathTex.GoliathWheels.GoliathWheelsSkin';
 
     DriverWeapons(0)=(WeaponClass=class'UT3GoliathCannon',WeaponBone=Chassis)
     PassengerWeapons(0)=(WeaponPawnClass=class'UT3GoliathTurretPawn',WeaponBone=Object10)
@@ -97,32 +105,21 @@ defaultproperties
 	Health=900
 	HealthMax=900
 
-    IdleSound = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_EngineLoop01RealTreadsMix';
+    IdleSound=Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_EngineLoop01RealTreadsMix';
     //IdleSound = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_EngineLoop01';
-    StartUpSound = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Start01';
-    ShutDownSound = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Stop01';
+    StartUpSound=Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Start01';
+    ShutDownSound=Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Stop01';
     DamagedEffectHealthSmokeFactor=0.65 //0.5
     DamagedEffectHealthFireFactor=0.40 //0.25
     DamagedEffectFireDamagePerSec=2.0 //0.75
-    ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Collide01';
-    ImpactDamageSounds(1) = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Collide01';
-    ImpactDamageSounds(2) = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Collide01';
-    ImpactDamageSounds(3) = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Collide01';
-    ImpactDamageSounds(4) = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Collide01';
-    ImpactDamageSounds(5) = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Collide01';
-    ImpactDamageSounds(6) = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Collide01';
-    ExplosionSounds(0) = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Explode01';
-    ExplosionSounds(1) = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Explode01';
-    ExplosionSounds(2) = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Explode01';
-    ExplosionSounds(3) = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Explode01';
-    ExplosionSounds(4) = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Explode01';
+    ImpactDamageSounds=();
+    ImpactDamageSounds(0)=Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Collide01';
+    ExplosionSounds=();
+    ExplosionSounds(0)=Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Explode01';
 
     TreadVelocityScale = 12.0;
-    // @100GPing100
-    //======END======
 
-
-    VehicleNameString = "UT3 Goliath"
+    VehicleNameString="UT3 Goliath"
     MaxGroundSpeed=900.0 //600.0
     GroundSpeed=520 //500
     MaxAirSpeed=900.0  //5000.0
