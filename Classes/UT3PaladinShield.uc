@@ -109,5 +109,5 @@ DefaultProperties
 	ShieldDeactivateSound = Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_ShieldOff01';
 	ShieldAmbientSound = Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_ShieldAmbient01';
 	DrawScale3D=(X=2.2,Y=2.2,Z=2.2)
-        PrePivot=(X=-70,Y=20.0,Z=-10)
+        PrePivot=(X=-100,Y=30.0,Z=-20)
 }
