@@ -1,6 +1,6 @@
 /*
  * Copyright © 2008 Wormbo
- * Copyright © 2012 100GPing100
+ * Copyright © 2012, 2017, 2018 Luís 'zeluisping' Guimarães (100GPing100)
  * Copyright © 2008, 2014 GreatEmerald
  * Copyright © 2018 HellDragon
  *
@@ -44,8 +44,7 @@ class UT3Manta extends ONSHoverBike;
 
 var Emitter DuckEffect;
 
-//===============
-// @100GPing100
+
 /* Load the packages. */
 #exec obj load file=../Animations/UT3MantaAnims.ukx
 #exec obj load file=../Textures/UT3MantaTex.utx
@@ -143,8 +142,6 @@ function Destroyed()
 
     Super.Destroyed();
 }
-// @100GPing100
-//======END======
 
 simulated function CheckJumpDuck()
 {
@@ -271,8 +268,6 @@ simulated function TeamChanged()
 
 defaultproperties
 {
-    //===============
-    // @100GPing100
     // Looks.
     Mesh = SkeletalMesh'UT3MantaAnims.Manta';
     RedSkin = Shader'UT3MantaTex.MantaSkin';
@@ -353,9 +348,6 @@ defaultproperties
     ExplosionSounds(2) = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Explode01';
     ExplosionSounds(3) = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Explode01';
     ExplosionSounds(4) = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Explode01';
-    // @100GPing100
-    //======END======
-
 
     VehicleNameString = "UT3 Manta"
     
