@@ -51,5 +51,5 @@ defaultproperties
     VehicleMomentumScaling=0.5
     VehicleDamageScaling=0.5  //0.36 def UT2004, 0.5 def UT3
     VehicleClass=class'UT3LeviathanTurretStinger'
-    bBulletHit
+    bBulletHit=True
 }
