@@ -310,11 +310,11 @@ defaultproperties
     DamagedEffectHealthSmokeFactor=0.65 //0.5
     DamagedEffectHealthFireFactor=0.40 //0.25
     DamagedEffectFireDamagePerSec=2.0 //0.75
-    ImpactDamageSounds();
+    ImpactDamageSounds()
+    ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_Collide03';
     ImpactDamageSounds(1) = Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_Collide04';
-    ImpactDamageSounds(2) = Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_Collide03';
-    ExplosionSounds();
-    ExplosionSounds(1) = Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_Explode01';
+    ExplosionSounds()
+    ExplosionSounds(0) = Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_Explode01';
 
     EntryPosition=(X=0,Y=0,Z=0)
     EntryRadius=180.0  //300.000000
