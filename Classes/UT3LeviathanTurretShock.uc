@@ -1,6 +1,7 @@
 /*
  * Copyright © 2007 Wormbo
  * Copyright © 2014 GreatEmerald
+ * Copyright © 2017 HellDragon
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -58,13 +59,15 @@ defaultproperties
     //CameraBone = "Rt_Rear_Turret_Barrel"
     //TPCamWorldOffset = (X=40.0,Y=80.0,Z=100.0)
     
-    ExitPositions(0)=(X=-380,Y=300,Z=140)
-    ExitPositions(1)=(X=-500,Y=80,Z=140)
-    ExitPositions(2)=(X=-380,Y=300,Z=100)
-    ExitPositions(3)=(X=-500,Y=80,Z=100)
+    ExitPositions(0)=(X=-400,Y=410,Z=160)
+    ExitPositions(1)=(X=-530,Y=90,Z=160)
+    ExitPositions(2)=(X=-400,Y=410,Z=140)
+    ExitPositions(3)=(X=-530,Y=90,Z=140)
+    ExitPositions(4)=(X=-150,Y=90,Z=280)
     
-    FPCamPos=(X=50,Y=0,Z=30)
-    TPCamLookAt=(X=0,Y=0,Z=-20)
-    TPCamWorldOffset=(X=0.0,Y=0.0,Z=90.0)
-    TPCamDistance=30
+    FPCamPos=(X=50,Y=0,Z=50)
+    TPCamLookAt=(X=-120,Y=0,Z=0)
+    TPCamWorldOffset=(X=0.0,Y=0.0,Z=80.0)
+    TPCamDistance=135.000000
+    
 }
