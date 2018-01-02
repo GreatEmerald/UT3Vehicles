@@ -27,5 +27,5 @@ DefaultProperties
     bNoDelete=false
     AmbientGlow=254
     bHardAttach=true
-    PrePivot=(X=-70,Y=0.0,Z=-30)
+    PrePivot=(X=20,Y=0.0,Z=-30)
 }
