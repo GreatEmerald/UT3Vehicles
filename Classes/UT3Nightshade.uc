@@ -1,5 +1,5 @@
 /*
- * Copyright � 2012, 2017 Luís 'zeluisping' Guimarães (100GPing100)
+ * Copyright � 2012, 2017, 2018 Luís 'zeluisping' Guimarães (100GPing100)
  * Copyright � 2014 GreatEmerald
  *
  * Redistribution and use in source and binary forms, with or without

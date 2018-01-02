@@ -1,5 +1,5 @@
 /*
- * Copyright © 2017 Luís 'zeluisping' Guimarães (100GPing100)
+ * Copyright © 2017, 2018 Luís 'zeluisping' Guimarães (100GPing100)
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
