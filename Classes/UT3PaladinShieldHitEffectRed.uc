@@ -28,4 +28,5 @@ defaultproperties
      AutoDestroy=True
      bNoDelete=False
      AmbientGlow=254
+     PrePivot=(X=-70,Y=20.0,Z=-10)
 }
