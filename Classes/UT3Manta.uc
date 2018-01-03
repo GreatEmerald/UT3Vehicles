@@ -1,6 +1,6 @@
 /*
  * Copyright © 2008 Wormbo
- * Copyright © 2012 100GPing100
+ * Copyright © 2012, 2017, 2018 Luís 'zeluisping' Guimarães (100GPing100)
  * Copyright © 2008, 2014 GreatEmerald
  * Copyright © 2018 HellDragon
  *
@@ -44,11 +44,11 @@ class UT3Manta extends ONSHoverBike;
 
 var Emitter DuckEffect;
 
-//===============
-// @100GPing100
+
 /* Load the packages. */
 #exec obj load file=../Animations/UT3MantaAnims.ukx
 #exec obj load file=../Textures/UT3MantaTex.utx
+#exec obj load file=../Sounds/UT3A_Vehicle_Manta.uax
 
 /* The spining blades. */
 var array<UT3MantaBlade> Blades;
@@ -89,26 +89,32 @@ function DrivingStatusChanged()
 //
 function Tick(float DeltaTime)
 {
+    super.Tick(DeltaTime);
+
     if (Driver != None) // Just in case.
         Ailerons(DeltaTime);
-    EmeraldTick(DeltaTime); // Renamed it.
+
+    if (!bHoldingDuck && DuckEffect != None)
+        DuckEffect.Destroy();
 }
 
 //
 // Turn the blades On/Off.
 //
-function ToggleBlades(bool OnOff)
+function ToggleBlades(bool bRotating)
 {
     if (Blades.length < 2 || Blades[0] == None || Blades[1] == None)
         return;
 
-    if (OnOff) { // On.
+    if (bRotating) {
+        // On.
         Blades[0].Skins[0] = Blades[0].BladesOnTex;
         Blades[1].Skins[0] = Blades[1].BladesOnTex;
-    } else { // Off.
+    } else {
+        // Off.
         Blades[0].Skins[0] = Blades[0].BladesOffTex;
         Blades[1].Skins[0] = Blades[1].BladesOffTex;
-    }
+    0}
 }
 
 //
@@ -121,8 +127,6 @@ function Ailerons(float DeltaTime)
 
     // 1000 = The velocity at wich the angle is of 45º
     AileronsRotation.Pitch = 8192 * (Velocity.Z / 1000) - Rotation.Pitch;
-    AileronsRotation.Yaw = 0;
-    AileronsRotation.Roll = 0;
 
     if (AileronsRotation.Pitch > 8192)
         AileronsRotation.Pitch = 8192;
@@ -143,8 +147,6 @@ function Destroyed()
 
     Super.Destroyed();
 }
-// @100GPing100
-//======END======
 
 simulated function CheckJumpDuck()
 {
@@ -207,14 +209,6 @@ simulated function CheckJumpDuck()
     bHoldingDuck = False;
 }
 
-simulated function EmeraldTick(float DeltaTime)
-{
-Super.Tick(DeltaTime);
-if (!bHoldingDuck && DuckEffect!=None) {
-    DuckEffect.Destroy();
-    }
-}
-
 simulated function AttachDriver(Pawn P)
 {
     local rotator ThighDriveL,ThighDriveR;
@@ -268,11 +262,8 @@ simulated function TeamChanged()
 //=============================================================================
 // Default values
 //=============================================================================
-
 defaultproperties
 {
-    //===============
-    // @100GPing100
     // Looks.
     Mesh = SkeletalMesh'UT3MantaAnims.Manta';
     RedSkin = Shader'UT3MantaTex.MantaSkin';
@@ -284,10 +275,11 @@ defaultproperties
 
     // Strings.
     VehiclePositionString = "in a UT3 Manta";
+    VehicleNameString = "UT3 Manta"
 
     // Movement.
     GroundSpeed = 1500 //UT2004 default is 2000 UT3 default is 1500
-    MaxPitchSpeed = 2000;
+    MaxPitchSpeed = 4000;
     AirControl = 1.5
     MaxYawRate=5.0 //3.0
     TurnTorqueMax=180.0 //125.0 def UT2004
@@ -300,6 +292,7 @@ defaultproperties
         
     MaxStrafeForce=27 //20 def UT2004
     LatDamping=0.2
+    LongDamping=0.1
     
     HoverSoftness=0.15 //0.09 def UT2004
     HoverPenScale=1.35 //1.0 def UT2004
@@ -337,31 +330,18 @@ defaultproperties
     ShutDownSound = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Stop01';
     JumpSound = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Jump';
     DuckSound = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Crouch';
+    ImpactDamageSounds=();
+    ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Collide01';
+    ImpactDamageSounds(1) = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Collide02';
+    ExplosionSounds=();
+    ExplosionSounds(0) = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Explode01';
+    HornSounds(1)=sound'ONSVehicleSounds-S.Horns.LaCuchachaHorn';
+    
+    MomentumMult=0.8 //?
     ImpactDamageMult = 0.00001 //0.0003
     DamagedEffectHealthSmokeFactor=0.65 //0.5
     DamagedEffectHealthFireFactor=0.40 //0.25 //.373 is what I had, I think 0.4 will be too much but we'll se
     DamagedEffectFireDamagePerSec=2.0  //0.75
-    ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Collide01';
-    ImpactDamageSounds(1) = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Collide02';
-    ImpactDamageSounds(2) = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Collide01';
-    ImpactDamageSounds(3) = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Collide02';
-    ImpactDamageSounds(4) = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Collide01';
-    ImpactDamageSounds(5) = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Collide02';
-    ImpactDamageSounds(6) = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Collide01';
-    ExplosionSounds(0) = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Explode01';
-    ExplosionSounds(1) = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Explode01';
-    ExplosionSounds(2) = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Explode01';
-    ExplosionSounds(3) = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Explode01';
-    ExplosionSounds(4) = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Explode01';
-    // @100GPing100
-    //======END======
-
-
-    VehicleNameString = "UT3 Manta"
-    
-    MomentumMult=0.8 //?
-    
-    HornSounds(1)=sound'ONSVehicleSounds-S.Horns.LaCuchachaHorn'
     
     //ExitPositions(0)=(X=0,Y=160,Z=30)
     //ExitPositions(1)=(X=0,Y=-160,Z=30)
