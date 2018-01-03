@@ -1,6 +1,6 @@
 /*
- * Copyright © 2012 100GPing100
- * Copyright © 2014 GreatEmerald
+ * Copyright ï¿½ 2012, 2017, 2018 LuÃ­s 'zeluisping' GuimarÃ£es (100GPing100)
+ * Copyright ï¿½ 2014 GreatEmerald
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -44,6 +44,7 @@ class UT3Nightshade extends ONSHoverBike;
 // Load packages.
 #exec obj load file=../Textures/UT3NightShadeTex.utx
 #exec obj load file=../Animations/UT3NightShadeAnims.ukx
+#exec obj load file=../Sounds/UT3A_Vehicle_Nightshade.uax
 
 
 /* The ammount of normal speed to have when cloaked. */
@@ -91,7 +92,38 @@ var float LastDropAttemptTime;
 var array< class<Actor> > MineObjectClasses;
 /* The mine that's on the arm when we deploy. */
 var Actor ArmMine;
+/* The third person camera distance before we deployed. */
+var float LastDesiredTPCamDistance;
+/* The third person camera distance to use when deployed. */
+var float DeployedTPCamDistance;
+/* The third person camera position to use when deployed. */
+var vector DeployedTPCamLookat;
 
+
+
+simulated function Destroyed() {
+	super.Destroyed();
+
+	if (ArmMine != none) {
+		ArmMine.Destroy();
+	}
+}
+simulated function bool SpecialCalcView(out actor ViewActor, out vector CameraLocation, out rotator CameraRotation)
+{
+	local PlayerController PC;
+
+	PC = PlayerController(Controller);
+	if (PC == none || PC.Viewtarget != self) {
+		return false;
+	}
+
+	// force behind view when deployed
+	if (CurrentState == VS_Deployed) {
+		SpecialCalcBehindView(PC,ViewActor,CameraLocation,CameraRotation);
+	}
+
+	return super.SpecialCalcView(ViewActor, CameraLocation, CameraRotation);
+}
 
 simulated function CheckJumpDuck()
 {
@@ -107,25 +139,11 @@ simulated function CheckJumpDuck()
 			ArmMine = Spawn(MineObjectClasses[SelectedMine - 1], Driver,, Location);
 			AttachToBone(ArmMine, 'Object');
 
-			Cloak(false);
-
-			CurrentState = VS_Deploying;
-			PlaySound(DeploySnd, SLOT_None);
-			PlayAnim('ArmExtend', 1.6, 0.2);
-			CurrentAnim = "ArmExtend";
-
-			// Do not allow to move or rotate.
-			MaxThrustForce = 0.0;
-			MaxStrafeForce = 0.0;
-			KarmaParamsRBFull(KParams).KMaxSpeed = 0.0;
-			TurnTorqueMax = 0.0;
+			ChangeDeployState(VS_Deploying);
 		}
 		else if (CurrentState == VS_Deployed)
 		{
-			CurrentState = VS_Undeploying;
-			PlaySound(UndeploySnd, SLOT_None);
-			PlayAnim('ArmRetract', 4.8, 0.2);
-			CurrentAnim = "ArmRetract";
+			ChangeDeployState(VS_Undeploying);
 		}
 		else if (!CheckNearby() && (CurrentState == VS_Cloaked || CurrentState == VS_Undeployed))
 			ShowMessage(0, 2);
@@ -156,7 +174,7 @@ function bool NoObstacle()
 	else
 		return false;
 }
-/* » Type:
+/* ï¿½ Type:
  * 0: General message.
  * 1: Mine select message.
 */
@@ -185,16 +203,10 @@ function bool IsOnGround()
 }
 function AltFire(optional float F)
 {
-	if (CurrentState == VS_Undeployed)
-	{
-		// Cloak
-		Cloak(true);
-		CurrentState = VS_Cloaked;
-	}
-	else if (CurrentState == VS_Cloaked)
-	{
-		Cloak(false);
-		CurrentState = VS_Undeployed;
+	if (CurrentState == VS_Undeployed) {
+		ChangeDeployState(VS_Cloaked);
+	} else if (CurrentState == VS_Cloaked) {
+		ChangeDeployState(VS_Undeployed);
 	}
 }
 function Fire(optional float F)
@@ -255,21 +267,37 @@ function Fire(optional float F)
 		ArmMine.Destroy();
 
 		// Undeploy.
-		CurrentState = VS_Undeploying;
-		PlaySound(UndeploySnd, SLOT_None);
-		PlayAnim('ArmRetract', 4.8, 0.2);
-		CurrentAnim = "ArmRetract";
+		ChangeDeployState(VS_Undeploying);
 	}
 	else
 		Super.Fire(F);
 }
 function Tick(float DeltaTime)
 {
+	// 45Â° = 8192 RUU
+	local Rotator ShoulderRotation;
+
 	// If we have ammo available and we have no mine selected, select one right away!
 	if (bHasAmmo(0) && SelectedMine == 0)
 		SelectNextMine();
 
 	CheckState();
+
+	if (CurrentState == VS_Deployed && PlayerController(Controller) != none) {
+		ShoulderRotation.Yaw = (Rotation - Controller.Rotation).Yaw % 65536;
+		if (ShoulderRotation.Yaw < 0) {
+			ShoulderRotation.Yaw += 65536;
+		}
+
+		if (ShoulderRotation.Yaw <= 32768 && ShoulderRotation.Yaw > 8192) {
+			ShoulderRotation.Yaw = 8192;
+		} else if (ShoulderRotation.Yaw > 32768 && ShoulderRotation.Yaw < 57344) {
+			ShoulderRotation.Yaw = 57344;
+		}
+
+		SetBoneRotation('ArmShoulder', ShoulderRotation, 0, 1);
+	}
+
 	super.Tick(DeltaTime);
 }
 function CheckState()
@@ -278,57 +306,139 @@ function CheckState()
 	ArmExtend [121]
 	ArmExtendIdle [1]
 	ArmRelease [1]
-	ArmRetract [121] (Made by me. Reverse of ArmExtend)
+	ArmRetract [121] (Made by zeluisping; Reverse of ArmExtend)
 	Idle [1]
 	*/
-	if (CurrentState == VS_Deploying && CurrentAnim == "ArmExtend" && !IsAnimating())
-	{
-		CurrentState = VS_Deployed;
-	}
-	else if (CurrentState == VS_Undeploying && CurrentAnim == "ArmRetract" && !IsAnimating())
-	{
-		if (ArmMine != None)
-			ArmMine.Destroy();
-		// Reset these.
-		MaxThrustForce = Default.MaxThrustForce;
-		MaxStrafeForce = Default.MaxStrafeForce;
-		TurnTorqueMax = Default.TurnTorqueMax;
-		Cloak(true); // KMaxSpeed gets reset here.
-		CurrentState = VS_Cloaked;
+	if (CurrentState == VS_Deploying && CurrentAnim == "ArmExtend" && !IsAnimating()) {
+		ChangeDeployState(VS_Deployed);
+	} else if (CurrentState == VS_Undeploying && CurrentAnim == "ArmRetract" && !IsAnimating()) {
+		ChangeDeployState(VS_Cloaked);
 	}
 }
-function Cloak(bool OnOff)
-{
+function ChangeDeployState(VState NewState) {
+	local VState PrevState;
+
+	PrevState = CurrentState;
+	CurrentState = NewState;
+
+	switch (CurrentState) {
+		case VS_Deployed:
+			// sanity check
+			if (PrevState == VS_Deploying) {
+				// Lock main weapon rotation
+				Weapons[0].YawConstraintDelta = 0;
+			//	Weapons[0].PitchConstraintDelta = 0;
+
+				// Setup camera (SpecialCalcView forces third person when deployed)
+				TPCamLookat = DeployedTPCamLookat;
+				LastDesiredTPCamDistance = DesiredTPCamDistance;
+				DesiredTPCamDistance = DeployedTPCamDistance;
+			}
+			break;
+		case VS_Undeployed:
+			// fallthrough
+		case VS_Cloaked:
+			Cloak(CurrentState == VS_Cloaked);
+
+			if (PrevState == VS_Undeploying) {
+				if (ArmMine != None) {
+					ArmMine.Destroy();
+				}
+
+				// Reset movement
+				MaxThrustForce = Default.MaxThrustForce;
+				MaxStrafeForce = Default.MaxStrafeForce;
+				TurnTorqueMax = Default.TurnTorqueMax;
+
+				// Reset main weapon rotation constraint
+				Weapons[0].YawConstraintDelta = Weapons[0].default.YawEndConstraint - Weapons[0].default.YawStartConstraint;
+			//	Weapons[0].PitchConstraintDelta = Weapons[0].default.PitchEndConstraint - Weapons[0].default.PitchStartConstraint;
+
+				// Reset third person camera
+				TPCamLookat = default.TPCamLookat;
+				DesiredTPCamDistance = LastDesiredTPCamDistance;
+			}
+			break;
+		case VS_Deploying:
+			if (PrevState == VS_Cloaked) {
+				Cloak(false);
+			}
+
+			PlaySound(DeploySnd, SLOT_None);
+			PlayAnim('ArmExtend', 1.6, 0.2);
+			CurrentAnim = "ArmExtend";
+
+			// Do not allow to move or rotate.
+			MaxThrustForce = 0.0;
+			MaxStrafeForce = 0.0;
+			KarmaParamsRBFull(KParams).KMaxSpeed = 0.0;
+			TurnTorqueMax = 0.0;
+			break;
+		case VS_Undeploying:
+			SetBoneRotation('ArmShoulder', rot(0,0,0), 0, 1);
+			PlaySound(UndeploySnd, SLOT_None);
+			PlayAnim('ArmRetract', 4.8, 0.2);
+			CurrentAnim = "ArmRetract";
+			break;
+		default:
+			// crash
+			break;
+	}
+}
+function Cloak(bool OnOff) {
 	/* byte Visibility
 	0   : Invisible.
 	128 : Normal.
 	255 : Higly visible.
 	*/
-	if (!OnOff)
-	{
-		// Uncloak.
-		if (Team == 0)
-		{
-			Skins[0] = Default.RedSkin;
-			Weapons[0].Skins[0] = Weapons[0].Default.RedSkin;
-		}
-		else
-		{
-			Skins[0] = Default.BlueSkin;
-			Weapons[0].Skins[0] = Weapons[0].Default.BlueSkin;
-		}
-		Visibility = Default.Visibility;
-		bDrawVehicleShadow = true;
-		KarmaParamsRBFull(KParams).KMaxSpeed = MaxVisibleSpeed;
-	}
-	else
-	{
+	local int i;
+
+	if (OnOff == true) {
 		// Cloak.
 		Skins[0] = CloakedSkin;
 		Weapons[0].Skins[0] = CloakedSkin;
 		Visibility = 0;
 		bDrawVehicleShadow = false;
 		KarmaParamsRBFull(KParams).KMaxSpeed = MaxVisibleSpeed * CloakedSpeedModifier;
+		
+		// Destroy dust effects
+		if (Level.NetMode == NM_DedicatedServer || BikeDust.length == 0) {
+			return;
+		}
+
+		for (i = 0; i < BikeDust.length; ++i) {
+			BikeDust[i].Destroy();
+		}
+		BikeDust.length = 0;
+
+		return;
+	}
+
+	// Uncloak.
+	if (Team == 0) {
+		Skins[0] = Default.RedSkin;
+		Weapons[0].Skins[0] = Weapons[0].Default.RedSkin;
+	} else {
+		Skins[0] = Default.BlueSkin;
+		Weapons[0].Skins[0] = Weapons[0].Default.BlueSkin;
+	}
+
+	Visibility = Default.Visibility;
+	bDrawVehicleShadow = true;
+	KarmaParamsRBFull(KParams).KMaxSpeed = MaxVisibleSpeed;
+
+	// Create dust effects
+	if (Level.NetMode == NM_DedicatedServer || BikeDust.length != 0 || bDropDetail || !bDriving) {
+		return;
+	}
+
+	BikeDust.length = BikeDustOffset.length;
+	BikeDustLastNormal.length = BikeDustOffset.length;
+	
+	for (i = 0; i < BikeDustOffset.length; ++i) {
+		BikeDust[i] = spawn(class'ONSHoverBikeHoverDust', self,, Location + (BikeDustOffset[i] >> Rotation));
+		BikeDust[i].SetDustColor(Level.DustColor);
+		BikeDustLastNormal[i] = vect(0,0,1);
 	}
 }
 simulated event DrivingStatusChanged()
@@ -336,33 +446,20 @@ simulated event DrivingStatusChanged()
 	// Do not call it in ONSHoverBike because of the dust effects.
 	Super(ONSHoverCraft).DrivingStatusChanged();
 
-	if (Driver == None)
-	{
-		if (ArmMine != None)
-			ArmMine.Destroy();
+	if (Driver == None) {
+		CurrentState = VS_Undeploying; // in case we were deployed, reset everything
+		ChangeDeployState(VS_Undeployed);
 
-		MaxThrustForce = Default.MaxThrustForce;
-		MaxStrafeForce = Default.MaxStrafeForce;
-		TurnTorqueMax = Default.TurnTorqueMax;
-		Cloak(false);
-
+		SetBoneRotation('ArmShoulder', rot(0,0,0), 0, 1);
 		PlayAnim('Idle', 1, 0.7);
 		CurrentAnim = "Idle";
-		CurrentState = VS_Undeployed;
-
-		// Reset these.
-		PitchTorqueMax = Default.PitchTorqueMax;
-		TurnTorqueMax = Default.TurnTorqueMax;
-		RollTorqueMax = Default.RollTorqueMax;
-
-		KarmaParamsRBFull(KParams).KMaxSpeed = MaxVisibleSpeed;
-	}
-	else
-	{
-		if (ArmMine != None)
+	} else {
+		// just in case it wasn't destroyed before
+		if (ArmMine != None) {
 			ArmMine.Destroy();
-		Cloak(true);
-		CurrentState = VS_Cloaked;
+		}
+		
+		ChangeDeployState(VS_Cloaked);
 	}
 
 	if (Role == ROLE_Authority)
@@ -452,9 +549,9 @@ simulated function NextWeapon()
 				break;
 		}
 		GoToState('QuickRedeploying');
-	}
-	else
+	} else if (CurrentState == VS_Undeployed || CurrentState == VS_Cloaked) {
 		Super.NextWeapon();
+	}
 }
 simulated function PrevWeapon()
 {
@@ -508,13 +605,13 @@ simulated function PrevWeapon()
 				break;
 		}
 		GoToState('QuickRedeploying');
-	}
-	else
+	} else if (CurrentState == VS_Undeployed || CurrentState == VS_Cloaked) {
 		Super.PrevWeapon();
+	}
 }
 simulated function SwitchWeapon(byte F)
 {
-	if (F == SelectedMine)
+	if (F == SelectedMine || CurrentState != VS_Deployed)
 		return;
 	switch (F)
 	{
@@ -699,10 +796,7 @@ function CheckAICloak()
 }
 function bool BotDropDeployable()
 {
-	if (CurrentState == VS_Undeployed || CurrentState == VS_Cloaked)
-	{
-		Cloak(false);
-
+	if (CurrentState == VS_Undeployed || CurrentState == VS_Cloaked) {
 		// Select a mine if we don't have one selected already.
 		if (SelectedMine == 0)
 			SelectNextMine();
@@ -710,28 +804,12 @@ function bool BotDropDeployable()
 		ArmMine = Spawn(MineObjectClasses[SelectedMine - 1], Driver,, Location);
 		AttachToBone(ArmMine, 'Object');
 
-		Cloak(false);
-
-		CurrentState = VS_Deploying;
-		PlaySound(DeploySnd, SLOT_None);
-		PlayAnim('ArmExtend', 1.6, 0.2);
-		CurrentAnim = "ArmExtend";
-
-		// Do not allow to move or rotate.
-		MaxThrustForce = 0.0;
-		MaxStrafeForce = 0.0;
-		KarmaParamsRBFull(KParams).KMaxSpeed = 0.0;
-		TurnTorqueMax = 0.0;
-	}
-	else if (CurrentState == VS_Deployed)
-	{
+		ChangeDeployState(VS_Deploying);
+	} else if (CurrentState == VS_Deployed) {
 		LastDropAttemptTime = Level.TimeSeconds;
 		Fire(0);
 
-		CurrentState = VS_Undeploying;
-		PlaySound(UndeploySnd, SLOT_None);
-		PlayAnim('ArmRetract', 4.8, 0.2);
-		CurrentAnim = "ArmRetract";
+		ChangeDeployState(VS_Undeploying);
 
 		if (ArmMine != None)
 			ArmMine.Destroy();
@@ -839,12 +917,14 @@ DefaultProperties
 	CloakedSkin = FinalBlend'XEffectMat.Combos.InvisOverlayFB';
 	bDrawDriverInTP = False;
 	HeadlightCoronaMaxSize = 0.0;
-	BikeDustTraceDistance = 0.0;
+//	BikeDustTraceDistance = 0.0;
 	bAdjustDriversHead = false;
 	MineObjectClasses(0) = class'UT3SpiderMineObject';
 	MineObjectClasses(1) = class'UT3StasisFieldObject';
 	MineObjectClasses(2) = class'UT3EMPObject';
 	MineObjectClasses(3) = class'UT3ShieldObject';
+	BikeDustOffset=();
+	BikeDustOffset(0)=(X=25,Y=0,Z=10)
 
 	// HUD.
 	bShowChargingBar = false;
@@ -875,7 +955,7 @@ DefaultProperties
 
 	// Damage.
 	//DriverWeapons(0) = (WeaponClass=Class'Onslaught.ONSHoverBikePlasmaGun',WeaponBone="Turret_Pitch")
-	DriverWeapons(0) = (WeaponClass=Class'Weap_UT3Nightshade',WeaponBone="Base");
+	DriverWeapons(0) = (WeaponClass=Class'UT3Weap_NightshadeBeam',WeaponBone="Base");
 	Health = 600;
 	HealthMax = 600;
 	MeleeRange = -100;
@@ -896,13 +976,9 @@ DefaultProperties
 	SwitchDeployableSnd = Sound'UT3A_Vehicle_Nightshade.Sounds.A_Vehicle_Nightshade_SwitchDeployables';
 	DropItemSnd = Sound'UT3A_Vehicle_Nightshade.Sounds.A_Vehicle_Nightshade_DropItem02';
 	MaxPitchSpeed = 1250; // 1000
+	ImpactDamageSounds=();
 	ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Nightshade.Sounds.A_Vehicle_Nightshade_Impact01';
 	ImpactDamageSounds(1) = Sound'UT3A_Vehicle_Nightshade.Sounds.A_Vehicle_Nightshade_Impact02';
-	ImpactDamageSounds(2) = Sound'UT3A_Vehicle_Nightshade.Sounds.A_Vehicle_Nightshade_Impact01';
-	ImpactDamageSounds(3) = Sound'UT3A_Vehicle_Nightshade.Sounds.A_Vehicle_Nightshade_Impact02';
-	ImpactDamageSounds(4) = Sound'UT3A_Vehicle_Nightshade.Sounds.A_Vehicle_Nightshade_Impact01';
-	ImpactDamageSounds(5) = Sound'UT3A_Vehicle_Nightshade.Sounds.A_Vehicle_Nightshade_Impact02';
-	ImpactDamageSounds(6) = Sound'UT3A_Vehicle_Nightshade.Sounds.A_Vehicle_Nightshade_Impact01';
 
 	// Movement.
 	MaxThrustForce = 15.0;
@@ -945,4 +1021,8 @@ DefaultProperties
 
 	// Misc.
 	EntryRadius = 200.0; // 140.0
+
+	// Deployed camera
+	DeployedTPCamLookat=(X=-175,Y=0,Z=-100);
+	DeployedTPCamDistance=330;
 }
