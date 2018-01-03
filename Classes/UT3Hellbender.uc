@@ -1,6 +1,7 @@
 /*
- * Copyright © 2008, 2014 GreatEmerald
+ * Copyright © 2008, 2014, 2017 GreatEmerald
  * Copyright © 2008-2009 Wormbo
+ * Copyright © 2017-2018 HellDragon
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -57,149 +58,9 @@ function AltFire(optional float F) //This is to remove the horn each time you fi
 
 function TakeDamage(int Damage, Pawn instigatedBy, Vector Hitlocation, Vector Momentum, class<DamageType> DamageType)
 {                            //Make sure you don't hurt yourself with a combo
-    if (InstigatedBy != self)
+    if (InstigatedBy == self && ClassIsChildOf(DamageType, class'DamTypeSkyMine'))
+        return;
     Super.TakeDamage(Damage, instigatedBy, Hitlocation, Momentum, damageType);
-}
-
-event bool IsVehicleEmpty() //Starting the removal of one seat - everywhere length-1
-{
-    local int i;
-
-    if ( Driver != None )
-        return false;
-
-    for (i=0; i<(WeaponPawns.length)-1; i++)
-        if ( WeaponPawns[i].Driver != None )
-            return false;
-
-    return true;
-}
-
-static function StaticPrecache(LevelInfo L)
-{
-    local int i;
-
-    for(i=0;i<Default.DriverWeapons.Length;i++)
-        Default.DriverWeapons[i].WeaponClass.static.StaticPrecache(L);
-
-    for(i=0;i<(Default.PassengerWeapons.Length)-1;i++)
-        Default.PassengerWeapons[i].WeaponPawnClass.static.StaticPrecache(L);
-
-    if (Default.DestroyedVehicleMesh != None)
-        L.AddPrecacheStaticMesh(Default.DestroyedVehicleMesh);
-
-    if (Default.HeadlightCoronaMaterial != None)
-        L.AddPrecacheMaterial(Default.HeadLightCoronaMaterial);
-
-    if (Default.HeadlightProjectorMaterial != None)
-        L.AddPrecacheMaterial(Default.HeadLightProjectorMaterial);
-
-    L.AddPrecacheMaterial( default.VehicleIcon.Material );
-
-    L.AddPrecacheMaterial(Material'EmitterTextures.MultiFrame.LargeFlames');
-    L.AddPrecacheMaterial(Material'EmitterTextures.MultiFrame.fire3');
-    L.AddPrecacheMaterial(Texture'AW-2004Particles.Weapons.DustSmoke');
-    L.AddPrecacheStaticMesh(StaticMesh'ONSDeadVehicles-SM.HELLbenderExploded.HellTire');
-    L.AddPrecacheStaticMesh(StaticMesh'ONSDeadVehicles-SM.HELLbenderExploded.HellDoor');
-    L.AddPrecacheStaticMesh(StaticMesh'ONSDeadVehicles-SM.HELLbenderExploded.HellGun');
-    L.AddPrecacheStaticMesh(StaticMesh'AW-2004Particles.Debris.Veh_Debris2');
-    L.AddPrecacheStaticMesh(StaticMesh'AW-2004Particles.Debris.Veh_Debris1');
-
-    L.AddPrecacheMaterial(Material'AW-2004Particles.Energy.SparkHead');
-    L.AddPrecacheMaterial(Material'ExplosionTex.Framed.exp2_frames');
-    L.AddPrecacheMaterial(Material'ExplosionTex.Framed.exp1_frames');
-    L.AddPrecacheMaterial(Material'ExplosionTex.Framed.we1_frames');
-    L.AddPrecacheMaterial(Material'AW-2004Particles.Fire.MuchSmoke1');
-    L.AddPrecacheMaterial(Material'AW-2004Particles.Fire.NapalmSpot');
-    L.AddPrecacheMaterial(Material'EpicParticles.Fire.SprayFire1');
-    L.AddPrecacheMaterial(Material'VMVehicles-TX.NEWprvGroup.newPRVnoColor');
-    L.AddPrecacheMaterial(Material'VMVehicles-TX.NEWprvGroup.PRVcolorRED');
-    L.AddPrecacheMaterial(Material'VMVehicles-TX.NEWprvGroup.PRVcolorBLUE');
-    L.AddPrecacheMaterial(Material'VMVehicles-TX.NEWprvGroup.EnergyEffectMASKtex');
-    L.AddPrecacheMaterial(Material'AW-2004Particles.Energy.PowerSwirl');
-    L.AddPrecacheMaterial(Material'VMWeaponsTX.ManualBaseGun.baseGunEffectcopy');
-    L.AddPrecacheMaterial(Material'VehicleFX.Particles.DustyCloud2');
-    L.AddPrecacheMaterial(Material'VMParticleTextures.DirtKICKGROUP.dirtKICKTEX');
-    L.AddPrecacheMaterial(Material'Engine.GRADIENT_Fade');
-    L.AddPrecacheMaterial(Material'VMVehicles-TX.NEWprvGroup.PRVtagFallBack');
-    L.AddPrecacheMaterial(Material'VMVehicles-TX.NEWprvGroup.prvTAGSCRIPTED');
-}
-
-simulated function PostNetBeginPlay()
-{
-    local int i;
-
-    // Count the number of powered wheels on the car
-    NumPoweredWheels = 0.0;
-    for(i=0; i<Wheels.Length; i++)
-    {
-        NumPoweredWheels += 1.0;
-    }
-
-    Super(SVehicle).PostNetBeginPlay();
-
-    if (Role == ROLE_Authority)
-    {
-        // Spawn the Driver Weapons
-        for(i=0;i<DriverWeapons.Length;i++)
-        {
-            // Spawn Weapon
-            Weapons[i] = spawn(DriverWeapons[i].WeaponClass, self,, Location, rot(0,0,0));
-            AttachToBone(Weapons[i], DriverWeapons[i].WeaponBone);
-            if (!Weapons[i].bAimable)
-                Weapons[i].CurrentAim = rot(0,32768,0);
-        }
-
-        if (ActiveWeapon < Weapons.length)
-        {
-            PitchUpLimit = Weapons[ActiveWeapon].PitchUpLimit;
-            PitchDownLimit = Weapons[ActiveWeapon].PitchDownLimit;
-        }
-
-        // Spawn the Passenger Weapons
-        for(i=0;i<(PassengerWeapons.Length)-1;i++)
-        {
-            // Spawn WeaponPawn
-            WeaponPawns[i] = spawn(PassengerWeapons[i].WeaponPawnClass, self,, Location);
-            WeaponPawns[i].AttachToVehicle(self, PassengerWeapons[i].WeaponBone);
-            if (!WeaponPawns[i].bHasOwnHealth)
-                WeaponPawns[i].HealthMax = HealthMax;
-            WeaponPawns[i].ObjectiveGetOutDist = ObjectiveGetOutDist;
-        }
-    }
-
-    if(Level.NetMode != NM_DedicatedServer && Level.DetailMode > DM_Low && SparkEffectClass != None)
-    {
-        SparkEffect = spawn( SparkEffectClass, self,, Location);
-    }
-
-    if(Level.NetMode != NM_DedicatedServer && Level.bUseHeadlights && !(Level.bDropDetail || (Level.DetailMode == DM_Low)))
-    {
-        HeadlightCorona.Length = HeadlightCoronaOffset.Length;
-
-        for(i=0; i<HeadlightCoronaOffset.Length; i++)
-        {
-            HeadlightCorona[i] = spawn( class'ONSHeadlightCorona', self,, Location + (HeadlightCoronaOffset[i] >> Rotation) );
-            HeadlightCorona[i].SetBase(self);
-            HeadlightCorona[i].SetRelativeRotation(rot(0,0,0));
-            HeadlightCorona[i].Skins[0] = HeadlightCoronaMaterial;
-            HeadlightCorona[i].ChangeTeamTint(Team);
-            HeadlightCorona[i].MaxCoronaSize = HeadlightCoronaMaxSize * Level.HeadlightScaling;
-        }
-
-        if(HeadlightProjectorMaterial != None && Level.DetailMode == DM_SuperHigh)
-        {
-            HeadlightProjector = spawn( class'ONSHeadlightProjector', self,, Location + (HeadlightProjectorOffset >> Rotation) );
-            HeadlightProjector.SetBase(self);
-            HeadlightProjector.SetRelativeRotation( HeadlightProjectorRotation );
-            HeadlightProjector.ProjTexture = HeadlightProjectorMaterial;
-            HeadlightProjector.SetDrawScale(HeadlightProjectorScale);
-            HeadlightProjector.CullDistance = ShadowCullDistance;
-        }
-    }
-
-    SetTeamNum(Team);
-    TeamChanged();
 }
 
 simulated function Tick(float DeltaTime)
@@ -317,6 +178,24 @@ simulated event DrivingStatusChanged()
     }
 }
 
+simulated function TeamChanged()
+{
+    local int i;
+
+    Super.TeamChanged();
+
+    if (Level.NetMode != NM_DedicatedServer)
+    {
+        for(i = 0; i < HeadlightCorona.Length; i++)
+        {
+            HeadlightCorona[i].LightSaturation = 0;
+            if (Team == 0)
+                HeadlightCorona[i].LightHue = 0;
+            if (Team == 1)
+                HeadlightCorona[i].LightHue = 175;
+        }
+    }
+}
 
 //=============================================================================
 // Default values
@@ -324,6 +203,9 @@ simulated event DrivingStatusChanged()
 
 defaultproperties
 {
+
+    Drawscale=1.0
+
     //===========================
     // @100GPing100
     Mesh = SkeletalMesh'UT3VH_Hellbender_Anims.SK_VH_Hellbender';
@@ -333,7 +215,11 @@ defaultproperties
     MovementAnims(0) = "Idle"
 
     DriverWeapons(0)=(WeaponClass=Class'UT3HellbenderSideGun',WeaponBone="SecondaryTurretYaw")
-    PassengerWeapons(0)=(WeaponPawnClass=Class'UT3HellbenderRearGunPawn',WeaponBone="MainTurretYaw")
+    PassengerWeapons=((WeaponPawnClass=Class'UT3HellbenderRearGunPawn',WeaponBone="MainTurretYaw"))
+    
+    /*GEm: Excellent! So that is a great example of how to get rid of a turret! 
+    Turns out that you need one pair of () to show that this is an array,
+    and the other pair of () inside the first one to show that this is the one and only element inside it.*/
 
     FlagBone = Hood;
 
@@ -343,6 +229,7 @@ defaultproperties
         KLinearDamping=0.05
         KAngularDamping=0.05
         KImpactThreshold=500
+        kMaxSpeed=1050.0
         bKNonSphericalInertia=True
         bHighDetailOnly=False
         bClientOnly=False
@@ -415,33 +302,74 @@ defaultproperties
     //============EDN============
 
     //MaxSteerAngleCurve=(Points=((OutVal=50.000000),,)) @100GPing100: Causes crash.
-    SteerSpeed=220.000000
-    PassengerWeapons(1)=()
+    SteerSpeed=200.000000 //110.0 def UT2004
     IdleSound=Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_EngineIdle01'
     StartUpSound=Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_EngineStart01'
     ShutDownSound=Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_EngineStop01'
-    EntryRadius=300.000000
-    TPCamWorldOffset=(Z=200.000000)
-    MomentumMult=1.000000
+    ImpactDamageMult = 0.00005
+    DamagedEffectHealthSmokeFactor=0.65 //0.5
+    DamagedEffectHealthFireFactor=0.40 //0.25
+    DamagedEffectFireDamagePerSec=2.0 //0.75
+    ImpactDamageSounds=()
+    ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_Collide03';
+    ImpactDamageSounds(1) = Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_Collide04';
+    ExplosionSounds=()
+    ExplosionSounds(0) = Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_Explode01';
+
+    EntryPosition=(X=0,Y=0,Z=0)
+    EntryRadius=180.0  //300.000000
+    MomentumMult=0.400000 //1.0  //HDm to GE: 0.4 feels right but Rocket and AVRiL force are reversed with each other
     bDrawDriverInTP=False
     DriverDamageMult=0.000000
     VehiclePositionString="in a Hellbender"
     VehicleNameString="UT3 Hellbender"
     HornSounds(0)=Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_Horn01'
-    GroundSpeed=700.000000
+    GroundSpeed=800.000000 //700
     SoundVolume=255
 
-    DrawScale=1.0
-    CollisionRadius=219
-    HeadlightCoronaOffset(0)=(X=77.5,Y=27.5,Z=52.5)
-    HeadlightCoronaOffset(1)=(X=77.5,Y=-27.5,Z=52.5)
-    HeadlightCoronaOffset(2)=(X=77.5,Y=25,Z=41)
-    HeadlightCoronaOffset(3)=(X=77.5,Y=-25,Z=41)
-    HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
-    HeadlightCoronaMaxSize=94
-    HeadlightProjectorMaterial=None
+    TransRatio=0.15 //0.11
+    EngineBrakeFactor=0.0002 //0.0001 def
+    MaxBrakeTorque=20.5 //20.0
+    EngineInertia=0.01
+    WheelInertia=0.01
+    ChassisTorqueScale=0.82 //0.7
+    WheelSuspensionOffset=5.0 //HDm: Fixes the chassis sitting height in-game
 
-    BrakeLightOffset(0)=(X=-137.5,Y=42.5,Z=64)
-    BrakeLightOffset(1)=(X=-137.5,Y=-42.5,Z=64)
+    CollisionRadius=219
+    
+    
+    ExitPositions(0)=(X=-10,Y=-160,Z=50)  //Left
+    ExitPositions(1)=(X=-10,Y=160,Z=50)   //Right
+    ExitPositions(2)=(X=-10,Y=-160,Z=-50) //Left Below
+    ExitPositions(3)=(X=-10,Y=160,Z=-50)  //Right Below
+    ExitPositions(4)=(X=10,Y=-5,Z=130)    //Roof
+    
+    FPCamPos=(X=0,Y=28,Z=135)
+    
+    //Normal
+    TPCamDistance=375.000000
+    TPCamLookat=(X=0,Y=0,Z=0)
+    TPCamWorldOffset=(X=0,Y=0,Z=200)
+    
+    //Aerial View
+    //TPCamDistance=375.000000
+    //TPCamLookat=(X=-10,Y=0,Z=0)
+    //TPCamWorldOffset=(X=0,Y=0,Z=140)
+    
+    HeadlightCoronaOffset(0)=(X=72.5,Y=26.5,Z=49.5) //(X=77.5,Y=27.5,Z=52.5)
+    HeadlightCoronaOffset(1)=(X=72.5,Y=-26.5,Z=49.5)
+    HeadlightCoronaOffset(2)=(X=72.5,Y=25,Z=39)
+    HeadlightCoronaOffset(3)=(X=72.5,Y=-25,Z=39)
+    HeadlightCoronaMaterial=Material'EpicParticles.FlashFlare1'
+    //HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
+    HeadlightCoronaMaxSize=50 //82 works with EFlareOY but FlashFlare is huge
+    
+    HeadlightProjectorOffset=(X=70.0,Y=0,Z=49.5) //(X=82.5,Y=0,Z=55.5)
+    HeadlightProjectorRotation=(Yaw=0,Pitch=-1000,Roll=0)
+    HeadlightProjectorMaterial=Texture'VMVehicles-TX.NewPRVGroup.PRVProjector'
+    HeadlightProjectorScale=0.40 //0.65
+
+    BrakeLightOffset(0)=(X=-131.5,Y=38.5,Z=60) //(X=-137.5,Y=42.5,Z=64)
+    BrakeLightOffset(1)=(X=-131.5,Y=-38.5,Z=60)
     BrakeLightMaterial=Material'EpicParticles.FlickerFlare'
 }
