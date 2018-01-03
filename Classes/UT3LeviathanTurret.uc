@@ -1,6 +1,7 @@
 /*
  * Copyright © 2007 Wormbo
  * Copyright © 2014 GreatEmerald
+ * Copyright © 2017-2018 HellDragon
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -48,7 +49,6 @@ class UT3LeviathanTurret extends ONSMASSideGunPawn abstract;
 
 var float ShieldDuration;
 var float ShieldRecharge;
-
 
 //=============================================================================
 // Variables
@@ -198,6 +198,63 @@ simulated function vector GetCameraLocationStart()
         return Super.GetCameraLocationStart();
 }
 
+simulated function AttachDriver(Pawn P)
+{
+    Local rotator FootDriveL,FootDriveR;
+    Local rotator ArmDriveL,ArmDriveR;
+    Local rotator ForeArmDriveL, ForeArmDriveR;
+    Local rotator ThighDriveL,ThighDriveR;
+    Local rotator CalfDriveL,CalfDriveR;
+    Local rotator SpineDrive;
+    super.AttachDriver(P);
+
+    ArmDriveL.Yaw=-5000;
+    ArmDriveL.Pitch=-4000;
+    P.SetBoneRotation('Bip01 L UpperArm',ArmDriveL);
+    ArmDriveR.Yaw=-5000;
+    ArmDriveR.Pitch=4000;
+    P.SetBoneRotation('Bip01 R UpperArm',ArmDriveR);
+    ForeArmDriveL.Yaw=8000;
+    P.SetBoneRotation('Bip01 L ForeArm',ForeArmDriveL);
+    ForeArmDriveR.Yaw=8000;
+    P.SetBoneRotation('Bip01 R ForeArm',ForeArmDriveR);
+    ThighDriveL.Pitch=1000;
+    P.SetBoneRotation('Bip01 L Thigh',ThighDriveL);
+    ThighDriveR.Pitch=-1000;
+    P.SetBoneRotation('Bip01 R Thigh',ThighDriveR);
+    CalfDriveL.Yaw=-2000;
+    P.SetBoneRotation('Bip01 L Calf',CalfDriveL);
+    CalfDriveR.Yaw=-2000;
+    P.SetBoneRotation('Bip01 R Calf',CalfDriveR);
+    SpineDrive.Yaw=-4000;
+    P.SetBoneRotation('Bip01 Spine',SpineDrive);
+    FootDriveL.Yaw=8000;
+    P.SetBoneRotation('Bip01 L Foot',FootDriveL);
+    FootDriveR.Yaw=8000;
+    P.SetBoneRotation('Bip01 R Foot',FootDriveR);
+}
+
+simulated function DetachDriver(Pawn P)
+{
+    P.SetBoneRotation('Bip01 Head');
+    P.SetBoneRotation('Bip01 Spine');
+    P.SetBoneRotation('Bip01 Spine1');
+    P.SetBoneRotation('Bip01 Spine2');
+    P.SetBoneRotation('Bip01 L Clavicle');
+    P.SetBoneRotation('Bip01 R Clavicle');
+    P.SetBoneRotation('Bip01 L UpperArm');
+    P.SetBoneRotation('Bip01 R UpperArm');
+    P.SetBoneRotation('Bip01 L ForeArm');
+    P.SetBoneRotation('Bip01 R ForeArm');
+    P.SetBoneRotation('Bip01 L Thigh');
+    P.SetBoneRotation('Bip01 R Thigh');
+    P.SetBoneRotation('Bip01 L Calf');
+    P.SetBoneRotation('Bip01 R Calf');
+    P.SetBoneRotation('Bip01 L Foot');
+    P.SetBoneRotation('Bip01 R Foot');
+    
+    Super.DetachDriver(P);
+}
 
 //=============================================================================
 // Default values
@@ -210,5 +267,5 @@ defaultproperties
     ShieldDuration   = 4.0
     ShieldRecharge   = 5.0
     bDrawDriverInTP = true
-    DrivePos = (X=-2.5,Y=0.0,Z=64.0) //(X=-7.0,Y=0.0,Z=65.0)
+    DrivePos = (X=7,Y=0.0,Z=53.5) //(X=-7.0,Y=0.0,Z=65.0)
 }
