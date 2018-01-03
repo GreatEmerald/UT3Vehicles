@@ -2,6 +2,7 @@
  * Copyright © 2008, 2014 GreatEmerald
  * Copyright © 2008-2009 Wormbo
  * Copyright © 2012 100GPing100
+ * Copyright © 2017-2018 HellDragon
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -155,7 +156,7 @@ simulated function Tick(float DT)
         if (Victim != None && Victim.bBlockActors)
         {
             if (Victim.IsA('Pawn') && !Victim.IsA('Vehicle'))
-                Pawn(Victim).TakeDamage(1000, self, HitLocation, Velocity * 100, class'DamTypeONSRVBlade');
+                Pawn(Victim).TakeDamage(1000, self, HitLocation, Velocity * 100, class'UT3DmgType_ScorpionBlades');
             else
             {
                 bLeftArmBroke = True;
@@ -185,7 +186,7 @@ simulated function Tick(float DT)
         if (Victim != None && Victim.bBlockActors)
         {
             if (Victim.IsA('Pawn') && !Victim.IsA('Vehicle'))
-                Pawn(Victim).TakeDamage(1000, self, HitLocation, Velocity * 100, class'DamTypeONSRVBlade');
+                Pawn(Victim).TakeDamage(1000, self, HitLocation, Velocity * 100, class'UT3DmgType_ScorpionBlades');
             else
             {
                 bRightArmBroke = True;
@@ -239,7 +240,7 @@ function Boost()
     {
         //log("UT3: Boosting!");
         BoostRechargeCounter=0;
-        PlaySound(BoostSound, SLOT_Misc, 128,,,64); //Boost sound Pitch 160
+        PlaySound(BoostSound, SLOT_Misc, 128,,,); //Boost sound Pitch 160
         bBoost = true;
         BoostCount--;
         SpeedAtBoost = Velocity dot Vector(Rotation);
@@ -539,12 +540,97 @@ simulated event DrivingStatusChanged()
     }
 }
 
+simulated function AttachDriver(Pawn P)
+{
+    Local rotator FootDriveL,FootDriveR;
+    Local rotator ArmDriveL,ArmDriveR;
+    Local rotator ForeArmDriveL, ForeArmDriveR;
+    Local rotator ThighDriveL,ThighDriveR;
+    Local rotator CalfDriveL,CalfDriveR;
+    Local rotator SpineDrive;
+    Local rotator NeckDrive;
+    super.AttachDriver(P);
+
+    ArmDriveL.Yaw=5000;
+    P.SetBoneRotation('Bip01 L UpperArm',ArmDriveL);
+    ArmDriveR.Yaw=5000;
+    P.SetBoneRotation('Bip01 R UpperArm',ArmDriveR);
+    ForeArmDriveL.Yaw=3000;
+    ForeArmDriveL.Roll=12000;
+    P.SetBoneRotation('Bip01 L ForeArm',ForeArmDriveL);
+    ForeArmDriveR.Roll=-12000;
+    P.SetBoneRotation('Bip01 R ForeArm',ForeArmDriveR);
+    ThighDriveL.Yaw=-10000;
+    ThighDriveL.Pitch=2000;
+    P.SetBoneRotation('Bip01 L Thigh',ThighDriveL);
+    ThighDriveR.Yaw=-10000;
+    ThighDriveR.Pitch=-2000;
+    P.SetBoneRotation('Bip01 R Thigh',ThighDriveR);
+    CalfDriveL.Yaw=2000;
+    CalfDriveL.Roll=14000;
+    P.SetBoneRotation('Bip01 L Calf',CalfDriveL);
+    CalfDriveR.Yaw=1000;
+    CalfDriveR.Roll=-14000;
+    P.SetBoneRotation('Bip01 R Calf',CalfDriveR);
+    SpineDrive.Yaw=2000; //-20000 with 4000 on Driver Rotate is decent
+    P.SetBoneRotation('Bip01 Spine',SpineDrive);
+    NeckDrive.Yaw=4000;
+    P.SetBoneRotation('Bip01 Head',NeckDrive);
+    FootDriveL.Yaw=8000;
+    P.SetBoneRotation('Bip01 L Foot',FootDriveL);
+    FootDriveR.Yaw=8000;
+    P.SetBoneRotation('Bip01 R Foot',FootDriveR);
+}
+
+simulated function DetachDriver(Pawn P)
+{
+    P.SetBoneRotation('Bip01 Head');
+    P.SetBoneRotation('Bip01 Spine');
+    P.SetBoneRotation('Bip01 Spine1');
+    P.SetBoneRotation('Bip01 Spine2');
+    P.SetBoneRotation('Bip01 L Clavicle');
+    P.SetBoneRotation('Bip01 R Clavicle');
+    P.SetBoneRotation('Bip01 L UpperArm');
+    P.SetBoneRotation('Bip01 R UpperArm');
+    P.SetBoneRotation('Bip01 L ForeArm');
+    P.SetBoneRotation('Bip01 R ForeArm');
+    P.SetBoneRotation('Bip01 L Thigh');
+    P.SetBoneRotation('Bip01 R Thigh');
+    P.SetBoneRotation('Bip01 L Calf');
+    P.SetBoneRotation('Bip01 R Calf');
+    P.SetBoneRotation('Bip01 L Foot');
+    P.SetBoneRotation('Bip01 R Foot');
+    
+    Super.DetachDriver(P);
+}
+
+simulated function TeamChanged()
+{
+    local int i;
+
+    Super.TeamChanged();
+
+    if (Level.NetMode != NM_DedicatedServer)
+    {
+        for(i = 0; i < HeadlightCorona.Length; i++)
+        {
+            HeadlightCorona[i].LightSaturation = 0;
+            if (Team == 0)
+                HeadlightCorona[i].LightHue = 0;
+            if (Team == 1)
+                HeadlightCorona[i].LightHue = 175;
+        }
+    }
+}
+
 //=============================================================================
 // Default values
 //=============================================================================
 
 defaultproperties
 {
+
+    DrawScale=1.0
     //=======================
     // @100GPing100
     Mesh = SkeletalMesh'UT3VH_Scorpion_Anims.SK_VH_Scorpion';
@@ -563,7 +649,7 @@ defaultproperties
         BoneSteerAxis = AXIS_Z;
         SupportBoneAxis = AXIS_X;
         SteerType = VST_Fixed;
-        BoneOffset = (X=0.0,Y=20.0,Z=0.0);
+        BoneOffset = (X=0.0,Y=20.0,Z=-6.0);
 
         WheelRadius = 20; //27
         //SuspensionTravel = 40;
@@ -578,7 +664,7 @@ defaultproperties
         BoneSteerAxis = AXIS_Z;
         SupportBoneAxis = AXIS_X;
         SteerType = VST_Fixed;
-        BoneOffset = (X=0.0,Y=-20.0,Z=0.0);
+        BoneOffset = (X=0.0,Y=-20.0,Z=-6.0);
 
         WheelRadius = 20;
         //SuspensionTravel = 0;
@@ -593,7 +679,7 @@ defaultproperties
         BoneSteerAxis = AXIS_Z;
         SupportBoneAxis = AXIS_X;
         SteerType = VST_Steered;
-        BoneOffset = (X=0.0,Y=20.0,Z=0.0);
+        BoneOffset = (X=0.0,Y=20.0,Z=-6.0);
 
         WheelRadius = 20;
         //SuspensionTravel = 40;
@@ -607,7 +693,7 @@ defaultproperties
         BoneSteerAxis = AXIS_Z;
         SupportBoneAxis = AXIS_X;
         SteerType = VST_Steered;
-        BoneOffset = (X=0.0,Y=-20.0,Z=0.0);
+        BoneOffset = (X=0.0,Y=-20.0,Z=-6.0);
 
         WheelRadius = 20;
         //SuspensionTravel = 40;
@@ -626,41 +712,139 @@ defaultproperties
     //DriverWeapons(0)=(WeaponClass=Class'UT3ScorpionTurret',WeaponBone="ChainGunAttachment")
     bHasAltFire=False
     GroundSpeed=950.0000
+    SteerSpeed=200.00 //200.00 //160 def
+    TurnDamping=10 //35 def
+    ChassisTorqueScale=0.45 //0.4
+    MaxBrakeTorque=22.0 //20 def
+    EngineBrakeFactor=0.001 //0.0001 def
+    TransRatio=0.18 //0.15 def UT2004
+    EngineInertia=0.008
+    WheelInertia=0.008
+    WheelSuspensionOffset=3.0
     bHasHandBrake=False //GE: Override for the space bar?
-    BoostSound=Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_EjectReadyBeep'
+    BoostSound=Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_EjectReadyBeepThrustStartMix'
+    //BoostSound=Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_EjectReadyBeep'
     BoostReadySound=None
+    IdleSound=sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_EngineLoop01'
     //IdleSound=sound'UT3Vehicles.SCORPION.ScorpionEngine'
     StartUpSound=sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_Start01'
     ShutDownSound=sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_Stop01'
+    SoundVolume=255
     DamagedEffectHealthSmokeFactor=0.65 //0.5
-    DamagedEffectHealthFireFactor=0.373 //0.25
+    DamagedEffectHealthFireFactor=0.40 //0.25
+    DamagedEffectFireDamagePerSec=2.0  //0.75
+    ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_Collide01';
+    ImpactDamageSounds(1) = Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_Collide02';
+    ImpactDamageSounds(2) = Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_Collide03';
+    ImpactDamageSounds(3) = Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_Collide04';
+    ImpactDamageSounds(4) = Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_Collide01';
+    ImpactDamageSounds(5) = Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_Collide02';
+    ImpactDamageSounds(6) = Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_Collide03';
+    ExplosionSounds(0) = Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_Explode02';
+    ExplosionSounds(1) = Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_Explode02';
+    ExplosionSounds(2) = Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_Explode02';
+    ExplosionSounds(3) = Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_Explode02';
+    ExplosionSounds(4) = Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_Explode02';
     RanOverDamageType=class'DamTypeRVRoadkill'
     CrushedDamageType=class'DamTypeRVPancake'
     SelfDestructDamageType=class'UT3ScorpionSDDamage'
     BoostIconCoords = (X1=2,Y1=843,X2=97,Y2=50)
     EjectIconCoords = (X1=92,Y1=317,X2=50,Y2=50)
-    DrivePos=(X=2.0,Y=0.0,Z=50.0)
+    DrivePos=(X=-20.0,Y=0.0,Z=60.0) //DrivePos=(X=2.0,Y=0.0,Z=50.0)  //A stock UT2004 character barely fits in here so the UT3 drawscale has to be right as I don't think they change size based on the vheicle's size from what I've seen of the turrets
+    DriveRot=(Pitch=8000) //4000 is decent to work with
 
-    HeadlightCoronaOffset(0)=(X=65,Y=33,Z=20)
-    HeadlightCoronaOffset(1)=(X=65,Y=-33,Z=20)
-    HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
-    HeadlightCoronaMaxSize=65
+    Begin Object Class=KarmaParamsRBFull Name=KParams0
+        KStartEnabled=True
+        KFriction=0.5
+        KLinearDamping=0.05
+        KAngularDamping=0.05
+        KImpactThreshold=700
+        KMaxSpeed=2000
+        bKNonSphericalInertia=True
+        bHighDetailOnly=False
+        bClientOnly=False
+        bKDoubleTickRate=True
+        KInertiaTensor(0)=1.0
+        KInertiaTensor(1)=0.0
+        KInertiaTensor(2)=0.0
+        KInertiaTensor(3)=3.0
+        KInertiaTensor(4)=0.0
+        KInertiaTensor(5)=3.0
+        KCOMOffset=(X=-0.25,Y=0.0,Z=-0.4)
+        bDestroyOnWorldPenetrate=True
+        bDoSafetime=True
+        Name="KParams0"
+    End Object
+    KParams=KarmaParams'KParams0'
+
+    HeadlightCoronaOffset(0)=(X=77,Y=39.0,Z=25)
+    HeadlightCoronaOffset(1)=(X=77,Y=-39.0,Z=25)
+    //Below are for original drawscale
+    //HeadlightCoronaOffset(0)=(X=65,Y=33,Z=20)
+    //HeadlightCoronaOffset(1)=(X=65,Y=-33,Z=20)
+    HeadlightCoronaMaterial=Material'EpicParticles.FlashFlare1'
+    //HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
+    HeadlightCoronaMaxSize=45 //65 looks good but probably too large with FlashFlare
+
+    HeadlightProjectorOffset=(X=75,Y=0,Z=25) //(X=90,Y=0,Z=7)
+    //HeadlightProjectorOffset=(X=69,Y=0,Z=20) //(X=90,Y=0,Z=7)
+    HeadlightProjectorRotation=(Yaw=0,Pitch=-1000,Roll=0)
+    HeadlightProjectorMaterial=Texture'VMVehicles-TX.RVGroup.RVProjector'
+    HeadlightProjectorScale=0.3
 
     bMakeBrakeLights=true
-    BrakeLightOffset(0)=(X=-72,Y=2,Z=37)
-    BrakeLightOffset(1)=(X=-72,Y=-2,Z=37)
+    BrakeLightOffset(0)=(X=-86,Y=0,Z=45)
+    BrakeLightOffset(1)=(X=-92,Y=0,Z=42)
+    //Below are for original Drawscale
+    //BrakeLightOffset(0)=(X=-72,Y=2,Z=37)
+    //BrakeLightOffset(1)=(X=-72,Y=-2,Z=37)
     BrakeLightMaterial=Material'EpicParticles.FlickerFlare'
 
-    HeadlightProjectorMaterial=None
-
     BoostRechargeTime = 5.0
-    AfterburnerOffset(0) = (X=-70.0,Y=-14.0,Z=20.0)
-    AfterburnerOffset(1) = (X=-70.0,Y=14.0,Z=20.0)
+    AfterburnerOffset(0) = (X=-80.0,Y=-16.0,Z=21.0)
+    AfterburnerOffset(1) = (X=-80.0,Y=16.0,Z=21.0)
+    //Below are for original drawscale
+    //AfterburnerOffset(0) = (X=-70.0,Y=-14.0,Z=20.0)
+    //AfterburnerOffset(1) = (X=-70.0,Y=14.0,Z=20.0)
     BoostForce = 1800.0
     MinEjectSpeed = 700.0 // GEm: Originally 900, but it feels too much in comparison
     bAllowAirControl = false
     SelfDestructDamage = 600.0
     SelfDestructDamageRadius = 600.0
     SelfDestructMomentum = 20000
-    SteerSpeed=200.00
+    
+    MomentumMult=0.25 //?
+    
+    ExitPositions(0)=(X=0,Y=-150,Z=50)  //Left
+    ExitPositions(1)=(X=0,Y=150,Z=50)   //Right
+    ExitPositions(2)=(X=0,Y=-150,Z=-50) //Left Below
+    ExitPositions(3)=(X=0,Y=150,Z=-50)  //Right Below
+    ExitPositions(4)=(X=150,Y=0,Z=50)   //Front
+    ExitPositions(5)=(X=0,Y=0,Z=100)    //Roof
+    ExitPositions(6)=(X=150,Y=0,Z=-50)  //Front Below
+    ExitPositions(7)=(X=-150,Y=0,Z=-50) //Rear Below
+    ExitPositions(8)=(X=-150,Y=0,Z=50)  //Rear
+    
+    FPCamPos=(X=-70,Y=0,Z=105)  //FPCamPos=(X=-60,Y=0,Z=70) For original drawscale
+
+    //Normal
+    TPCamDistance=250.000000
+    TPCamLookat=(X=-70,Y=0,Z=0) //X-40
+    TPCamWorldOffset=(X=0,Y=0,Z=140) //170-200 is better for aiming high up but to me it makes ground level aim feel awkward
+
+    //Normal for original drawscale
+    //TPCamDistance=275.000000
+    //TPCamLookat=(X=-20,Y=0,Z=0)
+    //TPCamWorldOffset=(X=0,Y=0,Z= 150)
+    
+    //Aerial View
+    //TPCamDistance=250.000000
+    //TPCamLookat=(X=-50,Y=0,Z=0)
+    //TPCamWorldOffset=(X=0,Y=0,Z=30)    
+    
+    //Aerial View for original drawscale
+    //TPCamDistance=275.000000
+    //TPCamLookat=(X=-10,Y=0,Z=0)
+    //TPCamWorldOffset=(X=0,Y=0,Z=50)
+    
 }
