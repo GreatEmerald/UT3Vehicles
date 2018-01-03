@@ -41,13 +41,15 @@ class UT3HellbenderSideGun extends ONSPRVSideGun;
 
 defaultproperties
 {
-    Mesh = SkeletalMesh'UT3VH_Hellbender_Anims.HellbenderSecondaryTurret'
+
     DrawScale = 1.0
+    Mesh = SkeletalMesh'UT3VH_Hellbender_Anims.HellbenderSecondaryTurret'
     RedSkin = Shader'UT3HellbenderTex.UT3HellbenderSkinRed'
     BlueSkin = Shader'UT3HellbenderTex.UT3HellbenderSkinBlue'
     PitchBone=SecondaryTurretPitch
     YawBone=SecondaryTurretYaw
     WeaponFireAttachmentBone=SecondaryTurretBarrel
+    DamageType=class'UT3DmgType_HellbenderLaser'
     FireSoundClass = Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_BallFire01'
     AltFireSoundClass = Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_BeamFire01'
     PitchUpLimit=9600  //16000 is about what UT3 is but we don't have UT3's camera collision meaning we see under and through the Hellbender in UT2004
