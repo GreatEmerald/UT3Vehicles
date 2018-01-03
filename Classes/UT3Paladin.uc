@@ -2,7 +2,7 @@
  * Copyright © 2008-2009 Wormbo
  * Copyright © 2008-2009, 2014 GreatEmerald
  * Copyright © 2012, 2017 Luís 'zeluisping' Guimarães <zeluis.100@gmail.com>
- * Copyright © 2017 HellDragon-HK
+ * Copyright © 2017-2018 HellDragon-HK
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -50,27 +50,42 @@
 
 class UT3Paladin extends ONSShockTank;
 
-
 #exec obj load file=../Animations/UT3PaladinAnims.ukx
 #exec obj load file=../Textures/UT3PaladinTex.utx
 #exec obj load file=../Sounds/UT3A_Vehicle_Paladin.uax
 
+simulated function TeamChanged()
+{
+    local int i;
+
+    Super.TeamChanged();
+
+    if (Level.NetMode != NM_DedicatedServer)
+    {
+        for(i = 0; i < HeadlightCorona.Length; i++)
+        {
+            HeadlightCorona[i].LightSaturation = 0;
+            if (Team == 0)
+                HeadlightCorona[i].LightHue = 0;
+            if (Team == 1)
+                HeadlightCorona[i].LightHue = 175;
+        }
+    }
+}
 
 //=============================================================================
 // Default values
 //=============================================================================
 defaultproperties
 {
+
+    Drawscale = 1.0 //Ensure default scale and not be overriden by stock classes
+
     Mesh=SkeletalMesh'UT3PaladinAnims.Paladin';
     RedSkin=Shader'UT3PaladinTex.Paladin.PaladinSkin';
     BlueSkin=Shader'UT3PaladinTex.Paladin.PaladinSkinBlue';
 
     DriverWeapons(0)=(WeaponClass=class'UT3PaladinCannon',WeaponBone="Turret_Yaw");
-
-    FPCamPos=(X=-30,Y=0,Z=120);
-    FPCamViewOffset=(X=-100,Y=0,Z=0);
-    TPCamWorldOffset=(X=0,Y=0,Z=200);
-    TPCamDistance=575;
 
     VehiclePositionString="in a UT3 Paladin";
     SteerBoneName="Body"
@@ -80,20 +95,12 @@ defaultproperties
     StartUpSound=Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Start01';
     ShutDownSound=Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Stop01';
     DamagedEffectHealthSmokeFactor=0.65 //0.5
-    DamagedEffectHealthFireFactor=0.37 //0.25
-    DamagedEffectFireDamagePerSec=0.95 //0.75
-    ExplosionSounds(0)=Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Explode01';
-    ExplosionSounds(1)=Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Explode01';
-    ExplosionSounds(2)=Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Explode01';
-    ExplosionSounds(3)=Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Explode01';
-    ExplosionSounds(4)=Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Explode01';
+    DamagedEffectHealthFireFactor=0.40 //0.25
+    DamagedEffectFireDamagePerSec=2.00 //0.75
+    ExplosionSounds=()
+    ExplosionSounds(0)=Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Explode02;
+    ImpactDamageSounds=()
     ImpactDamageSounds(0)=Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Collide01';
-    ImpactDamageSounds(1)=Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Collide01';
-    ImpactDamageSounds(2)=Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Collide01';
-    ImpactDamageSounds(3)=Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Collide01';
-    ImpactDamageSounds(4)=Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Collide01';
-    ImpactDamageSounds(5)=Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Collide01';
-    ImpactDamageSounds(6)=Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Collide01';
 
     //HornSounds(0)=sound'ONSBPSounds.ShockTank.PaladinHorn'
     //HornSounds(1)=sound'ONSVehicleSounds-S.Dixie_Horn'
@@ -104,7 +111,7 @@ defaultproperties
     Begin Object Class=SVehicleWheel Name=RWheel1
         BoneName="RtTire01";
         SupportBoneName="RtSuspension01";
-        BoneOffset=(X=0.0,Y=35,Z=30.0);
+        BoneOffset=(X=0.0,Y=35,Z=13.0);
         SuspensionTravel=60.0;
         bPoweredWheel=true;
         WheelRadius=60;
@@ -117,7 +124,7 @@ defaultproperties
     Begin Object Class=SVehicleWheel Name=RWheel2
         BoneName="RtTire02";
         SupportBoneName="RtSuspension02";
-        BoneOffset=(X=0.0,Y=35.0,Z=30.0);
+        BoneOffset=(X=0.0,Y=35.0,Z=13.0);
         SuspensionTravel=60.0;
         bPoweredWheel=true;
         WheelRadius=60;
@@ -130,7 +137,7 @@ defaultproperties
     Begin Object Class=SVehicleWheel Name=RWheel3
         BoneName="RtTire03";
         SupportBoneName="RtSuspension03";
-        BoneOffset=(X=0.0,Y=35.0,Z=30.0);
+        BoneOffset=(X=0.0,Y=35.0,Z=13.0);
         SuspensionTravel=60.0;
         bPoweredWheel=true;
         WheelRadius=60;
@@ -143,7 +150,7 @@ defaultproperties
     Begin Object Class=SVehicleWheel Name=RWheel4
         BoneName="RtTire04";
         SupportBoneName="RtSuspension04";
-        BoneOffset=(X=0.0,Y=35.0,Z=30.0);
+        BoneOffset=(X=0.0,Y=35.0,Z=13.0);
         SuspensionTravel=60.0;
         bPoweredWheel=true;
         WheelRadius=60;
@@ -156,7 +163,7 @@ defaultproperties
     Begin Object Class=SVehicleWheel Name=LWheel1
         BoneName="LtTire01";
         SupportBoneName="LtSuspension01";
-        BoneOffset=(X=0.0,Y=-35.0,Z=30.0);
+        BoneOffset=(X=0.0,Y=-35.0,Z=13.0);
         SuspensionTravel=60.0;
         bPoweredWheel=true;
         WheelRadius=60;
@@ -169,7 +176,7 @@ defaultproperties
     Begin Object Class=SVehicleWheel Name=LWheel2
         BoneName="LtTire02";
         SupportBoneName="LtSuspension02";
-        BoneOffset=(X=0.0,Y=-35.0,Z=30.0);
+        BoneOffset=(X=0.0,Y=-35.0,Z=13.0);
         SuspensionTravel=60.0;
         bPoweredWheel=true;
         WheelRadius=60;
@@ -182,7 +189,7 @@ defaultproperties
     Begin Object Class=SVehicleWheel Name=LWheel3
         BoneName="LtTire03";
         SupportBoneName="LtSuspension03";
-        BoneOffset=(X=0.0,Y=-35.0,Z=30.0)
+        BoneOffset=(X=0.0,Y=-35.0,Z=13.0)
         SuspensionTravel=60.0;
         bPoweredWheel=true;
         WheelRadius=60;
@@ -195,7 +202,7 @@ defaultproperties
     Begin Object Class=SVehicleWheel Name=LWheel4
         BoneName="LtTire04";
         SupportBoneName="LtSuspension04";
-        BoneOffset=(X=0.0,Y=-35.0,Z=30.0);
+        BoneOffset=(X=0.0,Y=-35.0,Z=13.0);
         SuspensionTravel=60.0;
         bPoweredWheel=true;
         WheelRadius=60;
@@ -221,8 +228,9 @@ defaultproperties
     MinBrakeFriction=4.2
     MaxBrakeTorque=75.000000            // And another, but this time higher
     MaxSteerAngleCurve=(Points=((OutVal=20.000000),(InVal=700.000000,OutVal=15.000000))) // Again, steered more easily
-//    EngineBrakeFactor=0.100000        // This makes it extremely easy to flip and have an accident
+    //EngineBrakeFactor=0.100000        // This makes it extremely easy to flip and have an accident
     WheelInertia=0.750000               // Has more inertia
+    WheelSuspensionOffset=3.0
     
     GroundSpeed=700.000000              //Is faster, GroundSpeed == deprecated?
     //DriverWeapons(0)=(WeaponClass=class'UT3PaladinCannon',WeaponBone=CannonAttach); // Has a better shield
@@ -232,11 +240,6 @@ defaultproperties
     ChangeUpPoint=2600 //2000
     
     MomentumMult=0.1 //0.8
-    
-    ExitPositions(0)=(X=0,Y=-250,Z=30)
-    ExitPositions(1)=(X=0,Y=250,Z=30)
-    ExitPositions(2)=(X=0,Y=-250,Z=-30)
-    ExitPositions(3)=(X=0,Y=250,Z=-30)
     
     Begin Object Class=KarmaParamsRBFull Name=KParams0
         KStartEnabled=True
@@ -262,12 +265,33 @@ defaultproperties
     End Object
     KParams=KarmaParams'KParams0'
     
-    HeadlightCoronaOffset(0)=(X=215.0,Y=34.5,Z=8.0)
-    HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
+    EntryPosition=(X=20,Y=0,Z=0)
+    EntryRadius=350.0
+    
+    ExitPositions(0)=(X=0,Y=-260,Z=50)
+    ExitPositions(1)=(X=0,Y=260,Z=50)
+    ExitPositions(2)=(X=0,Y=-260,Z=-50)
+    ExitPositions(3)=(X=0,Y=260,Z=-50)
+    ExitPositions(4)=(X=90,Y=0,Z=160)
+    
+    FPCamPos = (X=-55,Y=0,Z=170);
+    FPCamViewOffset = (X=0,Y=0,Z=0);
+    
+    TPCamWorldOffset = (X=0,Y=0,Z=220); //280+ aiming up without clipping but ground level aim feels awkward
+    TPCamDistance = 575;
+
+    //Aerial View
+    //TPCamWorldOffset = (X=0,Y=0,Z=200);
+    
+    HeadlightCoronaOffset=()
+    HeadlightCoronaOffset(0)=(X=290.0,Y=47,Z=58.0)
+    HeadlightCoronaMaterial=Material'EpicParticles.FlashFlare1'
+    //HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
     HeadlightCoronaMaxSize=92
     
-    HeadlightProjectorOffset=(X=200,Y=10,Z=8.0)
+    HeadlightProjectorOffset=(X=290,Y=10,Z=58.0)
     HeadlightProjectorRotation=(Yaw=0,Pitch=-1000,Roll=0)
     HeadlightProjectorMaterial=Texture'VMVehicles-TX.NewPRVGroup.PRVProjector'
     HeadlightProjectorScale=0.05
+    
 }
