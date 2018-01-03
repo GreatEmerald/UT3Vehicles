@@ -1,3 +1,10 @@
 # List of files to ignore
 [Uu][Tt]2004.ini
 [Uu]ser.ini
+*.ukx
+*.utx
+*.usx
+*.u
+*.uax
+*.wav
+*.dds
