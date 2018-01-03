@@ -1,5 +1,6 @@
 /*
  * Copyright © 2014 GreatEmerald
+ * Copyright © 2017-2018 HellDragon
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -45,6 +46,45 @@ var Material RedSkinB, BlueSkinB;
 
 simulated state InstantFireMode
 {
+	
+    function Explosion(float DamRad)
+       {
+        local actor Victims;
+        local float damageScale, dist;
+        local vector Dir;
+
+        if (Role < ROLE_Authority)
+    	    return;
+
+         foreach VisibleCollidingActors(class 'Actor', Victims, DamRad, GHitLocation)
+        {
+                 if( (Victims != self) && (Victims != Instigator) && (Victims.Role == ROLE_Authority) && (!Victims.IsA('FluidSurfaceInfo')) )
+                  {
+                        Dir = Victims.Location - GHitLocation;
+                        dist = FMax(1,VSize(Dir));
+                        Dir = Dir/dist;
+                        Dir.Z *= 5.0;
+                        Dir = Normal(Dir);
+                        damageScale = 1;
+
+                 if (Pawn(Victims) != None && Pawn(Victims).GetTeamNum() == Instigator.GetTeamNum())
+                    damageScale = 0;
+
+    	                Victims.TakeDamage(
+                                                damageScale * DamageMax,
+                                                Instigator,
+                                                Victims.Location - 0.5 * (Victims.CollisionHeight + Victims.CollisionRadius) * Dir,
+                                                (damageScale * Momentum * Dir),
+                                                DamageType
+                    			  );
+    	          }
+        }
+        }
+	
+         function AltFire(Controller C)
+    {
+          }
+
 ImplodeExplode:
     bCurrentlyFiring = true;
     Sleep(0.8);
@@ -95,4 +135,10 @@ defaultproperties
     YawBone = "MainTurretYaw"
     PitchBone = "MainTurretPitch"
     WeaponFireAttachmentBone = "MainTurretPitch"
+    DamageType=class'UT3DmgType_LeviathanCannon'
+    RotationsPerSecond=0.22
+    DamageMin=250
+    DamageMax=250
+    DamageRadius=2000
+    Momentum=250000.0
 }
