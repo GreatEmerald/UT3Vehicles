@@ -114,7 +114,7 @@ function ToggleBlades(bool bRotating)
         // Off.
         Blades[0].Skins[0] = Blades[0].BladesOffTex;
         Blades[1].Skins[0] = Blades[1].BladesOffTex;
-    0}
+    }
 }
 
 //
