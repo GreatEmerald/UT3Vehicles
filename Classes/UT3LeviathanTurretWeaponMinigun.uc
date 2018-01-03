@@ -1,6 +1,7 @@
 /*
  * Copyright © 2007, 2009 Wormbo
  * Copyright © 2009, 2014 GreatEmerald
+ * Copyright © 2017, HellDragon
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -147,10 +148,10 @@ defaultproperties
     Spread       = 0.0675
     DamageMin    = 40
     DamageMax    = 40
-    DamageType   = class'DamTypeONSChainGun'
+    DamageType   = class'UT3DmgType_LeviathanShard'
     FireInterval = 0.1
 
-    FireSoundClass = Sound'UT3Weapons2.Stinger.StingerPrimaryAmb'
+    FireSoundClass = Sound'UT3Weapons2.Stinger.StingerHitEnemy' //Needs to be Alt, I'm positive but is this the alt fire sound, it sounds like it but odd name
     bAmbientFireSound=True
 
     mTracerInterval=0.06
