@@ -1,5 +1,6 @@
 /*
  * Copyright © 2009, 2014 GreatEmerald
+ * Copyright © 2017-2018 HellDragon
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -101,10 +102,27 @@ class UT3RaptorProjRed extends ONSAttackCraftPlasmaProjectileRed;
     bHurtEntry = false;
 }*/
 
+simulated function Explode(vector HitLocation, vector HitNormal)
+{
+    local float MyDamage;
+
+    MyDamage = 20.0;
+
+    if ( LifeSpan < 1.0 )
+        Damage = 0.75 * MyDamage;
+    else
+        Damage = MyDamage * FMin(2.0, Square(MaxSpeed)/Square(Speed));
+
+    default.Damage = Damage;
+    Super.Explode(HitLocation, HitNormal);
+}
+
 defaultproperties
 {
     Damage = 20.0 //GE: We're weaker! Hooray!
+    Speed=2000
+    MaxSpeed=12500
     AccelerationMagnitude = 20000 //GE: And slower!
-    MomentumTransfer = 4000.0
+    MomentumTransfer = 20000.000000 //4000.0
     LifeSpan = 1.6
 }
