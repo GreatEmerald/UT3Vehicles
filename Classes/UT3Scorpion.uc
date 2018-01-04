@@ -789,7 +789,6 @@ defaultproperties
     BrakeLightOffset(0)=(X=-86,Y=0,Z=45)
     BrakeLightOffset(1)=(X=-92,Y=0,Z=42)
     BrakeLightMaterial=Material'EpicParticles.FlashFlare1' //Material'EpicParticles.FlickerFlare'
-    HeadlightProjectorMaterial=None
 
     BoostRechargeTime = 5.0
     AfterburnerOffset(0) = (X=-80.0,Y=-16.0,Z=21.0)
