@@ -102,19 +102,22 @@ class UT3RaptorProjRed extends ONSAttackCraftPlasmaProjectileRed;
     bHurtEntry = false;
 }*/
 
+simulated function HitWall(vector HitNormal, actor Wall)
+{
+    UpdateDamage();
+    Super.HitWall(HitNormal, Wall);
+}
+
 simulated function Explode(vector HitLocation, vector HitNormal)
 {
-    local float MyDamage;
-
-    MyDamage = 20.0;
-
-    if ( LifeSpan < 1.0 )
-        Damage = 0.75 * MyDamage;
-    else
-        Damage = MyDamage * FMin(2.0, Square(MaxSpeed)/Square(Speed));
-
-    default.Damage = Damage;
+    UpdateDamage();
     Super.Explode(HitLocation, HitNormal);
+}
+
+simulated function BlowUp(vector HitLocation)
+{
+    UpdateDamage();
+    Super.BlowUp(HitLocation);
 }
 
 defaultproperties
