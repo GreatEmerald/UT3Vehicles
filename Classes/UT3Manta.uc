@@ -123,8 +123,8 @@ function ToggleBlades(bool bRotating)
 function Ailerons(float DeltaTime)
 {
     local Rotator AileronsRotation;
+    local Rotator GunsRotation;
     Super.Tick(DeltaTime);
-    Guns();
     // 45° = 8192 RUU
 
     // 1000 = The velocity at wich the angle is of 45º
@@ -137,6 +137,12 @@ function Ailerons(float DeltaTime)
 
     SetBoneRotation('Aileron_Rt', AileronsRotation, 0, 1);
     SetBoneRotation('Aileron_Lt', AileronsRotation, 0, 1);
+    
+    GunsRotation.Pitch = -DriverViewPitch;
+    //GunsRotation.Yaw = -DriverViewYaw;
+    
+    SetBoneRotation('Barrel_rt', GunsRotation, 0, 1);
+    SetBoneRotation('Barrel_lt', GunsRotation, 0, 1);
 }
 
 //
@@ -148,19 +154,6 @@ function Destroyed()
     Blades[1].Destroy();
 
     Super.Destroyed();
-}
-
-// Animates the guns depending on the driver's view.
-//
-function Guns()
-{
-    local Rotator GunsRotation;
-
-    GunsRotation.Pitch = -DriverViewPitch;
-    //GunsRotation.Yaw = -DriverViewYaw;
-	
-    SetBoneRotation('Barrel_rt', GunsRotation, 0, 1);
-    SetBoneRotation('Barrel_lt', GunsRotation, 0, 1);
 }
 
 simulated function CheckJumpDuck()
