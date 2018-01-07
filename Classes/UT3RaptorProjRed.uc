@@ -102,6 +102,14 @@ class UT3RaptorProjRed extends ONSAttackCraftPlasmaProjectileRed;
     bHurtEntry = false;
 }*/
 
+simulated function UpdateDamage()
+{
+    if ( LifeSpan < 1.0 )
+        Damage = 0.75 * default.Damage;
+    else
+        Damage = default.Damage * FMin(2.0, Square(MaxSpeed)/Square(Speed));
+}
+
 simulated function HitWall(vector HitNormal, actor Wall)
 {
     UpdateDamage();
