@@ -45,9 +45,9 @@
 //#exec MESH  MODELIMPORT MESH=TankVictimMesh MODELFILE=models\tank_victim.PSK RIGID=1
 
 
-#exec OBJ LOAD FILE=StaticMeshes\EONSLocustSM.usx
-#exec OBJ LOAD FILE=Animations\EONSLocustA.ukx
-#exec OBJ LOAD FILE=Textures\EONSLocustTex.utx
+#exec OBJ LOAD FILE=..\StaticMeshes\EONSLocustSM.usx
+#exec OBJ LOAD FILE=..\Animations\EONSLocustA.ukx
+#exec OBJ LOAD FILE=..\Textures\EONSLocustTex.utx
 
 #exec OBJ LOAD FILE=..\Sounds\ONSVehicleSounds-S.uax
 #exec OBJ LOAD FILE=..\textures\EpicParticles.utx
