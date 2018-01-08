@@ -1,6 +1,6 @@
 /*
- * Copyright © 2018 GreatEmerald
- * Copyright © 2018 HellDragon
+ * Copyright © 2014 GreatEmerald
+ * Copyright © 2017-2018 HellDragon
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -38,14 +38,10 @@
  * of such parties' affiliates and subsidiaries.
  */
 
-class UT3DmgType_HellbenderLaser extends DamTypePRVLaser
-	abstract;
+class UT3DmgType_ScorpionBlades extends DamTypeONSRVBlade;
 
 defaultproperties
 {
-    VehicleClass=Class'UT3Hellbender'
-    DeathString="%k's laser shocked %o."
-    FemaleSuicide="%o used her laser on herself."
-    MaleSuicide="%o used his laser on himself."
-    KDamageImpulse=2000
+    DeathString="%o was cut down by %k's blades."
+    VehicleClass=class'UT3Scorpion'
 }
