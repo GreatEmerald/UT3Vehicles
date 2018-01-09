@@ -123,18 +123,18 @@ event Timer()
 
 DefaultProperties
 {
-	EMPRadius = 500.0;
+    EMPRadius = 500.0;
 
-	Mesh = SkeletalMesh'UT3NightshadeAnims.EMPMine';
-	DrawType = DT_Mesh;
+    Mesh = SkeletalMesh'UT3NightshadeAnims.EMPMine';
+    DrawType = DT_Mesh;
 
-	bCollideActors = false;
-	bBlockActors = false;
-	bBlockKarma = false;
+    bCollideActors = false;
+    bBlockActors = false;
+    bBlockKarma = false;
 
-	LifeSpan = 60.0;
+    LifeSpan = 60.0;
 
-	// Sound.
+    // Sound.
     DropSnd = Sound'UT3A_Vehicle_Nightshade.EMPMine.EMP_Drop';
     ShockSnd = Sound'UT3A_Vehicle_Nightshade.EMPMine.EMP_Shock';
 }
