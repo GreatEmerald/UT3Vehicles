@@ -1,6 +1,6 @@
 /*
- * Copyright © 2012 100GPing100
- * Copyright © 2014 GreatEmerald
+ * Copyright Â© 2012 100GPing100
+ * Copyright Â© 2014 GreatEmerald
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -39,12 +39,6 @@
  */
 
 class UT3SpiderMineTrap extends UT3DeployableMine;
-
-
-#exec audio import group=SpiderSounds file=../UT3Vehicles/Sounds/UT3Nightshade/SpiderMine/SpiderMine_Active01.wav
-#exec audio import group=SpiderSounds file=../UT3Vehicles/Sounds/UT3Nightshade/SpiderMine/SpiderMine_Active02.wav
-#exec audio import group=SpiderSounds file=../UT3Vehicles/Sounds/UT3Nightshade/SpiderMine/SpiderMine_Active03.wav
-#exec audio import group=SpiderSounds file=../UT3Vehicles/Sounds/UT3Nightshade/SpiderMine/SpiderMine_Drop.wav
 
 
 /* Max range for detecting enemies. */
@@ -181,10 +175,10 @@ DefaultProperties
 	AvailableMines=15;
 
 	// Sound.
-	ActivateSnd(0) = Sound'SpiderMine_Active01';
-	ActivateSnd(1) = Sound'SpiderMine_Active02';
-	ActivateSnd(2) = Sound'SpiderMine_Active03';
-	DropSnd = Sound'SpiderMine_Drop';
+    ActivateSnd(0) = Sound'UT3A_Vehicle_Nightshade.SpiderMine.SpiderMine_Active01';
+    ActivateSnd(1) = Sound'UT3A_Vehicle_Nightshade.SpiderMine.SpiderMine_Active02';
+    ActivateSnd(2) = Sound'UT3A_Vehicle_Nightshade.SpiderMine.SpiderMine_Active03';
+    DropSnd = Sound'UT3A_Vehicle_Nightshade.SpiderMine.SpiderMine_Drop';
 
 	// Misc.
 	LifeSpan=150.0;
