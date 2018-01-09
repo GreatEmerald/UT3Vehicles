@@ -60,26 +60,26 @@ event TakeDamage(int DamageAmount, Pawn Instigator, vector HitLocation, vector M
 
 DefaultProperties
 {
-	// Looks.
-	StaticMesh = StaticMesh'UT3NightshadeSM.Shield';
-	DrawType = DT_StaticMesh;
-	DrawScale = 5.0;
-	Rotation = (Roll=0);
+    // Looks.
+    StaticMesh = StaticMesh'UT3NightshadeSM.Shield';
+    DrawType = DT_StaticMesh;
+    DrawScale = 5.0;
+    Rotation = (Roll=0);
 
-	// Collision.
-	bCollideActors = true;
-	bBlockActors = false;
-	bBlockZeroExtentTraces = true;
-	//bBlockNonZeroExtentTraces = false;
-	bProjTarget = true;
-	bActorShadows = false;
+    // Collision.
+    bCollideActors = true;
+    bBlockActors = false;
+    bBlockZeroExtentTraces = true;
+    //bBlockNonZeroExtentTraces = false;
+    bProjTarget = true;
+    bActorShadows = false;
 
-	// Damage.
-	Health = 4000;
+    // Damage.
+    Health = 4000;
 
-	// Sound.
+    // Sound.
     AmbientSound = Sound'UT3A_Vehicle_Nightshade.Shield.Shield_Ambient';
     HitSnd = Sound'UT3A_Vehicle_Nightshade.Shield.Shield_Hit';
-	SoundRadius = 250;
-	SoundVolume = 128;
+    SoundRadius = 250;
+    SoundVolume = 128;
 }
