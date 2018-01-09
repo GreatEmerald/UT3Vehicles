@@ -737,41 +737,41 @@ simulated event ShutDown()
 
 defaultproperties
 {
-	MinSpiderFloorZ=0.1
-	Speed=800.0
-	MaxSpeed=800.0
-	ScurrySpeed=525.0
-	ScurryAnimRate=1.0
-	TossZ=0.0
-	Damage=95.0
-	DamageRadius=250.0
-	MomentumTransfer=50000
-	Physics=PHYS_Falling
-	RotationRate=(Pitch=20000)
-	DetectionTimer=0.50
-	DetectionRange=750.0
-	KeepTargetExtraRange=250.0
-	bProjTarget=true
-	bCollideWorld=True
-	bBlockActors=true
+    MinSpiderFloorZ=0.1
+    Speed=800.0
+    MaxSpeed=800.0
+    ScurrySpeed=525.0
+    ScurryAnimRate=1.0
+    TossZ=0.0
+    Damage=95.0
+    DamageRadius=250.0
+    MomentumTransfer=50000
+    Physics=PHYS_Falling
+    RotationRate=(Pitch=20000)
+    DetectionTimer=0.50
+    DetectionRange=750.0
+    KeepTargetExtraRange=250.0
+    bProjTarget=true
+    bCollideWorld=True
+    bBlockActors=true
 
-	RemoteRole=ROLE_SimulatedProxy
-	bNetTemporary=False
-	bUpdateSimulatedPosition=True
-	LifeSpan=0.0
-	TargetLocFuzz=250
-	ReturnToTrapDelay=5.0
-	bSwitchToZeroCollision=false
+    RemoteRole=ROLE_SimulatedProxy
+    bNetTemporary=False
+    bUpdateSimulatedPosition=True
+    LifeSpan=0.0
+    TargetLocFuzz=250
+    ReturnToTrapDelay=5.0
+    bSwitchToZeroCollision=false
 
-	bBounce=True
-	bHardAttach=True
+    bBounce=True
+    bHardAttach=True
 
-	Mesh=SkeletalMesh'UT3NightshadeAnims.Spider_1P';
-	CollisionRadius=10.000000
-	CollisionHeight=10.000000
-	bBlockKarma=True
+    Mesh=SkeletalMesh'UT3NightshadeAnims.Spider_1P';
+    CollisionRadius=10.000000
+    CollisionHeight=10.000000
+    bBlockKarma=True
 
-	// Sound.
+    // Sound.
     ExplosionSnd(0) = Sound'UT3A_Vehicle_Nightshade.SpiderMine.Spider_Explode01';
     ExplosionSnd(1) = Sound'UT3A_Vehicle_Nightshade.SpiderMine.Spider_Explode02';
     ExplosionSnd(2) = Sound'UT3A_Vehicle_Nightshade.SpiderMine.Spider_Explode03';
