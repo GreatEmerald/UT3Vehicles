@@ -1,6 +1,6 @@
 /*
- * Copyright © 2012 100GPing100
- * Copyright © 2014 GreatEmerald
+ * Copyright Â© 2012 100GPing100
+ * Copyright Â© 2014 GreatEmerald
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -39,9 +39,6 @@
  */
 
 class UT3DeployableEnergyShield extends UT3DeployableMine;
-
-#exec audio import group=ShieldSounds file=../UT3Vehicles/Sounds/UT3Nightshade/Shield/Shield_Open.wav
-#exec audio import group=ShieldSounds file=../UT3Vehicles/Sounds/UT3Nightshade/Shield/Shield_Close.wav
 
 /*  */
 var UT3EnergyShield ShieldActor;
@@ -84,6 +81,6 @@ DefaultProperties
 	LifeSpan = 90.0;
 
 	// Sound.
-	OpenSnd = Sound'Shield_Open';
-	CloseSnd = Sound'Shield_Close';
+    OpenSnd = Sound'UT3A_Vehicle_Nightshade.Shield.Shield_Open';
+    CloseSnd = Sound'UT3A_Vehicle_Nightshade.Shield.Shield_Close';
 }
