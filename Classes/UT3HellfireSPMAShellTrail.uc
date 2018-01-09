@@ -39,7 +39,7 @@ defaultproperties
 		ParticlesPerSecond=0.0
 		InitialParticlesPerSecond=0.0
 		DrawStyle=PTDS_AlphaBlend
-		Texture=Texture'SPMASmoke'
+		Texture=Texture'UT3SPMATex.Smoke.SPMASmoke'
 		SecondsBeforeInactive=0.0
 		LifetimeRange=(Min=2.0,Max=2.5)
 		InitialDelayRange=(Min=0.1,Max=0.1)
