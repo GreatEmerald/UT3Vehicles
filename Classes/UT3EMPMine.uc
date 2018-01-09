@@ -39,9 +39,6 @@
 
 class UT3EMPMine extends UT3DeployableMine;
 
-#exec audio import group=EMPSounds file=../UT3Vehicles/Sounds/UT3Nightshade/EMPMine/EMP_Drop.wav
-#exec audio import group=EMPSounds file=../UT3Vehicles/Sounds/UT3Nightshade/EMPMine/EMP_Shock.wav
-
 /*  */
 var float EMPRadius;
 /*  */
@@ -138,6 +135,6 @@ DefaultProperties
 	LifeSpan = 60.0;
 
 	// Sound.
-	DropSnd = Sound'EMP_Drop';
-	ShockSnd = Sound'EMP_Shock';
+    DropSnd = Sound'UT3A_Vehicle_Nightshade.EMPMine.EMP_Drop';
+    ShockSnd = Sound'UT3A_Vehicle_Nightshade.EMPMine.EMP_Shock';
 }
