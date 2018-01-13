@@ -378,7 +378,7 @@ defaultproperties
     //TPCamWorldOffset=(X=0,Y=0,Z=35)
 
     HeadlightCoronaOffset=()
-    HeadlightCoronaOffset(0)=(X=40.0,Y=0.0,Z=-30.0)
+    HeadlightCoronaOffset(0)=(X=40.0,Y=0.0,Z=-20.0)
     HeadlightCoronaMaterial=Material'EpicParticles.FlashFlare1'
     //HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
     
