@@ -39,6 +39,170 @@
 
 class UT3HellbenderSideGun extends ONSPRVSideGun;
 
+#exec obj load file=..\Animations\UT3VH_Hellbender_Anims.ukx
+#exec OBJ LOAD FILE=..\textures\EpicParticles.utx
+#exec OBJ LOAD FILE=..\textures\VMVehicles-TX.utx
+
+var		array<ONSHeadlightCorona>	HeadlightCorona;
+var()	array<vector>				HeadlightCoronaOffset;
+var()	Material					HeadlightCoronaMaterial;
+var()	float						HeadlightCoronaMaxSize;
+
+var		ONSHeadlightProjector		HeadlightProjector;
+var()	Material					HeadlightProjectorMaterial; // If null, do not create projector.
+var()	vector						HeadlightProjectorOffset;
+var()	rotator						HeadlightProjectorRotation;
+var()	float						HeadlightProjectorScale;
+
+simulated function PostNetBeginPlay()
+{
+    local int i;
+
+    Super.PostNetBeginPlay();
+
+	if(Level.NetMode != NM_DedicatedServer && Level.bUseHeadlights && !(Level.bDropDetail || (Level.DetailMode == DM_Low)))
+	{
+		HeadlightCorona.Length = HeadlightCoronaOffset.Length;
+
+		for(i=0; i<HeadlightCoronaOffset.Length; i++)
+		{
+			HeadlightCorona[i] = spawn( class'ONSHeadlightCorona', self,, Location + (HeadlightCoronaOffset[i] >> Rotation) );
+			HeadlightCorona[i].SetBase(self);
+			HeadlightCorona[i].SetRelativeRotation(rot(0,0,0));
+			HeadlightCorona[i].Skins[0] = HeadlightCoronaMaterial;
+			HeadlightCorona[i].ChangeTeamTint(Team);
+			HeadlightCorona[i].MaxCoronaSize = HeadlightCoronaMaxSize * Level.HeadlightScaling;
+		}
+
+		if(HeadlightProjectorMaterial != None && Level.DetailMode == DM_SuperHigh)
+		{
+			HeadlightProjector = spawn( class'ONSHeadlightProjector', self,, Location + (HeadlightProjectorOffset >> Rotation) );
+			HeadlightProjector.SetBase(self);
+			HeadlightProjector.SetRelativeRotation( HeadlightProjectorRotation );
+			HeadlightProjector.ProjTexture = HeadlightProjectorMaterial;
+			HeadlightProjector.SetDrawScale(HeadlightProjectorScale);
+			HeadlightProjector.CullDistance	= ShadowCullDistance;
+		}
+	}
+
+    SetTeamNum(Team);
+	TeamChanged();
+}
+
+simulated function Destroyed()
+{
+    local int i;
+
+	Super.Destroyed();
+
+    // Destroy the effects
+	if(Level.NetMode != NM_DedicatedServer)
+	{
+		for(i=0;i<HeadlightCorona.Length;i++)
+			HeadlightCorona[i].Destroy();
+		HeadlightCorona.Length = 0;
+
+		if(HeadlightProjector != None)
+			HeadlightProjector.Destroy();
+
+	}
+
+	TriggerEvent(Event, self, None);
+}
+
+simulated event TeamChanged()
+{
+    local int i;
+
+    Super.TeamChanged();
+
+    if (Team == 0 && RedSkin != None)
+        Skins[0] = RedSkin;
+    else if (Team == 1 && BlueSkin != None)
+        Skins[0] = BlueSkin;
+
+    if (Level.NetMode != NM_DedicatedServer && Team <= 2 && SpawnOverlay[0] != None && SpawnOverlay[1] != None)
+        SetOverlayMaterial(SpawnOverlay[Team], 1.5, True);
+
+    for (i = 0; i < Weapons.Length; i++)
+        Weapons[i].SetTeam(Team);
+
+	if (Level.NetMode != NM_DedicatedServer)
+	{
+		for(i = 0; i < HeadlightCorona.Length; i++)
+			HeadlightCorona[i].ChangeTeamTint(Team);
+	}
+}
+
+simulated event DestroyAppearance()
+{
+	local int i;
+
+    // Destroy the effects
+	if(Level.NetMode != NM_DedicatedServer)
+	{
+		bNoTeamBeacon = true;
+
+		for(i=0;i<HeadlightCorona.Length;i++)
+			HeadlightCorona[i].Destroy();
+		HeadlightCorona.Length = 0;
+
+		if(HeadlightProjector != None)
+			HeadlightProjector.Destroy();
+	}
+
+}
+
+simulated event SVehicleUpdateParams()
+{
+	local int i;
+
+	// This code just for making it easy to position coronas etc.
+	if(Level.NetMode != NM_DedicatedServer)
+	{
+		for(i=0; i<HeadlightCorona.Length; i++)
+		{
+			HeadlightCorona[i].SetBase(None);
+			HeadlightCorona[i].SetLocation( Location + (HeadlightCoronaOffset[i] >> Rotation) );
+			HeadlightCorona[i].SetBase(self);
+			HeadlightCorona[i].Skins[0] = HeadlightCoronaMaterial;
+			HeadlightCorona[i].MaxCoronaSize = HeadlightCoronaMaxSize * Level.HeadlightScaling;
+		}
+
+		if(HeadlightProjector != None)
+		{
+			HeadlightProjector.SetBase(None);
+			HeadlightProjector.SetLocation( Location + (HeadlightProjectorOffset >> Rotation) );
+			HeadlightProjector.SetBase(self);
+			HeadlightProjector.SetRelativeRotation( HeadlightProjectorRotation );
+			HeadlightProjector.ProjTexture = HeadlightProjectorMaterial;
+			HeadlightProjector.SetDrawScale(HeadlightProjectorScale);
+		}
+	}
+}
+
+static function StaticPrecache(LevelInfo L)
+{
+
+	if (Default.HeadlightCoronaMaterial != None)
+		L.AddPrecacheMaterial(Default.HeadLightCoronaMaterial);
+
+	if (Default.HeadlightProjectorMaterial != None)
+		L.AddPrecacheMaterial(Default.HeadLightProjectorMaterial);
+
+}
+
+simulated function UpdatePrecacheMaterials()
+{
+	if (HeadlightCoronaMaterial != None)
+		Level.AddPrecacheMaterial(HeadLightCoronaMaterial);
+
+	if (HeadlightProjectorMaterial != None)
+		Level.AddPrecacheMaterial(HeadLightProjectorMaterial);
+
+	Super.UpdatePrecacheMaterials();
+}
+
 defaultproperties
 {
 
@@ -56,4 +220,13 @@ defaultproperties
     PitchDownLimit=59200
     bInstantRotation=False
     ProjectileClass = class'UT3HBShockBall'
+    
+    HeadlightCoronaOffset=()
+    HeadlightCoronaOffset(0)=(X=40.0,Y=0.0,Z=-20.0)
+    HeadlightCoronaMaterial=Material'EpicParticles.FlashFlare1'
+    
+    HeadlightProjectorOffset=(X=35,Y=0,Z=-30)
+    HeadlightProjectorRotation=(Yaw=0,Pitch=-1000,Roll=0)
+    HeadlightProjectorMaterial=Texture'VMVehicles-TX.RVGroup.RVProjector'
+    HeadlightProjectorScale=0.02
 }
