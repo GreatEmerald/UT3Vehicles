@@ -42,13 +42,27 @@
 
 class UT3Manta extends ONSHoverBike;
 
+/* Load the packages. */
+#exec obj load file=..\Animations\UT3MantaAnims.ukx
+#exec obj load file=..\Textures\UT3MantaTex.utx
+#exec obj load file=..\Sounds\UT3A_Vehicle_Manta.uax
+#exec OBJ LOAD FILE=..\textures\EpicParticles.utx
+#exec OBJ LOAD FILE=..\textures\VMVehicles-TX.utx
+
 var Emitter DuckEffect;
 
+var()   array<vector>					TrailEffectPositions;
+var     class<ONSAttackCraftExhaust>	TrailEffectClass;
+var     array<ONSAttackCraftExhaust>	TrailEffects;
+var()	array<vector>					StreamerEffectOffset;
+var     class<ONSAttackCraftStreamer>	StreamerEffectClass;
+var		array<ONSAttackCraftStreamer>	StreamerEffect;
 
-/* Load the packages. */
-#exec obj load file=../Animations/UT3MantaAnims.ukx
-#exec obj load file=../Textures/UT3MantaTex.utx
-#exec obj load file=../Sounds/UT3A_Vehicle_Manta.uax
+var()	range							StreamerOpacityRamp;
+var()	float							StreamerOpacityChangeRate;
+var()	float							StreamerOpacityMax;
+var		float							StreamerCurrentOpacity;
+var		bool							StreamerActive;
 
 /* The spining blades. */
 var array<UT3MantaBlade> Blades;
@@ -74,28 +88,160 @@ function PostBeginPlay()
 //
 function DrivingStatusChanged()
 {
+    local vector RotX, RotY, RotZ;
+	local int i;
+    
     Super.DrivingStatusChanged();
 
     ToggleBlades(Driver != None);
 
     if (Driver == None) // The default value is set by the mutator.
-        bCanBeBaseForPawns = default.bCanBeBaseForPawns;
+    {    bCanBeBaseForPawns = default.bCanBeBaseForPawns;
+    }
     else
-        bCanBeBaseForPawns = false;
-}
+    {    bCanBeBaseForPawns = false;
+    }
 
+    if (bDriving && Level.NetMode != NM_DedicatedServer && !bDropDetail)
+	{
+        GetAxes(Rotation,RotX,RotY,RotZ);
+
+        if (TrailEffects.Length == 0)
+        {
+            TrailEffects.Length = TrailEffectPositions.Length;
+
+        	for(i=0;i<TrailEffects.Length;i++)
+            	if (TrailEffects[i] == None)
+            	{
+                	TrailEffects[i] = spawn(TrailEffectClass, self,, Location + (TrailEffectPositions[i] >> Rotation) );
+                	TrailEffects[i].SetBase(self);
+                    TrailEffects[i].SetRelativeRotation( rot(0,32768,0) );
+                }
+        }
+
+        if (StreamerEffect.Length == 0)
+        {
+    		StreamerEffect.Length = StreamerEffectOffset.Length;
+
+    		for(i=0; i<StreamerEffect.Length; i++)
+        		if (StreamerEffect[i] == None)
+        		{
+        			StreamerEffect[i] = spawn(StreamerEffectClass, self,, Location + (StreamerEffectOffset[i] >> Rotation) );
+        			StreamerEffect[i].SetBase(self);
+        		}
+    	}
+    }
+    else
+    {
+        if (Level.NetMode != NM_DedicatedServer)
+    	{
+        	for(i=0;i<TrailEffects.Length;i++)
+        	   TrailEffects[i].Destroy();
+
+        	TrailEffects.Length = 0;
+
+    		for(i=0; i<StreamerEffect.Length; i++)
+                StreamerEffect[i].Destroy();
+
+            StreamerEffect.Length = 0;
+        }
+    }
+}
+    
 //
 // Called every game tick.
 //
 function Tick(float DeltaTime)
 {
-    super.Tick(DeltaTime);
+    local float EnginePitch, HitDist;
+    local int i;
+	local vector TraceStart, TraceEnd, HitLocation, HitNormal;
+	local actor HitActor;
+    local float DesiredOpacity, DeltaOpacity, MaxOpacityChange, ThrustAmount;
+	local TrailEmitter T;
+	local vector RelVel;
+	local bool NewStreamerActive, bIsBehindView;
+	local PlayerController PC;
 
     if (Driver != None) // Just in case.
         Ailerons(DeltaTime);
 
     if (!bHoldingDuck && DuckEffect != None)
         DuckEffect.Destroy();
+
+    	if(Level.NetMode != NM_DedicatedServer)
+	{
+        EnginePitch = 64.0 + VSize(Velocity)/MaxPitchSpeed * 64.0;
+        SoundPitch = FClamp(EnginePitch, 34, 128);
+
+        RelVel = Velocity << Rotation;
+
+        PC = Level.GetLocalPlayerController();
+		if (PC != None && PC.ViewTarget == self)
+			bIsBehindView = PC.bBehindView;
+		else
+            bIsBehindView = True;
+
+    	// Adjust Engine FX depending on being drive/velocity
+		if (!bIsBehindView)
+		{
+			for(i=0; i<TrailEffects.Length; i++)
+				TrailEffects[i].SetThrustEnabled(false);
+		}
+        else
+        {
+			ThrustAmount = FClamp(OutputThrust, 0.0, 1.0);
+
+			for(i=0; i<TrailEffects.Length; i++)
+			{
+				TrailEffects[i].SetThrustEnabled(true);
+				TrailEffects[i].SetThrust(ThrustAmount);
+			}
+		}
+
+		// Update streamer opacity (limit max change speed)
+		DesiredOpacity = (RelVel.X - StreamerOpacityRamp.Min)/(StreamerOpacityRamp.Max - StreamerOpacityRamp.Min);
+		DesiredOpacity = FClamp(DesiredOpacity, 0.0, StreamerOpacityMax);
+
+		MaxOpacityChange = DeltaTime * StreamerOpacityChangeRate;
+
+		DeltaOpacity = DesiredOpacity - StreamerCurrentOpacity;
+		DeltaOpacity = FClamp(DeltaOpacity, -MaxOpacityChange, MaxOpacityChange);
+
+		if(!bIsBehindView)
+            StreamerCurrentOpacity = 0.0;
+        else
+    		StreamerCurrentOpacity += DeltaOpacity;
+
+		if(StreamerCurrentOpacity < 0.01)
+			NewStreamerActive = false;
+		else
+			NewStreamerActive = true;
+
+		for(i=0; i<StreamerEffect.Length; i++)
+		{
+			if(NewStreamerActive)
+			{
+				if(!StreamerActive)
+				{
+					T = TrailEmitter(StreamerEffect[i].Emitters[0]);
+					T.ResetTrail();
+				}
+
+				StreamerEffect[i].Emitters[0].Disabled = false;
+				StreamerEffect[i].Emitters[0].Opacity = StreamerCurrentOpacity;
+			}
+			else
+			{
+				StreamerEffect[i].Emitters[0].Disabled = true;
+				StreamerEffect[i].Emitters[0].Opacity = 0.0;
+			}
+		}
+
+		StreamerActive = NewStreamerActive;
+    }
+
+    Super.Tick(DeltaTime);
 }
 
 //
@@ -142,11 +288,33 @@ function Ailerons(float DeltaTime)
 //
 function Destroyed()
 {
+    local int i;
+    
     Blades[0].Destroy();
     Blades[1].Destroy();
+    
+    if (Level.NetMode != NM_DedicatedServer)
+	{
+		for (i = 0; i < BikeDust.Length; i++)
+			BikeDust[i].Destroy();
+
+		BikeDust.Length = 0;
+	}
+
+    if(Level.NetMode != NM_DedicatedServer)
+	{
+    	for(i=0;i<TrailEffects.Length;i++)
+        	TrailEffects[i].Destroy();
+        TrailEffects.Length = 0;
+
+		for(i=0; i<StreamerEffect.Length; i++)
+			StreamerEffect[i].Destroy();
+		StreamerEffect.Length = 0;
+    }
 
     Super.Destroyed();
 }
+
 
 simulated function CheckJumpDuck()
 {
@@ -259,6 +427,24 @@ simulated function TeamChanged()
     }
 }
 
+function Died(Controller Killer, class<DamageType> damageType, vector HitLocation)
+{
+    local int i;
+
+    if(Level.NetMode != NM_DedicatedServer)
+	{
+    	for(i=0;i<TrailEffects.Length;i++)
+        	TrailEffects[i].Destroy();
+        TrailEffects.Length = 0;
+
+		for(i=0; i<StreamerEffect.Length; i++)
+			StreamerEffect[i].Destroy();
+		StreamerEffect.Length = 0;
+    }
+
+	Super.Died(Killer, damageType, HitLocation);
+}
+
 //=============================================================================
 // Default values
 //=============================================================================
@@ -279,7 +465,6 @@ defaultproperties
 
     // Movement.
     GroundSpeed = 1500 //UT2004 default is 2000 UT3 default is 1500
-    MaxPitchSpeed = 4000;
     AirControl = 1.5
     MaxYawRate=5.0 //3.0
     TurnTorqueMax=180.0 //125.0 def UT2004
@@ -325,6 +510,7 @@ defaultproperties
     KParams=KarmaParams'KParams0'
         
     // Sounds.
+    MaxPitchSpeed = 4000;
     IdleSound = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_EngineLoop01';
     StartUpSound = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Start01';
     ShutDownSound = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Stop01';
@@ -376,6 +562,18 @@ defaultproperties
     //TPCamDistance=300.000000
     //TPCamLookat=(X=0,Y=0,Z=0)
     //TPCamWorldOffset=(X=0,Y=0,Z=35)
+
+    TrailEffectPositions(0)=(X=-127.000000,Y=-16.000000,Z=16.000000)
+    TrailEffectPositions(1)=(X=-127.000000,Y=16.000000,Z=16.000000)
+    TrailEffectClass=Class'Onslaught.ONSAttackCraftExhaust'
+    StreamerEffectOffset(0)=(X=-68.000000,Y=-90.000000,Z=-14.000000)
+    StreamerEffectOffset(1)=(X=-68.000000,Y=90.000000,Z=-14.000000)
+    StreamerEffectOffset(2)=(X=-92.000000,Y=-22.000000,Z=10.000000)
+    StreamerEffectOffset(3)=(X=-92.000000,Y=22.000000,Z=10.000000)
+    StreamerEffectClass=Class'Onslaught.ONSAttackCraftStreamer'
+    StreamerOpacityRamp=(Min=1200.000000,Max=1600.000000)
+    StreamerOpacityChangeRate=1.000000
+    StreamerOpacityMax=0.700000
 
     HeadlightCoronaOffset=()
     HeadlightCoronaOffset(0)=(X=40.0,Y=0.0,Z=-30.0)
