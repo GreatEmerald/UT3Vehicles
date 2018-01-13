@@ -51,18 +51,9 @@ class UT3Manta extends ONSHoverBike;
 
 var Emitter DuckEffect;
 
-var()   array<vector>					TrailEffectPositions;
+var()   array<vector>			TrailEffectPositions;
 var     class<ONSAttackCraftExhaust>	TrailEffectClass;
 var     array<ONSAttackCraftExhaust>	TrailEffects;
-var()	array<vector>					StreamerEffectOffset;
-var     class<ONSAttackCraftStreamer>	StreamerEffectClass;
-var		array<ONSAttackCraftStreamer>	StreamerEffect;
-
-var()	range							StreamerOpacityRamp;
-var()	float							StreamerOpacityChangeRate;
-var()	float							StreamerOpacityMax;
-var		float							StreamerCurrentOpacity;
-var		bool							StreamerActive;
 
 var()	bool				bMakeBrakeLights;
 var()	vector				BrakeLightOffset[2];
@@ -151,18 +142,6 @@ function DrivingStatusChanged()
                     TrailEffects[i].SetRelativeRotation( rot(0,32768,0) );
                 }
         }
-
-        if (StreamerEffect.Length == 0)
-        {
-    		StreamerEffect.Length = StreamerEffectOffset.Length;
-
-    		for(i=0; i<StreamerEffect.Length; i++)
-        		if (StreamerEffect[i] == None)
-        		{
-        			StreamerEffect[i] = spawn(StreamerEffectClass, self,, Location + (StreamerEffectOffset[i] >> Rotation) );
-        			StreamerEffect[i].SetBase(self);
-        		}
-    	}
     }
     else
     {
@@ -173,10 +152,6 @@ function DrivingStatusChanged()
 
         	TrailEffects.Length = 0;
 
-    		for(i=0; i<StreamerEffect.Length; i++)
-                StreamerEffect[i].Destroy();
-
-            StreamerEffect.Length = 0;
         }
     }
 }
@@ -231,47 +206,6 @@ function Tick(float DeltaTime)
 				TrailEffects[i].SetThrust(ThrustAmount);
 			}
 		}
-
-		// Update streamer opacity (limit max change speed)
-		DesiredOpacity = (RelVel.X - StreamerOpacityRamp.Min)/(StreamerOpacityRamp.Max - StreamerOpacityRamp.Min);
-		DesiredOpacity = FClamp(DesiredOpacity, 0.0, StreamerOpacityMax);
-
-		MaxOpacityChange = DeltaTime * StreamerOpacityChangeRate;
-
-		DeltaOpacity = DesiredOpacity - StreamerCurrentOpacity;
-		DeltaOpacity = FClamp(DeltaOpacity, -MaxOpacityChange, MaxOpacityChange);
-
-		if(!bIsBehindView)
-            StreamerCurrentOpacity = 0.0;
-        else
-    		StreamerCurrentOpacity += DeltaOpacity;
-
-		if(StreamerCurrentOpacity < 0.01)
-			NewStreamerActive = false;
-		else
-			NewStreamerActive = true;
-
-		for(i=0; i<StreamerEffect.Length; i++)
-		{
-			if(NewStreamerActive)
-			{
-				if(!StreamerActive)
-				{
-					T = TrailEmitter(StreamerEffect[i].Emitters[0]);
-					T.ResetTrail();
-				}
-
-				StreamerEffect[i].Emitters[0].Disabled = false;
-				StreamerEffect[i].Emitters[0].Opacity = StreamerCurrentOpacity;
-			}
-			else
-			{
-				StreamerEffect[i].Emitters[0].Disabled = true;
-				StreamerEffect[i].Emitters[0].Opacity = 0.0;
-			}
-		}
-
-		StreamerActive = NewStreamerActive;
 		
 		if(bMakeBrakeLights)
 		    {
@@ -351,9 +285,6 @@ function Destroyed()
         	TrailEffects[i].Destroy();
         TrailEffects.Length = 0;
 
-		for(i=0; i<StreamerEffect.Length; i++)
-			StreamerEffect[i].Destroy();
-		StreamerEffect.Length = 0;
          }
 
      if(bMakeBrakeLights)
@@ -490,10 +421,7 @@ function Died(Controller Killer, class<DamageType> damageType, vector HitLocatio
         	TrailEffects[i].Destroy();
         TrailEffects.Length = 0;
 
-		for(i=0; i<StreamerEffect.Length; i++)
-			StreamerEffect[i].Destroy();
-		StreamerEffect.Length = 0;
-    }
+        }
 
 	Super.Died(Killer, damageType, HitLocation);
 }
@@ -641,14 +569,6 @@ defaultproperties
     TrailEffectPositions(0)=(X=-127.000000,Y=-16.000000,Z=16.000000)
     TrailEffectPositions(1)=(X=-127.000000,Y=16.000000,Z=16.000000)
     TrailEffectClass=Class'Onslaught.ONSAttackCraftExhaust'
-    StreamerEffectOffset(0)=(X=-68.000000,Y=-90.000000,Z=-14.000000)
-    StreamerEffectOffset(1)=(X=-68.000000,Y=90.000000,Z=-14.000000)
-    StreamerEffectOffset(2)=(X=-92.000000,Y=-22.000000,Z=10.000000)
-    StreamerEffectOffset(3)=(X=-92.000000,Y=22.000000,Z=10.000000)
-    StreamerEffectClass=Class'Onslaught.ONSAttackCraftStreamer'
-    StreamerOpacityRamp=(Min=1200.000000,Max=1600.000000)
-    StreamerOpacityChangeRate=1.000000
-    StreamerOpacityMax=0.700000
 
     HeadlightCoronaOffset=()
     HeadlightCoronaOffset(0)=(X=40.0,Y=0.0,Z=-30.0)
