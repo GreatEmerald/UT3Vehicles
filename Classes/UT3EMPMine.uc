@@ -39,9 +39,6 @@
 
 class UT3EMPMine extends UT3DeployableMine;
 
-#exec audio import group=EMPSounds file=../UT3Vehicles/Sounds/UT3Nightshade/EMPMine/EMP_Drop.wav
-#exec audio import group=EMPSounds file=../UT3Vehicles/Sounds/UT3Nightshade/EMPMine/EMP_Shock.wav
-
 /*  */
 var float EMPRadius;
 /*  */
@@ -126,18 +123,18 @@ event Timer()
 
 DefaultProperties
 {
-	EMPRadius = 500.0;
+    EMPRadius = 500.0;
 
-	Mesh = SkeletalMesh'UT3NightshadeAnims.EMPMine';
-	DrawType = DT_Mesh;
+    Mesh = SkeletalMesh'UT3NightshadeAnims.EMPMine';
+    DrawType = DT_Mesh;
 
-	bCollideActors = false;
-	bBlockActors = false;
-	bBlockKarma = false;
+    bCollideActors = false;
+    bBlockActors = false;
+    bBlockKarma = false;
 
-	LifeSpan = 60.0;
+    LifeSpan = 60.0;
 
-	// Sound.
-	DropSnd = Sound'EMP_Drop';
-	ShockSnd = Sound'EMP_Shock';
+    // Sound.
+    DropSnd = Sound'UT3A_Vehicle_Nightshade.EMPMine.EMP_Drop';
+    ShockSnd = Sound'UT3A_Vehicle_Nightshade.EMPMine.EMP_Shock';
 }

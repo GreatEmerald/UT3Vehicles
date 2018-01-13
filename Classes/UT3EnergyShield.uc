@@ -1,6 +1,6 @@
 /*
- * Copyright © 2012 100GPing100
- * Copyright © 2014 GreatEmerald
+ * Copyright Â© 2012 100GPing100
+ * Copyright Â© 2014 GreatEmerald
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -40,9 +40,6 @@
 
 class UT3EnergyShield extends Actor;
 
-#exec audio import group=ShieldSounds file=../UT3Vehicles/Sounds/UT3Nightshade/Shield/Shield_Ambient.wav
-#exec audio import group=ShieldSounds file=../UT3Vehicles/Sounds/UT3Nightshade/Shield/Shield_Hit.wav
-
 /* How much health the shield currently has. */
 var int Health;
 /* The mine that is producing this shield. */
@@ -63,26 +60,26 @@ event TakeDamage(int DamageAmount, Pawn Instigator, vector HitLocation, vector M
 
 DefaultProperties
 {
-	// Looks.
-	StaticMesh = StaticMesh'UT3NightshadeSM.Shield';
-	DrawType = DT_StaticMesh;
-	DrawScale = 5.0;
-	Rotation = (Roll=0);
+    // Looks.
+    StaticMesh = StaticMesh'UT3NightshadeSM.Shield';
+    DrawType = DT_StaticMesh;
+    DrawScale = 5.0;
+    Rotation = (Roll=0);
 
-	// Collision.
-	bCollideActors = true;
-	bBlockActors = false;
-	bBlockZeroExtentTraces = true;
-	//bBlockNonZeroExtentTraces = false;
-	bProjTarget = true;
-	bActorShadows = false;
+    // Collision.
+    bCollideActors = true;
+    bBlockActors = false;
+    bBlockZeroExtentTraces = true;
+    //bBlockNonZeroExtentTraces = false;
+    bProjTarget = true;
+    bActorShadows = false;
 
-	// Damage.
-	Health = 4000;
+    // Damage.
+    Health = 4000;
 
-	// Sound.
-	AmbientSound = Sound'Shield_Ambient';
-	HitSnd = Sound'Shield_Hit';
-	SoundRadius = 250;
-	SoundVolume = 128;
+    // Sound.
+    AmbientSound = Sound'UT3A_Vehicle_Nightshade.Shield.Shield_Ambient';
+    HitSnd = Sound'UT3A_Vehicle_Nightshade.Shield.Shield_Hit';
+    SoundRadius = 250;
+    SoundVolume = 128;
 }
