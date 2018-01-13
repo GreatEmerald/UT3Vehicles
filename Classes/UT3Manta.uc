@@ -64,6 +64,11 @@ var()	float							StreamerOpacityMax;
 var		float							StreamerCurrentOpacity;
 var		bool							StreamerActive;
 
+var()	bool				bMakeBrakeLights;
+var()	vector				BrakeLightOffset[2];
+var		ONSBrakelightCorona	BrakeLight[2];
+var()	Material			BrakeLightMaterial;
+
 /* The spining blades. */
 var array<UT3MantaBlade> Blades;
 
@@ -106,6 +111,34 @@ function DrivingStatusChanged()
 	{
         GetAxes(Rotation,RotX,RotY,RotZ);
 
+	        if(bMakeBrakeLights)
+		{
+		    for(i=0; i<2; i++)
+    			if (BrakeLight[i] == None)
+    			{
+    			    BrakeLight[i] = spawn(class'ONSBrakelightCorona', self,, Location + (BrakeLightOffset[i] >> Rotation) );
+    			    BrakeLight[i].SetBase(self);
+    			    BrakeLight[i].SetRelativeRotation( rot(0,32768,0) ); // Point lights backwards.
+    			    BrakeLight[i].Skins[0] = BrakeLightMaterial;
+    			}
+		}
+	}
+	else
+        {
+            if (Level.NetMode != NM_DedicatedServer)
+    	    {
+                 for(i=0; i<Dust.Length; i++)
+                     Dust[i].Destroy();
+
+                 Dust.Length = 0;
+
+                 if(bMakeBrakeLights)
+                 {
+            	     for(i=0; i<2; i++)
+                         if (BrakeLight[i] != None)
+                             BrakeLight[i].Destroy();
+                  }
+        }    
         if (TrailEffects.Length == 0)
         {
             TrailEffects.Length = TrailEffectPositions.Length;
@@ -239,6 +272,17 @@ function Tick(float DeltaTime)
 		}
 
 		StreamerActive = NewStreamerActive;
+		
+		if(bMakeBrakeLights)
+		    {
+			   for(i=0; i<2; i++)
+                   if (BrakeLight[i] != None)
+                       BrakeLight[i].bCorona = True;
+
+			   for(i=0; i<2; i++)
+                   if (BrakeLight[i] != None)
+                       BrakeLight[i].UpdateBrakelightState(OutputThrust);
+		    }
     }
 
     Super.Tick(DeltaTime);
@@ -310,8 +354,17 @@ function Destroyed()
 		for(i=0; i<StreamerEffect.Length; i++)
 			StreamerEffect[i].Destroy();
 		StreamerEffect.Length = 0;
-    }
+         }
 
+     if(bMakeBrakeLights)
+     {
+        if (BrakeLight[0] != None)
+            BrakeLight[0].Destroy();
+
+        if (BrakeLight[1] != None)
+	    BrakeLight[1].Destroy();
+     }
+	
     Super.Destroyed();
 }
 
@@ -443,6 +496,28 @@ function Died(Controller Killer, class<DamageType> damageType, vector HitLocatio
     }
 
 	Super.Died(Killer, damageType, HitLocation);
+}
+
+simulated event SVehicleUpdateParams()
+{
+	local int i;
+
+	Super.SVehicleUpdateParams();
+
+	if(Level.NetMode != NM_DedicatedServer && bMakeBrakeLights)
+	{
+	   for(i=0; i<2; i++)
+	    {
+               if (BrakeLight[i] != None)
+               {
+				BrakeLight[i].SetBase(None);
+				BrakeLight[i].SetLocation( Location + (BrakelightOffset[i] >> Rotation) );
+				BrakeLight[i].SetBase(self);
+				BrakeLight[i].SetRelativeRotation( rot(0,32768,0) );
+				BrakeLight[i].Skins[0] = BrakeLightMaterial;
+		}
+	     }
+	}
 }
 
 //=============================================================================
@@ -582,6 +657,12 @@ defaultproperties
     
     HeadlightProjectorOffset=(X=35,Y=0,Z=-30)
     HeadlightProjectorRotation=(Yaw=0,Pitch=-1000,Roll=0)
-    HeadlightProjectorMaterial=Texture'VMVehicles-TX.RVGroup.RVProjector'
+    HeadlightProjectorMaterial=Texture'VMVehicles-TX.RVGroup.RVProjector' 
     HeadlightProjectorScale=0.02
+    
+    bMakeBrakeLights=true
+    BrakeLightOffset(0)=(X=-173,Y=73,Z=30)
+    BrakeLightOffset(1)=(X=-173,Y=-73,Z=30)
+    BrakeLightMaterial=Material'EpicParticles.flashflare1'
+    
 }
