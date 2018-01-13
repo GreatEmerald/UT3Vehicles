@@ -42,13 +42,23 @@
 
 class UT3Manta extends ONSHoverBike;
 
+/* Load the packages. */
+#exec obj load file=..\Animations\UT3MantaAnims.ukx
+#exec obj load file=..\Textures\UT3MantaTex.utx
+#exec obj load file=..\Sounds\UT3A_Vehicle_Manta.uax
+#exec OBJ LOAD FILE=..\textures\EpicParticles.utx
+#exec OBJ LOAD FILE=..\textures\VMVehicles-TX.utx
+
 var Emitter DuckEffect;
 
+var()   array<vector>			TrailEffectPositions;
+var     class<ONSAttackCraftExhaust>	TrailEffectClass;
+var     array<ONSAttackCraftExhaust>	TrailEffects;
 
-/* Load the packages. */
-#exec obj load file=../Animations/UT3MantaAnims.ukx
-#exec obj load file=../Textures/UT3MantaTex.utx
-#exec obj load file=../Sounds/UT3A_Vehicle_Manta.uax
+var()	bool				bMakeBrakeLights;
+var()	vector				BrakeLightOffset[2];
+var		ONSBrakelightCorona	BrakeLight[2];
+var()	Material			BrakeLightMaterial;
 
 /* The spining blades. */
 var array<UT3MantaBlade> Blades;
@@ -74,28 +84,142 @@ function PostBeginPlay()
 //
 function DrivingStatusChanged()
 {
+    local vector RotX, RotY, RotZ;
+	local int i;
+    
     Super.DrivingStatusChanged();
 
     ToggleBlades(Driver != None);
 
     if (Driver == None) // The default value is set by the mutator.
-        bCanBeBaseForPawns = default.bCanBeBaseForPawns;
+    {    bCanBeBaseForPawns = default.bCanBeBaseForPawns;
+    }
     else
-        bCanBeBaseForPawns = false;
-}
+    {    bCanBeBaseForPawns = false;
+    }
 
+    if (bDriving && Level.NetMode != NM_DedicatedServer && !bDropDetail)
+	{
+        GetAxes(Rotation,RotX,RotY,RotZ);
+
+	        if(bMakeBrakeLights)
+		{
+		    for(i=0; i<2; i++)
+    			if (BrakeLight[i] == None)
+    			{
+    			    BrakeLight[i] = spawn(class'ONSBrakelightCorona', self,, Location + (BrakeLightOffset[i] >> Rotation) );
+    			    BrakeLight[i].SetBase(self);
+    			    BrakeLight[i].SetRelativeRotation( rot(0,32768,0) ); // Point lights backwards.
+    			    BrakeLight[i].Skins[0] = BrakeLightMaterial;
+    			}
+		}
+	}
+	else
+        {
+            if (Level.NetMode != NM_DedicatedServer)
+    	    {
+                 for(i=0; i<Dust.Length; i++)
+                     Dust[i].Destroy();
+
+                 Dust.Length = 0;
+
+                 if(bMakeBrakeLights)
+                 {
+            	     for(i=0; i<2; i++)
+                         if (BrakeLight[i] != None)
+                             BrakeLight[i].Destroy();
+                  }
+        }    
+        if (TrailEffects.Length == 0)
+        {
+            TrailEffects.Length = TrailEffectPositions.Length;
+
+        	for(i=0;i<TrailEffects.Length;i++)
+            	if (TrailEffects[i] == None)
+            	{
+                	TrailEffects[i] = spawn(TrailEffectClass, self,, Location + (TrailEffectPositions[i] >> Rotation) );
+                	TrailEffects[i].SetBase(self);
+                    TrailEffects[i].SetRelativeRotation( rot(0,32768,0) );
+                }
+        }
+    }
+    else
+    {
+        if (Level.NetMode != NM_DedicatedServer)
+    	{
+        	for(i=0;i<TrailEffects.Length;i++)
+        	   TrailEffects[i].Destroy();
+
+        	TrailEffects.Length = 0;
+
+        }
+    }
+}
+    
 //
 // Called every game tick.
 //
 function Tick(float DeltaTime)
 {
-    super.Tick(DeltaTime);
+    local float EnginePitch, HitDist;
+    local int i;
+	local vector TraceStart, TraceEnd, HitLocation, HitNormal;
+	local actor HitActor;
+    local float DesiredOpacity, DeltaOpacity, MaxOpacityChange, ThrustAmount;
+	local TrailEmitter T;
+	local vector RelVel;
+	local bool NewStreamerActive, bIsBehindView;
+	local PlayerController PC;
 
     if (Driver != None) // Just in case.
         Ailerons(DeltaTime);
 
     if (!bHoldingDuck && DuckEffect != None)
         DuckEffect.Destroy();
+
+    	if(Level.NetMode != NM_DedicatedServer)
+	{
+        EnginePitch = 64.0 + VSize(Velocity)/MaxPitchSpeed * 64.0;
+        SoundPitch = FClamp(EnginePitch, 34, 128);
+
+        RelVel = Velocity << Rotation;
+
+        PC = Level.GetLocalPlayerController();
+		if (PC != None && PC.ViewTarget == self)
+			bIsBehindView = PC.bBehindView;
+		else
+            bIsBehindView = True;
+
+    	// Adjust Engine FX depending on being drive/velocity
+		if (!bIsBehindView)
+		{
+			for(i=0; i<TrailEffects.Length; i++)
+				TrailEffects[i].SetThrustEnabled(false);
+		}
+        else
+        {
+			ThrustAmount = FClamp(OutputThrust, 0.0, 1.0);
+
+			for(i=0; i<TrailEffects.Length; i++)
+			{
+				TrailEffects[i].SetThrustEnabled(true);
+				TrailEffects[i].SetThrust(ThrustAmount);
+			}
+		}
+		
+		if(bMakeBrakeLights)
+		    {
+			   for(i=0; i<2; i++)
+                   if (BrakeLight[i] != None)
+                       BrakeLight[i].bCorona = True;
+
+			   for(i=0; i<2; i++)
+                   if (BrakeLight[i] != None)
+                       BrakeLight[i].UpdateBrakelightState(OutputThrust);
+		    }
+    }
+
+    Super.Tick(DeltaTime);
 }
 
 //
@@ -142,11 +266,39 @@ function Ailerons(float DeltaTime)
 //
 function Destroyed()
 {
+    local int i;
+    
     Blades[0].Destroy();
     Blades[1].Destroy();
+    
+    if (Level.NetMode != NM_DedicatedServer)
+	{
+		for (i = 0; i < BikeDust.Length; i++)
+			BikeDust[i].Destroy();
 
+		BikeDust.Length = 0;
+	}
+
+    if(Level.NetMode != NM_DedicatedServer)
+	{
+    	for(i=0;i<TrailEffects.Length;i++)
+        	TrailEffects[i].Destroy();
+        TrailEffects.Length = 0;
+
+         }
+
+     if(bMakeBrakeLights)
+     {
+        if (BrakeLight[0] != None)
+            BrakeLight[0].Destroy();
+
+        if (BrakeLight[1] != None)
+	    BrakeLight[1].Destroy();
+     }
+	
     Super.Destroyed();
 }
+
 
 simulated function CheckJumpDuck()
 {
@@ -259,6 +411,43 @@ simulated function TeamChanged()
     }
 }
 
+function Died(Controller Killer, class<DamageType> damageType, vector HitLocation)
+{
+    local int i;
+
+    if(Level.NetMode != NM_DedicatedServer)
+	{
+    	for(i=0;i<TrailEffects.Length;i++)
+        	TrailEffects[i].Destroy();
+        TrailEffects.Length = 0;
+
+        }
+
+	Super.Died(Killer, damageType, HitLocation);
+}
+
+simulated event SVehicleUpdateParams()
+{
+	local int i;
+
+	Super.SVehicleUpdateParams();
+
+	if(Level.NetMode != NM_DedicatedServer && bMakeBrakeLights)
+	{
+	   for(i=0; i<2; i++)
+	    {
+               if (BrakeLight[i] != None)
+               {
+				BrakeLight[i].SetBase(None);
+				BrakeLight[i].SetLocation( Location + (BrakelightOffset[i] >> Rotation) );
+				BrakeLight[i].SetBase(self);
+				BrakeLight[i].SetRelativeRotation( rot(0,32768,0) );
+				BrakeLight[i].Skins[0] = BrakeLightMaterial;
+		}
+	     }
+	}
+}
+
 //=============================================================================
 // Default values
 //=============================================================================
@@ -279,7 +468,6 @@ defaultproperties
 
     // Movement.
     GroundSpeed = 1500 //UT2004 default is 2000 UT3 default is 1500
-    MaxPitchSpeed = 4000;
     AirControl = 1.5
     MaxYawRate=5.0 //3.0
     TurnTorqueMax=180.0 //125.0 def UT2004
@@ -325,6 +513,7 @@ defaultproperties
     KParams=KarmaParams'KParams0'
         
     // Sounds.
+    MaxPitchSpeed = 4000;
     IdleSound = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_EngineLoop01';
     StartUpSound = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Start01';
     ShutDownSound = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Stop01';
@@ -377,6 +566,10 @@ defaultproperties
     //TPCamLookat=(X=0,Y=0,Z=0)
     //TPCamWorldOffset=(X=0,Y=0,Z=35)
 
+    TrailEffectPositions(0)=(X=-127.000000,Y=-16.000000,Z=16.000000)
+    TrailEffectPositions(1)=(X=-127.000000,Y=16.000000,Z=16.000000)
+    TrailEffectClass=Class'Onslaught.ONSAttackCraftExhaust'
+
     HeadlightCoronaOffset=()
     HeadlightCoronaOffset(0)=(X=40.0,Y=0.0,Z=-20.0)
     HeadlightCoronaMaterial=Material'EpicParticles.FlashFlare1'
@@ -384,6 +577,12 @@ defaultproperties
     
     HeadlightProjectorOffset=(X=35,Y=0,Z=-30)
     HeadlightProjectorRotation=(Yaw=0,Pitch=-1000,Roll=0)
-    HeadlightProjectorMaterial=Texture'VMVehicles-TX.RVGroup.RVProjector'
+    HeadlightProjectorMaterial=Texture'VMVehicles-TX.RVGroup.RVProjector' 
     HeadlightProjectorScale=0.02
+    
+    bMakeBrakeLights=true
+    BrakeLightOffset(0)=(X=-173,Y=73,Z=30)
+    BrakeLightOffset(1)=(X=-173,Y=-73,Z=30)
+    BrakeLightMaterial=Material'EpicParticles.flashflare1'
+    
 }
