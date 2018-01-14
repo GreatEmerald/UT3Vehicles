@@ -90,6 +90,17 @@ simulated function DrivingStatusChanged()
                     TrailEffects[i].SetRelativeRotation( TrailEffectRotation );
                 }
         }
+        if (StreamerEffect.Length == 0)
+        {
+            StreamerEffect.Length = StreamerEffectOffset.Length;
+
+            for(i=0; i<StreamerEffect.Length; i++)
+                if (StreamerEffect[i] == None)
+                {
+                    StreamerEffect[i] = spawn(StreamerEffectClass, self,, Location + (StreamerEffectOffset[i] >> Rotation) );
+                    StreamerEffect[i].SetBase(self);
+                }
+        }
     }
     else
     {
@@ -99,6 +110,11 @@ simulated function DrivingStatusChanged()
                TrailEffects[i].Destroy();
 
             TrailEffects.Length = 0;
+            
+            for(i=0; i<StreamerEffect.Length; i++)
+                StreamerEffect[i].Destroy();
+
+            StreamerEffect.Length = 0;
         }
     }
 
@@ -246,11 +262,12 @@ simulated function TeamChanged()
 defaultproperties
 {
 
-    //Drawscale = 1.3
+    Drawscale = 1.0
     
     //=======================
     // @100GPing100
     VehiclePositionString = "in a UT3 Cicada";
+    VehicleNameString = "UT3 Cicada"
 
     Mesh = SkeletalMesh'UT3VH_Cicada_Anims.VH_Cicada_Anims';
     RedSkin = Shader'UT3CicadaTex.CicadaSkin';
@@ -261,8 +278,7 @@ defaultproperties
     PassengerWeapons(0)=(WeaponPawnClass=Class'UT3CicadaTurretPawn',WeaponBone=MainTurret_Yaw)
     // @100GPing100
     //==========END==========
-    VehicleNameString = "UT3 Cicada"
-
+    
     GroundSpeed=1600
     MaxRandForce=2.0
     RandForceInterval=0.95
@@ -307,10 +323,6 @@ defaultproperties
     ExitPositions(2)=(X=330,Y=0,Z=35)
     ExitPositions(3)=(X=90,Y=0,Z=160) 
     
-    TrailEffectRotation=(Yaw=32768)
-    TrailEffectPositions(0)=(X=-63,Y=-42.5,Z=118) //(X=-53,Y=-33,Z=63)
-    TrailEffectPositions(1)=(X=-63,Y=42.5,Z=118)
-    
     MomentumMult=0.400000 //?
     
     bDrawMeshInFP=True
@@ -327,10 +339,24 @@ defaultproperties
     //TPCamLookAt=(X=50.0,Y=0.0,Z=0)
     //TPCamWorldOffset=(Z=250)
     
+    TrailEffectRotation=(Yaw=32768)
+    TrailEffectPositions(0)=(X=-63,Y=-42.5,Z=118) //(X=-53,Y=-33,Z=63)
+    TrailEffectPositions(1)=(X=-63,Y=42.5,Z=118)
+    
+    StreamerEffectOffset(0)=(X=175,Y=-95,Z=-33);
+    StreamerEffectOffset(1)=(X=175,Y=95,Z=-33);
+    StreamerEffectOffset(2)=(X=-250,Y=-100,Z=130);
+    StreamerEffectOffset(3)=(X=-250,Y=100,Z=130);
+    StreamerEffectOffset(4)=(X=-40,Y=-195,Z=67);
+    StreamerEffectOffset(5)=(X=-40,Y=195,Z=67);
+    StreamerOpacityRamp=(Min=1200.000000,Max=1600.000000)
+    StreamerOpacityChangeRate=1.0
+    StreamerOpacityMax=0.25 //0.7
+    StreamerEffectClass=class'Onslaught.ONSAttackCraftStreamer'
+    
     HeadlightCoronaOffset=()
     HeadlightCoronaOffset(0)=(X=243,Y=0,Z=67)
     HeadlightCoronaMaterial=Material'EpicParticles.FlashFlare1'
-    //HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
     HeadlightCoronaMaxSize=45
 
     HeadlightProjectorOffset=(X=240.0,Y=0,Z=67) //(X=82.5,Y=0,Z=55.5)
