@@ -413,7 +413,7 @@ defaultproperties
     
     StreamerEffectOffset(0)=(X=-160,Y=-80,Z=20);
     StreamerEffectOffset(1)=(X=-160,Y=80,Z=20);
-    StreamerEffectOffset(2)=(X=-240,Y=-50,Z=10);
+    StreamerEffectOffset(2)=(X=-250,Y=-50,Z=10);
     StreamerEffectOffset(3)=(X=-250,Y=50,Z=10);
     StreamerOpacityRamp=(Min=1200.000000,Max=1600.000000)
     StreamerOpacityChangeRate=1.0
