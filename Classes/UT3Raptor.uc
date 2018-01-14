@@ -219,7 +219,7 @@ function Guns()
 // The next 3 functions { Died, Destroyed, DrivingStatusChanged } have been
 // overriden to disable the streams.
 //
-function Died(Controller Killer, class<DamageType> DmgType, Vector HitLocation)
+/*function Died(Controller Killer, class<DamageType> DmgType, Vector HitLocation)
 {
     local int i;
 
@@ -278,7 +278,7 @@ simulated event DrivingStatusChanged()
 }
 // @100GPing100
 //============END============
-
+*/
 simulated function TeamChanged()
 {
     local int i;
@@ -322,18 +322,6 @@ defaultproperties
     RedSkin = Shader'UT3RaptorTex.RaptorSkin';
     BlueSkin = Shader'UT3RaptorTex.RaptorSkinBlue';
     
-    TrailEffectPositions(0) = (X=-120,Y=-42,Z=-19); //(X=-105,Y=-35,Z=-15)
-    TrailEffectPositions(1) = (X=-120,Y=42,Z=-19);  //(X=-105,Y=35,Z=-15)
-    
-    StreamerEffectOffset(0)=(X=-219,Y=-35,Z=57);
-    StreamerEffectOffset(1)=(X=-219,Y=35,Z=57);
-    StreamerEffectOffset(2)=(X=-52,Y=-24,Z=142);
-    StreamerEffectOffset(3)=(X=-52,Y=24,Z=142);
-    StreamerOpacityRamp=(Min=1200.000000,Max=1600.000000)
-    StreamerOpacityChangeRate=1.0
-    StreamerOpacityMax=0.7
-    StreamerEffectClass=class'Onslaught.ONSAttackCraftStreamer'
-
     VehiclePositionString = "in a UT3 Raptor";
 
     DriverWeapons[0] = (WeaponClass=class'UT3RaptorWeapon',WeaponBone="rt_gun")
@@ -350,18 +338,11 @@ defaultproperties
     DamagedEffectHealthSmokeFactor=0.65 //0.5
     DamagedEffectHealthFireFactor=0.40 //0.25
     DamagedEffectFireDamagePerSec=2.0 //0.75
+    ImpactDamageSounds=();
     ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Collide01';
     ImpactDamageSounds(1) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Collide02';
-    ImpactDamageSounds(2) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Collide01';
-    ImpactDamageSounds(3) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Collide02';
-    ImpactDamageSounds(4) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Collide01';
-    ImpactDamageSounds(5) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Collide02';
-    ImpactDamageSounds(6) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Collide01';
+    ExplosionSounds=();
     ExplosionSounds(0) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Explode01';
-    ExplosionSounds(1) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Explode01';
-    ExplosionSounds(2) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Explode01';
-    ExplosionSounds(3) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Explode01';
-    ExplosionSounds(4) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Explode01';
     // @100GPing100
     //============EDN============
     VehicleNameString = "UT3 Raptor"
@@ -426,6 +407,18 @@ defaultproperties
     ExitPositions(1)=(X=0,Y=185,Z=30)
     ExitPositions(3)=(X=300,Y=0,Z=40)
     ExitPositions(4)=(X=20,Y=0,Z=110) 
+
+    TrailEffectPositions(0) = (X=-120,Y=-42,Z=-19); //(X=-105,Y=-35,Z=-15)
+    TrailEffectPositions(1) = (X=-120,Y=42,Z=-19);  //(X=-105,Y=35,Z=-15)
+    
+    StreamerEffectOffset(0)=(X=-160,Y=-80,Z=20);
+    StreamerEffectOffset(1)=(X=-160,Y=80,Z=20);
+    StreamerEffectOffset(2)=(X=-240,Y=-50,Z=10);
+    StreamerEffectOffset(3)=(X=-250,Y=50,Z=10);
+    StreamerOpacityRamp=(Min=1200.000000,Max=1600.000000)
+    StreamerOpacityChangeRate=1.0
+    StreamerOpacityMax=0.25 //0.7
+    StreamerEffectClass=class'Onslaught.ONSAttackCraftStreamer'
 
     HeadlightCoronaOffset(0)=(X=182,Y=0,Z=-17)
     HeadlightCoronaOffset(1)=(X=180,Y=-0,Z=-55)
