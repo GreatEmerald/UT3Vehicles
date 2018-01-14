@@ -192,6 +192,11 @@ defaultproperties
     //Aerial View
     //TPCamWorldOffset=(X=0,Y=0,Z=200)
     
+    DamagedEffectOffset=(X=0,Y=120,Z=100)    //Right Treads Fire Point
+    DamagedEffectScale=1.7                   //Right Treads Fire Size
+    //DamagedEffectOffset=(X=170,Y=-40,Z=80) //Front Fire Point
+    //DamagedEffectScale=1.0                 //Front Fire Size
+    
     HeadlightCoronaOffset(0)=(X=222,Y=135,Z=58)
     HeadlightCoronaOffset(1)=(X=222,Y=-135,Z=58)
     HeadlightCoronaMaterial=Material'EpicParticles.FlashFlare1'
