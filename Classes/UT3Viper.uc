@@ -1,6 +1,6 @@
 /*
- * Copyright © 2012-2013 100GPing100
- * Copyright © 2014 GreatEmerald
+ * Copyright Â© 2012-2013 100GPing100
+ * Copyright Â© 2014 GreatEmerald
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -553,6 +553,65 @@ Begin:
 // AI Interface End.
 //============END============
 
+simulated function AttachDriver(Pawn P)
+{
+
+    Local rotator SpineDrive;
+    Local rotator NeckDrive;
+    Local rotator ArmDriveL,ArmDriveR;
+    Local rotator ThighDriveL,ThighDriveR;
+    Local rotator CalfDriveL,CalfDriveR;
+
+    super.AttachDriver(P);
+
+    SpineDrive.Yaw=12000;
+    P.SetBoneRotation('Bip01 Spine',SpineDrive);
+    NeckDrive.Yaw=-14000;
+    P.SetBoneRotation('Bip01 Head',NeckDrive);
+    ArmDriveL.Yaw=-9000;
+    ArmDriveL.Pitch=-10000;
+    P.SetBoneRotation('Bip01 L UpperArm',ArmDriveL);
+    ArmDriveR.Yaw=-9000;
+    ArmDriveR.Pitch=10000;
+    P.SetBoneRotation('Bip01 R UpperArm',ArmDriveR);
+    ThighDriveL.Yaw=-2000; 
+    ThighDriveL.Pitch=7000;
+    ThighDriveL.Roll=1000;
+    P.SetBoneRotation('Bip01 L Thigh',ThighDriveL);
+    ThighDriveR.Yaw=-2000;
+    ThighDriveR.Pitch=-7000;
+    ThighDriveR.Roll=-1000;
+    P.SetBoneRotation('Bip01 R Thigh',ThighDriveR);
+    CalfDriveL.Pitch=2000;
+    CalfDriveL.Yaw=-17000;
+    CalfDriveL.Roll=-8000;
+    P.SetBoneRotation('Bip01 L Calf',CalfDriveL);
+    CalfDriveR.Pitch=2000;
+    CalfDriveR.Yaw=-17000;
+    CalfDriveR.Roll=8000;
+    P.SetBoneRotation('Bip01 R Calf',CalfDriveR);
+
+}
+
+simulated function DetachDriver(Pawn P)
+{
+    P.SetBoneRotation('Bip01 Head');
+    P.SetBoneRotation('Bip01 Spine');
+    P.SetBoneRotation('Bip01 Spine1');
+    P.SetBoneRotation('Bip01 Spine2');
+    P.SetBoneRotation('Bip01 L Clavicle');
+    P.SetBoneRotation('Bip01 R Clavicle');
+    P.SetBoneRotation('Bip01 L UpperArm');
+    P.SetBoneRotation('Bip01 R UpperArm');
+    P.SetBoneRotation('Bip01 L ForeArm');
+    P.SetBoneRotation('Bip01 R ForeArm');
+    P.SetBoneRotation('Bip01 L Thigh');
+    P.SetBoneRotation('Bip01 R Thigh');
+    P.SetBoneRotation('Bip01 L Calf');
+    P.SetBoneRotation('Bip01 R Calf');
+    
+    Super.DetachDriver(P);
+}
 
 DefaultProperties
 {
@@ -622,7 +681,9 @@ DefaultProperties
 	bCanBeBaseForPawns = true;
 	CollisionHeight=50;
 	CollisionRadius=220;
-	DrivePos=(X=10.0,Y=0.0,Z=50.0);
+	//DrivePos=(X=10.0,Y=0.0,Z=50.0);
+	DrivePos=(X=22.0,Y=0.0,Z=73.0);
+        DriveRot=(Pitch=-1400)
 	ObjectiveGetOutDist=750.0;
 	MaxDesireability=0.6;
 	LinkHealMult=0.35;
