@@ -344,7 +344,7 @@ defaultproperties
     ExitPositions(3)=(X=-10,Y=160,Z=-50)  //Right Below
     ExitPositions(4)=(X=10,Y=-5,Z=130)    //Roof
     
-    FPCamPos=(X=0,Y=28,Z=135)
+    FPCamPos=(X=0,Y=31,Z=160)
     
     //Normal
     TPCamDistance=375.000000
