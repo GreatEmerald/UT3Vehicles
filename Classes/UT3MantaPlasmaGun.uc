@@ -1,5 +1,6 @@
 /*
  * Copyright © 2008, 2014 GreatEmerald
+ * Copyright © 2017-2018 HellDragon
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -105,6 +106,9 @@ simulated function CalcWeaponFire()
 
 defaultproperties
 {
+
+    Drawscale = 1.0
+
     // @100GPing100
     FireSoundClass = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Fire01';
 
