@@ -356,9 +356,9 @@ defaultproperties
     //TPCamLookat=(X=-10,Y=0,Z=0)
     //TPCamWorldOffset=(X=0,Y=0,Z=140)
     
-    DamagedEffectOffset=(X=-35,Y=25,Z=95)  //Behind Driver Turret Fire Point
-    DamagedEffectScale=1.0                 //Behind Driver Turret Fire Size
-    //DamagedEffectOffset=(X=-52,Y=-45,Z=70)   //Exhaust Pipe Fire Point
+    DamagedEffectOffset=(X=-35,Y=25,Z=120)  //Behind Driver Turret Fire Point
+    DamagedEffectScale=1.2                 //Behind Driver Turret Fire Size
+    //DamagedEffectOffset=(X=-60,Y=-65,Z=90)   //Exhaust Pipe Fire Point
     //DamagedEffectScale=0.6                   //Exhaust Pipe Fire Size
     
     HeadlightCoronaOffset(0)=(X=72.5,Y=26.5,Z=49.5) //(X=77.5,Y=27.5,Z=52.5)
