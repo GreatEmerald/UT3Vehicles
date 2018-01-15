@@ -332,8 +332,8 @@ defaultproperties
     MaxBrakeTorque=20.5 //20.0
     EngineInertia=0.01
     WheelInertia=0.01
-    ChassisTorqueScale=0.82 //0.7
-    WheelSuspensionOffset=5.0 //HDm: Fixes the chassis sitting height in-game
+    ChassisTorqueScale=1.0 //0.82 //0.7
+    WheelSuspensionOffset=7.0 //5.0 //HDm: Fixes the chassis sitting height in-game
 
     CollisionRadius=219
     
