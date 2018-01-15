@@ -251,7 +251,7 @@ defaultproperties
         BoneName="Rt_Rear_Tire"
         BoneRollAxis=AXIS_Y
         BoneSteerAxis=AXIS_Z
-        BoneOffset=(X=0.0,Y=27.0,Z=0.0)
+        BoneOffset=(X=0.0,Y=27.0,Z=-6.0)
         WheelRadius=30
         bPoweredWheel=True
         bHandbrakeWheel=True
@@ -263,7 +263,7 @@ defaultproperties
         BoneName="Lt_Rear_Tire"
         BoneRollAxis=AXIS_Y
         BoneSteerAxis=AXIS_Z
-        BoneOffset=(X=15.0,Y=-27.0,Z=0.0)
+        BoneOffset=(X=15.0,Y=-27.0,Z=-6.0)
         WheelRadius=30
         bPoweredWheel=True
         bHandbrakeWheel=True
@@ -275,7 +275,7 @@ defaultproperties
         BoneName="Rt_Front_Tire"
         BoneRollAxis=AXIS_Y
         BoneSteerAxis=AXIS_Z
-        BoneOffset=(X=0.0,Y=27.0,Z=0.0)
+        BoneOffset=(X=0.0,Y=27.0,Z=-6.0)
         WheelRadius=30
         bPoweredWheel=True
         SteerType=VST_Steered
@@ -286,7 +286,7 @@ defaultproperties
         BoneName="Lt_Front_Tire"
         BoneRollAxis=AXIS_Y
         BoneSteerAxis=AXIS_Z
-        BoneOffset=(X=0.0,Y=-27.0,Z=0.0)
+        BoneOffset=(X=0.0,Y=-27.0,Z=-6.0)
         WheelRadius=30
         bPoweredWheel=True
         SteerType=VST_Steered
