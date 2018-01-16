@@ -288,12 +288,13 @@ defaultproperties
     //PassengerWeapons(0)=(WeaponPawnClass=Class'UT3CicadaTurretPawn',WeaponBone="GatlingGunAttach")
     TargetLockSound=sound'UT3A_Vehicle_Cicada.Sounds.A_Vehicle_Cicada_TargetLock01'
     IdleSound=Sound'UT3A_Vehicle_Cicada.Sounds.A_Vehicle_Cicada_EngineLoopForeverCue'
-    StartUpSound=Sound'UT3A_Vehicle_Cicada.Sounds.A_Vehicle_Cicada_Start01'
-    ShutDownSound=Sound'UT3A_Vehicle_Cicada.Sounds.A_Vehicle_Cicada_Stop01'//8/10
+    StartUpSound=Sound'UT3A_Vehicle_Cicada.SoundCues.StartCue'
+    ShutDownSound=Sound'UT3A_Vehicle_Cicada.SoundCues.StopCue'
     ExplosionSounds=()
     ExplosionSounds(0)=Sound'UT3A_Vehicle_Cicada.Sounds.A_Vehicle_Cicada_Explode02'
     ImpactDamageSounds=()
     ImpactDamageSounds(0)=Sound'UT3A_Vehicle_Cicada.SoundCues.A_Vehicle_Cicada_Collide'
+    SoundVolume=255
     
     MomentumMult=0.400000 //?
     ImpactDamageMult = 0.00003 //0.0003
