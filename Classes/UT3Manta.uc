@@ -2,7 +2,7 @@
  * Copyright © 2008 Wormbo
  * Copyright © 2012, 2017, 2018 Luís 'zeluisping' Guimarães (100GPing100)
  * Copyright © 2008, 2014 GreatEmerald
- * Copyright © 2018 HellDragon
+ * Copyright © 2017-2018 HellDragon
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -279,7 +279,6 @@ defaultproperties
 
     // Movement.
     GroundSpeed = 1500 //UT2004 default is 2000 UT3 default is 1500
-    MaxPitchSpeed = 4000;
     AirControl = 1.5
     MaxYawRate=5.0 //3.0
     TurnTorqueMax=180.0 //125.0 def UT2004
@@ -325,9 +324,9 @@ defaultproperties
     KParams=KarmaParams'KParams0'
         
     // Sounds.
-    IdleSound = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_EngineLoop01';
-    StartUpSound = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Start01';
-    ShutDownSound = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Stop01';
+    IdleSound = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_EngineLoopForeverCue';
+    StartUpSound = Sound'UT3A_Vehicle_Manta.Sounds.StartCue';
+    ShutDownSound = Sound'UT3A_Vehicle_Manta.Sounds.StopCue';
     JumpSound = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Jump';
     DuckSound = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Crouch';
     ImpactDamageSounds=();
@@ -336,6 +335,7 @@ defaultproperties
     ExplosionSounds=();
     ExplosionSounds(0) = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Explode01';
     HornSounds(1)=sound'ONSVehicleSounds-S.Horns.LaCuchachaHorn';
+    //MaxPitchSpeed = 4000;
     
     MomentumMult=0.8 //?
     ImpactDamageMult = 0.00001 //0.0003
