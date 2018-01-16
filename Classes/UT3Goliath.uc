@@ -101,7 +101,7 @@ simulated function TeamChanged()
 defaultproperties
 {
 
-    //Drawscale = 1.35
+    Drawscale = 1.0
 
     //===============
     // @100GPing100
@@ -119,25 +119,18 @@ defaultproperties
 	HealthMax=900
 
     IdleSound = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_EngineLoop01RealTreadsMix';
-    //IdleSound = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_EngineLoop01';
-    StartUpSound = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Start01';
-    ShutDownSound = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Stop01';
+    //IdleSound = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_EngineAndTreadCueMix';
+    StartUpSound = SoundGroup'UT3A_Vehicle_Goliath.Sounds.StartCue';
+    ShutDownSound = SoundGroup'UT3A_Vehicle_Goliath.Sounds.StopCue';
     DamagedEffectHealthSmokeFactor=0.65 //0.5
     DamagedEffectHealthFireFactor=0.40 //0.25
     DamagedEffectFireDamagePerSec=2.0 //0.75
+    ImpactDamageSounds=()
     ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Collide01';
-    ImpactDamageSounds(1) = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Collide01';
-    ImpactDamageSounds(2) = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Collide01';
-    ImpactDamageSounds(3) = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Collide01';
-    ImpactDamageSounds(4) = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Collide01';
-    ImpactDamageSounds(5) = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Collide01';
-    ImpactDamageSounds(6) = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Collide01';
+    ExplosionSounds=()
     ExplosionSounds(0) = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Explode01';
-    ExplosionSounds(1) = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Explode01';
-    ExplosionSounds(2) = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Explode01';
-    ExplosionSounds(3) = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Explode01';
-    ExplosionSounds(4) = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Explode01';
-
+    SoundVolume=255
+   
     TreadVelocityScale = 12.0;
     // @100GPing100
     //======END======
@@ -150,7 +143,6 @@ defaultproperties
     MaxSteerTorque=70.0
     ForwardDampFactor=0.13
     //ChassisTorqueScale=5.0 compiles but is ignored in-game
-    SoundVolume=255
     MaxThrust=80.0 //GE val 200.000000//GE: was 65, maybe the tank is too fast now?
     MaxDesireability=1.25
     
