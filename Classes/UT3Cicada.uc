@@ -246,7 +246,7 @@ simulated function TeamChanged()
 defaultproperties
 {
 
-    //Drawscale = 1.3
+    Drawscale = 1.0
     
     //=======================
     // @100GPing100
@@ -285,20 +285,22 @@ defaultproperties
     CollisionHeight=70.000000
     //DriverWeapons(0)=(WeaponClass=class'UT3CicadaMissileLauncher',WeaponBone=RightRLAttach);
     //DriverWeapons(1)=(WeaponClass=class'UT3CicadaMissileLauncher',WeaponBone=LeftRLAttach);
+    //PassengerWeapons(0)=(WeaponPawnClass=Class'UT3CicadaTurretPawn',WeaponBone="GatlingGunAttach")
     TargetLockSound=sound'UT3A_Vehicle_Cicada.Sounds.A_Vehicle_Cicada_TargetLock01'
-    IdleSound=Sound'UT3A_Vehicle_Cicada.Sounds.A_Vehicle_Cicada_EngineLoop02'
+    IdleSound=Sound'UT3A_Vehicle_Cicada.Sounds.A_Vehicle_Cicada_EngineLoopForeverCue'
     StartUpSound=Sound'UT3A_Vehicle_Cicada.Sounds.A_Vehicle_Cicada_Start01'
     ShutDownSound=Sound'UT3A_Vehicle_Cicada.Sounds.A_Vehicle_Cicada_Stop01'//8/10
-    ImpactDamageMult = 0.00003 //0.0003
-    DamagedEffectHealthSmokeFactor=0.65 //0.5
-    DamagedEffectHealthFireFactor=0.40 //0.25
-    DamagedEffectFireDamagePerSec=2.0 //0.75
     ExplosionSounds=()
     ExplosionSounds(0)=Sound'UT3A_Vehicle_Cicada.Sounds.A_Vehicle_Cicada_Explode02'
     ImpactDamageSounds=()
     ImpactDamageSounds(0)=Sound'UT3A_Vehicle_Cicada.SoundCues.A_Vehicle_Cicada_Collide'
-    //PassengerWeapons(0)=(WeaponPawnClass=Class'UT3CicadaTurretPawn',WeaponBone="GatlingGunAttach")
     
+    MomentumMult=0.400000 //?
+    ImpactDamageMult = 0.00003 //0.0003
+    DamagedEffectHealthSmokeFactor=0.65 //0.5
+    DamagedEffectHealthFireFactor=0.40 //0.25
+    DamagedEffectFireDamagePerSec=2.0 //0.75
+
     EntryRadius=300
     EntryPosition=(X=40,Y=0,Z=0)
     
@@ -310,8 +312,6 @@ defaultproperties
     TrailEffectRotation=(Yaw=32768)
     TrailEffectPositions(0)=(X=-63,Y=-42.5,Z=118) //(X=-53,Y=-33,Z=63)
     TrailEffectPositions(1)=(X=-63,Y=42.5,Z=118)
-    
-    MomentumMult=0.400000 //?
     
     bDrawMeshInFP=True
     
