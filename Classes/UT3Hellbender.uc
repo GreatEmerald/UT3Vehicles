@@ -303,18 +303,22 @@ defaultproperties
 
     //MaxSteerAngleCurve=(Points=((OutVal=50.000000),,)) @100GPing100: Causes crash.
     SteerSpeed=200.000000 //110.0 def UT2004
-    IdleSound=Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_EngineIdle01'
-    StartUpSound=Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_EngineStart01'
-    ShutDownSound=Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_EngineStop01'
-    ImpactDamageMult = 0.00005
-    DamagedEffectHealthSmokeFactor=0.65 //0.5
-    DamagedEffectHealthFireFactor=0.40 //0.25
-    DamagedEffectFireDamagePerSec=2.0 //0.75
+    IdleSound=Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_EngineIdleForeverCue'
+    StartUpSound=Sound'UT3A_Vehicle_Hellbender.Sounds.StartCue'
+    ShutDownSound=Sound'UT3A_Vehicle_Hellbender.Sounds.StopCue'
     ImpactDamageSounds=()
     ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_Collide03';
     ImpactDamageSounds(1) = Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_Collide04';
     ExplosionSounds=()
     ExplosionSounds(0) = Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_Explode01';
+    HornSounds(0)=Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_Horn01'
+    IdleRPM=2000
+    SoundVolume=255
+    
+    DamagedEffectHealthSmokeFactor=0.65 //0.5
+    DamagedEffectHealthFireFactor=0.40 //0.25
+    DamagedEffectFireDamagePerSec=2.0 //0.75
+    
 
     EntryPosition=(X=0,Y=0,Z=0)
     EntryRadius=180.0  //300.000000
@@ -323,9 +327,8 @@ defaultproperties
     DriverDamageMult=0.000000
     VehiclePositionString="in a Hellbender"
     VehicleNameString="UT3 Hellbender"
-    HornSounds(0)=Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_Horn01'
+    
     GroundSpeed=800.000000 //700
-    SoundVolume=255
 
     TransRatio=0.15 //0.11
     EngineBrakeFactor=0.0002 //0.0001 def
