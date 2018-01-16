@@ -1,7 +1,7 @@
 /*
  * Copyright © 2007, 2009 Wormbo
  * Copyright © 2007, 2009, 2014 GreatEmerald
- * Copyright © 2017 HellDragon
+ * Copyright © 2017-2018 HellDragon
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -553,9 +553,11 @@ defaultproperties
 
     DeploySound = Sound'UT3A_Vehicle_Leviathan.Sounds.A_Vehicle_Leviathan_Deploy01'
     HideSound = Sound'UT3A_Vehicle_Leviathan.Sounds.A_Vehicle_Leviathan_Deploy01'
-    IdleSound = Sound'UT3A_Vehicle_Leviathan.Sounds.A_Vehicle_Leviathan_EngineIdle'
+    IdleSound = Sound'UT3A_Vehicle_Leviathan.Sounds.A_Vehicle_Leviathan_EngineIdleForeverCue'
     StartUpSound = Sound'UT3A_Vehicle_Leviathan.Sounds.A_Vehicle_Leviathan_EngineStart'
     ShutDownSound = Sound'UT3A_Vehicle_Leviathan.Sounds.A_Vehicle_Leviathan_EngineStop'
+    SoundVolume = 255
+    
     ImpactDamageMult = 0.00003 //0.0003
     DamagedEffectHealthSmokeFactor=0.90 //0.5
     DamagedEffectHealthFireFactor=0.80 //0.25
