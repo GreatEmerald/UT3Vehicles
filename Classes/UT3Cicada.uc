@@ -291,9 +291,9 @@ defaultproperties
     StartUpSound=Sound'UT3A_Vehicle_Cicada.SoundCues.StartCue'
     ShutDownSound=Sound'UT3A_Vehicle_Cicada.SoundCues.StopCue'
     ExplosionSounds=()
-    ExplosionSounds(0)=Sound'UT3A_Vehicle_Cicada.Sounds.A_Vehicle_Cicada_Explode02'
+    ExplosionSounds(0)=Sound'UT3A_Vehicle_Cicada.SoundCues.ExplodeCue'
     ImpactDamageSounds=()
-    ImpactDamageSounds(0)=Sound'UT3A_Vehicle_Cicada.SoundCues.A_Vehicle_Cicada_Collide'
+    ImpactDamageSounds(0)=Sound'UT3A_Vehicle_Cicada.SoundCues.CollideCue'
     SoundVolume=255
     
     MomentumMult=0.400000 //?
