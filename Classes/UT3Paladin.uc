@@ -91,16 +91,21 @@ defaultproperties
     SteerBoneName="Body"
 
     // Sound.
-    IdleSound=Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_EngineLoop01';
-    StartUpSound=Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Start01';
-    ShutDownSound=Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Stop01';
-    DamagedEffectHealthSmokeFactor=0.65 //0.5
-    DamagedEffectHealthFireFactor=0.40 //0.25
-    DamagedEffectFireDamagePerSec=2.00 //0.75
+    IdleSound = Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_EngineLoopForeverCue';
+    StartUpSound = Sound'UT3A_Vehicle_Paladin.Sounds.StartCue';
+    ShutDownSound = Sound'UT3A_Vehicle_Paladin.Sounds.StopCue';
     ExplosionSounds=()
     ExplosionSounds(0)=Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Explode02;
     ImpactDamageSounds=()
     ImpactDamageSounds(0)=Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Collide01';
+    EngineRPMSoundRange=11000
+    IdleRPM=3500
+    SoundVolume = 255
+    
+    DamagedEffectHealthSmokeFactor=0.65 //0.5
+    DamagedEffectHealthFireFactor=0.40 //0.25
+    DamagedEffectFireDamagePerSec=2.00 //0.75
+
 
     //HornSounds(0)=sound'ONSBPSounds.ShockTank.PaladinHorn'
     //HornSounds(1)=sound'ONSVehicleSounds-S.Dixie_Horn'
