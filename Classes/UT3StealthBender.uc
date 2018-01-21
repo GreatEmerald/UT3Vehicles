@@ -326,6 +326,22 @@ function CheckState()
 		CurrentState = VS_Cloaked;
 	}
 }
+simulated event TeamChanged()
+{
+
+    Super(SVehicle).TeamChanged();
+
+    if (Team == 0 && RedSkin != None)
+    {
+        Skins[0] = RedSkin;
+        Skins[1] = RedSkinB[0];
+    }
+    else if (Team == 1 && BlueSkin != None)
+    {
+        Skins[0] = BlueSkin;
+        Skins[1] = BlueSkinB[0];
+    }
+}
 function Cloak(bool OnOff)
 {
 	/* byte Visibility
