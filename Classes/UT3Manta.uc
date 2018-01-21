@@ -50,6 +50,11 @@ var Emitter DuckEffect;
 #exec obj load file=../Textures/UT3MantaTex.utx
 #exec obj load file=../Sounds/UT3A_Vehicle_Manta.uax
 
+var  	array<ONSDamagedEffect>     DamagedEffect;
+var()	array<vector>               DamagedEffectOffset;
+var()	class<ONSDamagedEffect>     DamagedEffectClass;
+var()	float						DamagedEffectScale;
+
 /* The spining blades. */
 var array<UT3MantaBlade> Blades;
 
@@ -376,6 +381,15 @@ defaultproperties
     //TPCamDistance=300.000000
     //TPCamLookat=(X=0,Y=0,Z=0)
     //TPCamWorldOffset=(X=0,Y=0,Z=35)
+
+	DamagedEffectClass=()
+    DamagedEffectClass(0)=class'ONSDamagedEffect'
+	DamagedEffectClass(1)=class'ONSDamagedEffect'
+	
+	DamagedEffectOffset=()
+	DamagedEffectOffset(0)=(X=2,Y=31,Z=16)    //Right Turbine fire point
+	DamagedEffectOffset(1)=(X=2,Y=-75,Z=-10)  //Left Blades fire point
+	DamagedEffectScale=0.6
 
     HeadlightCoronaOffset=()
     HeadlightCoronaOffset(0)=(X=40.0,Y=0.0,Z=-20.0)
