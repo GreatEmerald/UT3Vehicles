@@ -1,7 +1,7 @@
 /*
  * Copyright © 2007, 2009 Wormbo
  * Copyright © 2007, 2009, 2014 GreatEmerald
- * Copyright © 2017 HellDragon
+ * Copyright © 2017-2018 HellDragon
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -586,6 +586,14 @@ defaultproperties
     FPCamPos=(X=100,Y=0,Z=330)
     UnDeployedFPCamPos=(X=100,Y=0,Z=330)
     DeployedFPCamPos=(X=-200,Y=0,Z=500)
+
+    //DamagedEffectOffset=(X=280,Y=160,Z=210)   //Front Right Turret Fire Point
+    DamagedEffectScale=2.3                    
+    //DamagedEffectOffset=(X=-110,Y=-150,Z=150)   //Rear Left Turret Fire Point
+
+    //Custom Alternate Fire Locations Away from Passenger Turrets
+    DamagedEffectOffset=(X=210,Y=70,Z=190)     
+    //DamagedEffectOffset=(X=-70,Y=-110,Z=150)
 
     HeadlightCoronaOffset(0)=(X=318,Y=87,Z=212)
     HeadlightCoronaOffset(1)=(X=318,Y=-87,Z=212)
