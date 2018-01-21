@@ -161,65 +161,60 @@ function DrivingStatusChanged()
 //
 function Tick(float DeltaTime)
 {
-    local float EnginePitch, HitDist;
     local int i;
-	local vector TraceStart, TraceEnd, HitLocation, HitNormal;
-	local actor HitActor;
-    local float DesiredOpacity, DeltaOpacity, MaxOpacityChange, ThrustAmount;
-	local TrailEmitter T;
-	local vector RelVel;
-	local bool NewStreamerActive, bIsBehindView;
-	local PlayerController PC;
-
+    local float ThrustAmount;
+    local TrailEmitter T;
+    local vector RelVel;
+    local bool bIsBehindView;
+    local PlayerController PC;
+        
+    Super.Tick(DeltaTime);
+    
     if (Driver != None) // Just in case.
         Ailerons(DeltaTime);
-
+    
     if (!bHoldingDuck && DuckEffect != None)
-        DuckEffect.Destroy();
-
-    	if(Level.NetMode != NM_DedicatedServer)
-	{
-        EnginePitch = 64.0 + VSize(Velocity)/MaxPitchSpeed * 64.0;
-        SoundPitch = FClamp(EnginePitch, 34, 128);
+    DuckEffect.Destroy();
+    
+        if(Level.NetMode != NM_DedicatedServer)
+    {
 
         RelVel = Velocity << Rotation;
 
         PC = Level.GetLocalPlayerController();
-		if (PC != None && PC.ViewTarget == self)
-			bIsBehindView = PC.bBehindView;
-		else
+        if (PC != None && PC.ViewTarget == self)
+            bIsBehindView = PC.bBehindView;
+        else
             bIsBehindView = True;
 
-    	// Adjust Engine FX depending on being drive/velocity
-		if (!bIsBehindView)
-		{
-			for(i=0; i<TrailEffects.Length; i++)
-				TrailEffects[i].SetThrustEnabled(false);
-		}
+        // Adjust Engine FX depending on being drive/velocity
+        if (!bIsBehindView)
+        {
+            for(i=0; i<TrailEffects.Length; i++)
+                TrailEffects[i].SetThrustEnabled(false);
+        }
         else
         {
-			ThrustAmount = FClamp(OutputThrust, 0.0, 1.0);
+            ThrustAmount = FClamp(OutputThrust, 0.0, 1.0);
 
-			for(i=0; i<TrailEffects.Length; i++)
-			{
-				TrailEffects[i].SetThrustEnabled(true);
-				TrailEffects[i].SetThrust(ThrustAmount);
-			}
-		}
+            for(i=0; i<TrailEffects.Length; i++)
+            {
+                TrailEffects[i].SetThrustEnabled(true);
+                TrailEffects[i].SetThrust(ThrustAmount);
+            }
+        }
 		
-		if(bMakeBrakeLights)
-		    {
-			   for(i=0; i<2; i++)
-                   if (BrakeLight[i] != None)
-                       BrakeLight[i].bCorona = True;
+        if(bMakeBrakeLights)
+	{
+        for(i=0; i<2; i++)
+        if (BrakeLight[i] != None)
+               BrakeLight[i].bCorona = True;
 
-			   for(i=0; i<2; i++)
-                   if (BrakeLight[i] != None)
-                       BrakeLight[i].UpdateBrakelightState(OutputThrust);
-		    }
+	for(i=0; i<2; i++)
+        if (BrakeLight[i] != None)
+               BrakeLight[i].UpdateBrakelightState(OutputThrust);
+	}
     }
-
-    Super.Tick(DeltaTime);
 }
 
 //
