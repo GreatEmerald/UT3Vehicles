@@ -306,11 +306,7 @@ defaultproperties
     ExitPositions(1)=(X=80,Y=210,Z=25)
     ExitPositions(2)=(X=330,Y=0,Z=35)
     ExitPositions(3)=(X=90,Y=0,Z=160) 
-    
-    TrailEffectRotation=(Yaw=32768)
-    TrailEffectPositions(0)=(X=-63,Y=-42.5,Z=118) //(X=-53,Y=-33,Z=63)
-    TrailEffectPositions(1)=(X=-63,Y=42.5,Z=118)
-    
+        
     MomentumMult=0.400000 //?
     
     bDrawMeshInFP=True
@@ -326,6 +322,15 @@ defaultproperties
     //Aerial View
     //TPCamLookAt=(X=50.0,Y=0.0,Z=0)
     //TPCamWorldOffset=(Z=250)
+    
+    TrailEffectRotation=(Yaw=32768)
+    TrailEffectPositions(0)=(X=-63,Y=-42.5,Z=118) //(X=-53,Y=-33,Z=63)
+    TrailEffectPositions(1)=(X=-63,Y=42.5,Z=118)
+    
+    //DamagedEffectOffset=(X=-10,Y=50,Z=120)   //Engine Fire Point
+    //DamagedEffectScale=1.2                   //Engine Fire Size
+    DamagedEffectOffset=(X=210,Y=-40,Z=-17)    //Front Fire Point
+    DamagedEffectScale=1.0                     //Front Fire Size
     
     HeadlightCoronaOffset=()
     HeadlightCoronaOffset(0)=(X=243,Y=0,Z=67)
