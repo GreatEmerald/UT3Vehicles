@@ -52,7 +52,7 @@ simulated function PostNetBeginPlay()
 
 DefaultProperties
 {
-   TurretFireSound=sound'UT3A_Vehicle_Cicada.SoundCues.A_Vehicle_Cicada_TurretFire'
+   TurretFireSound=sound'UT3A_Vehicle_Cicada.TurretFire.A_Vehicle_Cicada_TurretFire'
         Begin Object Class=BeamEmitter Name=BeamEmitter0
          BeamDistanceRange=(Min=512.000000,Max=512.000000)
          DetermineEndPointBy=PTEP_Distance
