@@ -286,14 +286,14 @@ defaultproperties
     //DriverWeapons(0)=(WeaponClass=class'UT3CicadaMissileLauncher',WeaponBone=RightRLAttach);
     //DriverWeapons(1)=(WeaponClass=class'UT3CicadaMissileLauncher',WeaponBone=LeftRLAttach);
     //PassengerWeapons(0)=(WeaponPawnClass=Class'UT3CicadaTurretPawn',WeaponBone="GatlingGunAttach")
-    TargetLockSound=sound'UT3A_Vehicle_Cicada.Sounds.A_Vehicle_Cicada_TargetLock01'
-    IdleSound=Sound'UT3A_Vehicle_Cicada.Sounds.A_Vehicle_Cicada_EngineLoopForeverCue'
-    StartUpSound=Sound'UT3A_Vehicle_Cicada.SoundCues.StartCue'
-    ShutDownSound=Sound'UT3A_Vehicle_Cicada.SoundCues.StopCue'
+    TargetLockSound=sound'UT3A_Vehicle_Cicada.Singles.A_Vehicle_Cicada_TargetLock01'
+    IdleSound=Sound'UT3A_Vehicle_Cicada.Singles.A_Vehicle_Cicada_EngineLoopCue'
+    StartUpSound=Sound'UT3A_Vehicle_Cicada.EngineStart.StartCue'
+    ShutDownSound=Sound'UT3A_Vehicle_Cicada.EngineStop.StopCue'
     ExplosionSounds=()
-    ExplosionSounds(0)=Sound'UT3A_Vehicle_Cicada.SoundCues.ExplodeCue'
+    ExplosionSounds(0)=Sound'UT3A_Vehicle_Cicada.Explode.ExplodeCue'
     ImpactDamageSounds=()
-    ImpactDamageSounds(0)=Sound'UT3A_Vehicle_Cicada.SoundCues.CollideCue'
+    ImpactDamageSounds(0)=Sound'UT3A_Vehicle_Cicada.Collide.CollideCue'
     SoundRadius=350
     ExplosionSoundRadius=350
     SoundVolume=255
