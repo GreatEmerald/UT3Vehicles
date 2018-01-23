@@ -109,5 +109,5 @@ DefaultProperties
    MomentumTransfer=40000.000000
    DamageRadius=220.000000
    KillRange=2000.000000
-   IgniteSound=Sound'UT3A_Vehicle_Cicada.SoundCues.MissileIgniteCue'
+   IgniteSound=Sound'UT3A_Vehicle_Cicada.MissileIgnite.MissileIgniteCue'
 }
