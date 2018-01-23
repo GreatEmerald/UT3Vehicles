@@ -187,6 +187,7 @@ defaultproperties
     LoadSound=sound'UT3A_Vehicle_Cicada.SoundCues.MissileLoadCue'
     FireSoundClass=Sound'UT3A_Vehicle_Cicada.SoundCues.FireCue'
     AltFireSoundClass=Sound'UT3A_Vehicle_Cicada.SoundCues.MissleEjectCue'
+    SoundRadius=350
     SoundVolume=255
     Mesh = SkeletalMesh'UT3VH_Cicada_Anims.VH_Cicada_RightSideGun'
     RedSkin = Shader'UT3CicadaTex.CicadaSkin'
