@@ -49,7 +49,7 @@ DefaultProperties
     BeamEffectClass(1) = class'UT3CicadaTurretFire'
     AltFireProjectileClass=class'UT3CicadaDecoy'
 
-    FireSoundClass = Sound'UT3A_Vehicle_Cicada.SoundCues.TurretFireCue'
+    FireSoundClass = Sound'UT3A_Vehicle_Cicada.TurretFire.TurretFireCue'
     FireSoundVolume = 3.0 //GE: Again it's a FLOAT!!
     //FireForce=""
 
