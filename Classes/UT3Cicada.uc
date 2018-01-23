@@ -294,6 +294,8 @@ defaultproperties
     ExplosionSounds(0)=Sound'UT3A_Vehicle_Cicada.SoundCues.ExplodeCue'
     ImpactDamageSounds=()
     ImpactDamageSounds(0)=Sound'UT3A_Vehicle_Cicada.SoundCues.CollideCue'
+    SoundRadius=350
+    ExplosionSoundRadius=350
     SoundVolume=255
     
     MomentumMult=0.400000 //?
