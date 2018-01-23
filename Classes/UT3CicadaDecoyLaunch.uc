@@ -50,7 +50,7 @@ simulated function PostNetBeginPlay()
 
 defaultproperties
 {
-    TurretAltFireSound=sound'UT3A_Vehicle_Cicada.SoundCues.TurretAltFireCue'
+    TurretAltFireSound=sound'UT3A_Vehicle_Cicada.TurretAltFire.TurretAltFireCue'
 	
     Begin Object Class=SpriteEmitter Name=SpriteEmitter16
         UseDirectionAs=PTDU_Normal
