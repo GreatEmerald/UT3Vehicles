@@ -115,20 +115,19 @@ defaultproperties
     DriverWeapons(0)=(WeaponClass=class'UT3GoliathCannon',WeaponBone=Chassis)
     PassengerWeapons(0)=(WeaponPawnClass=class'UT3GoliathTurretPawn',WeaponBone=Object10)
 
-	Health=900
-	HealthMax=900
+    Health=900
+    HealthMax=900
 
-    IdleSound = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_EngineLoop01RealTreadsMix';
-    //IdleSound = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_EngineAndTreadCueMix';
-    StartUpSound = SoundGroup'UT3A_Vehicle_Goliath.Sounds.StartCue';
-    ShutDownSound = SoundGroup'UT3A_Vehicle_Goliath.Sounds.StopCue';
+    IdleSound = Sound'UT3A_Vehicle_Goliath.Singles.A_Vehicle_Goliath_EngineLoopTreadCueMix';
+    StartUpSound = SoundGroup'UT3A_Vehicle_Goliath.EngineStart.StartCue';
+    ShutDownSound = SoundGroup'UT3A_Vehicle_Goliath.EngineStop.StopCue';
     DamagedEffectHealthSmokeFactor=0.65 //0.5
     DamagedEffectHealthFireFactor=0.40 //0.25
     DamagedEffectFireDamagePerSec=2.0 //0.75
     ImpactDamageSounds=()
-    ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Collide01';
+    ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Goliath.Collide.CollideCue';
     ExplosionSounds=()
-    ExplosionSounds(0) = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Explode01';
+    ExplosionSounds(0) = Sound'UT3A_Vehicle_Goliath.Explode.A_Vehicle_Goliath_Explode01';
     SoundVolume=255
    
     TreadVelocityScale = 12.0;
