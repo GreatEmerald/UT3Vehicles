@@ -9,19 +9,22 @@ class UT3GoliathTurret extends ONSTankSecondaryTurret;
 
 DefaultProperties
 {
-	//===============
-	// @100GPing100
-	Mesh = SkeletalMesh'UT3GoliathAnims.GoliathMachineGun';
-	RedSkin = Shader'UT3GoliathTex.Goliath.GoliathSkin';
-	BlueSkin = Shader'UT3GoliathTex.Goliath.GoliathSkinBlue';
 
-	YawBone = "Object10";
-	PitchBone = "Object03";
-	WeaponFireAttachmentBone = "Object02";
+    Drawscale = 1.0
 
-	FireSoundClass = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_TurretFire03';
-	// @100GPing100
-	//======END======
+    //===============
+    // @100GPing100
+    Mesh = SkeletalMesh'UT3GoliathAnims.GoliathMachineGun';
+    RedSkin = Shader'UT3GoliathTex.Goliath.GoliathSkin';
+    BlueSkin = Shader'UT3GoliathTex.Goliath.GoliathSkinBlue';
+
+    YawBone = "Object10";
+    PitchBone = "Object03";
+    WeaponFireAttachmentBone = "Object02";
+
+    FireSoundClass = Sound'UT3A_Vehicle_Goliath.Singles.A_Vehicle_Goliath_TurretFire03';
+    // @100GPing100
+    //======END======
 
     PitchUpLimit=11000
     WeaponFireOffset=30.0 //85.0
