@@ -1,5 +1,6 @@
 /*
  * Copyright © 2008, 2014 GreatEmerald
+ * Copyright © 2018 HellDragon
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -101,7 +102,7 @@ state InstantFireMode
         DamageMin = default.DamageMin * DamageScale;
         DamageMax = default.DamageMax * DamageScale;
         Momentum = default.Momentum * DamageScale;
-        FireSoundPitch = 2.0 - DamageScale;
+        //FireSoundPitch = 2.0 - DamageScale;
 
         Super(ONSWeapon).Fire(C);
         FireCountdown = FireInterval;
@@ -153,7 +154,7 @@ defaultproperties
     YawBone = MainTurretYaw
     WeaponFireAttachmentBone = MainTurretBarrel
     GunnerAttachmentBone = MainTurretYaw
-    FireSoundClass=sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_TurretFire01'
+    FireSoundClass=sound'UT3A_Vehicle_Hellbender.TurretFire.TurretFireCue'
     //BeamEffectClass=class'ShockBeamEffect'//'ONSChargeBeamEffect'
     DamageType=Class'UT3DmgType_HellbenderRearGunBeam'
     FireInterval=0.5
