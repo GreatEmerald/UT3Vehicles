@@ -303,15 +303,15 @@ defaultproperties
 
     //MaxSteerAngleCurve=(Points=((OutVal=50.000000),,)) @100GPing100: Causes crash.
     SteerSpeed=200.000000 //110.0 def UT2004
-    IdleSound=Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_EngineIdleForeverCue'
-    StartUpSound=Sound'UT3A_Vehicle_Hellbender.Sounds.StartCue'
-    ShutDownSound=Sound'UT3A_Vehicle_Hellbender.Sounds.StopCue'
+    IdleSound=Sound'UT3A_Vehicle_Hellbender.Singles.A_Vehicle_Hellbender_EngineLoopCue'
+    StartUpSound=Sound'UT3A_Vehicle_Hellbender.EngineStart.StartCue'
+    ShutDownSound=Sound'UT3A_Vehicle_Hellbender.EngineStop.StopCue'
     ImpactDamageSounds=()
-    ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_Collide03';
-    ImpactDamageSounds(1) = Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_Collide04';
+    ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Hellbender.Collide.CollideCue';
+    //ImpactDamageSounds(1) = Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_Collide04';
     ExplosionSounds=()
-    ExplosionSounds(0) = Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_Explode01';
-    HornSounds(0)=Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_Horn01'
+    ExplosionSounds(0) = Sound'UT3A_Vehicle_Hellbender.Explode.ExplodeCue';
+    HornSounds(0)=Sound'UT3A_Vehicle_Hellbender.Singles.A_Vehicle_Hellbender_Horn01'
     IdleRPM=2000
     SoundVolume=255
     
