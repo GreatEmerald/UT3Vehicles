@@ -1,5 +1,6 @@
 /*
  * Copyright © 2008, 2014 GreatEmerald
+ * Copyright © 2017-2018 HellDragon
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -50,8 +51,8 @@ defaultproperties
     YawBone=SecondaryTurretYaw
     WeaponFireAttachmentBone=SecondaryTurretBarrel
     DamageType=class'UT3DmgType_HellbenderLaser'
-    FireSoundClass = Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_BallFire01'
-    AltFireSoundClass = Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_BeamFire01'
+    FireSoundClass = Sound'UT3A_Vehicle_Hellbender.BallFire.BallFireCue'
+    AltFireSoundClass = Sound'UT3A_Vehicle_Hellbender.BeamFire.BeamFireCue'
     PitchUpLimit=9600  //16000 is about what UT3 is but we don't have UT3's camera collision meaning we see under and through the Hellbender in UT2004
     PitchDownLimit=59200
     bInstantRotation=False
