@@ -907,12 +907,15 @@ defaultproperties
     //RanOverDamageType=class'DamTypeEONSLocustHeadshot'
     //CrushedDamageType=class'DamTypeEONSLocustPancake'
 
-    IdleSound=Sound'UT3A_Vehicle_Hoverboard.WAV.A_Vehicle_HoverBoard_Engine01'
-    StartUpSound=Sound'UT3A_Vehicle_Hoverboard.SoundCues.A_Vehicle_Hoverboard_EngineStartCue'
-    ShutDownSound=Sound'UT3A_Vehicle_Hoverboard.SoundCues.A_Vehicle_HoverBoard_EngineStopCue'
-    JumpSound=Sound'UT3A_Vehicle_Hoverboard.SoundCues.A_Vehicle_HoverBoard_JumpCue'
-    AltFireSound=Sound'UT3A_Vehicle_Hoverboard.WAV.A_Vehicle_Hoverboard_GrappleFail01'
-    WaterDisruptSound=Sound'UT3A_Vehicle_Hoverboard.WAV.A_Vehicle_Hoverboard_WaterDisrupt01'
+    IdleSound=Sound'UT3A_Vehicle_Hoverboard.Singles.A_Vehicle_HoverBoard_EngineLoopCue'
+    StartUpSound=Sound'UT3A_Vehicle_Hoverboard.EngineStart.StartCue'
+    ShutDownSound=Sound'UT3A_Vehicle_Hoverboard.EngineStop.StopCue'
+    JumpSound=Sound'UT3A_Vehicle_Hoverboard.Jump.JumpCue'
+    AltFireSound=Sound'UT3A_Vehicle_Hoverboard.GrappleFail.GrappleFailCue'
+    WaterDisruptSound=Sound'UT3A_Vehicle_Hoverboard.WaterDisrupt.WaterDisruptCue'
+    ImpactDamageSounds=()
+    ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Hoverboard.Collide.CollideCue'
+    //ImpactDamageSounds(1) = Sound'UT3A_Vehicle_Hoverboard.WAV.A_Vehicle_Hoverboard_Collide02'
     MaxPitchSpeed=1200.000000
     SoundVolume=255
     SoundRadius=600.000000
@@ -1007,10 +1010,6 @@ defaultproperties
     JumpDelay=1.000000
 
     //
-
-    ImpactDamageSounds=()
-    ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Hoverboard.WAV.A_Vehicle_Hoverboard_Collide01'
-    ImpactDamageSounds(1) = Sound'UT3A_Vehicle_Hoverboard.WAV.A_Vehicle_Hoverboard_Collide02'
 
     NoEntryTexture=Texture'HUDContent.NoEntry'
     TeamBeaconTexture=Texture'ONSInterface-TX.HealthBar'
