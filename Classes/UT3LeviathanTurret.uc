@@ -162,7 +162,7 @@ function KDriverEnter(Pawn P)
         AnimSlot = UT3LeviathanTurretWeapon(Gun).SkinSlot-1;
         VehicleBase.AnimBlendParams(AnimSlot, 1.0, , , ArmBone);
         VehicleBase.PlayAnim(EnterAnim, 1.0, 0.0, AnimSlot);
-        PlaySound(Sound'UT3A_Vehicle_Leviathan.Sounds.A_Vehicle_Leviathan_TurretActivate', SLOT_None, 2.0);
+        PlaySound(Sound'UT3A_Vehicle_Leviathan.Singles.A_Vehicle_Leviathan_TurretActivate', SLOT_None, 2.0);
     }
 }
 
@@ -177,7 +177,7 @@ function bool KDriverLeave(bool bForceLeave)
         AnimSlot = UT3LeviathanTurretWeapon(Gun).SkinSlot-1;
         VehicleBase.AnimBlendParams(AnimSlot, 1.0, , , ArmBone);
         VehicleBase.PlayAnim(LeaveAnim, 1.0, 0.0, AnimSlot);
-        PlaySound(Sound'UT3A_Vehicle_Leviathan.Sounds.A_Vehicle_Leviathan_TurretDeactivate', SLOT_None, 2.0);
+        PlaySound(Sound'UT3A_Vehicle_Leviathan.Singles.A_Vehicle_Leviathan_TurretDeactivate', SLOT_None, 2.0);
     }
 
     return bResult;
