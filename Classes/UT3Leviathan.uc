@@ -551,11 +551,11 @@ defaultproperties
     End Object
     Wheels(6) = SVehicleWheel'CenterWheel'*/
 
-    DeploySound = Sound'UT3A_Vehicle_Leviathan.Sounds.A_Vehicle_Leviathan_Deploy01'
-    HideSound = Sound'UT3A_Vehicle_Leviathan.Sounds.A_Vehicle_Leviathan_Deploy01'
-    IdleSound = Sound'UT3A_Vehicle_Leviathan.Sounds.A_Vehicle_Leviathan_EngineIdleForeverCue'
-    StartUpSound = Sound'UT3A_Vehicle_Leviathan.Sounds.A_Vehicle_Leviathan_EngineStart'
-    ShutDownSound = Sound'UT3A_Vehicle_Leviathan.Sounds.A_Vehicle_Leviathan_EngineStop'
+    DeploySound = Sound'UT3A_Vehicle_Leviathan.Singles.A_Vehicle_Leviathan_Deploy01'
+    HideSound = Sound'UT3A_Vehicle_Leviathan.Singles.A_Vehicle_Leviathan_Deploy01'
+    IdleSound = Sound'UT3A_Vehicle_Leviathan.Singles.EngineLoopCue'
+    StartUpSound = Sound'UT3A_Vehicle_Leviathan.EngineStart.StartCue'
+    ShutDownSound = Sound'UT3A_Vehicle_Leviathan.EngineStop.StopCue'
     SoundVolume = 255
     
     ImpactDamageMult = 0.00003 //0.0003
@@ -563,9 +563,9 @@ defaultproperties
     DamagedEffectHealthFireFactor=0.80 //0.25
     DamagedEffectFireDamagePerSec=2.0 //0.75
     ImpactDamageSounds = ()
-    ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Leviathan.Sounds.A_Vehicle_Leviathan_Collide01'
+    ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Leviathan.Collide.CollideCue'
     ExplosionSounds = ()
-    ExplosionSounds(0) = Sound'UT3A_Vehicle_Leviathan.Sounds.A_Vehicle_Leviathan_Explode'
+    ExplosionSounds(0) = Sound'UT3A_Vehicle_Leviathan.Explode.ExplodeCue'
 
     ExitPositions(0)=(X=90,Y=-330,Z=20)
     ExitPositions(1)=(X=90,Y=330,Z=20)
