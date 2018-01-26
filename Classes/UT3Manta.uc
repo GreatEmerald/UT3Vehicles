@@ -324,16 +324,16 @@ defaultproperties
     KParams=KarmaParams'KParams0'
         
     // Sounds.
-    IdleSound = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_EngineLoopForeverCue';
-    StartUpSound = Sound'UT3A_Vehicle_Manta.Sounds.StartCue';
-    ShutDownSound = Sound'UT3A_Vehicle_Manta.Sounds.StopCue';
-    JumpSound = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Jump';
-    DuckSound = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Crouch';
+    IdleSound = Sound'UT3A_Vehicle_Manta.Singles.A_Vehicle_Manta_EngineLoopCue';
+    StartUpSound = Sound'UT3A_Vehicle_Manta.EngineStart.StartCue';
+    ShutDownSound = Sound'UT3A_Vehicle_Manta.EngineStop.StopCue';
+    JumpSound = Sound'UT3A_Vehicle_Manta.Jump.JumpCue';
+    DuckSound = Sound'UT3A_Vehicle_Manta.Crouch.CrouchCue';
     ImpactDamageSounds=();
-    ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Collide01';
-    ImpactDamageSounds(1) = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Collide02';
+    ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Manta.Collide.CollideCue';
+    //ImpactDamageSounds(1) = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Collide02';
     ExplosionSounds=();
-    ExplosionSounds(0) = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Explode01';
+    ExplosionSounds(0) = Sound'UT3A_Vehicle_Manta.Explode.ExplodeCue';
     HornSounds(1)=sound'ONSVehicleSounds-S.Horns.LaCuchachaHorn';
     //MaxPitchSpeed = 4000;
     
