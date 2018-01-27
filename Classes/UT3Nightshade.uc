@@ -1,6 +1,6 @@
 /*
- * Copyright © 2012 100GPing100
- * Copyright © 2014 GreatEmerald
+ * Copyright Â© 2012 100GPing100
+ * Copyright Â© 2014 GreatEmerald
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -110,7 +110,7 @@ simulated function CheckJumpDuck()
 			Cloak(false);
 
 			CurrentState = VS_Deploying;
-			PlaySound(DeploySnd, SLOT_None);
+			PlaySound(DeploySnd, SLOT_None, 5.0);
 			PlayAnim('ArmExtend', 1.6, 0.2);
 			CurrentAnim = "ArmExtend";
 
@@ -123,7 +123,7 @@ simulated function CheckJumpDuck()
 		else if (CurrentState == VS_Deployed)
 		{
 			CurrentState = VS_Undeploying;
-			PlaySound(UndeploySnd, SLOT_None);
+			PlaySound(UndeploySnd, SLOT_None, 5.0);
 			PlayAnim('ArmRetract', 4.8, 0.2);
 			CurrentAnim = "ArmRetract";
 		}
@@ -156,7 +156,7 @@ function bool NoObstacle()
 	else
 		return false;
 }
-/* » Type:
+/* Â» Type:
  * 0: General message.
  * 1: Mine select message.
 */
@@ -213,7 +213,7 @@ function Fire(optional float F)
 		if (Mines[0] == None && SelectedMine == 1)
 		{
 			Mines[0] = Spawn(Class'UT3SpiderMineTrap', Driver,, ArmMine.Location);
-			PlaySound(DropItemSnd);
+			PlaySound(DropItemSnd, Slot_NONE, 5.0);
 
 			if (!bHasAmmo(1))
 				SelectNextMine();
@@ -221,7 +221,7 @@ function Fire(optional float F)
 		else if (Mines[1] == None && SelectedMine == 1)
 		{
 			Mines[1] = Spawn(Class'UT3SpiderMineTrap', Driver,, ArmMine.Location);
-			PlaySound(DropItemSnd);
+			PlaySound(DropItemSnd, Slot_NONE, 5.0);
 
 			if (!bHasAmmo(1))
 				SelectNextMine();
@@ -230,7 +230,7 @@ function Fire(optional float F)
 		{
 			ShowMessage(0, 4); // "Only in next beta (have a shield :D)"
 			Mines[2] = Spawn(Class'UT3DeployableEnergyShield', Driver,, ArmMine.Location);
-			PlaySound(DropItemSnd);
+			PlaySound(DropItemSnd, Slot_NONE, 5.0);
 
 			if (!bHasAmmo(2))
 				SelectNextMine();
@@ -238,7 +238,7 @@ function Fire(optional float F)
 		else if (Mines[3] == None && SelectedMine == 3)
 		{
 			Mines[3] = Spawn(Class'UT3EMPMine', Driver,, ArmMine.Location);
-			PlaySound(DropItemSnd);
+			PlaySound(DropItemSnd, Slot_NONE, 5.0);
 
 			if (!bHasAmmo(3))
 				SelectNextMine();
@@ -246,7 +246,7 @@ function Fire(optional float F)
 		else if (Mines[4] == None && SelectedMine == 4)
 		{
 			Mines[4] = Spawn(Class'UT3DeployableEnergyShield', Driver,, ArmMine.Location);
-			PlaySound(DropItemSnd);
+			PlaySound(DropItemSnd, Slot_NONE, 5.0);
 
 			if (!bHasAmmo(4))
 				SelectNextMine();
@@ -256,7 +256,7 @@ function Fire(optional float F)
 
 		// Undeploy.
 		CurrentState = VS_Undeploying;
-		PlaySound(UndeploySnd, SLOT_None);
+		PlaySound(UndeploySnd, SLOT_None, 5.0);
 		PlayAnim('ArmRetract', 4.8, 0.2);
 		CurrentAnim = "ArmRetract";
 	}
@@ -381,7 +381,7 @@ Begin:
 	CurrentState = VS_Deploying;
 
 	// Undeploy.
-	PlaySound(UndeploySnd, SLOT_None);
+	PlaySound(UndeploySnd, SLOT_None, 5.0);
 	PlayAnim('ArmRetract', 4.8, 0.2);
 
 	// Wait for the animation to end.
@@ -394,7 +394,7 @@ Begin:
 	AttachToBone(ArmMine, 'Object');
 
 	// Deploy.
-	PlaySound(DeploySnd, SLOT_None);
+	PlaySound(DeploySnd, SLOT_None, 5.0);
 	PlayAnim('ArmExtend', 1.6, 0.2);
 
 	// Will change it back to VS_Deployed in CheckState().
@@ -526,7 +526,7 @@ simulated function SwitchWeapon(byte F)
 				break;
 			}
 			SelectedMine = 1;
-			PlaySound(SwitchDeployableSnd, SLOT_None);
+			PlaySound(SwitchDeployableSnd, SLOT_None, 5.0);
 			ShowMessage(1, 0); // "Spidermine Trap"
 			break;
 		case 2:
@@ -537,7 +537,7 @@ simulated function SwitchWeapon(byte F)
 				break;
 			}
 			SelectedMine = 2;
-			PlaySound(SwitchDeployableSnd, SLOT_None);
+			PlaySound(SwitchDeployableSnd, SLOT_None, 5.0);
 			ShowMessage(1, 1); // "Stasis Field"
 			break;
 		case 3:
@@ -548,7 +548,7 @@ simulated function SwitchWeapon(byte F)
 				break;
 			}
 			SelectedMine = 3;
-			PlaySound(SwitchDeployableSnd, SLOT_None);
+			PlaySound(SwitchDeployableSnd, SLOT_None, 5.0);
 			ShowMessage(1, 2); // "EMP"
 			break;
 		case 4:
@@ -559,7 +559,7 @@ simulated function SwitchWeapon(byte F)
 				break;
 			}
 			SelectedMine = 4;
-			PlaySound(SwitchDeployableSnd, SLOT_None);
+			PlaySound(SwitchDeployableSnd, SLOT_None, 5.0);
 			ShowMessage(1, 3); // "Shield Generator"
 			break;
 	}
@@ -713,7 +713,7 @@ function bool BotDropDeployable()
 		Cloak(false);
 
 		CurrentState = VS_Deploying;
-		PlaySound(DeploySnd, SLOT_None);
+		PlaySound(DeploySnd, SLOT_None, 5.0);
 		PlayAnim('ArmExtend', 1.6, 0.2);
 		CurrentAnim = "ArmExtend";
 
@@ -729,7 +729,7 @@ function bool BotDropDeployable()
 		Fire(0);
 
 		CurrentState = VS_Undeploying;
-		PlaySound(UndeploySnd, SLOT_None);
+		PlaySound(UndeploySnd, SLOT_None, 5.0);
 		PlayAnim('ArmRetract', 4.8, 0.2);
 		CurrentAnim = "ArmRetract";
 
@@ -888,22 +888,24 @@ DefaultProperties
 	Mines(4) = none;
 
 	// Sound.
-	IdleSound = Sound'UT3A_Vehicle_Nightshade.Sounds.A_Vehicle_Nightshade_EngineLoop01';
-	StartUpSound = Sound'UT3A_Vehicle_Nightshade.Sounds.A_Vehicle_Nightshade_EngineStart01';
-	ShutDownSound = Sound'UT3A_Vehicle_Nightshade.Sounds.A_Vehicle_Nightshade_EngineStop01';
-	DeploySnd = Sound'UT3A_Vehicle_Nightshade.Sounds.A_Vehicle_Nightshade_ArmsExtend01';
-	UndeploySnd = Sound'UT3A_Vehicle_Nightshade.Sounds.A_Vehicle_Nightshade_ArmsRetract01';
-	SwitchDeployableSnd = Sound'UT3A_Vehicle_Nightshade.Sounds.A_Vehicle_Nightshade_SwitchDeployables';
-	DropItemSnd = Sound'UT3A_Vehicle_Nightshade.Sounds.A_Vehicle_Nightshade_DropItem02';
+	IdleSound = Sound'UT3A_Vehicle_Nightshade.Singles.A_Vehicle_Nightshade_EngineLoop01';
+	StartUpSound = Sound'UT3A_Vehicle_Nightshade.EngineStart.StartCue';
+	ShutDownSound = Sound'UT3A_Vehicle_Nightshade.EngineStop.StopCue';
+	DeploySnd = Sound'UT3A_Vehicle_Nightshade.ArmsExtend.ArmsExtendCue';
+	UndeploySnd = Sound'UT3A_Vehicle_Nightshade.ArmsRetract.ArmsRetractCue';
+	SwitchDeployableSnd = Sound'UT3A_Vehicle_Nightshade.Singles.A_Vehicle_Nightshade_SwitchDeployables';
+	DropItemSnd = Sound'UT3A_Vehicle_Nightshade.DropItem.DropItemCue';
 	MaxPitchSpeed = 1250; // 1000
-	ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Nightshade.Sounds.A_Vehicle_Nightshade_Impact01';
-	ImpactDamageSounds(1) = Sound'UT3A_Vehicle_Nightshade.Sounds.A_Vehicle_Nightshade_Impact02';
-	ImpactDamageSounds(2) = Sound'UT3A_Vehicle_Nightshade.Sounds.A_Vehicle_Nightshade_Impact01';
-	ImpactDamageSounds(3) = Sound'UT3A_Vehicle_Nightshade.Sounds.A_Vehicle_Nightshade_Impact02';
-	ImpactDamageSounds(4) = Sound'UT3A_Vehicle_Nightshade.Sounds.A_Vehicle_Nightshade_Impact01';
-	ImpactDamageSounds(5) = Sound'UT3A_Vehicle_Nightshade.Sounds.A_Vehicle_Nightshade_Impact02';
-	ImpactDamageSounds(6) = Sound'UT3A_Vehicle_Nightshade.Sounds.A_Vehicle_Nightshade_Impact01';
-
+        ImpactDamageSounds= ();
+	ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Nightshade.Collide.CollideCue';
+	//ImpactDamageSounds(1) = Sound'UT3A_Vehicle_Nightshade.Sounds.A_Vehicle_Nightshade_Impact02';
+	//ImpactDamageSounds(2) = Sound'UT3A_Vehicle_Nightshade.Sounds.A_Vehicle_Nightshade_Impact01';
+	//ImpactDamageSounds(3) = Sound'UT3A_Vehicle_Nightshade.Sounds.A_Vehicle_Nightshade_Impact02';
+	//ImpactDamageSounds(4) = Sound'UT3A_Vehicle_Nightshade.Sounds.A_Vehicle_Nightshade_Impact01';
+	//ImpactDamageSounds(5) = Sound'UT3A_Vehicle_Nightshade.Sounds.A_Vehicle_Nightshade_Impact02';
+	//ImpactDamageSounds(6) = Sound'UT3A_Vehicle_Nightshade.Sounds.A_Vehicle_Nightshade_Impact01';
+        SoundVolume=255
+	
 	// Movement.
 	MaxThrustForce = 15.0;
 	MaxStrafeForce = 15.0;
