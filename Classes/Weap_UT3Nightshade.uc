@@ -1,6 +1,6 @@
 /*
- * Copyright © 2012 100GPing100
- * Copyright © 2014 GreatEmerald
+ * Copyright Â© 2012 100GPing100
+ * Copyright Â© 2014 GreatEmerald
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -262,9 +262,9 @@ DefaultProperties
 	MinimumDamage = 5.0;
 
 	// Sound.
-	FireStart = Sound'UT3A_Vehicle_Nightshade.Sounds.A_Vehicle_Nightshade_FireStart01';
-	FireSoundClass = Sound'UT3A_Vehicle_Nightshade.Sounds.A_Vehicle_Nightshade_FireLoop01';
-	FireEnd = Sound'UT3A_Vehicle_Nightshade.Sounds.A_Vehicle_Nightshade_FireStop01';
+	FireStart = Sound'UT3A_Vehicle_Nightshade.FireStart.FireStartCue';
+	FireSoundClass = Sound'UT3A_Vehicle_Nightshade.Singles.A_Vehicle_Nightshade_FireLoop01';
+	FireEnd = Sound'UT3A_Vehicle_Nightshade.FireStop.FireStopCue';
 	bAmbientFireSound = true;
 
 	// Force feedback.
