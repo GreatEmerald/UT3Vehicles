@@ -91,13 +91,13 @@ defaultproperties
     SteerBoneName="Body"
 
     // Sound.
-    IdleSound = Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_EngineLoopForeverCue';
-    StartUpSound = Sound'UT3A_Vehicle_Paladin.Sounds.StartCue';
-    ShutDownSound = Sound'UT3A_Vehicle_Paladin.Sounds.StopCue';
+    IdleSound = Sound'UT3A_Vehicle_Paladin.Singles.A_Vehicle_Paladin_EngineLoopCue';
+    StartUpSound = Sound'UT3A_Vehicle_Paladin.EngineStart.StartCue';
+    ShutDownSound = Sound'UT3A_Vehicle_Paladin.EngineStop.StopCue';
     ExplosionSounds=()
-    ExplosionSounds(0)=Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Explode02;
+    ExplosionSounds(0)=Sound'UT3A_Vehicle_Paladin.Explode.ExplodeCue;
     ImpactDamageSounds=()
-    ImpactDamageSounds(0)=Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Collide01';
+    ImpactDamageSounds(0)=Sound'UT3A_Vehicle_Paladin.Collide.CollideCue';
     EngineRPMSoundRange=11000
     IdleRPM=3500
     SoundVolume = 255
