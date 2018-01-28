@@ -2,7 +2,7 @@
  * Copyright © 2008-2009 Wormbo
  * Copyright © 2008-2009, 2014 GreatEmerald
  * Copyright © 2012 100GPing100
- * Copyright © 2017 HellDragon
+ * Copyright © 2017-2018 HellDragon
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -243,9 +243,9 @@ defaultproperties
 {
     //===========================
     // @100GPing100
-    FireSoundClass = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Fire01';
-    AltFireSoundClass = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_AltFire01_Dup';
-    HomingSound = Sound'UT3A_Vehicle_Cicada.Sounds.A_Vehicle_Cicada_TargetLock01';
+    FireSoundClass = Sound'UT3A_Vehicle_Raptor.Fire.FireCue';
+    AltFireSoundClass = Sound'UT3A_Vehicle_Raptor.AltFire.AltFireCue';
+    HomingSound = Sound'UT3A_Vehicle_Cicada.Singles.A_Vehicle_Cicada_TargetLock01';
     Mesh = SkeletalMesh'UT3VH_Raptor_Anims.RaptorRightGunOnly'
     RedSkin = Shader'UT3RaptorTex.RaptorSkin'
     BlueSkin = Shader'UT3RaptorTex.RaptorSkinBlue'
