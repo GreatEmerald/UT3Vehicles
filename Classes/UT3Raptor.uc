@@ -335,6 +335,7 @@ defaultproperties
     StreamerEffectClass=class'Onslaught.ONSAttackCraftStreamer'
 
     VehiclePositionString = "in a UT3 Raptor";
+    VehicleNameString = "UT3 Raptor"
 
     DriverWeapons[0] = (WeaponClass=class'UT3RaptorWeapon',WeaponBone="rt_gun")
     DriverWeapons[1] = (WeaponClass=class'UT3RaptorWeaponLeft',WeaponBone="left_gun")
@@ -343,28 +344,23 @@ defaultproperties
     RudderYawContraint = 2048 // 30° ~= 5461 RUU
 
     // Sounds.
-    IdleSound = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_EngineLoop01';
-    StartUpSound = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Start01';
-    ShutDownSound = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Stop01';
+    IdleSound = Sound'UT3A_Vehicle_Raptor.Singles.A_Vehicle_Raptor_EngineLoopCue';
+    StartUpSound = Sound'UT3A_Vehicle_Raptor.EngineStart.StartCue';
+    ShutDownSound = Sound'UT3A_Vehicle_Raptor.EngineStop.StopCue';
+    ImpactDamageSounds=();
+    ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Raptor.Collide.CollideCue';
+    ExplosionSounds=();
+    ExplosionSounds(0) = Sound'UT3A_Vehicle_Raptor.Explode.ExplodeCue';
+    SoundVolume=255
+    
+    MomentumMult=0.400000 //? HDm to GE: Feels right on everything except Rocket Launcher has more force than it should on the Raptor
     ImpactDamageMult = 0.00003 //0.0003
     DamagedEffectHealthSmokeFactor=0.65 //0.5
     DamagedEffectHealthFireFactor=0.40 //0.25
     DamagedEffectFireDamagePerSec=2.0 //0.75
-    ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Collide01';
-    ImpactDamageSounds(1) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Collide02';
-    ImpactDamageSounds(2) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Collide01';
-    ImpactDamageSounds(3) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Collide02';
-    ImpactDamageSounds(4) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Collide01';
-    ImpactDamageSounds(5) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Collide02';
-    ImpactDamageSounds(6) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Collide01';
-    ExplosionSounds(0) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Explode01';
-    ExplosionSounds(1) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Explode01';
-    ExplosionSounds(2) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Explode01';
-    ExplosionSounds(3) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Explode01';
-    ExplosionSounds(4) = Sound'UT3A_Vehicle_Raptor.Sounds.A_Vehicle_Raptor_Explode01';
+   
     // @100GPing100
-    //============EDN============
-    VehicleNameString = "UT3 Raptor"
+    //============EDN===========
 
     //DriverWeapons[0] = (WeaponClass=class'UT3RaptorWeapon',WeaponBone=PlasmaGunAttachment)
 
@@ -404,6 +400,7 @@ defaultproperties
     //RollDamping=15.050000        //Decreased here.
     MaxRandForce=14.000000
     RandForceInterval=0.625000  Somewhat decreased */
+    
     GroundSpeed=2000               //2500//We are faster now! This should be a true option.
     
     MaxThrustForce=70.0
@@ -416,8 +413,6 @@ defaultproperties
     
     PitchTorqueMax=10.0
     RollTorqueMax=35.0
-    
-    MomentumMult=0.400000 //? HDm to GE: Feels right on everything except Rocket Launcher has more force than it should on the Raptor
     
     EntryPosition=(X=0,Y=0,Z=0)
     EntryRadius = 300
