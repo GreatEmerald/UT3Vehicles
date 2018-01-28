@@ -2,7 +2,7 @@
  * Copyright © 2009 Wormbo
  * Copyright © 2013-2014 José Luís '100GPing100'
  * Copyright © 2013-2014 GreatEmerald
- * Copyright © 2017 HellDragon
+ * Copyright © 2017-2018 HellDragon
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -986,6 +986,11 @@ defaultproperties
     ExitPositions(2)=(X=50,Y=-165,Z=-30)
     ExitPositions(3)=(X=50,Y=165,Z=-30)
     ExitPositions(4)=(X=350,Y=0,Z=60)
+
+    DamagedEffectOffset=(X=0,Y=40,Z=120)      //Near Cannon Fire Point
+    DamagedEffectScale=1.3                    //Near Cannon Fire Size
+    //DamagedEffectOffset=(X=190,Y=-70,Z=100) //Front Tire Fire Point
+    //DamagedEffectScale=1.0                  //Front Tire Fire Size
 
     //HeadlightCoronaOffset(0)=(X=213,Y=85,Z=43) //(X=195,Y=85,Z=70)
     //HeadlightCoronaOffset(1)=(X=213,Y=-85,Z=43) //(X=195,Y=-85,Z=70)

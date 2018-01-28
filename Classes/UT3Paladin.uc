@@ -81,13 +81,13 @@ defaultproperties
 
     Drawscale = 1.0 //Ensure default scale and not be overriden by stock classes
 
-    Mesh=SkeletalMesh'UT3PaladinAnims.Paladin';
-    RedSkin=Shader'UT3PaladinTex.Paladin.PaladinSkin';
-    BlueSkin=Shader'UT3PaladinTex.Paladin.PaladinSkinBlue';
+    Mesh=SkeletalMesh'UT3PaladinAnims.Paladin'
+    RedSkin=Shader'UT3PaladinTex.Paladin.PaladinSkin'
+    BlueSkin=Shader'UT3PaladinTex.Paladin.PaladinSkinBlue'
 
-    DriverWeapons(0)=(WeaponClass=class'UT3PaladinCannon',WeaponBone="Turret_Yaw");
+    DriverWeapons(0)=(WeaponClass=class'UT3PaladinCannon',WeaponBone="Turret_Yaw")
 
-    VehiclePositionString="in a UT3 Paladin";
+    VehiclePositionString="in a UT3 Paladin"
     SteerBoneName="Body"
 
     // Sound.
@@ -106,20 +106,19 @@ defaultproperties
     DamagedEffectHealthFireFactor=0.40 //0.25
     DamagedEffectFireDamagePerSec=2.00 //0.75
 
-
     //HornSounds(0)=sound'ONSBPSounds.ShockTank.PaladinHorn'
     //HornSounds(1)=sound'ONSVehicleSounds-S.Dixie_Horn'
 
-    BaseEyeheight=40;
-    Eyeheight=40;
+    BaseEyeheight=40
+    Eyeheight=40
 
     Begin Object Class=SVehicleWheel Name=RWheel1
-        BoneName="RtTire01";
-        SupportBoneName="RtSuspension01";
-        BoneOffset=(X=0.0,Y=35,Z=13.0);
-        SuspensionTravel=60.0;
-        bPoweredWheel=true;
-        WheelRadius=60;
+        BoneName="RtTire01"
+        SupportBoneName="RtSuspension01"
+        BoneOffset=(X=0.0,Y=35,Z=13.0)
+        SuspensionTravel=60.0
+        bPoweredWheel=true
+        WheelRadius=60
 
         BoneRollAxis=AXIS_Y
         BoneSteerAxis=AXIS_Z
@@ -127,12 +126,12 @@ defaultproperties
         SteerType=VST_Steered
     End Object
     Begin Object Class=SVehicleWheel Name=RWheel2
-        BoneName="RtTire02";
-        SupportBoneName="RtSuspension02";
-        BoneOffset=(X=0.0,Y=35.0,Z=13.0);
-        SuspensionTravel=60.0;
-        bPoweredWheel=true;
-        WheelRadius=60;
+        BoneName="RtTire02"
+        SupportBoneName="RtSuspension02"
+        BoneOffset=(X=0.0,Y=35.0,Z=13.0)
+        SuspensionTravel=60.0
+        bPoweredWheel=true
+        WheelRadius=60
 
         BoneRollAxis=AXIS_Y
         BoneSteerAxis=AXIS_Z
@@ -140,12 +139,12 @@ defaultproperties
         SteerType=VST_Steered
     End Object
     Begin Object Class=SVehicleWheel Name=RWheel3
-        BoneName="RtTire03";
-        SupportBoneName="RtSuspension03";
-        BoneOffset=(X=0.0,Y=35.0,Z=13.0);
-        SuspensionTravel=60.0;
-        bPoweredWheel=true;
-        WheelRadius=60;
+        BoneName="RtTire03"
+        SupportBoneName="RtSuspension03"
+        BoneOffset=(X=0.0,Y=35.0,Z=13.0)
+        SuspensionTravel=60.0
+        bPoweredWheel=true
+        WheelRadius=60
 
         BoneRollAxis=AXIS_Y
         BoneSteerAxis=AXIS_Z
@@ -153,12 +152,12 @@ defaultproperties
         SteerType=VST_Inverted
     End Object
     Begin Object Class=SVehicleWheel Name=RWheel4
-        BoneName="RtTire04";
-        SupportBoneName="RtSuspension04";
-        BoneOffset=(X=0.0,Y=35.0,Z=13.0);
-        SuspensionTravel=60.0;
-        bPoweredWheel=true;
-        WheelRadius=60;
+        BoneName="RtTire04"
+        SupportBoneName="RtSuspension04"
+        BoneOffset=(X=0.0,Y=35.0,Z=13.0)
+        SuspensionTravel=60.0
+        bPoweredWheel=true
+        WheelRadius=60
 
         BoneRollAxis=AXIS_Y
         BoneSteerAxis=AXIS_Z
@@ -166,12 +165,12 @@ defaultproperties
         SteerType=VST_Inverted
     End Object
     Begin Object Class=SVehicleWheel Name=LWheel1
-        BoneName="LtTire01";
-        SupportBoneName="LtSuspension01";
-        BoneOffset=(X=0.0,Y=-35.0,Z=13.0);
-        SuspensionTravel=60.0;
-        bPoweredWheel=true;
-        WheelRadius=60;
+        BoneName="LtTire01"
+        SupportBoneName="LtSuspension01"
+        BoneOffset=(X=0.0,Y=-35.0,Z=13.0)
+        SuspensionTravel=60.0
+        bPoweredWheel=true
+        WheelRadius=60
 
         BoneRollAxis=AXIS_Y
         BoneSteerAxis=AXIS_Z
@@ -179,12 +178,12 @@ defaultproperties
         SteerType=VST_Steered
     End Object
     Begin Object Class=SVehicleWheel Name=LWheel2
-        BoneName="LtTire02";
-        SupportBoneName="LtSuspension02";
-        BoneOffset=(X=0.0,Y=-35.0,Z=13.0);
-        SuspensionTravel=60.0;
-        bPoweredWheel=true;
-        WheelRadius=60;
+        BoneName="LtTire02"
+        SupportBoneName="LtSuspension02"
+        BoneOffset=(X=0.0,Y=-35.0,Z=13.0)
+        SuspensionTravel=60.0
+        bPoweredWheel=true
+        WheelRadius=60
 
         BoneRollAxis=AXIS_Y
         BoneSteerAxis=AXIS_Z
@@ -192,12 +191,12 @@ defaultproperties
         SteerType=VST_Steered
     End Object
     Begin Object Class=SVehicleWheel Name=LWheel3
-        BoneName="LtTire03";
-        SupportBoneName="LtSuspension03";
+        BoneName="LtTire03"
+        SupportBoneName="LtSuspension03"
         BoneOffset=(X=0.0,Y=-35.0,Z=13.0)
-        SuspensionTravel=60.0;
-        bPoweredWheel=true;
-        WheelRadius=60;
+        SuspensionTravel=60.0
+        bPoweredWheel=true
+        WheelRadius=60
 
         BoneRollAxis=AXIS_Y
         BoneSteerAxis=AXIS_Z
@@ -205,26 +204,26 @@ defaultproperties
         SteerType=VST_Inverted
     End Object
     Begin Object Class=SVehicleWheel Name=LWheel4
-        BoneName="LtTire04";
-        SupportBoneName="LtSuspension04";
-        BoneOffset=(X=0.0,Y=-35.0,Z=13.0);
-        SuspensionTravel=60.0;
-        bPoweredWheel=true;
-        WheelRadius=60;
+        BoneName="LtTire04"
+        SupportBoneName="LtSuspension04"
+        BoneOffset=(X=0.0,Y=-35.0,Z=13.0)
+        SuspensionTravel=60.0
+        bPoweredWheel=true
+        WheelRadius=60
 
         BoneRollAxis=AXIS_Y
         BoneSteerAxis=AXIS_Z
         SupportBoneAxis=AXIS_X
         SteerType=VST_Inverted
     End Object
-    Wheels(0)=RWheel1;
-    Wheels(1)=RWheel2;
-    Wheels(2)=RWheel3;
-    Wheels(3)=RWheel4;
-    Wheels(4)=LWheel1;
-    Wheels(5)=LWheel2;
-    Wheels(6)=LWheel3;
-    Wheels(7)=LWheel4;
+    Wheels(0)=RWheel1
+    Wheels(1)=RWheel2
+    Wheels(2)=RWheel3
+    Wheels(3)=RWheel4
+    Wheels(4)=LWheel1
+    Wheels(5)=LWheel2
+    Wheels(6)=LWheel3
+    Wheels(7)=LWheel4
 
     VehicleNameString="UT3 Paladin"   //GE: UT3 Paladin...
     ImpactDamageMult=0.0003
@@ -287,6 +286,11 @@ defaultproperties
 
     //Aerial View
     //TPCamWorldOffset = (X=0,Y=0,Z=200);
+    
+    DamagedEffectOffset=(X=160,Y=50,Z=100)     //Front Fire Point
+    DamagedEffectScale=1.2                     //Front Fire Size, 1.1 may be better
+    //DamagedEffectOffset=(X=-110,Y=-20,Z=70)  //Front Fire Point
+    //DamagedEffectScale=1.1                   //Front Fire Size, 1.1 may be better
     
     HeadlightCoronaOffset=()
     HeadlightCoronaOffset(0)=(X=290.0,Y=47,Z=58.0)

@@ -47,6 +47,7 @@ simulated function AttachDriver(Pawn P)
     Local rotator CalfDriveL,CalfDriveR;
     Local rotator FootDriveL,FootDriveR;
     Local rotator ArmDriveL,ArmDriveR;
+    Local rotator HandDriveL, HandDriveR;
     Local rotator ForeArmDriveL, ForeArmDriveR;
     Local rotator NeckDrive;
     super.AttachDriver(P);
@@ -55,31 +56,39 @@ simulated function AttachDriver(Pawn P)
     P.SetBoneRotation('Bip01 Head',NeckDrive);
     SpineDrive.Yaw=-8000;
     P.SetBoneRotation('Bip01 Spine',SpineDrive);
-    ArmDriveL.Pitch=-500;
+    ArmDriveL.Pitch=-3000;
+    ArmDriveL.Roll=-3000;
     P.SetBoneRotation('Bip01 L UpperArm',ArmDriveL);
-    ArmDriveR.Pitch=-500;
+    ArmDriveR.Pitch=1500;
     P.SetBoneRotation('Bip01 R UpperArm',ArmDriveR);
-    ForeArmDriveL.Yaw=6000;
+    ForeArmDriveL.Yaw=4000;
     ForeArmDriveL.Pitch=2000;
     ForeArmDriveL.Roll=-8000;
     P.SetBoneRotation('Bip01 L ForeArm',ForeArmDriveL);
-    ForeArmDriveR.Yaw=5000;
-    ForeArmDriveR.Roll=3000;
+    ForeArmDriveR.Yaw=4000;
+    ForeArmDriveR.Pitch=500;
+    ForeArmDriveR.Roll=8000;
     P.SetBoneRotation('Bip01 R ForeArm',ForeArmDriveR);
+    HandDriveL.Roll=4000;
+    P.SetBoneRotation('Bip01 L Hand',HandDriveL);
+    HandDriveR.Pitch=-2000;
+    HandDriveR.Roll=-2000;
+    P.SetBoneRotation('Bip01 R Hand',HandDriveR);
     ThighDriveL.Pitch=2000;
-    ThighDriveL.Yaw=7000;
+    ThighDriveL.Yaw=5000;
     P.SetBoneRotation('Bip01 L Thigh',ThighDriveL);
     ThighDriveR.Pitch=-2000;
-    ThighDriveR.Yaw=7000;
+    ThighDriveR.Yaw=5000;
     P.SetBoneRotation('Bip01 R Thigh',ThighDriveR);
-    CalfDriveL.Yaw=-15000;
+    CalfDriveL.Yaw=-8000;
     P.SetBoneRotation('Bip01 L Calf',CalfDriveL);
-    CalfDriveR.Yaw=-15000;
+    CalfDriveR.Yaw=-8000;
     P.SetBoneRotation('Bip01 R Calf',CalfDriveR);
-    FootDriveL.Yaw=15000;
+    FootDriveL.Yaw=9000;
     P.SetBoneRotation('Bip01 L Foot',FootDriveL);
-    FootDriveR.Yaw=15000;
+    FootDriveR.Yaw=9000;
     P.SetBoneRotation('Bip01 R Foot',FootDriveR);
+    
 }
 
 simulated function DetachDriver(Pawn P)
@@ -94,6 +103,8 @@ simulated function DetachDriver(Pawn P)
     P.SetBoneRotation('Bip01 R UpperArm');
     P.SetBoneRotation('Bip01 L ForeArm');
     P.SetBoneRotation('Bip01 R ForeArm');
+    P.SetBoneRotation('Bip01 L Hand');
+    P.SetBoneRotation('Bip01 R Hand');
     P.SetBoneRotation('Bip01 L Thigh');
     P.SetBoneRotation('Bip01 R Thigh');
     P.SetBoneRotation('Bip01 L Calf');
@@ -106,9 +117,12 @@ simulated function DetachDriver(Pawn P)
 
 defaultproperties
 {
+
+    Drawscale = 1.0
+
     GunClass = class'UT3HellbenderRearGun'
     CameraBone = MainTurretPitch
-    DrivePos=(X=2.500000,Z=67.000000)  //DrivePos=(X=-10.000000,Z=77.000000)
+    DrivePos=(X=6.500000,Z=55.000000)
     
     FPCamPos=(X=-15.000000)
     
