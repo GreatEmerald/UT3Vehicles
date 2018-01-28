@@ -173,8 +173,8 @@ defaultproperties
     RedSkin=Shader'UT3PaladinTex.Paladin.PaladinSkin';
     BlueSkin=Shader'UT3PaladinTex.Paladin.PaladinSkinBlue';
 
-    FireSoundClass=Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Fire01';
-    FireImpact=Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_FireImpact01';
+    FireSoundClass=Sound'UT3A_Vehicle_Paladin.Fire.FireCue';
+    FireImpact=Sound'UT3A_Vehicle_Paladin.Singles.A_Vehicle_Paladin_FireImpact01';
     //RotateSound=sound'ONSBPSounds.ShockTank.TurretHorizontal'
     RotationsPerSecond=0.68 //0.18
     PitchUpLimit=9900
