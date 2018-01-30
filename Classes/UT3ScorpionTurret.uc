@@ -64,7 +64,7 @@ defaultproperties
     ProjectileClass=Class'UT3ScorpionBallRed'
     TeamProjectileClasses(0)=class'UT3ScorpionBallRed'
     TeamProjectileClasses(1)=class'UT3ScorpionBallBlue'
-    FireSoundClass=Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_AltFire01'
+    FireSoundClass=Sound'UT3A_Vehicle_Scorpion.AltFire.AltFireCue'
     AIInfo(0)=(aimerror=650.000000,bTrySplash=True,bLeadTarget=True)
     PitchUpLimit=9600
     PitchDownLimit=60000
