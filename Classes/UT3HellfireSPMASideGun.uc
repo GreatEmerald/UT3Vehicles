@@ -132,6 +132,9 @@ event Tick(float DeltaTime)
 
 defaultproperties
 {
+
+    Drawscale = 1.0
+
     Mesh = SkeletalMesh'UT3VH_SPMA_Anims.SPMA_SecondaryTurret'
     RedSkin = Shader'UT3SPMATex.Body.RedSkin'
     BlueSkin = Shader'UT3SPMATex.Body.BlueSkin'
@@ -140,9 +143,9 @@ defaultproperties
     WeaponFireAttachmentBone = "SecondaryTurret_Tip"
     GunnerAttachmentBone = "SecondaryTurret_YawLift"
 
-    FireSoundClass    = Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_BallFire01'
-    AltFireSoundClass = Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_BeamFire01'
+    FireSoundClass    = Sound'UT3A_Vehicle_Hellbender.BallFire.BallFireCue'
+    AltFireSoundClass = Sound'UT3A_Vehicle_Hellbender.BeamFire.BeamFireCue'
     ProjectileClass   = class'UT3HellfireSPMAShockBall'
     bInstantRotation=false
-    RotateSound=sound'UT3SPMA.A_Vehicle_SPMA_TurretRotate01'
+    //RotateSound=sound'UT3SPMA.A_Vehicle_SPMA_TurretRotate01'
 }
