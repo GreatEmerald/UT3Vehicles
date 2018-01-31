@@ -264,6 +264,9 @@ simulated function TeamChanged()
 //=============================================================================
 defaultproperties
 {
+
+    Drawscale = 1.0
+
     // Looks.
     Mesh = SkeletalMesh'UT3MantaAnims.Manta';
     RedSkin = Shader'UT3MantaTex.MantaSkin';

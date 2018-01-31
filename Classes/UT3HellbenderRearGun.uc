@@ -146,6 +146,9 @@ state InstantFireMode
 
 defaultproperties
 {
+
+    Drawscale = 1.0
+
     Mesh = SkeletalMesh'UT3VH_Hellbender_Anims.HellbenderMainTurret'
     RedSkin = Shader'UT3HellbenderTex.UT3HellbenderSkinRed'
     BlueSkin = Shader'UT3HellbenderTex.UT3HellbenderSkinBlue'
