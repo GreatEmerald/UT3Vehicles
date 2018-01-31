@@ -114,7 +114,7 @@ simulated function DeployCamera()
     DesiredRotation = rot(-16384,0,0);
     RotationRate = rot(16384,16384,16384);
     bRotateToDesired = True;
-    PlaySound(DeploySound);
+    PlaySound(DeploySound, SLOT_None, 1.0);
     AmbientSound = DeployedAmbientSound;
     PlayAnim('Deploy', 1.0, 0.0);
     if (Trajectory == None)
@@ -334,9 +334,10 @@ defaultproperties
     MaxTargetRange = 10240.0
     Speed = 4000.0
     DrawScale=0.3
-    AmbientSound      = Sound'UT3SPMA.SPMACameraAmbient'
-    ImpactSound       = Sound'UT3SPMA.SPMAShellFragmentExplode'
+    DeploySound = Sound'UT3A_Vehicle_SPMA.CameraDeploy.CameraDeployCue'
+    DeployedAmbientSound = Sound'UT3A_Vehicle_SPMA.Singles.A_Vehicle_SPMA_CameraAmbientLoopCue'
+    ImpactSound = Sound'UT3A_Vehicle_SPMA.ShellFragmentExplode.ShellFragmentExplodeCue'
     bOrientToVelocity = True
-    bAlwaysRelevant   = True
+    bAlwaysRelevant = True
     TransientSoundRadius = 500.0
 }
