@@ -368,7 +368,7 @@ function Projectile SpawnProjectile(class<Projectile> ProjClass, bool bAltFire)
 
     for (C = Level.ControllerList; C != None; C = C.nextController) {
         if (PlayerController(C) != None)
-            PlayerController(C).ClientPlaySound(Sound'DistantBooms.DistantSPMA', true, 1);
+            PlayerController(C).ClientPlaySound(DistantFireSound, true, 1);
     }
     if (AIController(Instigator.Controller) != None) {
         if (Instigator.Controller.Target == None) {
@@ -501,20 +501,24 @@ simulated function float ChargeBar()
 
 defaultproperties
 {
+
+    Drawscale = 1.0
+
     bForceCenterAim    = True // rotation is initially disabled
     PitchUpLimit       = 16000
     WeaponFireOffset   = 0.0
     RotationsPerSecond = 1.0
 
-    DistantFireSound  = Sound'DistantBooms.DistantSPMA'
+    DistantFireSound  = Sound'UT3A_Vehicle_SPMA.DistantSPMA.DistantSPMACue'
     ReadyToFireSound  = Sound'WeaponSounds.BaseGunTech.BSeekLost1'
-    FireSoundClass    = Sound'UT3SPMA.SPMACannonFire'
+    FireSoundClass    = Sound'UT3A_Vehicle_SPMA.Fire.FireCue'
     FireInterval      = 3.5
-    AltFireSoundClass = Sound'UT3SPMA.SPMACannonFire'
+    AltFireSoundClass = Sound'UT3A_Vehicle_SPMA.Fire.FireCue'
     AltFireInterval   = 1.5
     ProjectileClass        = class'UT3HellfireSPMAShell'
     AltFireProjectileClass = class'UT3HellfireSPMACamera'
-    RotateSound=sound'UT3SPMA.SPMACannonRotate'
+    RotateSound=sound'UT3A_Vehicle_SPMA.Singles.A_Vehicle_SPMA_CannonRotate01'
+    
 
     Mesh                     = SkeletalMesh'UT3VH_SPMA_Anims.SPMA_MainTurret'
     RedSkin                  = Shader'UT3SPMATex.Body.RedSkin'
