@@ -2,7 +2,7 @@
  * Copyright © 2009 Wormbo
  * Copyright © 2013-2014 José Luís '100GPing100'
  * Copyright © 2013-2014 GreatEmerald
- * Copyright © 2017 HellDragon
+ * Copyright © 2017-2018 HellDragon
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -821,6 +821,7 @@ function TakeDamage(int Damage, Pawn instigatedBy, Vector Hitlocation, Vector Mo
 
 defaultproperties
 {
+    Drawscale = 1.0
     Health = 800
     HealthMax = 800
 
@@ -917,29 +918,23 @@ defaultproperties
     MaxDeploySpeed = 100.0
     DeployTime     = 2.1
     UndeployTime   = 2.0
-    DeploySound    = Sound'UT3SPMA.SPMADeploy'
-    UndeploySound  = Sound'UT3SPMA.SPMADeploy'
+    DeploySound    = Sound'UT3A_Vehicle_SPMA.Deploy.DeployCue'
+    UndeploySound  = Sound'UT3A_Vehicle_SPMA.Deploy.DeployCue'
+    IdleSound      = Sound'UT3A_Vehicle_SPMA.Singles.A_Vehicle_SPMA_EngineLoopCue'
+    StartUpSound   = Sound'UT3A_Vehicle_SPMA.EngineStart.StartCue'
+    ShutDownSound  = Sound'UT3A_Vehicle_SPMA.EngineStop.StopCue'
+    ImpactDamageSounds = ();
+    ImpactDamageSounds(0) = Sound'UT3A_Vehicle_SPMA.Collide.CollideCue';
+    ExplosionSounds = ();
+    ExplosionSounds(0) = Sound'UT3A_Vehicle_SPMA.Explode.ExplodeCue';
 
     SoundVolume    = 255
     SoundRadius    = 300
-    IdleSound      = Sound'UT3SPMA.SPMAEngineIdle'
-    StartUpSound   = Sound'UT3SPMA.SPMAEngineStart'
-    ShutDownSound  = Sound'UT3SPMA.SPMAEngineStop'
+    
     DamagedEffectHealthSmokeFactor=0.65 //0.5
     DamagedEffectHealthFireFactor=0.40 //0.25
     DamagedEffectFireDamagePerSec=2.0 //0.75
-    ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Collide01';
-    ImpactDamageSounds(1) = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Collide01';
-    ImpactDamageSounds(2) = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Collide01';
-    ImpactDamageSounds(3) = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Collide01';
-    ImpactDamageSounds(4) = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Collide01';
-    ImpactDamageSounds(5) = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Collide01';
-    ImpactDamageSounds(6) = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Collide01';
-    ExplosionSounds(0) = Sound'UT3SPMA.A_Vehicle_SPMA_Explode01';
-    ExplosionSounds(1) = Sound'UT3SPMA.A_Vehicle_SPMA_Explode01';
-    ExplosionSounds(2) = Sound'UT3SPMA.A_Vehicle_SPMA_Explode01';
-    ExplosionSounds(3) = Sound'UT3SPMA.A_Vehicle_SPMA_Explode01';
-    ExplosionSounds(4) = Sound'UT3SPMA.A_Vehicle_SPMA_Explode01';
+    
     bDrawDriverInTP = false
     DriverDamageMult = 0.0
     TreadVelocityScale = 30.0
