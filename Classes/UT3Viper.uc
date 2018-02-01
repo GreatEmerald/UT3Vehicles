@@ -1,6 +1,6 @@
 /*
- * Copyright © 2012-2013 100GPing100
- * Copyright © 2014 GreatEmerald
+ * Copyright Â© 2012-2013 100GPing100
+ * Copyright Â© 2014 GreatEmerald
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -592,21 +592,21 @@ DefaultProperties
 	NormalMaxThrustForce = 27.0;
 	NormalMaxStrafeForce = 20.0;
 
-	// Sound.
-	IdleSound=Sound'UT3A_Vehicle_Viper.Sounds.A_Vehicle_Viper_EngineLoop';
-	StartUpSound=Sound'UT3A_Vehicle_Viper.Sounds.A_Vehicle_Viper_Start';
-	ShutDownSound=Sound'UT3A_Vehicle_Viper.Sounds.A_Vehicle_Viper_Stop';
-	JumpSound=Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Jump';
-	DriverEjectSnd=Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_Eject01';
-	EjectReadySnd=Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_EjectReadyBeep';
-	SelfDestructSnd=Sound'UT3A_Vehicle_Viper.Sounds.A_Vehicle_Viper_SelfDestruct';
+    // Sound.
+    IdleSound=Sound'UT3A_Vehicle_Viper.Singles.A_Vehicle_Viper_EngineLoopCue';
+    StartUpSound=Sound'UT3A_Vehicle_Viper.EngineStart.StartCue';
+    ShutDownSound=Sound'UT3A_Vehicle_Viper.EngineStop.StopCue';
+    JumpSound=Sound'UT3A_Vehicle_Manta.Jump.JumpCue';
+    DriverEjectSnd=Sound'UT3A_Vehicle_Scorpion.Singles.A_Vehicle_Scorpion_Eject01';
+    EjectReadySnd=Sound'UT3A_Vehicle_Scorpion.Singles.A_Vehicle_Scorpion_EjectReadyBeep';
+    SelfDestructSnd=Sound'UT3A_Vehicle_Viper.Singles.A_Vehicle_Viper_SelfDestruct';
     ExplosionSounds=()
-	ExplosionSounds(0)=Sound'UT3A_Vehicle_Viper.Sounds.A_Vehicle_Viper_Explosion';
+    ExplosionSounds(0)=Sound'UT3A_Vehicle_Viper.Explode.ExplodeCue';
     ImpactDamageSounds=();
-	ImpactDamageSounds(0)=Sound'UT3A_Vehicle_Viper.Sounds.A_Vehicle_Viper_Collision';
-	MaxPitchSpeed=1000;
-	SoundVolume=200;
-	SoundRadius=900;
+    ImpactDamageSounds(0)=Sound'UT3A_Vehicle_Viper.Collide.CollideCue';
+    MaxPitchSpeed=1000;
+    SoundVolume=255;
+    SoundRadius=900;
 
 	// SelfDestruct.
 	SelfDestructWindow = 3;
