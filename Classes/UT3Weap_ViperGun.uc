@@ -1,6 +1,6 @@
 /*
- * Copyright © 2012 100GPing100
- * Copyright © 2014 GreatEmerald
+ * Copyright Â© 2012 100GPing100
+ * Copyright Â© 2014 GreatEmerald
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -47,7 +47,7 @@ DefaultProperties
 	ProjectileClass=Class'UT3Proj_ViperBolt';
 
 	// Sound.
-	FireSoundClass=Sound'UT3A_Vehicle_Viper.Sounds.A_Vehicle_Viper_PrimaryFire';
+	FireSoundClass=Sound'UT3A_Vehicle_Viper.Singles.A_Vehicle_Viper_PrimaryFire';
 	//RotateSound=Sound'UT3A_Vehicle_Viper.Sounds.Rotate01';
 	AmbientSoundScaling=0.5;
 
