@@ -898,12 +898,8 @@ DefaultProperties
 	MaxPitchSpeed = 1250; // 1000
         ImpactDamageSounds= ();
 	ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Nightshade.Collide.CollideCue';
-	//ImpactDamageSounds(1) = Sound'UT3A_Vehicle_Nightshade.Sounds.A_Vehicle_Nightshade_Impact02';
-	//ImpactDamageSounds(2) = Sound'UT3A_Vehicle_Nightshade.Sounds.A_Vehicle_Nightshade_Impact01';
-	//ImpactDamageSounds(3) = Sound'UT3A_Vehicle_Nightshade.Sounds.A_Vehicle_Nightshade_Impact02';
-	//ImpactDamageSounds(4) = Sound'UT3A_Vehicle_Nightshade.Sounds.A_Vehicle_Nightshade_Impact01';
-	//ImpactDamageSounds(5) = Sound'UT3A_Vehicle_Nightshade.Sounds.A_Vehicle_Nightshade_Impact02';
-	//ImpactDamageSounds(6) = Sound'UT3A_Vehicle_Nightshade.Sounds.A_Vehicle_Nightshade_Impact01';
+	ExplosionSounds=()
+        ExplosionSounds(0)=Sound'UT3A_Vehicle_Viper.Explode.ExplodeCue';
         SoundVolume=255
 	
 	// Movement.
