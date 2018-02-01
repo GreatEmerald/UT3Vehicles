@@ -81,8 +81,8 @@ DefaultProperties
     IdleSound = Sound'UT3A_Vehicle_Fury.Singles.A_Vehicle_Fury_EngineLoop01'; //Loop is not modulated
     StartUpSound = Sound'UT3A_Vehicle_Fury.EngineStart.StartCue';
     ShutDownSound = Sound'UT3A_Vehicle_Fury.EngineStop.StopCue';
-    //ExplosionSounds=()
-    //ExplosionSounds(0) = Sound'UT3A_Vehicle_Fury.Sounds.A_Vehicle_Paladin_Explode02'; //Unknown at this time
+    ExplosionSounds=()
+    ExplosionSounds(0) = Sound'UT3A_Vehicle_Cicada.Explode.ExplodeCue';
     ImpactDamageSounds=()
     ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Fury.Collide.CollideCue';
     SoundVolume=255
