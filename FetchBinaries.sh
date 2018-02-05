@@ -19,6 +19,7 @@ function checksum {
 # Print a message in case the checksum is bad after download
 function bad_checksum {
     echo "ERROR: checksum validation failed after download! Make sure Binaries.csv has the right hash!"
+    exit 1
 }
 
 ## Handle each file in Binaries.csv ##
