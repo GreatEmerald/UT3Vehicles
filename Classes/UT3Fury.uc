@@ -1,7 +1,7 @@
 //============================================================
 // UT3 Fury
-// Credits: 100GPing100(José Luís)
-// Copytight José Luís, 2012
+// Credits: 100GPing100(JosÃ© LuÃ­s)
+// Copytight JosÃ© LuÃ­s, 2012
 // Contact: zeluis.100@gmail.com
 //============================================================
 class UT3Fury extends ONSAttackCraft;
@@ -71,19 +71,19 @@ simulated event DrivingStatusChanged()
 */
 DefaultProperties
 {
-	// Strings.
-	VehiclePositionString="in a UT3 Fury";
-	VehicleNameString="UT3 Fury";
+    // Strings.
+    VehiclePositionString="in a UT3 Fury";
+    VehicleNameString="UT3 Fury";
 	
-	// Looks.
-	Mesh=SkeletalMesh'UT3FuryAnims.UT3Fury';
-	RedSkin=Shader'UT3FuryTex.Fury.FurySkin';
-	BlueSkin=Shader'UT3FuryTex.Fury.FurySkin';
+    // Looks.
+    Mesh=SkeletalMesh'UT3FuryAnims.UT3Fury';
+    RedSkin=Shader'UT3FuryTex.Fury.FurySkin';
+    BlueSkin=Shader'UT3FuryTex.Fury.FurySkinBlue';
 	
-	// Damage.
-	DriverWeapons(0)=(WeaponClass=Class'Onslaught.ONSAttackCraftGun',WeaponBone="UpRt_Arm08")
+    // Damage.
+    DriverWeapons(0)=(WeaponClass=Class'Onslaught.ONSAttackCraftGun',WeaponBone="UpRt_Arm08")
 	
-	// Misc
-	EntryPosition=(X=0,Y=0,Z=20);
-	EntryRadius=250.0;
+    // Misc
+    EntryPosition=(X=0,Y=0,Z=20);
+    EntryRadius=250.0;
 }
