@@ -66,7 +66,7 @@ for line in $(tail -n +2 Binaries.csv); do
     # Is the file already there?
     if [[ -f ${file} ]]; then
         # Do checksums match? If no, download the files and recheck
-        checksum ${checksum} ${file} || (wget $opts ${WGET_EXTRA_OPTS} -O ${file} ${url} && checksum ${checksum} ${file} || bad_checksum)
+        checksum ${checksum} ${file} || { wget $opts ${WGET_EXTRA_OPTS} -O ${file} ${url} && checksum ${checksum} ${file} || bad_checksum ; }
     else
         # Just download and then check that it's OK
         wget $opts ${WGET_EXTRA_OPTS} -O ${file} ${url}
