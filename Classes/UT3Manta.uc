@@ -377,8 +377,10 @@ defaultproperties
     //TPCamLookat=(X=0,Y=0,Z=0)
     //TPCamWorldOffset=(X=0,Y=0,Z=35)
 
+    DamagedEffectOffset=(X=2,Y=31,Z=16)   //Turbine fire point
+
     HeadlightCoronaOffset=()
-    HeadlightCoronaOffset(0)=(X=40.0,Y=0.0,Z=-30.0)
+    HeadlightCoronaOffset(0)=(X=40.0,Y=0.0,Z=-20.0)
     HeadlightCoronaMaterial=Material'EpicParticles.FlashFlare1'
     //HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
     

@@ -1,6 +1,6 @@
 /*
- * Copyright © 2012 100GPing100
- * Copyright © 2014 GreatEmerald
+ * Copyright Â© 2012 100GPing100
+ * Copyright Â© 2014 GreatEmerald
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -39,17 +39,6 @@
  */
 
 class UT3SpiderMine extends Projectile;
-
-
-#exec audio import group=SpiderSounds file=../UT3Vehicles/Sounds/UT3Nightshade/SpiderMine/Spider_Explode01.wav
-#exec audio import group=SpiderSounds file=../UT3Vehicles/Sounds/UT3Nightshade/SpiderMine/Spider_Explode02.wav
-#exec audio import group=SpiderSounds file=../UT3Vehicles/Sounds/UT3Nightshade/SpiderMine/Spider_Explode03.wav
-#exec audio import group=SpiderSounds file=../UT3Vehicles/Sounds/UT3Nightshade/SpiderMine/Spider_Attack01.wav
-#exec audio import group=SpiderSounds file=../UT3Vehicles/Sounds/UT3Nightshade/SpiderMine/Spider_Attack02.wav
-#exec audio import group=SpiderSounds file=../UT3Vehicles/Sounds/UT3Nightshade/SpiderMine/Spider_Attack03.wav
-#exec audio import group=SpiderSounds file=../UT3Vehicles/Sounds/UT3Nightshade/SpiderMine/Spider_Walk01.wav
-#exec audio import group=SpiderSounds file=../UT3Vehicles/Sounds/UT3Nightshade/SpiderMine/Spider_Walk02.wav
-#exec audio import group=SpiderSounds file=../UT3Vehicles/Sounds/UT3Nightshade/SpiderMine/Spider_Walk03.wav
 
 
 var float DetectionTimer; // check target every this many seconds
@@ -748,48 +737,48 @@ simulated event ShutDown()
 
 defaultproperties
 {
-	MinSpiderFloorZ=0.1
-	Speed=800.0
-	MaxSpeed=800.0
-	ScurrySpeed=525.0
-	ScurryAnimRate=1.0
-	TossZ=0.0
-	Damage=95.0
-	DamageRadius=250.0
-	MomentumTransfer=50000
-	Physics=PHYS_Falling
-	RotationRate=(Pitch=20000)
-	DetectionTimer=0.50
-	DetectionRange=750.0
-	KeepTargetExtraRange=250.0
-	bProjTarget=true
-	bCollideWorld=True
-	bBlockActors=true
+    MinSpiderFloorZ=0.1
+    Speed=800.0
+    MaxSpeed=800.0
+    ScurrySpeed=525.0
+    ScurryAnimRate=1.0
+    TossZ=0.0
+    Damage=95.0
+    DamageRadius=250.0
+    MomentumTransfer=50000
+    Physics=PHYS_Falling
+    RotationRate=(Pitch=20000)
+    DetectionTimer=0.50
+    DetectionRange=750.0
+    KeepTargetExtraRange=250.0
+    bProjTarget=true
+    bCollideWorld=True
+    bBlockActors=true
 
-	RemoteRole=ROLE_SimulatedProxy
-	bNetTemporary=False
-	bUpdateSimulatedPosition=True
-	LifeSpan=0.0
-	TargetLocFuzz=250
-	ReturnToTrapDelay=5.0
-	bSwitchToZeroCollision=false
+    RemoteRole=ROLE_SimulatedProxy
+    bNetTemporary=False
+    bUpdateSimulatedPosition=True
+    LifeSpan=0.0
+    TargetLocFuzz=250
+    ReturnToTrapDelay=5.0
+    bSwitchToZeroCollision=false
 
-	bBounce=True
-	bHardAttach=True
+    bBounce=True
+    bHardAttach=True
 
-	Mesh=SkeletalMesh'UT3NightshadeAnims.Spider_1P';
-	CollisionRadius=10.000000
-	CollisionHeight=10.000000
-	bBlockKarma=True
+    Mesh=SkeletalMesh'UT3NightshadeAnims.Spider_1P';
+    CollisionRadius=10.000000
+    CollisionHeight=10.000000
+    bBlockKarma=True
 
-	// Sound.
-	ExplosionSnd(0) = Sound'Spider_Explode01';
-	ExplosionSnd(1) = Sound'Spider_Explode02';
-	ExplosionSnd(2) = Sound'Spider_Explode03';
-	AttackScreechSnd(0) = Sound'Spider_Attack01';
-	AttackScreechSnd(1) = Sound'Spider_Attack02';
-	AttackScreechSnd(2) = Sound'Spider_Attack03';
-	WalkingSnd(0) = Sound'Spider_Walk01';
-	WalkingSnd(1) = Sound'Spider_Walk02';
-	WalkingSnd(2) = Sound'Spider_Walk03';
+    // Sound.
+    ExplosionSnd(0) = Sound'UT3A_Vehicle_Nightshade.SpiderMine.Spider_Explode01';
+    ExplosionSnd(1) = Sound'UT3A_Vehicle_Nightshade.SpiderMine.Spider_Explode02';
+    ExplosionSnd(2) = Sound'UT3A_Vehicle_Nightshade.SpiderMine.Spider_Explode03';
+    AttackScreechSnd(0) = Sound'UT3A_Vehicle_Nightshade.SpiderMine.Spider_Attack01';
+    AttackScreechSnd(1) = Sound'UT3A_Vehicle_Nightshade.SpiderMine.Spider_Attack02';
+    AttackScreechSnd(2) = Sound'UT3A_Vehicle_Nightshade.SpiderMine.Spider_Attack03';
+    WalkingSnd(0) = Sound'UT3A_Vehicle_Nightshade.SpiderMine.Spider_Walk01';
+    WalkingSnd(1) = Sound'UT3A_Vehicle_Nightshade.SpiderMine.Spider_Walk02';
+    WalkingSnd(2) = Sound'UT3A_Vehicle_Nightshade.SpiderMine.Spider_Walk03';
 }
