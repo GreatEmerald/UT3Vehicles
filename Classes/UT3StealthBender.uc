@@ -88,7 +88,7 @@ var array< class<Actor> > MineObjectClasses;
 /* The mine that's on the arm when we deploy. */
 var Actor ArmMine;
 
-var Material RedSkinB[2], BlueSkinB[2];
+var Material RedSkinB, BlueSkinB;
 
 //
 // Check if jump was pressed.
@@ -334,12 +334,12 @@ simulated event TeamChanged()
     if (Team == 0 && RedSkin != None)
     {
         Skins[0] = RedSkin;
-        Skins[1] = RedSkinB[0];
+        Skins[1] = RedSkinB;
     }
     else if (Team == 1 && BlueSkin != None)
     {
         Skins[0] = BlueSkin;
-        Skins[1] = BlueSkinB[0];
+        Skins[1] = BlueSkinB;
     }
 }
 function Cloak(bool OnOff)
@@ -355,13 +355,13 @@ function Cloak(bool OnOff)
 		if (Team == 0)
 		{
 			Skins[0] = Default.RedSkin;
-			Skins[1] = Default.RedSkinB [0];
+			Skins[1] = Default.RedSkinB;
 			Weapons[0].Skins[0] = Weapons[0].Default.RedSkin;
 		}
 		else
 		{
 			Skins[0] = Default.BlueSkin;
-			Skins[1] = Default.BlueSkinB [0];
+			Skins[1] = Default.BlueSkinB;
 			Weapons[0].Skins[0] = Weapons[0].Default.BlueSkin;
 		}
 		Visibility = Default.Visibility;
@@ -876,9 +876,9 @@ DefaultProperties
     // Looks.
     Mesh = SkeletalMesh'UT3StealthBenderAnims.StealthBender';
     RedSkin = Shader'UT3StealthBenderTex.HELLBENDER.HellbenderSkin';
-    RedSkinB (0) = Shader'UT3StealthBenderTex.StealthBender.StealthBenderSkin';
+    RedSkinB = Shader'UT3StealthBenderTex.StealthBender.StealthBenderSkin';
     BlueSkin = Shader'UT3StealthBenderTex.HELLBENDER.HellbenderSkinBlue';
-    BlueSkinB (0) = Shader'UT3StealthBenderTex.StealthBender.StealthBenderSkinBlue';
+    BlueSkinB = Shader'UT3StealthBenderTex.StealthBender.StealthBenderSkinBlue';
     CloakedSkin = FinalBlend'XEffectMat.Combos.InvisOverlayFB';
     bDrawDriverInTP = false;
     bAdjustDriversHead = false;
