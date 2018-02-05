@@ -59,8 +59,9 @@ for line in $(tail -n +2 Binaries.csv); do
     file=${destdir}/${filename}
     
     # Make sure the directory exists
-    if [[ ! -d ${destdir} ]]
+    if [[ ! -d ${destdir} ]]; then
         mkdir ${destdir}
+    fi
     
     # Is the file already there?
     if [[ -f ${file} ]]; then
