@@ -19,3 +19,11 @@ EditPackages=UT3Vehicles
 ```
 * (Re)move the `UT2004/System/UT3Vehicles.u` file.
 * Run `ucc.exe make` from the command prompt, this should create a `UT3Vehicles.u` file in `UT2004/System`.
+
+## Binaries.csv consistency
+
+[![Build Status](https://travis-ci.org/GreatEmerald/UT3Vehicles.svg?branch=master)](https://travis-ci.org/GreatEmerald/UT3Vehicles)
+
+The `Binaries.csv` file is supposed to always be consistent. Travis CI ensures that it is. If the image above shows a build failure, that means it has gone out of sync (dead URL etc.) and needs to be put back into sync.
+
+Currently Travis is not testing building the whole thing itself, since it relies on UT2004 being installed.
