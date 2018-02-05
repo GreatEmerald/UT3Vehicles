@@ -1,6 +1,6 @@
 /*
- * Copyright © 2012 100GPing100
- * Copyright © 2014 GreatEmerald
+ * Copyright Â© 2012 100GPing100
+ * Copyright Â© 2014 GreatEmerald
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -88,6 +88,8 @@ var array< class<Actor> > MineObjectClasses;
 /* The mine that's on the arm when we deploy. */
 var Actor ArmMine;
 
+var Material RedSkinB[2], BlueSkinB[2];
+
 //
 // Check if jump was pressed.
 //
@@ -165,7 +167,7 @@ function bool NoObstacle()
 //
 function ShowMessage(byte Type, int Switch)
 {
-	/* » Type:
+	/* Â» Type:
 	 * 0: General message.
 	 * 1: Mine select message.
 	*/
@@ -324,6 +326,22 @@ function CheckState()
 		CurrentState = VS_Cloaked;
 	}
 }
+simulated event TeamChanged()
+{
+
+    Super(SVehicle).TeamChanged();
+
+    if (Team == 0 && RedSkin != None)
+    {
+        Skins[0] = RedSkin;
+        Skins[1] = RedSkinB[0];
+    }
+    else if (Team == 1 && BlueSkin != None)
+    {
+        Skins[0] = BlueSkin;
+        Skins[1] = BlueSkinB[0];
+    }
+}
 function Cloak(bool OnOff)
 {
 	/* byte Visibility
@@ -337,13 +355,13 @@ function Cloak(bool OnOff)
 		if (Team == 0)
 		{
 			Skins[0] = Default.RedSkin;
-			Skins[1] = Default.RedSkin;
+			Skins[1] = Default.RedSkinB [0];
 			Weapons[0].Skins[0] = Weapons[0].Default.RedSkin;
 		}
 		else
 		{
 			Skins[0] = Default.BlueSkin;
-			Skins[1] = Default.BlueSkin;
+			Skins[1] = Default.BlueSkinB [0];
 			Weapons[0].Skins[0] = Weapons[0].Default.BlueSkin;
 		}
 		Visibility = Default.Visibility;
@@ -852,46 +870,48 @@ event Timer()
 
 DefaultProperties
 {
-	VehiclePositionString="in a Stealthbender"
-	VehicleNameString="Stealthbender"
+    VehiclePositionString="in a Stealthbender"
+    VehicleNameString="Stealthbender"
 
-	// Looks.
-	Mesh = SkeletalMesh'UT3StealthBenderAnims.StealthBender';
+    // Looks.
+    Mesh = SkeletalMesh'UT3StealthBenderAnims.StealthBender';
     RedSkin = Shader'UT3StealthBenderTex.HELLBENDER.HellbenderSkin';
-	BlueSkin = Shader'UT3StealthBenderTex.HELLBENDER.HellbenderSkinBlue';
-	CloakedSkin = FinalBlend'XEffectMat.Combos.InvisOverlayFB';
-	bDrawDriverInTP = false;
-	bAdjustDriversHead = false;
-	MineObjectClasses(0) = class'UT3SpiderMineObject';
-	MineObjectClasses(1) = class'UT3StasisFieldObject';
-	MineObjectClasses(2) = class'UT3EMPObject';
-	MineObjectClasses(3) = class'UT3ShieldObject';
+    RedSkinB (0) = Shader'UT3StealthBenderTex.StealthBender.StealthBenderSkin';
+    BlueSkin = Shader'UT3StealthBenderTex.HELLBENDER.HellbenderSkinBlue';
+    BlueSkinB (0) = Shader'UT3StealthBenderTex.StealthBender.StealthBenderSkinBlue';
+    CloakedSkin = FinalBlend'XEffectMat.Combos.InvisOverlayFB';
+    bDrawDriverInTP = false;
+    bAdjustDriversHead = false;
+    MineObjectClasses(0) = class'UT3SpiderMineObject';
+    MineObjectClasses(1) = class'UT3StasisFieldObject';
+    MineObjectClasses(2) = class'UT3EMPObject';
+    MineObjectClasses(3) = class'UT3ShieldObject';
 
-	// HUD.
-	Begin Object Class=UT3HUDItem Name=HUDSpidermineTrap
-		DrawColor = (R=128,G=128,B=128,A=255);
-		Icon = Texture'UT3NightshadeTex.SpiderMine.Icon_SpiderMineTrap';
-		Scale = 0.5;
-	End Object
-	HUDItems(0) = HUDSpidermineTrap
-	Begin Object Class=UT3HUDItem Name=HUDStasisField
-		DrawColor = (R=128,G=128,B=128,A=255);
-		Icon = Texture'UT3NightshadeTex.SlowField.Icon_SlowFieldGenerator';
-		Scale = 0.5;
-	End Object
-	HUDItems(1) = HUDStasisField
-	Begin Object Class=UT3HUDItem Name=HUDEMP
-		DrawColor = (R=128,G=128,B=128,A=255);
-		Icon = Texture'UT3NightshadeTex.EMPMine.Icon_EMPMine';
-		Scale = 0.5;
-	End Object
-	HUDItems(2) = HUDEMP
-	Begin Object Class=UT3HUDItem Name=HUDShield
-		DrawColor = (R=128,G=128,B=128,A=255);
-		Icon = Texture'UT3NightshadeTex.ShieldGenerator.Icon_ShieldGenerator';
-		Scale = 0.5;
-	End Object
-	HUDItems(3) = HUDShield
+    // HUD.
+    Begin Object Class=UT3HUDItem Name=HUDSpidermineTrap
+        DrawColor = (R=128,G=128,B=128,A=255);
+        Icon = Texture'UT3NightshadeTex.SpiderMine.Icon_SpiderMineTrap';
+        Scale = 0.5;
+    End Object
+    HUDItems(0) = HUDSpidermineTrap
+    Begin Object Class=UT3HUDItem Name=HUDStasisField
+        DrawColor = (R=128,G=128,B=128,A=255);
+        Icon = Texture'UT3NightshadeTex.SlowField.Icon_SlowFieldGenerator';
+        Scale = 0.5;
+    End Object
+    HUDItems(1) = HUDStasisField
+    Begin Object Class=UT3HUDItem Name=HUDEMP
+        DrawColor = (R=128,G=128,B=128,A=255);
+        Icon = Texture'UT3NightshadeTex.EMPMine.Icon_EMPMine';
+        Scale = 0.5;
+    End Object
+    HUDItems(2) = HUDEMP
+    Begin Object Class=UT3HUDItem Name=HUDShield
+        DrawColor = (R=128,G=128,B=128,A=255);
+        Icon = Texture'UT3NightshadeTex.ShieldGenerator.Icon_ShieldGenerator';
+        Scale = 0.5;
+    End Object
+    HUDItems(3) = HUDShield
 
 	// Damage.
 	DriverWeapons(0) = (WeaponClass=Class'Onslaught.ONSHoverBikePlasmaGun',WeaponBone="SecondaryTurretBarrel")
