@@ -92,7 +92,7 @@ DefaultProperties
     // Looks.
     Mesh=SkeletalMesh'UT3FuryAnims.UT3Fury';
     RedSkin=Shader'UT3FuryTex.Fury.FurySkin';
-    BlueSkin=Shader'UT3FuryTex.Fury.FurySkin';
+    BlueSkin=Shader'UT3FuryTex.Fury.FurySkinBlue';
 	
     // Damage.
     DriverWeapons(0)=(WeaponClass=Class'Onslaught.ONSAttackCraftGun',WeaponBone="UpRt_Arm08")
@@ -100,5 +100,5 @@ DefaultProperties
     // Misc
     EntryPosition=(X=0,Y=0,Z=20);
     EntryRadius=250.0;
-    
+
 }
