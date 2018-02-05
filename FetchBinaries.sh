@@ -58,6 +58,10 @@ for line in $(tail -n +2 Binaries.csv); do
     
     file=${destdir}/${filename}
     
+    # Make sure the directory exists
+    if [[ ! -d ${destdir} ]]
+        mkdir ${destdir}
+    
     # Is the file already there?
     if [[ -f ${file} ]]; then
         # Do checksums match? If no, download the files and recheck
