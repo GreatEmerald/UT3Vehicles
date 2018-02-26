@@ -335,7 +335,7 @@ defaultproperties
     Speed = 4000.0
     DrawScale=0.3
     DeploySound = Sound'UT3A_Vehicle_SPMA.CameraDeploy.CameraDeployCue'
-    DeployedAmbientSound = Sound'UT3A_Vehicle_SPMA.Singles.A_Vehicle_SPMA_CameraAmbientLoopCue'
+    DeployedAmbientSound = Sound'UT3A_Vehicle_SPMA.Singles.CameraAmbientLoopCue'
     ImpactSound = Sound'UT3A_Vehicle_SPMA.ShellFragmentExplode.ShellFragmentExplodeCue'
     bOrientToVelocity = True
     bAlwaysRelevant = True
