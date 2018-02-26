@@ -1,6 +1,6 @@
 /*
- * Copyright © 2012 100GPing100
- * Copyright © 2014 GreatEmerald
+ * Copyright Â© 2012 100GPing100
+ * Copyright Â© 2014 GreatEmerald
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -165,7 +165,7 @@ function bool NoObstacle()
 //
 function ShowMessage(byte Type, int Switch)
 {
-	/* » Type:
+	/* Â» Type:
 	 * 0: General message.
 	 * 1: Mine select message.
 	*/
@@ -955,13 +955,26 @@ DefaultProperties
 	MaxViewYaw=16000
 	MaxViewPitch=16000
 
-	IdleSound=sound'ONSVehicleSounds-S.PRV.PRVEng01'
-	StartUpSound=sound'ONSVehicleSounds-S.PRV.PRVStart01'
-	ShutDownSound=sound'ONSVehicleSounds-S.PRV.PRVStop01'
+	IdleSound=sound'UT3A_Vehicle_Stealthbender.Singles.EngineLoopCue'
+        StartUpSound=sound'UT3A_Vehicle_Stealthbender.EngineStart.StartCue'
+        ShutDownSound=sound'UT3A_Vehicle_Stealthbender.EngineStop.StopCue'
+        DeploySnd = Sound'UT3A_Vehicle_Stealthbender.ArmsExtend.ArmsExtendCue';
+        UndeploySnd = Sound'UT3A_Vehicle_Stealthbender.ArmsRetract.ArmsRetractCue';
+        SwitchDeployableSnd = Sound'UT3A_Vehicle_Nightshade.Singles.A_Vehicle_Nightshade_SwitchDeployables';
+        DropItemSnd = Sound'UT3A_Vehicle_Nightshade.DropItem.DropItemCue';
+	HornSounds(0)=sound'ONSVehicleSounds-S.Horn09'
+	HornSounds(1)=sound'ONSVehicleSounds-S.Horn04'
+        ImpactDamageSounds=()
+        ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Stealthbender.Collide.CollideCue';
+        ExplosionSounds=()
+        ExplosionSounds(0) = Sound'UT3A_Vehicle_Hellbender.Explode.ExplodeCue';
+        BulletSounds = ()
+        BulletSounds(0) = Sound'UT3A_Weapon_BulletImpacts.ImpactMetal.ImpactMetalCue'
+    
 	EngineRPMSoundRange=10000
 	IdleRPM=500
 	RevMeterScale=4000
-	SoundVolume=180
+	SoundVolume=255
 	SoundRadius=200
 
 	StartUpForce="PRVStartUp"
@@ -1120,14 +1133,10 @@ DefaultProperties
 	//FlagBone=Dummy01
 	FlagRotation=(Yaw=32768)
 
-	HornSounds(0)=sound'ONSVehicleSounds-S.Horn09'
-	HornSounds(1)=sound'ONSVehicleSounds-S.Horn04'
 	//VehicleIcon=(Material=Texture'AS_FX_TX.HUD.AssaultHUD',X=380,Y=83,SizeX=130,SizeY=64)
 	VehicleIcon=(Material=Texture'AS_FX_TX.Icons.OBJ_HellBender',X=0,Y=0,SizeX=64,SizeY=64,bIsGreyScale=true)
 
 	ObjectiveGetOutDist=1500.0
 	bCanDoTrickJumps=true
-
-	SwitchDeployableSnd = Sound'UT3A_Vehicle_Nightshade.Sounds.A_Vehicle_Nightshade_SwitchDeployables'
 }
 
