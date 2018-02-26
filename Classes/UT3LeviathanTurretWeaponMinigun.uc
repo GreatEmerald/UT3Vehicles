@@ -151,8 +151,8 @@ defaultproperties
     DamageType   = class'UT3DmgType_LeviathanShard'
     FireInterval = 0.1
 
-    FireSoundClass = Sound'UT3Weapons2.Stinger.StingerHitEnemy' //Needs to be Alt, I'm positive but is this the alt fire sound, it sounds like it but odd name
-    bAmbientFireSound=True
+    FireSoundClass = Sound'UT3A_Weapon_Stinger.FireAlt.FireAltCue'
+    bAmbientFireSound=False
 
     mTracerInterval=0.06
     mTracerClass=class'XEffects.NewTracer'
