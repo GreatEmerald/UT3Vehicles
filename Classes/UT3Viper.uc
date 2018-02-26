@@ -44,7 +44,7 @@ class UT3Viper extends ONSHoverBike;
 #exec OBJ LOAD FILE=../Animations/UT3ViperAnims.ukx
 #exec OBJ LOAD FILE=../Textures/UT3ViperTex.utx
 #exec OBJ LOAD FILE=../StaticMeshes/UT3ViperSM.usx
-
+#exec OBJ LOAD FILE=../Sounds/UT3A_Vehicle_Viper.uax
 
 /* Time, in seconds, that the driver has to activate the self-destruct. */
 var int SelfDestructWindow;
@@ -593,17 +593,19 @@ DefaultProperties
 	NormalMaxStrafeForce = 20.0;
 
     // Sound.
-    IdleSound=Sound'UT3A_Vehicle_Viper.Singles.A_Vehicle_Viper_EngineLoopCue';
+    IdleSound=Sound'UT3A_Vehicle_Viper.Singles.EngineLoopCue';
     StartUpSound=Sound'UT3A_Vehicle_Viper.EngineStart.StartCue';
     ShutDownSound=Sound'UT3A_Vehicle_Viper.EngineStop.StopCue';
     JumpSound=Sound'UT3A_Vehicle_Manta.Jump.JumpCue';
     DriverEjectSnd=Sound'UT3A_Vehicle_Scorpion.Singles.A_Vehicle_Scorpion_Eject01';
     EjectReadySnd=Sound'UT3A_Vehicle_Scorpion.Singles.A_Vehicle_Scorpion_EjectReadyBeep';
-    SelfDestructSnd=Sound'UT3A_Vehicle_Viper.Singles.A_Vehicle_Viper_SelfDestruct';
+    SelfDestructSnd=Sound'UT3A_Vehicle_Viper.Singles.SelfDestructCue';
     ExplosionSounds=()
     ExplosionSounds(0)=Sound'UT3A_Vehicle_Viper.Explode.ExplodeCue';
     ImpactDamageSounds=();
     ImpactDamageSounds(0)=Sound'UT3A_Vehicle_Viper.Collide.CollideCue';
+    BulletSounds = ()
+    BulletSounds(0) = Sound'UT3A_Weapon_BulletImpacts.ImpactMetal.ImpactMetalCue'
     MaxPitchSpeed=1000;
     SoundVolume=255;
     SoundRadius=900;
