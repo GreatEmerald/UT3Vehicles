@@ -55,7 +55,7 @@ class UT3LeviathanTurretWeaponShock extends UT3LeviathanTurretWeapon;
 defaultproperties
 {
     ProjectileClass = class'UT3LeviathanShockBall'
-    FireSoundClass  = Sound'UT3Weapons.ShockRifle.ShockRifleAlt'
+    FireSoundClass  = Sound'UT3A_Weapon_ShockRifle.AltFire.AltFireCue'
     FireInterval    = 0.5
 
     Mesh = SkeletalMesh'UT3VH_Leviathan_Anims.Leviathan_RightRearTurret'
