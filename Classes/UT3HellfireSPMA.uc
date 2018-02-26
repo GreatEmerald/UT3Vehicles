@@ -920,14 +920,17 @@ defaultproperties
     UndeployTime   = 2.0
     DeploySound    = Sound'UT3A_Vehicle_SPMA.Deploy.DeployCue'
     UndeploySound  = Sound'UT3A_Vehicle_SPMA.Deploy.DeployCue'
-    IdleSound      = Sound'UT3A_Vehicle_SPMA.Singles.A_Vehicle_SPMA_EngineLoopCue'
+    IdleSound      = Sound'UT3A_Vehicle_SPMA.Singles.EngineLoopCue'
     StartUpSound   = Sound'UT3A_Vehicle_SPMA.EngineStart.StartCue'
     ShutDownSound  = Sound'UT3A_Vehicle_SPMA.EngineStop.StopCue'
     ImpactDamageSounds = ();
     ImpactDamageSounds(0) = Sound'UT3A_Vehicle_SPMA.Collide.CollideCue';
     ExplosionSounds = ();
     ExplosionSounds(0) = Sound'UT3A_Vehicle_SPMA.Explode.ExplodeCue';
+    BulletSounds = ()
+    BulletSounds(0) = Sound'UT3A_Weapon_BulletImpacts.ImpactMetal.ImpactMetalCue'
 
+    IdleRPM=2500
     SoundVolume    = 255
     SoundRadius    = 300
     
