@@ -125,7 +125,7 @@ simulated function SetTeam(byte T)
 
 defaultproperties
 {
-    FireSoundClass = Sound'UT3A_Vehicle_Leviathan.Singles.A_Vehicle_Leviathan_CannonFire01'
+    FireSoundClass = Sound'UT3A_Vehicle_Leviathan.CannonFire.CannonFireCue'
 
     Mesh = SkeletalMesh'UT3VH_Leviathan_Anims.Leviathan_MainTurreta'
     RedSkin = Shader'UT3LeviathanTex.Levi1.LeviathanSkin1'
