@@ -148,7 +148,7 @@ defaultproperties
     FireInterval = 0.3
     AIInfo(0)=(bInstantHit=true,AimError=600)
 
-    FireSoundClass = Sound'UT3Weapons.ShockRifle.ShockRiflePrimary'
+    FireSoundClass = Sound'UT3A_Weapon_ShockRifle.Fire.FireCue'
 
     BeamEffectClass(0) = class'ONSTurretBeamEffect'
     BeamEffectClass(1) = class'ONSTurretBeamEffectBlue'
