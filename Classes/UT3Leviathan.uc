@@ -567,6 +567,9 @@ defaultproperties
     ExplosionSounds = ()
     ExplosionSounds(0) = Sound'UT3A_Vehicle_Leviathan.Explode.ExplodeCue'
 
+    BulletSounds = ()
+    BulletSounds(0) = Sound'UT3A_Weapon_BulletImpacts.ImpactMetal.ImpactMetalCue'
+
     ExitPositions(0)=(X=90,Y=-330,Z=20)
     ExitPositions(1)=(X=90,Y=330,Z=20)
     ExitPositions(2)=(X=90,Y=-330,Z=-20)
