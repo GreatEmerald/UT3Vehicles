@@ -551,35 +551,34 @@ defaultproperties
     End Object
     Wheels(6) = SVehicleWheel'CenterWheel'*/
 
-    DeploySound = Sound'UT3A_Vehicle_Leviathan.Singles.A_Vehicle_Leviathan_Deploy01'
-    HideSound = Sound'UT3A_Vehicle_Leviathan.Singles.A_Vehicle_Leviathan_Deploy01'
+    DeploySound = Sound'UT3A_Vehicle_Leviathan.Deploy.DeployCue'
+    HideSound = Sound'UT3A_Vehicle_Leviathan.Deploy.DeployCue'
     IdleSound = Sound'UT3A_Vehicle_Leviathan.Singles.EngineLoopCue'
     StartUpSound = Sound'UT3A_Vehicle_Leviathan.EngineStart.StartCue'
     ShutDownSound = Sound'UT3A_Vehicle_Leviathan.EngineStop.StopCue'
-    SoundVolume = 255
-    
-    ImpactDamageMult = 0.00003 //0.0003
-    DamagedEffectHealthSmokeFactor=0.90 //0.5
-    DamagedEffectHealthFireFactor=0.80 //0.25
-    DamagedEffectFireDamagePerSec=2.0 //0.75
     ImpactDamageSounds = ()
     ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Leviathan.Collide.CollideCue'
     ExplosionSounds = ()
     ExplosionSounds(0) = Sound'UT3A_Vehicle_Leviathan.Explode.ExplodeCue'
-
     BulletSounds = ()
     BulletSounds(0) = Sound'UT3A_Weapon_BulletImpacts.ImpactMetal.ImpactMetalCue'
-
+    
+    SoundVolume = 255
+    
+    MomentumMult=0.0001
+    ImpactDamageMult = 0.00003 //0.0003
+    DamagedEffectHealthSmokeFactor=0.90 //0.5
+    DamagedEffectHealthFireFactor=0.80 //0.25
+    DamagedEffectFireDamagePerSec=2.0 //0.75
+    
+    MaxDeploySpeed = 15.0
+    DeployIconCoords = (X1=0,Y1=670,X2=154,Y2=96)
+    
     ExitPositions(0)=(X=90,Y=-330,Z=20)
     ExitPositions(1)=(X=90,Y=330,Z=20)
     ExitPositions(2)=(X=90,Y=-330,Z=-20)
     ExitPositions(3)=(X=90,Y=330,Z=-20)
     ExitPositions(4)=(X=230,Y=-90,Z=280)
-
-    MomentumMult=0.0001
-
-    MaxDeploySpeed = 15.0
-    DeployIconCoords = (X1=0,Y1=670,X2=154,Y2=96)
 
     TPCamDistance=980.000000
     TPCamLookat=(X=0,Y=0,Z=170) //(X=-200,Y=0,Z=300) def UT2004
