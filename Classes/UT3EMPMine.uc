@@ -125,7 +125,7 @@ DefaultProperties
 {
     EMPRadius = 500.0;
 
-    Mesh = SkeletalMesh'UT3NightshadeAnims.EMPMine';
+    Mesh = SkeletalMesh'UT3DeployableAnims.EMPMine';
     DrawType = DT_Mesh;
 
     bCollideActors = false;
@@ -135,6 +135,6 @@ DefaultProperties
     LifeSpan = 60.0;
 
     // Sound.
-    DropSnd = Sound'UT3A_Vehicle_Nightshade.EMPMine.EMP_Drop';
-    ShockSnd = Sound'UT3A_Vehicle_Nightshade.EMPMine.EMP_Shock';
+    DropSnd = Sound'UT3A_Pickups_Deployables.EMPMine.EMPMine_Drop';
+    ShockSnd = Sound'UT3A_Pickups_Deployables.EMPMine.EMPMine_Shock';
 }
