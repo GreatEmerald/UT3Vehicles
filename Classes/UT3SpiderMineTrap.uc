@@ -67,6 +67,7 @@ event Landed(vector HitNormal)
 function Deploy()
 {
 	Super.Deploy();
+    PlaySound(DropSnd, SLOT_None);
 	PlayAnim('Deploy', 1, 0);
 }
 function SpawnMine(Pawn Target, vector TargetDir)
