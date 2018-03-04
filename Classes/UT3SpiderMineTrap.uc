@@ -167,7 +167,7 @@ event Timer()
 DefaultProperties
 {
     // Looks.
-    Mesh=SkeletalMesh'UT3NightshadeAnims.SpiderMine';
+    Mesh=SkeletalMesh'UT3DeployableAnims.SpiderMine';
     DrawType=DT_Mesh;
 
     // Damage.
@@ -175,10 +175,10 @@ DefaultProperties
     AvailableMines=15;
 
     // Sound.
-    ActivateSnd(0) = Sound'UT3A_Vehicle_Nightshade.SpiderMine.SpiderMine_Active01';
-    ActivateSnd(1) = Sound'UT3A_Vehicle_Nightshade.SpiderMine.SpiderMine_Active02';
-    ActivateSnd(2) = Sound'UT3A_Vehicle_Nightshade.SpiderMine.SpiderMine_Active03';
-    DropSnd = Sound'UT3A_Vehicle_Nightshade.SpiderMine.SpiderMine_Drop';
+    ActivateSnd(0) = Sound'UT3A_Pickups_Deployables.SpiderMine.SpiderMine_Activate01';
+    ActivateSnd(1) = Sound'UT3A_Pickups_Deployables.SpiderMine.SpiderMine_Activate02';
+    ActivateSnd(2) = Sound'UT3A_Pickups_Deployables.SpiderMine.SpiderMine_Activate03';
+    DropSnd = Sound'UT3A_Pickups_Deployables.SpiderMine.SpiderMine_Drop';
 
     // Misc.
     LifeSpan=150.0;
