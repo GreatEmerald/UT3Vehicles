@@ -78,8 +78,8 @@ DefaultProperties
     Health = 4000;
 
     // Sound.
-    AmbientSound = Sound'UT3A_Vehicle_Nightshade.Shield.Shield_Ambient';
-    HitSnd = Sound'UT3A_Vehicle_Nightshade.Shield.Shield_Hit';
+    AmbientSound = Sound'UT3A_Pickups_Deployables.ShieldGenerator.ShieldGenerator_OutsideLoop';
+    HitSnd = Sound'UT3A_Pickups_Deployables.ShieldGenerator.ShieldGenerator_PanelBlow';
     SoundRadius = 250;
     SoundVolume = 128;
 }
