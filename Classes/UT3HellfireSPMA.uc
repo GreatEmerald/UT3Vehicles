@@ -928,7 +928,7 @@ defaultproperties
     ExplosionSounds = ();
     ExplosionSounds(0) = Sound'UT3A_Vehicle_SPMA.Explode.ExplodeCue';
     BulletSounds = ()
-    BulletSounds(0) = Sound'UT3A_Weapon_BulletImpacts.ImpactMetal.ImpactMetalCue'
+    BulletSounds(0) = Sound'UT3A_Weapon_BulletImpacts.UT3BulletImpactMetal.UT3BulletImpactMetalCue'
 
     IdleRPM=2500
     SoundVolume    = 255
