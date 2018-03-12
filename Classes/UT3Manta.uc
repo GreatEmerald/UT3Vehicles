@@ -1,4 +1,4 @@
-/* Trigger Travis CI test
+/*
  * Copyright © 2008 Wormbo
  * Copyright © 2012, 2017, 2018 Luís 'zeluisping' Guimarães (100GPing100)
  * Copyright © 2008, 2014 GreatEmerald
