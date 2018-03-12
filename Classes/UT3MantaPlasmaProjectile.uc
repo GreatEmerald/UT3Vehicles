@@ -40,6 +40,8 @@
 
 class UT3MantaPlasmaProjectile extends ONSHoverBikePlasmaProjectile;
 
+var(Sound) sound PlasmaImpactSound;
+
 // GEm: Don't hurt the instigator, but only applicable if we have radius
 /*simulated function HurtRadius( float DamageAmount, float DamageRadius, class<DamageType> DamageType, float Momentum, vector HitLocation )
 {
@@ -103,13 +105,27 @@ class UT3MantaPlasmaProjectile extends ONSHoverBikePlasmaProjectile;
     bHurtEntry = false;
 }*/
 
+simulated function Explode(vector HitLocation, vector HitNormal)
+{
+    if ( Role == ROLE_Authority )
+        HurtRadius(Damage, DamageRadius, MyDamageType, MomentumTransfer, HitLocation );
+
+    if ( EffectIsRelevant(Location,false) )
+        Spawn(HitEffectClass,,, HitLocation + HitNormal*5, rotator(-HitNormal));
+
+    PlaySound(PlasmaImpactSound,,1.0);
+    
+    Destroy();
+}
+
 defaultproperties
 {
     Speed=2000
     MaxSpeed=7000
     Damage = 36.0
-    DamageRadius = 0.0
+    DamageRadius = 0.000001
     MomentumTransfer = 20000.000000 //4000.0
     LifeSpan = 1.6
     MyDamageType=Class'UT3Vehicles.UT3DmgType_MantaPlasma'
+    PlasmaImpactSound = Sound'UT3A_Vehicle_Manta.UT3MantaShot.UT3MantaShotCue';
 }
