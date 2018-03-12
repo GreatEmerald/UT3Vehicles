@@ -476,7 +476,6 @@ defaultproperties
     ExitPositions(6)=(X=-70,Y=140,Z=-30)  //Right Below
     ExitPositions(7)=(X=-70,Y=-140,Z=-30) //Left Below
     
-
     bDrawMeshInFP=True
     
     FPCamPos=(X=65,Y=0,Z=-5)
@@ -493,7 +492,7 @@ defaultproperties
     DamagedEffectOffset=(X=2,Y=31,Z=16)   //Turbine fire point
     //DamagedEffectOffset=(X=2,Y=-75,Z=-10) //Blades fire point
     //DamagedEffectScale=0.6
-    
+
     HeadlightCoronaOffset=()
     HeadlightCoronaOffset(0)=(X=40.0,Y=0.0,Z=-20.0)
     HeadlightCoronaMaterial=Material'EpicParticles.FlashFlare1'

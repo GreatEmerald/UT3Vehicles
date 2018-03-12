@@ -426,16 +426,6 @@ defaultproperties
     ExitPositions(1)=(X=0,Y=185,Z=30)
     ExitPositions(3)=(X=300,Y=0,Z=40)
     ExitPositions(4)=(X=20,Y=0,Z=110) 
-
-    HeadlightCoronaOffset(0)=(X=182,Y=0,Z=-17)
-    HeadlightCoronaOffset(1)=(X=180,Y=-0,Z=-55)
-    HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
-    HeadlightCoronaMaxSize=60
-    
-    HeadlightProjectorOffset=(X=142.0,Y=0,Z=-10.5) //(X=82.5,Y=0,Z=55.5)
-    HeadlightProjectorRotation=(Yaw=0,Pitch=-1000,Roll=0)
-    HeadlightProjectorMaterial=Texture'VMVehicles-TX.NewPRVGroup.PRVProjector'
-    HeadlightProjectorScale=0.40 //0.65
     
     Begin Object Class=KarmaParamsRBFull Name=KParams0
         KStartEnabled=True
@@ -475,5 +465,20 @@ defaultproperties
     //Aerial View
     //TPCamLookAt=(X=10.0,Y=0.0,Z=0)
     //TPCamWorldOffset=(X=0,Y=0,Z=130)
+    
+    DamagedEffectOffset=(X=0,Y=20,Z=45)   //Top Fire Point
+    DamagedEffectScale=1.2                //Top Fire Size
+    //DamagedEffectOffset=(X=160,Y=-30,Z=-25) //Front Fire Point
+    //DamagedEffectScale=1.0                //Front Fire Size
+    
+    HeadlightCoronaOffset(0)=(X=182,Y=0,Z=-17)
+    HeadlightCoronaOffset(1)=(X=180,Y=-0,Z=-55)
+    HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
+    HeadlightCoronaMaxSize=60
+    
+    HeadlightProjectorOffset=(X=142.0,Y=0,Z=-10.5) //(X=82.5,Y=0,Z=55.5)
+    HeadlightProjectorRotation=(Yaw=0,Pitch=-1000,Roll=0)
+    HeadlightProjectorMaterial=Texture'VMVehicles-TX.NewPRVGroup.PRVProjector'
+    HeadlightProjectorScale=0.40 //0.65
     
 }

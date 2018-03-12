@@ -774,22 +774,6 @@ defaultproperties
     End Object
     KParams=KarmaParams'KParams0'
 
-    HeadlightCoronaOffset(0)=(X=77,Y=39.0,Z=25)
-    HeadlightCoronaOffset(1)=(X=77,Y=-39.0,Z=25)
-    HeadlightCoronaMaterial=Material'EpicParticles.FlashFlare1'
-    //HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
-    HeadlightCoronaMaxSize=45 //45 //65 looks good but probably too large with FlashFlare...except it's also the default UT2004 value
-
-    HeadlightProjectorOffset=(X=75,Y=0,Z=25) //(X=90,Y=0,Z=7)
-    HeadlightProjectorRotation=(Yaw=0,Pitch=-1000,Roll=0)
-    HeadlightProjectorMaterial=Texture'VMVehicles-TX.RVGroup.RVProjector'
-    HeadlightProjectorScale=0.3
-
-    bMakeBrakeLights=true
-    BrakeLightOffset(0)=(X=-86,Y=0,Z=45)
-    BrakeLightOffset(1)=(X=-92,Y=0,Z=42)
-    BrakeLightMaterial=Material'EpicParticles.FlashFlare1' //Material'EpicParticles.FlickerFlare'
-
     BoostRechargeTime = 5.0
     AfterburnerOffset(0) = (X=-80.0,Y=-16.0,Z=21.0)
     AfterburnerOffset(1) = (X=-80.0,Y=16.0,Z=21.0)
@@ -823,4 +807,26 @@ defaultproperties
     //TPCamDistance=250.000000
     //TPCamLookat=(X=-50,Y=0,Z=0)
     //TPCamWorldOffset=(X=0,Y=0,Z=30)
+    
+    //DamagedEffectOffset=(X=60,Y=10,Z=10)  //Hood Fire Point
+    DamagedEffectOffset=(X=-12,Y=-40,Z=0)   //Body Fire Point
+    DamagedEffectScale=0.6                  //Body Fire Size
+    //DamagedEffectOffset=(X=-80,Y=20,Z=30)   //Booster Fire Point, scale probably needs to be larger than 1.0
+    
+    HeadlightCoronaOffset(0)=(X=77,Y=39.0,Z=25)
+    HeadlightCoronaOffset(1)=(X=77,Y=-39.0,Z=25)
+    HeadlightCoronaMaterial=Material'EpicParticles.FlashFlare1'
+    //HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
+    HeadlightCoronaMaxSize=45 //45 //65 looks good but probably too large with FlashFlare...except it's also the default UT2004 value
+
+    HeadlightProjectorOffset=(X=75,Y=0,Z=25) //(X=90,Y=0,Z=7)
+    HeadlightProjectorRotation=(Yaw=0,Pitch=-1000,Roll=0)
+    HeadlightProjectorMaterial=Texture'VMVehicles-TX.RVGroup.RVProjector'
+    HeadlightProjectorScale=0.3
+
+    bMakeBrakeLights=true
+    BrakeLightOffset(0)=(X=-86,Y=0,Z=45)
+    BrakeLightOffset(1)=(X=-92,Y=0,Z=42)
+    BrakeLightMaterial=Material'EpicParticles.FlashFlare1' //Material'EpicParticles.FlickerFlare'
+    
 }
