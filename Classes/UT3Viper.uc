@@ -605,7 +605,7 @@ DefaultProperties
     ImpactDamageSounds=();
     ImpactDamageSounds(0)=Sound'UT3A_Vehicle_Viper.Collide.CollideCue';
     BulletSounds = ()
-    BulletSounds(0) = Sound'UT3A_Weapon_BulletImpacts.ImpactMetal.ImpactMetalCue'
+    BulletSounds(0) = Sound'UT3A_Weapon_BulletImpacts.UT3BulletImpactMetal.UT3BulletImpactMetalCue'
     MaxPitchSpeed=1000;
     SoundVolume=255;
     SoundRadius=900;
