@@ -727,6 +727,9 @@ defaultproperties
     EngineInertia=0.008
     WheelInertia=0.008
     WheelSuspensionOffset=3.0
+    WheelSoftness=0.045  //.025
+    WheelSuspensionTravel=35.0  //15
+    WheelSuspensionMaxRenderTravel=35.0  //15
     bHasHandBrake=False //GE: Override for the space bar?
     
     //Sound Related
