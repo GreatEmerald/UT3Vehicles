@@ -100,7 +100,7 @@ DefaultProperties
 	//MyDamageType=class'DmgType_ViperBolt';
 
 	// Sound.
-	ExplosionSound=Sound'UT3A_Vehicle_Viper.FireImpact.FireImpactCue';
+	ExplosionSound=Sound'UT3A_Vehicle_Viper.UT3ViperFireImpact.UT3ViperFireImpactCue';
 
 	// Misc.
 	LifeSpan=1.6;
