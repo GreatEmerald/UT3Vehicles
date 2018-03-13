@@ -553,6 +553,65 @@ Begin:
 // AI Interface End.
 //============END============
 
+simulated function AttachDriver(Pawn P)
+{
+
+    Local rotator SpineDrive;
+    Local rotator NeckDrive;
+    Local rotator ArmDriveL,ArmDriveR;
+    Local rotator ThighDriveL,ThighDriveR;
+    Local rotator CalfDriveL,CalfDriveR;
+
+    super.AttachDriver(P);
+
+    SpineDrive.Yaw=12000;
+    P.SetBoneRotation('Bip01 Spine',SpineDrive);
+    NeckDrive.Yaw=-14000;
+    P.SetBoneRotation('Bip01 Head',NeckDrive);
+    ArmDriveL.Yaw=-9000;
+    ArmDriveL.Pitch=-10000;
+    P.SetBoneRotation('Bip01 L UpperArm',ArmDriveL);
+    ArmDriveR.Yaw=-9000;
+    ArmDriveR.Pitch=10000;
+    P.SetBoneRotation('Bip01 R UpperArm',ArmDriveR);
+    ThighDriveL.Yaw=-2000;  
+    ThighDriveL.Pitch=7000;
+    ThighDriveL.Roll=1000;
+    P.SetBoneRotation('Bip01 L Thigh',ThighDriveL);
+    ThighDriveR.Yaw=-2000;  
+    ThighDriveR.Pitch=-7000;
+    ThighDriveR.Roll=-1000;
+    P.SetBoneRotation('Bip01 R Thigh',ThighDriveR);
+    CalfDriveL.Pitch=2000;
+    CalfDriveL.Yaw=-17000;
+    CalfDriveL.Roll=-8000;
+    P.SetBoneRotation('Bip01 L Calf',CalfDriveL);
+    CalfDriveR.Pitch=2000;
+    CalfDriveR.Yaw=-17000;
+    CalfDriveR.Roll=8000;
+    P.SetBoneRotation('Bip01 R Calf',CalfDriveR);
+
+}
+
+simulated function DetachDriver(Pawn P)
+{
+    P.SetBoneRotation('Bip01 Head');
+    P.SetBoneRotation('Bip01 Spine');
+    P.SetBoneRotation('Bip01 Spine1');
+    P.SetBoneRotation('Bip01 Spine2');
+    P.SetBoneRotation('Bip01 L Clavicle');
+    P.SetBoneRotation('Bip01 R Clavicle');
+    P.SetBoneRotation('Bip01 L UpperArm');
+    P.SetBoneRotation('Bip01 R UpperArm');
+    P.SetBoneRotation('Bip01 L ForeArm');
+    P.SetBoneRotation('Bip01 R ForeArm');
+    P.SetBoneRotation('Bip01 L Thigh');
+    P.SetBoneRotation('Bip01 R Thigh');
+    P.SetBoneRotation('Bip01 L Calf');
+    P.SetBoneRotation('Bip01 R Calf');
+    
+    Super.DetachDriver(P);
+}
 
 DefaultProperties
 {
@@ -593,17 +652,18 @@ DefaultProperties
 	NormalMaxStrafeForce = 20.0;
 
     // Sound.
-    IdleSound=Sound'UT3A_Vehicle_Viper.Singles.EngineLoopCue';
-    StartUpSound=Sound'UT3A_Vehicle_Viper.EngineStart.StartCue';
-    ShutDownSound=Sound'UT3A_Vehicle_Viper.EngineStop.StopCue';
-    JumpSound=Sound'UT3A_Vehicle_Manta.Jump.JumpCue';
+    IdleSound=Sound'UT3A_Vehicle_Viper.UT3ViperSingles.UT3ViperEngineLoopCue';
+    StartUpSound=Sound'UT3A_Vehicle_Viper.UT3ViperEngineStart.UT3ViperEngineStartCue';
+    ShutDownSound=Sound'UT3A_Vehicle_Viper.UT3ViperEngineStop.UT3ViperEngineStopCue';
+    JumpSound=Sound'UT3A_Vehicle_Manta.UT3MantaJump.UT3MantaJumpCue';
+    DuckSound = Sound'UT3A_Vehicle_Viper.UT3ViperSquishAttack.UT3ViperSquishAttackCue';
     DriverEjectSnd=Sound'UT3A_Vehicle_Scorpion.Singles.A_Vehicle_Scorpion_Eject01';
     EjectReadySnd=Sound'UT3A_Vehicle_Scorpion.Singles.A_Vehicle_Scorpion_EjectReadyBeep';
-    SelfDestructSnd=Sound'UT3A_Vehicle_Viper.Singles.SelfDestructCue';
+    SelfDestructSnd=Sound'UT3A_Vehicle_Viper.UT3ViperSingles.UT3ViperSelfDestructCue';
     ExplosionSounds=()
-    ExplosionSounds(0)=Sound'UT3A_Vehicle_Viper.Explode.ExplodeCue';
+    ExplosionSounds(0)=Sound'UT3A_Vehicle_Viper.UT3ViperExplode.UT3ViperExplodeCue';
     ImpactDamageSounds=();
-    ImpactDamageSounds(0)=Sound'UT3A_Vehicle_Viper.Collide.CollideCue';
+    ImpactDamageSounds(0)=Sound'UT3A_Vehicle_Viper.UT3ViperCollide.UT3ViperCollideCue';
     BulletSounds = ()
     BulletSounds(0) = Sound'UT3A_Weapon_BulletImpacts.UT3BulletImpactMetal.UT3BulletImpactMetalCue'
     MaxPitchSpeed=1000;
@@ -624,7 +684,8 @@ DefaultProperties
 	bCanBeBaseForPawns = true;
 	CollisionHeight=50;
 	CollisionRadius=220;
-	DrivePos=(X=10.0,Y=0.0,Z=50.0);
+	DrivePos=(X=22.0,Y=0.0,Z=73.0);
+        DriveRot=(Pitch=-1400)
 	ObjectiveGetOutDist=750.0;
 	MaxDesireability=0.6;
 	LinkHealMult=0.35;
