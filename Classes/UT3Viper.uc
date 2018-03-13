@@ -720,4 +720,9 @@ DefaultProperties
     ExitPositions(6)=(X=30,Y=140,Z=-30)  //Right Below
     ExitPositions(7)=(X=30,Y=-140,Z=-30) //Left Below
     
+    DamagedEffectOffset=(X=-40,Y=-25,Z=10)   //Engine Fire Point
+    DamagedEffectScale=1.0                   //Engine Fire Size
+    //DamagedEffectOffset=(X=120,Y=8,Z=-10)  //Front Fire Point
+    //DamagedEffectScale=0.4                 //Front Fire Size
+    
 }
