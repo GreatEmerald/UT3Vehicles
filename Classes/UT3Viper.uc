@@ -709,4 +709,15 @@ DefaultProperties
     UpDamping=0.0;
 
     PitchTorqueMax=35.0;
+    
+    EntryRadius = 160.0
+    ExitPositions(0)=(X=30,Y=140,Z=30)   //Right
+    ExitPositions(1)=(X=30,Y=-140,Z=30)  //Left
+    ExitPositions(2)=(X=200,Y=0,Z=30)   //Front
+    ExitPositions(3)=(X=-170,Y=0,Z=30)  //Rear
+    ExitPositions(4)=(X=-170,Y=0,Z=-30) //Rear Below
+    ExitPositions(5)=(X=200,Y=0,Z=-30)  //Front Below
+    ExitPositions(6)=(X=30,Y=140,Z=-30)  //Right Below
+    ExitPositions(7)=(X=30,Y=-140,Z=-30) //Left Below
+    
 }
