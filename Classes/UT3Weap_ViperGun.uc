@@ -47,8 +47,8 @@ DefaultProperties
 	ProjectileClass=Class'UT3Proj_ViperBolt';
 
 	// Sound.
-	FireSoundClass=Sound'UT3A_Vehicle_Viper.Fire.FireCue';
-        //RotateSound=Sound'UT3A_Vehicle_Viper.Slide.SlideCue';
+	FireSoundClass=Sound'UT3A_Vehicle_Viper.UT3ViperFire.UT3ViperFireCue';
+        //RotateSound=Sound'UT3A_Vehicle_Viper.UT3ViperSlide.UT3ViperSlideCue';
 	AmbientSoundScaling=0.5;
 
 	// Aim
