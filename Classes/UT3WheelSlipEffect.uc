@@ -82,5 +82,5 @@ simulated function UpdateDust(SVehicleWheel t, float DustSlipRate, float DustSli
 
 defaultproperties
 {
-    DirtSlipSound = Sound'UT3A_Vehicle_Scorpion.Slide.SlideCue'
+    DirtSlipSound = Sound'UT3A_Vehicle_Scorpion.UT3ScorpionSlide.UT3ScorpionSlideCue'
 }
