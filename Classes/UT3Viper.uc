@@ -658,8 +658,8 @@ DefaultProperties
     ShutDownSound=Sound'UT3A_Vehicle_Viper.UT3ViperEngineStop.UT3ViperEngineStopCue';
     JumpSound=Sound'UT3A_Vehicle_Manta.UT3MantaJump.UT3MantaJumpCue';
     DuckSound = Sound'UT3A_Vehicle_Viper.UT3ViperSquishAttack.UT3ViperSquishAttackCue';
-    DriverEjectSnd=Sound'UT3A_Vehicle_Scorpion.Singles.A_Vehicle_Scorpion_Eject01';
-    EjectReadySnd=Sound'UT3A_Vehicle_Scorpion.Singles.A_Vehicle_Scorpion_EjectReadyBeep';
+    DriverEjectSnd=Sound'UT3A_Vehicle_Scorpion.UT3ScorpionSingles.UT3ScorpionEject01';
+    EjectReadySnd=Sound'UT3A_Vehicle_Scorpion.UT3ScorpionSingles.UT3ScorpionEjectReadyBeep';
     SelfDestructSnd=Sound'UT3A_Vehicle_Viper.UT3ViperSingles.UT3ViperSelfDestructCue';
     ExplosionSounds=()
     ExplosionSounds(0)=Sound'UT3A_Vehicle_Viper.UT3ViperExplode.UT3ViperExplodeCue';
