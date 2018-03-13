@@ -615,17 +615,17 @@ simulated function DetachDriver(Pawn P)
 
 DefaultProperties
 {
-	// Looks.
-	Mesh=Mesh'UT3ViperAnims.VH_NecrisManta';
-	DestroyedVehicleMesh=StaticMesh'UT3ViperSM.UT3Viper';
-	RedSkin=Shader'UT3ViperTex.Viper.ViperSkin';
-	BlueSkin=Shader'UT3ViperTex.Viper.ViperSkinBlue';
-	HeadlightCoronaMaxSize=0.0;
-	BikeDustOffset(0)=(X=50.00,Y=0.0,Z=10.0)
-	BikeDustOffset(1)=(X=-25.0,Y=0.0,Z=10.0)
+    // Looks.
+    Mesh=Mesh'UT3ViperAnims.VH_NecrisManta';
+    DestroyedVehicleMesh=StaticMesh'UT3ViperSM.UT3Viper';
+    RedSkin=Shader'UT3ViperTex.Viper.ViperSkin';
+    BlueSkin=Shader'UT3ViperTex.Viper.ViperSkinBlue';
+    HeadlightCoronaMaxSize=0.0;
+    BikeDustOffset(0)=(X=50.00,Y=0.0,Z=10.0)
+    BikeDustOffset(1)=(X=-25.0,Y=0.0,Z=10.0)
 
-	// Weapons.
-	DriverWeapons(0)=(WeaponClass=Class'UT3Weap_ViperGun',WeaponBone="FrontBody")
+    // Weapons.
+    DriverWeapons(0)=(WeaponClass=Class'UT3Weap_ViperGun',WeaponBone="FrontBody")
 
 
     // Health
@@ -719,6 +719,10 @@ DefaultProperties
     ExitPositions(5)=(X=200,Y=0,Z=-30)  //Front Below
     ExitPositions(6)=(X=30,Y=140,Z=-30)  //Right Below
     ExitPositions(7)=(X=30,Y=-140,Z=-30) //Left Below
+    
+    bDrawMeshInFP=True
+    
+    FPCamPos=(X=63,Y=0,Z=56)
     
     TPCamDistance=300.000000  //NOTE: Be sure TO DELETE THIS LINE from USER.INI, it overrides this value and will be re-added to the ini as soon as you use the vehicle, all this does here is make it the starting distance
     TPCamLookat=(X=-10,Y=0,Z=0)
