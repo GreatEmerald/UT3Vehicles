@@ -46,6 +46,7 @@ var IntBox BoostIconCoords, EjectIconCoords;
 var float LastBoostAttempt, SpeedAtBoost;
 var() float MinEjectSpeed;
 var int AirBoost;
+var Sound DriverEjectSnd;
 
 event KImpact(actor other, vector pos, vector impactVel, vector impactNorm) //Modified so we would have control over when we detonate
 {
@@ -150,7 +151,7 @@ simulated function Tick(float DT)
         //ArmTipCoords = GetBoneCoords('LeftBladeDummy');
         ArmBaseCoords = GetBoneCoords('Blade_L1');
         ArmTipCoords = GetBoneCoords('Blade_L2');
-        ArmTipCoords.Origin += vect(0,50,0) >> Rotation;
+        ArmTipCoords.Origin += vect(0,-80,0) >> Rotation;
         Victim = Trace(HitLocation, HitNormal, ArmTipCoords.Origin, ArmBaseCoords.Origin);
 
         if (Victim != None && Victim.bBlockActors)
@@ -180,7 +181,7 @@ simulated function Tick(float DT)
         //ArmTipCoords = GetBoneCoords('RightBladeDummy');
         ArmBaseCoords = GetBoneCoords('Blade_R1');
         ArmTipCoords = GetBoneCoords('Blade_R2');
-        ArmTipCoords.Origin += vect(0,50,0) >> Rotation;
+        ArmTipCoords.Origin += vect(0,80,0) >> Rotation;
         Victim = Trace(HitLocation, HitNormal, ArmTipCoords.Origin, ArmBaseCoords.Origin);
 
         if (Victim != None && Victim.bBlockActors)
@@ -341,6 +342,9 @@ function SuperEjectDriver()
     OldPawn.Velocity = EjectVel;
     OldPawn.SpawnTime = Level.TimeSeconds;
     OldPawn.PlayTeleportEffect(False,False);
+    
+    PlaySound(DriverEjectSnd, SLOT_None, 1.0, true);
+    
 }
 
 function bool KDriverLeave(bool bForceLeave)
@@ -552,7 +556,6 @@ simulated function AttachDriver(Pawn P)
     Local rotator NeckDrive;
     super.AttachDriver(P);
 
-
     ArmDriveL.Yaw=5000;
     P.SetBoneRotation('Bip01 L UpperArm',ArmDriveL);
     ArmDriveR.Yaw=5000;
@@ -725,22 +728,24 @@ defaultproperties
     WheelInertia=0.008
     WheelSuspensionOffset=3.0
     bHasHandBrake=False //GE: Override for the space bar?
-    BoostSound=Sound'UT3A_Vehicle_Scorpion.Singles.A_Vehicle_Scorpion_EjectReadyBeepThrustStartMix'
-    //BoostSound=Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_EjectReadyBeep'
-    BoostReadySound=None
-    IdleSound=sound'UT3A_Vehicle_Scorpion.Singles.A_Vehicle_Scorpion_EngineLoopCue'
-    StartUpSound=sound'UT3A_Vehicle_Scorpion.EngineStart.StartCue'
-    ShutDownSound=sound'UT3A_Vehicle_Scorpion.EngineStop.StopCue'
-    ArmExtendSound=sound'UT3A_Vehicle_Scorpion.BladeExtend.BladeExtendCue'
-    ArmRetractSound=sound'UT3A_Vehicle_Scorpion.BladeRetract.BladeRetractCue'
-    BladeBreakSound=sound'UT3A_Vehicle_Scorpion.BladeBreakOff.BladeBreakOffCue'
-    ImpactDamageSounds = ()
-    ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Scorpion.Collide.CollideCue';
-    //ImpactDamageSounds(1) = Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_Collide02';
-    //ImpactDamageSounds(2) = Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_Collide03';
-    //ImpactDamageSounds(3) = Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_Collide04';
-    ExplosionSounds = ()
-    ExplosionSounds(0) = Sound'UT3A_Vehicle_Scorpion.Explode.ExplodeCue';
+    
+    //Sound Related
+    BoostSound = Sound'UT3A_Vehicle_Scorpion.UT3ScorpionSingles.UT3ScorpionEjectReadyBeepThrustStartMix'
+    BoostReadySound = None
+    DriverEjectSnd=Sound'UT3A_Vehicle_Scorpion.UT3ScorpionSingles.UT3ScorpionEject01DestructionWarningMix';
+    IdleSound = sound'UT3A_Vehicle_Scorpion.UT3ScorpionSingles.UT3ScorpionEngineLoop01Cue'
+    StartUpSound = sound'UT3A_Vehicle_Scorpion.UT3ScorpionEngineStart.UT3ScorpionEngineStartCue'
+    ShutDownSound = sound'UT3A_Vehicle_Scorpion.UT3ScorpionEngineStop.UT3ScorpionEngineStopCue'
+    ArmExtendSound = sound'UT3A_Vehicle_Scorpion.UT3ScorpionBladeExtend.UT3ScorpionBladeExtendCue'
+    ArmRetractSound = sound'UT3A_Vehicle_Scorpion.UT3ScorpionBladeRetract.UT3ScorpionBladeRetractCue'
+    BladeBreakSound = sound'UT3A_Vehicle_Scorpion.UT3ScorpionBladeBreakOff.UT3ScorpionBladeBreakOffCue'
+    ImpactDamageSounds = ();
+    ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Scorpion.UT3ScorpionCollide.UT3ScorpionCollideCue';
+    ExplosionSounds = ();
+    ExplosionSounds(0) = Sound'UT3A_Vehicle_Scorpion.UT3ScorpionExplode.UT3ScorpionExplodeCue';
+    BulletSounds = ()
+    BulletSounds(0) = Sound'UT3A_Weapon_BulletImpacts.UT3BulletImpactMetal.UT3BulletImpactMetalCue'
+    SoundVolume=255
     
     DamagedEffectHealthSmokeFactor=0.65
     DamagedEffectHealthFireFactor=0.40 
@@ -806,11 +811,6 @@ defaultproperties
     TPCamDistance=250.000000
     TPCamLookat=(X=-70,Y=0,Z=0) //X-40
     TPCamWorldOffset=(X=0,Y=0,Z=140) //170-200 is better for aiming high up but to me it makes ground level aim feel awkward
-
-    //Aerial View
-    //TPCamDistance=250.000000
-    //TPCamLookat=(X=-50,Y=0,Z=0)
-    //TPCamWorldOffset=(X=0,Y=0,Z=30)
     
     //DamagedEffectOffset=(X=60,Y=10,Z=10)  //Hood Fire Point
     DamagedEffectOffset=(X=-12,Y=-40,Z=0)   //Body Fire Point
