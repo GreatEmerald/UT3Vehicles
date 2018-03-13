@@ -720,6 +720,10 @@ DefaultProperties
     ExitPositions(6)=(X=30,Y=140,Z=-30)  //Right Below
     ExitPositions(7)=(X=30,Y=-140,Z=-30) //Left Below
     
+    TPCamDistance=300.000000  //NOTE: Be sure TO DELETE THIS LINE from USER.INI, it overrides this value and will be re-added to the ini as soon as you use the vehicle, all this does here is make it the starting distance
+    TPCamLookat=(X=-10,Y=0,Z=0)
+    TPCamWorldOffset=(X=0,Y=0,Z=100)
+    
     DamagedEffectOffset=(X=-40,Y=-25,Z=10)   //Engine Fire Point
     DamagedEffectScale=1.0                   //Engine Fire Size
     //DamagedEffectOffset=(X=120,Y=8,Z=-10)  //Front Fire Point
