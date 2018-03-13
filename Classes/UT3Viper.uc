@@ -628,28 +628,29 @@ DefaultProperties
 	DriverWeapons(0)=(WeaponClass=Class'UT3Weap_ViperGun',WeaponBone="FrontBody")
 
 
-	// Health
-	Health=200;
-	HealthMax=200;
+    // Health
+    Health=200;
+    HealthMax=200;
 
-	// Strings.
-	VehiclePositionString="in a UT3 Viper";
-	VehicleNameString="UT3 Viper";
+    // Strings.
+    VehiclePositionString="in a UT3 Viper";
+    VehicleNameString="UT3 Viper";
 
-	// Movement
-	GroundSpeed=1000.0;
-	AirSpeed=2400.0;
-	JumpDuration=0.12;
-	JumpDelay=2.0;
-	MomentumMult=2.2; // 3.2
-	JumpForceMag=60.0; // 67.5
-	JumpTraceDist=175.0;
-	NormalGravScale = 0.9;
-	GlidingGravScale = 0.1;
-	GlideMaxThrustForce = 1.0;
-	GlideMaxStrafeForce = 1.0;
-	NormalMaxThrustForce = 27.0;
-	NormalMaxStrafeForce = 20.0;
+    // Movement
+    GroundSpeed=1500.0;
+    AirSpeed=2400.0;
+    JumpDuration=0.12;
+    JumpDelay=2.0;
+    MomentumMult=2.2; // 3.2
+    JumpForceMag=60.0; // 67.5
+    JumpTraceDist=175.0;
+    NormalGravScale = 0.9;
+    GlidingGravScale = 0.1;
+    GlideMaxThrustForce = 1.0;
+    GlideMaxStrafeForce = 1.0;
+    NormalMaxThrustForce = 27.0;
+    NormalMaxStrafeForce = 20.0;
+    ImpactDamageMult = 0.000010
 
     // Sound.
     IdleSound=Sound'UT3A_Vehicle_Viper.UT3ViperSingles.UT3ViperEngineLoopCue';
@@ -670,39 +671,42 @@ DefaultProperties
     SoundVolume=255;
     SoundRadius=900;
 
-	// SelfDestruct.
-	SelfDestructWindow = 3;
-	SelfDestructForceDuration = 1;
-	DmgType_SelfDestruct = Class'UT3DmgType_SelfDestruct'
-	SelfDestructDamage = 800;
-	SelfDestructRadius = 600;
-	SelfDestructMomentum = 200000;
-	BoostForce = 500; // 200
-	TimeToRiseForSelfDestruct = 1.1;
+    // SelfDestruct.
+    SelfDestructWindow = 3;
+    SelfDestructForceDuration = 1;
+    DmgType_SelfDestruct = Class'UT3DmgType_SelfDestruct'
+    SelfDestructDamage = 800;
+    SelfDestructRadius = 600;
+    SelfDestructMomentum = 200000;
+    BoostForce = 500; // 200
+    TimeToRiseForSelfDestruct = 1.1;
 
-	// Misc.
-	bCanBeBaseForPawns = true;
-	CollisionHeight=50;
-	CollisionRadius=220;
-	DrivePos=(X=22.0,Y=0.0,Z=73.0);
-        DriveRot=(Pitch=-1400)
-	ObjectiveGetOutDist=750.0;
-	MaxDesireability=0.6;
-	LinkHealMult=0.35;
-	MeleeRange=-100.0;
-	HoverCheckDist=100; // 150
+    // Misc.
+    bCanBeBaseForPawns = true;
+    CollisionHeight=50;
+    CollisionRadius=220;
+    DrivePos=(X=22.0,Y=0.0,Z=73.0);
+    DriveRot=(Pitch=-1400)
+    ObjectiveGetOutDist=750.0;
+    MaxDesireability=0.6;
+    LinkHealMult=0.35;
+    MeleeRange=-100.0;
+    DamagedEffectHealthSmokeFactor=0.65 
+    DamagedEffectHealthFireFactor=0.40 
+    DamagedEffectFireDamagePerSec=2.0  
+    HoverCheckDist=100; // 150
 
-	TurnDamping=55;
-	TurnTorqueFactor=750.0;
-	TurnTorqueMax=1000.0;
-	MaxYawRate=150.0;
+    TurnDamping=55;
+    TurnTorqueFactor=750.0;
+    TurnTorqueMax=1000.0;
+    MaxYawRate=150.0;
 
-	RollTorqueTurnFactor=200.0;
-	RollTorqueStrafeFactor=65.0;
-	RollTorqueMax=200.0;
-	RollDamping=20;
+    RollTorqueTurnFactor=200.0;
+    RollTorqueStrafeFactor=65.0;
+    RollTorqueMax=200.0;
+    RollDamping=20;
 
-	UpDamping=0.0;
+    UpDamping=0.0;
 
-	PitchTorqueMax=35.0;
+    PitchTorqueMax=35.0;
 }
