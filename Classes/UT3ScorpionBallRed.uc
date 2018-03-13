@@ -84,7 +84,7 @@ simulated function SpawnEffects( vector HitLocation, vector HitNormal )
         if (bZap)
         {
            spawn(class'xEffects.GoopSparks',,,Location);
-           PlaySound(sound'WeaponSounds.BioRifle.BioRifleGoo1',,8*TransientSoundVolume);
+           PlaySound(ExplosionSound,,8*TransientSoundVolume);
         }
         else
         {
