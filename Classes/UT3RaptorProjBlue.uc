@@ -135,7 +135,7 @@ simulated function BlowUp(vector HitLocation)
 
 defaultproperties
 {
-    PlasmaImpactSound = Sound'UT3A_Vehicle_Manta.Shot.PlasmaImpact';
+    PlasmaImpactSound = Sound'UT3A_Vehicle_Manta.UT3MantaShot.UT3MantaShotCue';
     Damage = 20.0 //20 GE: We're weaker! Hooray!
     Speed=2000
     MaxSpeed=12500
