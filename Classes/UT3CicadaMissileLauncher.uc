@@ -1,5 +1,6 @@
 /*
  * Copyright © 2009, 2014 GreatEmerald
+ * Copyright © 2017-2018 HellDragon
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -176,13 +177,18 @@ function Projectile SpawnProjectile(class<Projectile> ProjClass, bool bAltFire) 
 
 defaultproperties
 {
+
+    Drawscale = 1.0
+
     FireInterval=0.25
     AltFireInterval=0.5
     ProjectileClass=class'UT3CicadaRocket'
     AltFireProjectileClass=class'UT3CicadaRocket'
-    LoadSound=sound'UT3A_Vehicle_Cicada.Sounds.A_Vehicle_Cicada_MissleLoad01'
-    FireSoundClass=Sound'UT3A_Vehicle_Cicada.SoundCues.A_Vehicle_Cicada_Fire'
-    AltFireSoundClass=Sound'UT3A_Vehicle_Cicada.Sounds.A_Vehicle_Cicada_MissleEject01'
+    LoadSound=sound'UT3A_Vehicle_Cicada.MissileLoad.MissileLoadCue'
+    FireSoundClass=Sound'UT3A_Vehicle_Cicada.Fire.FireCue'
+    AltFireSoundClass=Sound'UT3A_Vehicle_Cicada.MissileEject.MissileEjectCue'
+    SoundRadius=350
+    SoundVolume=255
     Mesh = SkeletalMesh'UT3VH_Cicada_Anims.VH_Cicada_RightSideGun'
     RedSkin = Shader'UT3CicadaTex.CicadaSkin'
     BlueSkin = Shader'UT3CicadaTex.CicadaSkinBlue'

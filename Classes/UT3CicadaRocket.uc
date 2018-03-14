@@ -1,5 +1,6 @@
 /*
  * Copyright © 2009, 2014 GreatEmerald
+ * Copyright © 2018 HellDragon
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -108,5 +109,5 @@ DefaultProperties
    MomentumTransfer=40000.000000
    DamageRadius=220.000000
    KillRange=2000.000000
-   IgniteSound=Sound'UT3A_Vehicle_Cicada.Sounds.A_Vehicle_Cicada_MissleIgnite01'
+   IgniteSound=Sound'UT3A_Vehicle_Cicada.MissileIgnite.MissileIgniteCue'
 }
