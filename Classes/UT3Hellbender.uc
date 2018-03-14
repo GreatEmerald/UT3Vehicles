@@ -344,7 +344,7 @@ defaultproperties
     ExitPositions(3)=(X=-10,Y=160,Z=-50)  //Right Below
     ExitPositions(4)=(X=10,Y=-5,Z=130)    //Roof
     
-    FPCamPos=(X=0,Y=28,Z=135)
+    FPCamPos=(X=0,Y=31,Z=160)
     
     //Normal
     TPCamDistance=375.000000
@@ -361,20 +361,20 @@ defaultproperties
     //DamagedEffectOffset=(X=-60,Y=-65,Z=90)   //Exhaust Pipe Fire Point
     //DamagedEffectScale=0.6                   //Exhaust Pipe Fire Size
     
-    HeadlightCoronaOffset(0)=(X=72.5,Y=26.5,Z=49.5) //(X=77.5,Y=27.5,Z=52.5)
-    HeadlightCoronaOffset(1)=(X=72.5,Y=-26.5,Z=49.5)
-    HeadlightCoronaOffset(2)=(X=72.5,Y=25,Z=39)
-    HeadlightCoronaOffset(3)=(X=72.5,Y=-25,Z=39)
+    HeadlightCoronaOffset(0)=(X=90,Y=34,Z=62)
+    HeadlightCoronaOffset(1)=(X=90,Y=-34,Z=62)
+    HeadlightCoronaOffset(2)=(X=90,Y=31,Z=49)
+    HeadlightCoronaOffset(3)=(X=90,Y=-31,Z=49)
+
     HeadlightCoronaMaterial=Material'EpicParticles.FlashFlare1'
-    //HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
-    HeadlightCoronaMaxSize=50 //82 works with EFlareOY but FlashFlare is huge
+    HeadlightCoronaMaxSize=120 //100 def UT2004  //30 is good for subtle
     
-    HeadlightProjectorOffset=(X=70.0,Y=0,Z=49.5) //(X=82.5,Y=0,Z=55.5)
+    HeadlightProjectorOffset=(X=90,Y=0,Z=62)
     HeadlightProjectorRotation=(Yaw=0,Pitch=-1000,Roll=0)
     HeadlightProjectorMaterial=Texture'VMVehicles-TX.NewPRVGroup.PRVProjector'
-    HeadlightProjectorScale=0.40 //0.65
+    HeadlightProjectorScale=0.65 //0.65
 
-    BrakeLightOffset(0)=(X=-131.5,Y=38.5,Z=60) //(X=-137.5,Y=42.5,Z=64)
-    BrakeLightOffset(1)=(X=-131.5,Y=-38.5,Z=60)
-    BrakeLightMaterial=Material'EpicParticles.FlickerFlare'
+    BrakeLightOffset(0)=(X=-165,Y=50,Z=77)
+    BrakeLightOffset(1)=(X=-165,Y=-50,Z=77)
+    BrakeLightMaterial=Material'EpicParticles.FlashFlare1'
 }
