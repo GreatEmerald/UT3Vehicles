@@ -1,6 +1,6 @@
 /*
- * Copyright © 2012 100GPing100
- * Copyright © 2014 GreatEmerald
+ * Copyright Â© 2012 100GPing100
+ * Copyright Â© 2014 GreatEmerald
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -156,7 +156,7 @@ function bool NoObstacle()
 	else
 		return false;
 }
-/* » Type:
+/* Â» Type:
  * 0: General message.
  * 1: Mine select message.
 */
@@ -887,22 +887,22 @@ DefaultProperties
 	Mines(3) = none;
 	Mines(4) = none;
 
-	// Sound.
-	IdleSound = Sound'UT3A_Vehicle_Nightshade.Sounds.A_Vehicle_Nightshade_EngineLoop01';
-	StartUpSound = Sound'UT3A_Vehicle_Nightshade.Sounds.A_Vehicle_Nightshade_EngineStart01';
-	ShutDownSound = Sound'UT3A_Vehicle_Nightshade.Sounds.A_Vehicle_Nightshade_EngineStop01';
-	DeploySnd = Sound'UT3A_Vehicle_Nightshade.Sounds.A_Vehicle_Nightshade_ArmsExtend01';
-	UndeploySnd = Sound'UT3A_Vehicle_Nightshade.Sounds.A_Vehicle_Nightshade_ArmsRetract01';
-	SwitchDeployableSnd = Sound'UT3A_Vehicle_Nightshade.Sounds.A_Vehicle_Nightshade_SwitchDeployables';
-	DropItemSnd = Sound'UT3A_Vehicle_Nightshade.Sounds.A_Vehicle_Nightshade_DropItem02';
-	MaxPitchSpeed = 1250; // 1000
-	ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Nightshade.Sounds.A_Vehicle_Nightshade_Impact01';
-	ImpactDamageSounds(1) = Sound'UT3A_Vehicle_Nightshade.Sounds.A_Vehicle_Nightshade_Impact02';
-	ImpactDamageSounds(2) = Sound'UT3A_Vehicle_Nightshade.Sounds.A_Vehicle_Nightshade_Impact01';
-	ImpactDamageSounds(3) = Sound'UT3A_Vehicle_Nightshade.Sounds.A_Vehicle_Nightshade_Impact02';
-	ImpactDamageSounds(4) = Sound'UT3A_Vehicle_Nightshade.Sounds.A_Vehicle_Nightshade_Impact01';
-	ImpactDamageSounds(5) = Sound'UT3A_Vehicle_Nightshade.Sounds.A_Vehicle_Nightshade_Impact02';
-	ImpactDamageSounds(6) = Sound'UT3A_Vehicle_Nightshade.Sounds.A_Vehicle_Nightshade_Impact01';
+    // Sound.
+    IdleSound = Sound'UT3A_Vehicle_Nightshade.UT3NightshadeSingles.UT3NightshadeEngineLoop01';
+    StartUpSound = Sound'UT3A_Vehicle_Nightshade.UT3NightshadeEngineStart.UT3NightshadeEngineStartCue';
+    ShutDownSound = Sound'UT3A_Vehicle_Nightshade.UT3NightshadeEngineStop.UT3NightshadeEngineStopCue';
+    DeploySnd = Sound'UT3A_Vehicle_Nightshade.UT3NightshadeArmsExtend.UT3NightshadeArmsExtendCue';
+    UndeploySnd = Sound'UT3A_Vehicle_Nightshade.UT3NightshadeArmsRetract.UT3NightshadeArmsRetractCue';
+    SwitchDeployableSnd = Sound'UT3A_Vehicle_Nightshade.UT3NightshadeSingles.UT3NightshadeSwitchDeployablesCue';
+    DropItemSnd = Sound'UT3A_Vehicle_Nightshade.UT3NightshadeDropItem.UT3NightshadeDropItemCue';
+    MaxPitchSpeed = 1250; // 1000
+    ImpactDamageSounds= ();
+    ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Nightshade.UT3NightshadeCollide.UT3NightshadeCollideCue';
+    ExplosionSounds=()
+    ExplosionSounds(0)=Sound'UT3A_Vehicle_Viper.UT3ViperExplode.UT3ViperExplodeCue';
+    BulletSounds = ()
+    BulletSounds(0) = Sound'UT3A_Weapon_BulletImpacts.UT3BulletImpactMetal.UT3BulletImpactMetalCue'
+    SoundVolume=255
 
 	// Movement.
 	MaxThrustForce = 15.0;
