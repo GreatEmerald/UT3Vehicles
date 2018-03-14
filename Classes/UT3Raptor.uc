@@ -344,13 +344,15 @@ defaultproperties
     RudderYawContraint = 2048 // 30° ~= 5461 RUU
 
     // Sounds.
-    IdleSound = Sound'UT3A_Vehicle_Raptor.Singles.A_Vehicle_Raptor_EngineLoopCue';
-    StartUpSound = Sound'UT3A_Vehicle_Raptor.EngineStart.StartCue';
-    ShutDownSound = Sound'UT3A_Vehicle_Raptor.EngineStop.StopCue';
+    IdleSound = Sound'UT3A_Vehicle_Raptor.UT3RaptorSingles.UT3RaptorEngineLoop01Cue';
+    StartUpSound = Sound'UT3A_Vehicle_Raptor.UT3RaptorEngineStart.UT3RaptorEngineStartCue';
+    ShutDownSound = Sound'UT3A_Vehicle_Raptor.UT3RaptorEngineStop.UT3RaptorEngineStopCue';
     ImpactDamageSounds=();
-    ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Raptor.Collide.CollideCue';
+    ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Raptor.UT3RaptorCollide.UT3RaptorCollideCue';
     ExplosionSounds=();
-    ExplosionSounds(0) = Sound'UT3A_Vehicle_Raptor.Explode.ExplodeCue';
+    ExplosionSounds(0) = Sound'UT3A_Vehicle_Raptor.UT3RaptorExplode.UT3RaptorExplodeCue';
+    BulletSounds = ()
+    BulletSounds(0) = Sound'UT3A_Weapon_BulletImpacts.UT3BulletImpactMetal.UT3BulletImpactMetalCue'
     SoundVolume=255
     
     MomentumMult=0.400000 //? HDm to GE: Feels right on everything except Rocket Launcher has more force than it should on the Raptor
