@@ -51,8 +51,8 @@ defaultproperties
     YawBone=SecondaryTurretYaw
     WeaponFireAttachmentBone=SecondaryTurretBarrel
     DamageType=class'UT3DmgType_HellbenderLaser'
-    FireSoundClass = Sound'UT3A_Vehicle_Hellbender.BallFire.BallFireCue'
-    AltFireSoundClass = Sound'UT3A_Vehicle_Hellbender.BeamFire.BeamFireCue'
+    FireSoundClass = Sound'UT3A_Vehicle_Hellbender.UT3HellbenderBallFire.UT3HellbenderBallFireCue'
+    AltFireSoundClass = Sound'UT3A_Vehicle_Hellbender.UT3HellbenderBeamFire.UT3HellbenderBeamFireCue'
     PitchUpLimit=9600  //16000 is about what UT3 is but we don't have UT3's camera collision meaning we see under and through the Hellbender in UT2004
     PitchDownLimit=59200
     bInstantRotation=False
