@@ -154,7 +154,7 @@ defaultproperties
     YawBone = MainTurretYaw
     WeaponFireAttachmentBone = MainTurretBarrel
     GunnerAttachmentBone = MainTurretYaw
-    FireSoundClass=sound'UT3A_Vehicle_Hellbender.TurretFire.TurretFireCue'
+    FireSoundClass=sound'UT3A_Vehicle_Hellbender.UT3HellbenderTurretFire.UT3HellbenderTurretFireCue'
     //BeamEffectClass=class'ShockBeamEffect'//'ONSChargeBeamEffect'
     DamageType=Class'UT3DmgType_HellbenderRearGunBeam'
     FireInterval=0.5
