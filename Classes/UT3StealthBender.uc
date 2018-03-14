@@ -975,13 +975,25 @@ DefaultProperties
 	MaxViewYaw=16000
 	MaxViewPitch=16000
 
-	IdleSound=sound'ONSVehicleSounds-S.PRV.PRVEng01'
-	StartUpSound=sound'ONSVehicleSounds-S.PRV.PRVStart01'
-	ShutDownSound=sound'ONSVehicleSounds-S.PRV.PRVStop01'
+    IdleSound=sound'UT3A_Vehicle_Stealthbender.UT3StealthbenderSingles.UT3StealthbenderEngineLoop01Cue'
+    StartUpSound=sound'UT3A_Vehicle_Stealthbender.UT3StealthbenderEngineStart.UT3StealthbenderEngineStartCue'
+    ShutDownSound=sound'UT3A_Vehicle_Stealthbender.UT3StealthbenderEngineStop.UT3StealthbenderEngineStopCue'
+    DeploySnd = Sound'UT3A_Vehicle_Stealthbender.UT3StealthbenderArmsExtend.UT3StealthbenderArmsExtendCue';
+    UndeploySnd = Sound'UT3A_Vehicle_Stealthbender.UT3StealthbenderArmsRetract.UT3StealthbenderArmsRetractCue';
+    SwitchDeployableSnd = Sound'UT3A_Vehicle_Nightshade.UT3NightshadeSingles.UT3NightshadeSwitchDeployablesCue';
+    DropItemSnd = Sound'UT3A_Vehicle_Nightshade.UT3NightshadeDropItem.UT3NightshadeDropItemCue';
+    HornSounds(0)=Sound'UT3A_Vehicle_Hellbender.UT3HellbenderSingles.UT3HellbenderHorn01'
+    ImpactDamageSounds=()
+    ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Stealthbender.UT3StealthbenderCollide.UT3StealthbenderCollideCue';
+    ExplosionSounds=()
+    ExplosionSounds(0) = Sound'UT3A_Vehicle_Hellbender.UT3HellbenderExplode.UT3HellbenderExplodeCue';
+    BulletSounds = ()
+    BulletSounds(0) = Sound'UT3A_Weapon_BulletImpacts.UT3BulletImpactMetal.UT3BulletImpactMetalCue'
+    
 	EngineRPMSoundRange=10000
 	IdleRPM=500
 	RevMeterScale=4000
-	SoundVolume=180
+	SoundVolume=255
 	SoundRadius=200
 
 	StartUpForce="PRVStartUp"
@@ -1140,14 +1152,10 @@ DefaultProperties
 	//FlagBone=Dummy01
 	FlagRotation=(Yaw=32768)
 
-	HornSounds(0)=sound'ONSVehicleSounds-S.Horn09'
-	HornSounds(1)=sound'ONSVehicleSounds-S.Horn04'
 	//VehicleIcon=(Material=Texture'AS_FX_TX.HUD.AssaultHUD',X=380,Y=83,SizeX=130,SizeY=64)
 	VehicleIcon=(Material=Texture'AS_FX_TX.Icons.OBJ_HellBender',X=0,Y=0,SizeX=64,SizeY=64,bIsGreyScale=true)
 
 	ObjectiveGetOutDist=1500.0
 	bCanDoTrickJumps=true
-
-	SwitchDeployableSnd = Sound'UT3A_Vehicle_Nightshade.Sounds.A_Vehicle_Nightshade_SwitchDeployables'
 }
 
