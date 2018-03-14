@@ -243,8 +243,8 @@ defaultproperties
 {
     //===========================
     // @100GPing100
-    FireSoundClass = Sound'UT3A_Vehicle_Raptor.Fire.FireCue';
-    AltFireSoundClass = Sound'UT3A_Vehicle_Raptor.AltFire.AltFireCue';
+    FireSoundClass = Sound'UT3A_Vehicle_Raptor.UT3RaptorFire.UT3RaptorFireCue';
+    AltFireSoundClass = Sound'UT3A_Vehicle_Raptor.UT3RaptorAltFire.UT3RaptorAltFireCue';
     HomingSound = Sound'UT3A_Vehicle_Cicada.Singles.A_Vehicle_Cicada_TargetLock01';
     Mesh = SkeletalMesh'UT3VH_Raptor_Anims.RaptorRightGunOnly'
     RedSkin = Shader'UT3RaptorTex.RaptorSkin'
