@@ -955,21 +955,20 @@ DefaultProperties
 	MaxViewYaw=16000
 	MaxViewPitch=16000
 
-	IdleSound=sound'UT3A_Vehicle_Stealthbender.Singles.EngineLoopCue'
-        StartUpSound=sound'UT3A_Vehicle_Stealthbender.EngineStart.StartCue'
-        ShutDownSound=sound'UT3A_Vehicle_Stealthbender.EngineStop.StopCue'
-        DeploySnd = Sound'UT3A_Vehicle_Stealthbender.ArmsExtend.ArmsExtendCue';
-        UndeploySnd = Sound'UT3A_Vehicle_Stealthbender.ArmsRetract.ArmsRetractCue';
-        SwitchDeployableSnd = Sound'UT3A_Vehicle_Nightshade.Singles.A_Vehicle_Nightshade_SwitchDeployables';
-        DropItemSnd = Sound'UT3A_Vehicle_Nightshade.DropItem.DropItemCue';
-	HornSounds(0)=sound'ONSVehicleSounds-S.Horn09'
-	HornSounds(1)=sound'ONSVehicleSounds-S.Horn04'
-        ImpactDamageSounds=()
-        ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Stealthbender.Collide.CollideCue';
-        ExplosionSounds=()
-        ExplosionSounds(0) = Sound'UT3A_Vehicle_Hellbender.Explode.ExplodeCue';
-        BulletSounds = ()
-        BulletSounds(0) = Sound'UT3A_Weapon_BulletImpacts.ImpactMetal.ImpactMetalCue'
+    IdleSound=sound'UT3A_Vehicle_Stealthbender.UT3StealthbenderSingles.UT3StealthbenderEngineLoop01Cue'
+    StartUpSound=sound'UT3A_Vehicle_Stealthbender.UT3StealthbenderEngineStart.UT3StealthbenderEngineStartCue'
+    ShutDownSound=sound'UT3A_Vehicle_Stealthbender.UT3StealthbenderEngineStop.UT3StealthbenderEngineStopCue'
+    DeploySnd = Sound'UT3A_Vehicle_Stealthbender.UT3StealthbenderArmsExtend.UT3StealthbenderArmsExtendCue';
+    UndeploySnd = Sound'UT3A_Vehicle_Stealthbender.UT3StealthbenderArmsRetract.UT3StealthbenderArmsRetractCue';
+    SwitchDeployableSnd = Sound'UT3A_Vehicle_Nightshade.UT3NightshadeSingles.UT3NightshadeSwitchDeployablesCue';
+    DropItemSnd = Sound'UT3A_Vehicle_Nightshade.UT3NightshadeDropItem.UT3NightshadeDropItemCue';
+    HornSounds(0)=Sound'UT3A_Vehicle_Hellbender.UT3HellbenderSingles.UT3HellbenderHorn01'
+    ImpactDamageSounds=()
+    ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Stealthbender.UT3StealthbenderCollide.UT3StealthbenderCollideCue';
+    ExplosionSounds=()
+    ExplosionSounds(0) = Sound'UT3A_Vehicle_Hellbender.UT3HellbenderExplode.UT3HellbenderExplodeCue';
+    BulletSounds = ()
+    BulletSounds(0) = Sound'UT3A_Weapon_BulletImpacts.UT3BulletImpactMetal.UT3BulletImpactMetalCue'
     
 	EngineRPMSoundRange=10000
 	IdleRPM=500
