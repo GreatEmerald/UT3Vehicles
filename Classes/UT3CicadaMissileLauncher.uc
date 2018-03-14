@@ -176,13 +176,17 @@ function Projectile SpawnProjectile(class<Projectile> ProjClass, bool bAltFire) 
 
 defaultproperties
 {
+
+    Drawscale = 1.0
+
     FireInterval=0.25
     AltFireInterval=0.5
     ProjectileClass=class'UT3CicadaRocket'
     AltFireProjectileClass=class'UT3CicadaRocket'
-    LoadSound=sound'UT3A_Vehicle_Cicada.Sounds.A_Vehicle_Cicada_MissleLoad01'
-    FireSoundClass=Sound'UT3A_Vehicle_Cicada.SoundCues.A_Vehicle_Cicada_Fire'
-    AltFireSoundClass=Sound'UT3A_Vehicle_Cicada.Sounds.A_Vehicle_Cicada_MissleEject01'
+    LoadSound=sound'UT3A_Vehicle_Cicada.UT3CicadaMissileLoad.UT3CicadaMissileLoadCue'
+    FireSoundClass=Sound'UT3A_Vehicle_Cicada.UT3CicadaFire.UT3CicadaFireCue'
+    AltFireSoundClass=Sound'UT3A_Vehicle_Cicada.UT3CicadaMissileEject.UT3CicadaMissileEjectCue'
+    SoundVolume=255
     Mesh = SkeletalMesh'UT3VH_Cicada_Anims.VH_Cicada_RightSideGun'
     RedSkin = Shader'UT3CicadaTex.CicadaSkin'
     BlueSkin = Shader'UT3CicadaTex.CicadaSkinBlue'
