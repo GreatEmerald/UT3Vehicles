@@ -918,15 +918,15 @@ defaultproperties
     MaxDeploySpeed = 100.0
     DeployTime     = 2.1
     UndeployTime   = 2.0
-    DeploySound    = Sound'UT3A_Vehicle_SPMA.Deploy.DeployCue'
-    UndeploySound  = Sound'UT3A_Vehicle_SPMA.Deploy.DeployCue'
-    IdleSound      = Sound'UT3A_Vehicle_SPMA.Singles.EngineLoopCue'
-    StartUpSound   = Sound'UT3A_Vehicle_SPMA.EngineStart.StartCue'
-    ShutDownSound  = Sound'UT3A_Vehicle_SPMA.EngineStop.StopCue'
+    DeploySound    = Sound'UT3A_Vehicle_SPMA.UT3SPMADeploy.UT3SPMADeployCue'
+    UndeploySound  = Sound'UT3A_Vehicle_SPMA.UT3SPMADeploy.UT3SPMADeployCue'
+    IdleSound      = Sound'UT3A_Vehicle_SPMA.UT3SPMASingles.UT3SPMAEngineIdle01Cue'
+    StartUpSound   = Sound'UT3A_Vehicle_SPMA.UT3SPMAEngineStart.UT3SPMAEngineStartCue'
+    ShutDownSound  = Sound'UT3A_Vehicle_SPMA.UT3SPMAEngineStop.UT3SPMAEngineStopCue'
     ImpactDamageSounds = ();
-    ImpactDamageSounds(0) = Sound'UT3A_Vehicle_SPMA.Collide.CollideCue';
+    ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Goliath.Collide.CollideCue';
     ExplosionSounds = ();
-    ExplosionSounds(0) = Sound'UT3A_Vehicle_SPMA.Explode.ExplodeCue';
+    ExplosionSounds(0) = Sound'UT3A_Vehicle_SPMA.UT3SPMAExplode.UT3SPMAExplodeCue';
     BulletSounds = ()
     BulletSounds(0) = Sound'UT3A_Weapon_BulletImpacts.UT3BulletImpactMetal.UT3BulletImpactMetalCue'
 
