@@ -163,8 +163,8 @@ simulated function ExplodeInAir()
 
 defaultproperties
 {
-    AirExplosionSound = Sound'UT3A_Vehicle_SPMA.ShellBreakingExplode.ShellBreakingExplodeCue'
-    ImpactSound       = Sound'UT3A_Vehicle_SPMA.ShellFragmentExplode.ShellFragmentExplodeCue'
+    AirExplosionSound = Sound'UT3A_Vehicle_SPMA.UT3SPMAShellBrakingExplode.UT3SPMAShellBrakingExplodeCue'
+    ImpactSound       = Sound'UT3A_Vehicle_SPMA.UT3SPMAShellFragmentExplode.UT3SPMAShellFragmentExplodeCue'
     AmbientSound      = None
     LifeSpan          = 8.0
 
