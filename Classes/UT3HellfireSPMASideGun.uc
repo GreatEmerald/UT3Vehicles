@@ -142,10 +142,11 @@ defaultproperties
     PitchBone = "SecondaryTurret_Pitch"
     WeaponFireAttachmentBone = "SecondaryTurret_Tip"
     GunnerAttachmentBone = "SecondaryTurret_YawLift"
+    DamageType=class'UT3DmgType_HellbenderLaser'
 
     FireSoundClass    = Sound'UT3A_Vehicle_Hellbender.UT3HellbenderBallFire.UT3HellbenderBallFireCue'
     AltFireSoundClass = Sound'UT3A_Vehicle_Hellbender.UT3HellbenderBeamFire.UT3HellbenderBeamFireCue'
-    ProjectileClass   = class'UT3HellfireSPMAShockBall'
+    ProjectileClass   = class'UT3HBShockBall'
     bInstantRotation=false
     //RotateSound=sound'UT3SPMA.A_Vehicle_SPMA_TurretRotate01'
 }
