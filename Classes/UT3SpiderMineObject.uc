@@ -1,6 +1,6 @@
 /*
- * Copyright © 2012 100GPing100
- * Copyright © 2014 GreatEmerald
+ * Copyright Â© 2012 100GPing100
+ * Copyright Â© 2014 GreatEmerald
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -42,6 +42,6 @@ class UT3SpiderMineObject extends Actor;
 
 DefaultProperties
 {
-	Mesh = SkeletalMesh'UT3NightshadeAnims.SpiderMine';
+	Mesh = SkeletalMesh'UT3DeployableAnims.SpiderMine';
 	DrawType = DT_Mesh;
 }

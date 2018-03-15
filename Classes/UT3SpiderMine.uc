@@ -766,19 +766,19 @@ defaultproperties
     bBounce=True
     bHardAttach=True
 
-    Mesh=SkeletalMesh'UT3NightshadeAnims.Spider_1P';
+    Mesh=SkeletalMesh'UT3DeployableAnims.Spider_1P';
     CollisionRadius=10.000000
     CollisionHeight=10.000000
     bBlockKarma=True
 
     // Sound.
-    ExplosionSnd(0) = Sound'UT3A_Vehicle_Nightshade.SpiderMine.Spider_Explode01';
-    ExplosionSnd(1) = Sound'UT3A_Vehicle_Nightshade.SpiderMine.Spider_Explode02';
-    ExplosionSnd(2) = Sound'UT3A_Vehicle_Nightshade.SpiderMine.Spider_Explode03';
-    AttackScreechSnd(0) = Sound'UT3A_Vehicle_Nightshade.SpiderMine.Spider_Attack01';
-    AttackScreechSnd(1) = Sound'UT3A_Vehicle_Nightshade.SpiderMine.Spider_Attack02';
-    AttackScreechSnd(2) = Sound'UT3A_Vehicle_Nightshade.SpiderMine.Spider_Attack03';
-    WalkingSnd(0) = Sound'UT3A_Vehicle_Nightshade.SpiderMine.Spider_Walk01';
-    WalkingSnd(1) = Sound'UT3A_Vehicle_Nightshade.SpiderMine.Spider_Walk02';
-    WalkingSnd(2) = Sound'UT3A_Vehicle_Nightshade.SpiderMine.Spider_Walk03';
+    ExplosionSnd(0) = Sound'UT3A_Pickups_Deployables.SpiderMine.SpiderMines_Explodes01';
+    ExplosionSnd(1) = Sound'UT3A_Pickups_Deployables.SpiderMine.SpiderMines_Explodes02';
+    ExplosionSnd(2) = Sound'UT3A_Pickups_Deployables.SpiderMine.SpiderMines_Explodes03';
+    AttackScreechSnd(0) = Sound'UT3A_Pickups_Deployables.SpiderMine.Spidermine_AttackScreech01';
+    AttackScreechSnd(1) = Sound'UT3A_Pickups_Deployables.SpiderMine.Spidermine_AttackScreech02';
+    AttackScreechSnd(2) = Sound'UT3A_Pickups_Deployables.SpiderMine.Spidermine_AttackScreech03';
+    WalkingSnd(0) = Sound'UT3A_Pickups_Deployables.SpiderMine.SpiderMine_WalkLoop01';
+    WalkingSnd(1) = Sound'UT3A_Pickups_Deployables.SpiderMine.SpiderMine_WalkLoop02';
+    WalkingSnd(2) = Sound'UT3A_Pickups_Deployables.SpiderMine.SpiderMine_WalkLoop03';
 }

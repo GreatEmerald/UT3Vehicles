@@ -72,7 +72,7 @@ simulated event Destroyed()
 
 DefaultProperties
 {
-    Mesh = SkeletalMesh'UT3NightshadeAnims.ShieldMine';
+    Mesh = SkeletalMesh'UT3DeployableAnims.ShieldMine';
     DrawType = DT_Mesh;
 
     bHardAttach = true;
@@ -81,6 +81,6 @@ DefaultProperties
     LifeSpan = 90.0;
 
     // Sound.
-    OpenSnd = Sound'UT3A_Vehicle_Nightshade.Shield.Shield_Open';
-    CloseSnd = Sound'UT3A_Vehicle_Nightshade.Shield.Shield_Close';
+    OpenSnd = Sound'UT3A_Pickups_Deployables.ShieldGenerator.ShieldGenerator_Open';
+    CloseSnd = Sound'UT3A_Pickups_Deployables.ShieldGenerator.ShieldGenerator_Close';
 }

@@ -1,6 +1,6 @@
 /*
- * Copyright © 2012 100GPing100
- * Copyright © 2014 GreatEmerald
+ * Copyright Â© 2012 100GPing100
+ * Copyright Â© 2014 GreatEmerald
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -156,7 +156,7 @@ function bool NoObstacle()
 	else
 		return false;
 }
-/* » Type:
+/* Â» Type:
  * 0: General message.
  * 1: Mine select message.
 */
@@ -834,8 +834,8 @@ DefaultProperties
 
 	// Looks.
 	Mesh = SkeletalMesh'UT3NightshadeAnims.Nightshade';
-	RedSkin = Shader'UT3NightshadeTex.Nightshader.NightshadeSkin';
-	BlueSkin = Shader'UT3NightshadeTex.Nightshader.NightshadeSkinBlue';
+	RedSkin = Shader'UT3NightshadeTex.NightshadeSkin';
+	BlueSkin = Shader'UT3NightshadeTex.NightshadeSkinBlue';
 	CloakedSkin = FinalBlend'XEffectMat.Combos.InvisOverlayFB';
 	bDrawDriverInTP = False;
 	HeadlightCoronaMaxSize = 0.0;
@@ -850,25 +850,25 @@ DefaultProperties
 	bShowChargingBar = false;
 	Begin Object Class=UT3HUDItem Name=HUDSpidermineTrap
 		DrawColor = (R=128,G=128,B=128,A=255);
-		Icon = Texture'UT3NightshadeTex.SpiderMine.Icon_SpiderMineTrap';
+		Icon = Texture'UT3DeployableTex.SpiderMine.Icon_SpiderMineTrap';
 		Scale = 0.5;
 	End Object
 	HUDItems(0) = HUDSpidermineTrap
 	Begin Object Class=UT3HUDItem Name=HUDStasisField
 		DrawColor = (R=128,G=128,B=128,A=255);
-		Icon = Texture'UT3NightshadeTex.SlowField.Icon_SlowFieldGenerator';
+		Icon = Texture'UT3DeployableTex.SlowField.Icon_SlowFieldGenerator';
 		Scale = 0.5;
 	End Object
 	HUDItems(1) = HUDStasisField
 	Begin Object Class=UT3HUDItem Name=HUDEMP
 		DrawColor = (R=128,G=128,B=128,A=255);
-		Icon = Texture'UT3NightshadeTex.EMPMine.Icon_EMPMine';
+		Icon = Texture'UT3DeployableTex.EMPMine.Icon_EMPMine';
 		Scale = 0.5;
 	End Object
 	HUDItems(2) = HUDEMP
 	Begin Object Class=UT3HUDItem Name=HUDShield
 		DrawColor = (R=128,G=128,B=128,A=255);
-		Icon = Texture'UT3NightshadeTex.ShieldGenerator.Icon_ShieldGenerator';
+		Icon = Texture'UT3DeployableTex.ShieldGenerator.Icon_ShieldGenerator';
 		Scale = 0.5;
 	End Object
 	HUDItems(3) = HUDShield
