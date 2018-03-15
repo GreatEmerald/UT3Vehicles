@@ -509,11 +509,12 @@ defaultproperties
     WeaponFireOffset   = 0.0
     RotationsPerSecond = 1.0
 
-    DistantFireSound  = Sound'UT3A_Vehicle_SPMA.DistantSPMA.DistantSPMACue'
+    DistantFireSound  = Sound'UT3A_Vehicle_SPMA.UT3SPMADistantSPMA.UT3SPMADistantSPMACue'
     ReadyToFireSound  = Sound'WeaponSounds.BaseGunTech.BSeekLost1'
-    FireSoundClass    = Sound'UT3A_Vehicle_SPMA.Fire.FireCue'
+    RotateSound = sound'UT3A_Vehicle_SPMA.UT3SPMASingles.UT3SPMACannonRotate01'
+    FireSoundClass    = Sound'UT3A_Vehicle_SPMA.UT3SPMAFire.UT3SPMAFireCue'
+    AltFireSoundClass = Sound'UT3A_Vehicle_SPMA.UT3SPMAFire.UT3SPMAFireCue'
     FireInterval      = 3.5
-    AltFireSoundClass = Sound'UT3A_Vehicle_SPMA.Fire.FireCue'
     AltFireInterval   = 1.5
     ProjectileClass        = class'UT3HellfireSPMAShell'
     AltFireProjectileClass = class'UT3HellfireSPMACamera'
