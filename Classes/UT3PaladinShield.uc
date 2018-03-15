@@ -107,8 +107,8 @@ DefaultProperties
     DrawScale3D=(X=2.2,Y=2.2,Z=2.2) //Note: Is smaller than ShieldEffect Start Range of 2.2 on all axes when not hidden
     PrePivot=(X=-100,Y=30.0,Z=-20)
     
-    ShieldActivateSound = Sound'UT3A_Vehicle_Paladin.Singles.A_Vehicle_Paladin_ShieldActivate01';
-    ShieldDeactivateSound = Sound'UT3A_Vehicle_Paladin.Singles.A_Vehicle_Paladin_ShieldOff01';
-    ShieldAmbientSound = Sound'UT3A_Vehicle_Paladin.Singles.A_Vehicle_Paladin_ShieldAmbient01';
+    ShieldActivateSound = Sound'UT3A_Vehicle_Paladin.UT3PaladinShieldActivate.UT3PaladinShieldActivateCue';
+    ShieldDeactivateSound = Sound'UT3A_Vehicle_Paladin.UT3PaladinShieldOff.UT3PaladinShieldOffCue';
+    ShieldAmbientSound = Sound'UT3A_Vehicle_Paladin.UT3PaladinSingles.UT3PaladinShieldAmbient01';
     
 }
