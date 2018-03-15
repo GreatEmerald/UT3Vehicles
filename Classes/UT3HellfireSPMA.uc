@@ -932,7 +932,6 @@ defaultproperties
 
     IdleRPM=2500
     SoundVolume    = 255
-    SoundRadius    = 300
     
     DamagedEffectHealthSmokeFactor=0.65 //0.5
     DamagedEffectHealthFireFactor=0.40 //0.25
