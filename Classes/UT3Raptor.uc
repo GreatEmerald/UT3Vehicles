@@ -219,6 +219,7 @@ function Guns()
 // The next 3 functions { Died, Destroyed, DrivingStatusChanged } have been
 // overriden to disable the streams.
 //
+/*
 function Died(Controller Killer, class<DamageType> DmgType, Vector HitLocation)
 {
     local int i;
@@ -276,6 +277,7 @@ simulated event DrivingStatusChanged()
 
     Super(ONSChopperCraft).DrivingStatusChanged();
 }
+*/
 // @100GPing100
 //============END============
 
@@ -459,9 +461,17 @@ defaultproperties
     TPCamLookAt=(X=0.0,Y=0.0,Z=0)
     TPCamWorldOffset=(X=0,Y=0,Z=150)
     
-    //Aerial View
-    //TPCamLookAt=(X=10.0,Y=0.0,Z=0)
-    //TPCamWorldOffset=(X=0,Y=0,Z=130)
+    TrailEffectPositions(0) = (X=-120,Y=-42,Z=-19); //(X=-105,Y=-35,Z=-15)
+    TrailEffectPositions(1) = (X=-120,Y=42,Z=-19);  //(X=-105,Y=35,Z=-15)
+    
+    StreamerEffectOffset(0)=(X=-160,Y=-80,Z=20);
+    StreamerEffectOffset(1)=(X=-160,Y=80,Z=20);
+    StreamerEffectOffset(2)=(X=-250,Y=-50,Z=10);
+    StreamerEffectOffset(3)=(X=-250,Y=50,Z=10);
+    StreamerOpacityRamp=(Min=1200.000000,Max=1600.000000)
+    StreamerOpacityChangeRate=1.0
+    StreamerOpacityMax=0.25 //0.7
+    StreamerEffectClass=class'Onslaught.ONSAttackCraftStreamer'
     
     DamagedEffectOffset=(X=0,Y=20,Z=45)   //Top Fire Point
     DamagedEffectScale=1.2                //Top Fire Size
