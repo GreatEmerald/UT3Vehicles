@@ -78,13 +78,15 @@ DefaultProperties
     VehiclePositionString="in a UT3 Fury";
     VehicleNameString="UT3 Fury";
     
-    IdleSound = Sound'UT3A_Vehicle_Fury.Singles.A_Vehicle_Fury_EngineLoop01'; //Loop is not modulated
-    StartUpSound = Sound'UT3A_Vehicle_Fury.EngineStart.StartCue';
-    ShutDownSound = Sound'UT3A_Vehicle_Fury.EngineStop.StopCue';
+    IdleSound = Sound'UT3A_Vehicle_Fury.UT3FurySingles.UT3FuryEngineLoop01'; //Loop is not modulated
+    StartUpSound = Sound'UT3A_Vehicle_Fury.UT3FuryEngineStart.UT3FuryEngineStartCue';
+    ShutDownSound = Sound'UT3A_Vehicle_Fury.UT3FuryEngineStop.UT3FuryEngineStopCue';
     ExplosionSounds=()
-    ExplosionSounds(0) = Sound'UT3A_Vehicle_Cicada.Explode.ExplodeCue';
+    ExplosionSounds(0) = Sound'UT3A_Vehicle_Cicada.UT3CicadaExplode.UT3CicadaExplodeCue';
     ImpactDamageSounds=()
-    ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Fury.Collide.CollideCue';
+    ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Fury.UT3FuryCollide.UT3FuryCollideCue';
+    BulletSounds = ()
+    BulletSounds(0) = Sound'UT3A_Weapon_BulletImpacts.UT3BulletImpactMetal.UT3BulletImpactMetalCue'
     SoundVolume=255
     
     ImpactDamageMult = 0.00003
