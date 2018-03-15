@@ -66,6 +66,7 @@ function AnimateVehicle()
         CurrentAnim = "Idle";
     }
 }
+
 simulated function DrivingStatusChanged()
 {
 
@@ -90,6 +91,33 @@ simulated function DrivingStatusChanged()
                     TrailEffects[i].SetRelativeRotation( TrailEffectRotation );
                 }
         }
+        if (StreamerEffect.Length == 0)
+        {
+            StreamerEffect.Length = StreamerEffectOffset.Length;
+
+            for(i=0; i<StreamerEffect.Length; i++)
+                if (StreamerEffect[i] == None)
+                {
+                    StreamerEffect[i] = spawn(StreamerEffectClass, self,, Location + (StreamerEffectOffset[i] >> Rotation) );
+                    StreamerEffect[i].SetBase(self);
+                }
+        }
+    }
+    else
+    {
+        if (Level.NetMode != NM_DedicatedServer)
+        {
+            for(i=0;i<TrailEffects.Length;i++)
+               TrailEffects[i].Destroy();
+
+            TrailEffects.Length = 0;
+            
+            for(i=0; i<StreamerEffect.Length; i++)
+                StreamerEffect[i].Destroy();
+
+            StreamerEffect.Length = 0;
+        }
+    }
     }
     else
     {
@@ -251,6 +279,7 @@ defaultproperties
     //=======================
     // @100GPing100
     VehiclePositionString = "in a UT3 Cicada";
+    VehicleNameString = "UT3 Cicada"
 
     Mesh = SkeletalMesh'UT3VH_Cicada_Anims.VH_Cicada_Anims';
     RedSkin = Shader'UT3CicadaTex.CicadaSkin';
