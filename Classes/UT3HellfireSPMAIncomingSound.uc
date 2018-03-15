@@ -25,5 +25,5 @@ function StartTimer(float TimeToImpact)
 defaultproperties
 {
     SoundLength = 3.5
-    ShellSound  = Sound'UT3A_Vehicle_SPMA.ShellIncoming.ShellIncomingCue'
+    ShellSound  = Sound'UT3A_Vehicle_SPMA.UT3SPMAShellIncoming.UT3SPMAShellIncomingCue'
 }
