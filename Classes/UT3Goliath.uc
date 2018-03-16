@@ -300,13 +300,18 @@ defaultproperties
     
     FPCamPos=(X=-70,Y=0,Z=160)
     
-    //Aerial View
-    //TPCamWorldOffset=(X=0,Y=0,Z=200)
+    TrailEffectPositions(0)=(X=-250.000000,Y=-80.000000,Z=19.000000)
+    TrailEffectPositions(1)=(X=-250.000000,Y=80.000000,Z=19.000000)
+    TrailEffectClass=Class'Onslaught.ONSAttackCraftExhaust'
+    
+    DamagedEffectOffset=(X=0,Y=120,Z=100)  //Right Treads Fire Point
+    DamagedEffectScale=1.7                 //Right Treads Fire Size
+    //DamagedEffectOffset=(X=170,Y=-40,Z=80)
+    //DamagedEffectScale=1.0
     
     HeadlightCoronaOffset(0)=(X=222,Y=135,Z=58)
     HeadlightCoronaOffset(1)=(X=222,Y=-135,Z=58)
     HeadlightCoronaMaterial=Material'EpicParticles.FlashFlare1'
-    //HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
     HeadlightCoronaMaxSize=115  //95 looks good to me as well
 
     HeadlightProjectorOffset=(X=220,Y=0,Z=90)
