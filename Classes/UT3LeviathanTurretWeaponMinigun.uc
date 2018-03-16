@@ -151,7 +151,7 @@ defaultproperties
     DamageType   = class'UT3DmgType_LeviathanShard'
     FireInterval = 0.1
 
-    FireSoundClass = Sound'UT3A_Weapon_Stinger.FireAlt.FireAltCue'
+    FireSoundClass = Sound'UT3A_Weapon_Stinger.UT3StingerFireAlt.UT3StingerFireAltCue'
     bAmbientFireSound=False
 
     mTracerInterval=0.06
