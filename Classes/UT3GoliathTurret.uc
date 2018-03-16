@@ -22,7 +22,8 @@ DefaultProperties
     PitchBone = "Object03";
     WeaponFireAttachmentBone = "Object02";
 
-    FireSoundClass = Sound'UT3A_Vehicle_Goliath.Singles.A_Vehicle_Goliath_TurretFire03';
+    FireSoundClass = Sound'UT3A_Vehicle_Goliath.UT3GoliathSingles.UT3GoliathTurretFire03Cue';
+    FireEnd = Sound'UT3A_Vehicle_Goliath.UT3GoliathSingles.UT3GoliathTurretFireStopCue'; //HD: Not sure this works yet
     // @100GPing100
     //======END======
 
