@@ -42,13 +42,18 @@
 
 class UT3Goliath extends ONSHoverTank;
 
-//var(ONSWheeledCraft) float ChassisTorqueScale; //doesn't work yet
-
 //=====================
 // @100GPing100
 #exec obj load file=../Animations/UT3GoliathAnims.ukx
 #exec obj load file=../Textures/UT3GoliathTex.utx
+#exec OBJ LOAD FILE=..\textures\EpicParticles.utx
+#exec OBJ LOAD FILE=..\textures\VMVehicles-TX.utx
 
+//var(ONSWheeledCraft) float ChassisTorqueScale; //doesn't work yet
+
+var()   array<vector>                   TrailEffectPositions;
+var     class<ONSAttackCraftExhaust>    TrailEffectClass;
+var     array<ONSAttackCraftExhaust>    TrailEffects;
 
 simulated function SetupTreads()
 {
@@ -94,6 +99,119 @@ simulated function TeamChanged()
     }
 }
 
+function DrivingStatusChanged()
+{
+    local vector RotX, RotY, RotZ;
+    local int i;
+    
+    Super.DrivingStatusChanged();
+
+    if (Driver == None) // The default value is set by the mutator.
+    {    bCanBeBaseForPawns = default.bCanBeBaseForPawns;
+    }
+    else
+    {    bCanBeBaseForPawns = false;
+    }
+
+    if (bDriving && Level.NetMode != NM_DedicatedServer && !bDropDetail)
+    {
+        GetAxes(Rotation,RotX,RotY,RotZ);
+
+        if (TrailEffects.Length == 0)
+        {
+            TrailEffects.Length = TrailEffectPositions.Length;
+
+            for(i=0;i<TrailEffects.Length;i++)
+                if (TrailEffects[i] == None)
+                {
+                    TrailEffects[i] = spawn(TrailEffectClass, self,, Location + (TrailEffectPositions[i] >> Rotation) );
+                    TrailEffects[i].SetBase(self);
+                    TrailEffects[i].SetRelativeRotation( rot(0,32768,0) );
+                }
+        }
+    }
+    else
+    {
+        if (Level.NetMode != NM_DedicatedServer)
+        {
+            for(i=0;i<TrailEffects.Length;i++)
+               TrailEffects[i].Destroy();
+
+            TrailEffects.Length = 0;
+        
+        }
+    }
+}
+
+function Tick(float DeltaTime)
+{
+    local int i;
+    local float ThrustAmount;
+    local TrailEmitter T;
+    local vector RelVel;
+    local bool bIsBehindView;
+    local PlayerController PC;
+        
+        if(Level.NetMode != NM_DedicatedServer)
+    {
+
+        RelVel = Velocity << Rotation;
+
+        PC = Level.GetLocalPlayerController();
+        if (PC != None && PC.ViewTarget == self)
+            bIsBehindView = PC.bBehindView;
+        else
+            bIsBehindView = True;
+
+        // Adjust Engine FX depending on being drive/velocity
+        if (!bIsBehindView)
+        {
+            for(i=0; i<TrailEffects.Length; i++)
+                TrailEffects[i].SetThrustEnabled(false);
+        }
+        else
+        {
+            ThrustAmount = FClamp(OutputThrust, 0.0, 1.0);
+
+            for(i=0; i<TrailEffects.Length; i++)
+            {
+                TrailEffects[i].SetThrustEnabled(true);
+                TrailEffects[i].SetThrust(ThrustAmount);
+            }
+        }
+    }
+
+    Super.Tick(DeltaTime);
+}
+
+simulated function Destroyed()
+{
+    local int i;
+    
+    if(Level.NetMode != NM_DedicatedServer)
+    {
+        for(i=0;i<TrailEffects.Length;i++)
+             TrailEffects[i].Destroy();
+        TrailEffects.Length = 0;
+    }
+
+    Super.Destroyed();
+}
+
+function Died(Controller Killer, class<DamageType> damageType, vector HitLocation)
+{
+    local int i;
+
+    if(Level.NetMode != NM_DedicatedServer)
+    {
+        for(i=0;i<TrailEffects.Length;i++)
+            TrailEffects[i].Destroy();
+        TrailEffects.Length = 0;
+    }
+
+    Super.Died(Killer, damageType, HitLocation);
+}
+
 //=============================================================================
 // Default values
 //=============================================================================
@@ -101,10 +219,9 @@ simulated function TeamChanged()
 defaultproperties
 {
 
-    Drawscale = 1.0
-
     //===============
     // @100GPing100
+    Drawscale = 1.0
     Mesh = SkeletalMesh'UT3GoliathAnims.Goliath';
     RedSkin = Shader'UT3GoliathTex.Goliath.GoliathSkin';
     BlueSkin = Shader'UT3GoliathTex.Goliath.GoliathSkinBlue';
