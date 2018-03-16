@@ -256,6 +256,7 @@ defaultproperties
 
 
     VehicleNameString = "UT3 Goliath"
+    VehiclePositionString="in a Goliath"
     MaxGroundSpeed=900.0 //600.0
     GroundSpeed=520 //500
     MaxAirSpeed=900.0  //5000.0
