@@ -924,7 +924,7 @@ defaultproperties
     StartUpSound   = Sound'UT3A_Vehicle_SPMA.UT3SPMAEngineStart.UT3SPMAEngineStartCue'
     ShutDownSound  = Sound'UT3A_Vehicle_SPMA.UT3SPMAEngineStop.UT3SPMAEngineStopCue'
     ImpactDamageSounds = ();
-    ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Goliath.Collide.CollideCue';
+    ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Goliath.UT3GoliathCollide.UT3GoliathCollideCue';
     ExplosionSounds = ();
     ExplosionSounds(0) = Sound'UT3A_Vehicle_SPMA.UT3SPMAExplode.UT3SPMAExplodeCue';
     BulletSounds = ()
