@@ -263,8 +263,8 @@ simulated function DetachDriver(Pawn P)
 
 defaultproperties
 {
-    TurretActivateSound = Sound'UT3A_Vehicle_Leviathan.TurretActivate.TurretActivateCue'
-    TurretDeactivateSound = Sound'UT3A_Vehicle_Leviathan.TurretDeactivate.TurretDeactivateCue'
+    TurretActivateSound = Sound'UT3A_Vehicle_Leviathan.UT3LeviathanTurretActivate.UT3LeviathanTurretActivateCue'
+    TurretDeactivateSound = Sound'UT3A_Vehicle_Leviathan.UT3LeviathanTurretDeactivate.UT3LeviathanTurretDeactivateCue'
     bShowChargingBar = True
     bHasAltFire      = False
     ShieldDuration   = 4.0
