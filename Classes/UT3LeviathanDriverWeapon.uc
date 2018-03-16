@@ -129,5 +129,5 @@ defaultproperties
     WeaponOffset = (X=0.0,Y=-11.0,Z=0.0)
     RotationsPerSecond=0.40
 
-    FireSoundClass = Sound'UT3A_Vehicle_Leviathan.TurretFire.TurretFireCue'
+    FireSoundClass = Sound'UT3A_Vehicle_Leviathan.UT3LeviathanTurretFire.UT3LeviathanTurretFireCue'
 }
