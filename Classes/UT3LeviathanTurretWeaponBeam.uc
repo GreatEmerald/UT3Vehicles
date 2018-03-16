@@ -148,7 +148,7 @@ defaultproperties
     FireInterval = 0.3
     AIInfo(0)=(bInstantHit=true,AimError=600)
 
-    FireSoundClass = Sound'UT3A_Weapon_ShockRifle.Fire.FireCue'
+    FireSoundClass = Sound'UT3A_Weapon_ShockRifle.UT3ShockFire.UT3ShockFireCue'
 
     BeamEffectClass(0) = class'ONSTurretBeamEffect'
     BeamEffectClass(1) = class'ONSTurretBeamEffectBlue'
@@ -162,5 +162,6 @@ defaultproperties
     WeaponFireAttachmentBone = "Lt_Front_Turret_Barrel"
     GunnerAttachmentBone = "LT_Front_TurretPitch"
     ShieldAttachmentBone = "Lt_Front_Turret_Barrel"
-    DualFireOffset = 11 //14.0
+    DualFireOffset = 12 //14.0
+    WeaponFireOffset = 21.0
 }
