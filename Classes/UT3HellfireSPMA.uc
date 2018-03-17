@@ -836,9 +836,6 @@ defaultproperties
     BlueSkin = Shader'UT3SPMATex.Body.BlueSkin';
     Skins(1) = Shader'UT3SPMATex.Threads.ThreadsSkin'
 
-//=============================================================================
-// Weapons
-//=============================================================================
     DriverWeapons = ();
     DriverWeapons(0) = (WeaponClass=class'UT3HellfireSPMASideGun',WeaponBone="SecondaryTurret_YawLift");
     DriverWeapons(1) = (WeaponClass=class'UT3HellfireSPMACannon',WeaponBone="MainTurret_Yaw");
@@ -846,7 +843,7 @@ defaultproperties
     FlagBone = 'Body';
 
 //=============================================================================
-// Visual Effects
+// Special Visual Effects
 //=============================================================================
     DamagedEffectOffset=(X=0,Y=40,Z=120)      //Near Cannon Fire Point
     DamagedEffectScale=1.3                    //Near Cannon Fire Size
