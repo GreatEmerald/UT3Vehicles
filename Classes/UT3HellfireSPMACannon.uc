@@ -502,29 +502,46 @@ simulated function float ChargeBar()
 defaultproperties
 {
 
+//=============================================================================
+// Appearance
+//=============================================================================
     Drawscale = 1.0
-
-    bForceCenterAim    = True // rotation is initially disabled
-    PitchUpLimit       = 16000
-    WeaponFireOffset   = 0.0
-    RotationsPerSecond = 1.0
-
-    DistantFireSound  = Sound'UT3A_Vehicle_SPMA.UT3SPMADistantSPMA.UT3SPMADistantSPMACue'
-    ReadyToFireSound  = Sound'WeaponSounds.BaseGunTech.BSeekLost1'
-    RotateSound = sound'UT3A_Vehicle_SPMA.UT3SPMASingles.UT3SPMACannonRotate01'
-    FireSoundClass    = Sound'UT3A_Vehicle_SPMA.UT3SPMAFire.UT3SPMAFireCue'
-    AltFireSoundClass = Sound'UT3A_Vehicle_SPMA.UT3SPMAFire.UT3SPMAFireCue'
-    FireInterval      = 3.5
-    AltFireInterval   = 1.5
-    ProjectileClass        = class'UT3HellfireSPMAShell'
-    AltFireProjectileClass = class'UT3HellfireSPMACamera'
-    RotateSound=sound'UT3A_Vehicle_SPMA.Singles.A_Vehicle_SPMA_CannonRotate01'
+    Mesh = SkeletalMesh'UT3VH_SPMA_Anims.SPMA_MainTurret'
+    RedSkin = Shader'UT3SPMATex.Body.RedSkin'
+    BlueSkin = Shader'UT3SPMATex.Body.BlueSkin'
     
-
-    Mesh                     = SkeletalMesh'UT3VH_SPMA_Anims.SPMA_MainTurret'
-    RedSkin                  = Shader'UT3SPMATex.Body.RedSkin'
-    BlueSkin                 = Shader'UT3SPMATex.Body.BlueSkin'
     YawBone                  = "MainTurret_Yaw"
     PitchBone                = "MainTurret_Pitch"
     WeaponFireAttachmentBone = "MainTurret_Tip"
+    
+    ProjectileClass        = class'UT3HellfireSPMAShell'
+    AltFireProjectileClass = class'UT3HellfireSPMACamera'
+
+    WeaponFireOffset   = 0.0
+
+//=============================================================================
+// Sounds
+//=============================================================================
+    FireSoundClass = Sound'UT3A_Vehicle_SPMA.UT3SPMAFire.UT3SPMAFireCue'
+    AltFireSoundClass = Sound'UT3A_Vehicle_SPMA.UT3SPMAFire.UT3SPMAFireCue'
+    ReadyToFireSound = Sound'WeaponSounds.BaseGunTech.BSeekLost1'
+    RotateSound = sound'UT3A_Vehicle_SPMA.UT3SPMASingles.UT3SPMACannonRotate01'
+    DistantFireSound = Sound'UT3A_Vehicle_SPMA.UT3SPMADistantSPMA.UT3SPMADistantSPMACue'
+
+//=============================================================================
+// Health & Damage
+//=============================================================================  
+    FireInterval      = 3.5
+    AltFireInterval   = 1.5
+
+//=============================================================================
+// Movement
+//=============================================================================  
+    RotationsPerSecond = 1.0
+   
+//=============================================================================
+// Camera
+//=============================================================================  
+    bForceCenterAim    = True // rotation is initially disabled
+    PitchUpLimit       = 16000
 }
