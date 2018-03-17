@@ -820,40 +820,34 @@ function TakeDamage(int Damage, Pawn instigatedBy, Vector Hitlocation, Vector Mo
 //=============================================================================
 
 defaultproperties
-{ 
-    /* 100GPing100 BEGIN */
-  //INFO RELATED   
-    //Positions  
+{   
+//=============================================================================
+// Identity
+//=============================================================================
     VehiclePositionString="in a Hellfire SPMA"
     VehicleNameString = "UT3 Hellfire SPMA"
 
-    //HUD
-    DeployIconCoords = (X1=2,Y1=371,X2=124,Y2=115)
-
-    //Other
-    bNetNotify      = True
-    bStasis = False // would interfer with aiming when deployed
-    bDoStuntInfo = False
-    DeployState     = DS_Undeployed
-    LastDeployState = DS_Undeployed
-    FireImpulse      = (X=0) // sidegun shouldn't recoil and main cannon is fired when deployed
-   
-  //LOOKS RELATED
-    //Appearance
+//=============================================================================
+// Appearance
+//=============================================================================
     Drawscale = 1.0
     Mesh = SkeletalMesh'UT3VH_SPMA_Anims.SK_VH_SPMA';
     RedSkin = Shader'UT3SPMATex.Body.RedSkin';
     BlueSkin = Shader'UT3SPMATex.Body.BlueSkin';
     Skins(1) = Shader'UT3SPMATex.Threads.ThreadsSkin'
 
-    //Weapons
+//=============================================================================
+// Weapons
+//=============================================================================
     DriverWeapons = ();
     DriverWeapons(0) = (WeaponClass=class'UT3HellfireSPMASideGun',WeaponBone="SecondaryTurret_YawLift");
     DriverWeapons(1) = (WeaponClass=class'UT3HellfireSPMACannon',WeaponBone="MainTurret_Yaw");
     PassengerWeapons = ()
     FlagBone = 'Body';
 
-    //Visual Effects
+//=============================================================================
+// Visual Effects
+//=============================================================================
     DamagedEffectOffset=(X=0,Y=40,Z=120)      //Near Cannon Fire Point
     DamagedEffectScale=1.3                    //Near Cannon Fire Size
     //DamagedEffectOffset=(X=190,Y=-70,Z=100) //Front Tire Fire Point
@@ -876,8 +870,9 @@ defaultproperties
     BrakeLightMaterial=Material'EpicParticles.FlashFlare1'
     //BrakeLightMaterial=Material'EpicParticles.FlickerFlare'
 
-  //SOUND RELATED
-    //Sounds
+//=============================================================================
+// Sounds
+//=============================================================================
     IdleSound      = Sound'UT3A_Vehicle_SPMA.UT3SPMASingles.UT3SPMAEngineIdle01Cue'
     StartUpSound   = Sound'UT3A_Vehicle_SPMA.UT3SPMAEngineStart.UT3SPMAEngineStartCue'
     ShutDownSound  = Sound'UT3A_Vehicle_SPMA.UT3SPMAEngineStop.UT3SPMAEngineStopCue'
@@ -890,41 +885,39 @@ defaultproperties
     BulletSounds = ()
     BulletSounds(0) = Sound'UT3A_Weapon_BulletImpacts.UT3BulletImpactMetal.UT3BulletImpactMetalCue'
   
-    //Volume & Speed
     IdleRPM=2500
     SoundVolume    = 255
 
-  //DAMAGE RELATED
+//=============================================================================
+// Health & Damage
+//=============================================================================
     Health = 800
     HealthMax = 800
     DriverDamageMult = 0.0
     MomentumMult=0.1 //2.0
-    DamagedEffectHealthSmokeFactor=0.65 //0.5
-    DamagedEffectHealthFireFactor=0.40 //0.25
-    DamagedEffectFireDamagePerSec=2.0 //0.75
+    DamagedEffectHealthSmokeFactor=0.65
+    DamagedEffectHealthFireFactor=0.40
+    DamagedEffectFireDamagePerSec=2.0
 
-  //MOVEMENT RELATED
-    //Acceleration
+//=============================================================================
+// Movement
+//=============================================================================
     GroundSpeed = 650.0
     SteerSpeed=70 //110
     TurnDamping=50 //35
     TreadVelocityScale = 30.0
     
-    //Gears
     TransRatio=0.18
     ChangeUpPoint=105000
     
-    //Braking
     HandbrakeThresh=9000000
     EngineBrakeRPMScale=0.008
     MinBrakeFriction=6.5  //4.0
     
-    //Deployment
     MaxDeploySpeed = 100.0
     DeployTime     = 2.1
     UndeployTime   = 2.0
-    
-    //Suspensions    
+      
     ChassisTorqueScale=1.2 //1.25
     MaxBrakeTorque=25.0 //20.0
     
@@ -987,8 +980,6 @@ defaultproperties
         SteerType=VST_Steered
     End Object
     Wheels(3)=SVehicleWheel'RWheel1'
-
-    /* 100GPing100 END */
       
     Begin Object Class=KarmaParamsRBFull Name=KParams0
         KStartEnabled=True
@@ -1014,14 +1005,33 @@ defaultproperties
     End Object
     KParams=KarmaParams'KParams0'
     
-  //ENTRY & EXIT RELATED  
+//=============================================================================
+// Entry & Exit
+//=============================================================================  
     ExitPositions(0)=(X=50,Y=-165,Z=30)
     ExitPositions(1)=(X=50,Y=165,Z=30)
     ExitPositions(2)=(X=50,Y=-165,Z=-30)
     ExitPositions(3)=(X=50,Y=165,Z=-30)
     ExitPositions(4)=(X=350,Y=0,Z=60)
 
-  //CAMERA RELATED
+//=============================================================================
+// HUD
+//=============================================================================
+    bDoStuntInfo = False
+    DeployIconCoords = (X1=2,Y1=371,X2=124,Y2=115)
+
+//=============================================================================
+// Msic
+//=============================================================================
+    bNetNotify      = True
+    bStasis = False // would interfer with aiming when deployed
+    DeployState     = DS_Undeployed
+    LastDeployState = DS_Undeployed
+    FireImpulse      = (X=0) // sidegun shouldn't recoil and main cannon is fired when deployed
+
+//=============================================================================
+// Camera
+//=============================================================================
     bAllowViewChange = false // who would want to use it 1st-person anyway 
     bDrawDriverInTP = false
  
