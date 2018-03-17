@@ -158,7 +158,6 @@ defaultproperties
     WeaponFireAttachmentBone = MainTurretBarrel
     GunnerAttachmentBone = MainTurretYaw 
     
-    bInstantRotation=False
     bShowChargingBar=False
     //BeamEffectClass=class'ShockBeamEffect'//'ONSChargeBeamEffect'
     FlashEmitterClass=class'ONSPRVRearGunCharge'
@@ -180,6 +179,9 @@ defaultproperties
     Momentum=75000
     TraceRange=20000
     AIInfo(0)=(bInstantHit=true,RefireRate=0.5,bFireOnRelease=false)//0.85  
+ 
+    //MOVEMENT RELATED
+    bInstantRotation=False
  
 }
 
