@@ -251,7 +251,7 @@ defaultproperties
         BoneName="Rt_Rear_Tire"
         BoneRollAxis=AXIS_Y
         BoneSteerAxis=AXIS_Z
-        BoneOffset=(X=0.0,Y=27.0,Z=0.0)
+        BoneOffset=(X=0.0,Y=27.0,Z=-6.0)
         WheelRadius=30
         bPoweredWheel=True
         bHandbrakeWheel=True
@@ -263,7 +263,7 @@ defaultproperties
         BoneName="Lt_Rear_Tire"
         BoneRollAxis=AXIS_Y
         BoneSteerAxis=AXIS_Z
-        BoneOffset=(X=15.0,Y=-27.0,Z=0.0)
+        BoneOffset=(X=15.0,Y=-27.0,Z=-6.0)
         WheelRadius=30
         bPoweredWheel=True
         bHandbrakeWheel=True
@@ -275,7 +275,7 @@ defaultproperties
         BoneName="Rt_Front_Tire"
         BoneRollAxis=AXIS_Y
         BoneSteerAxis=AXIS_Z
-        BoneOffset=(X=0.0,Y=27.0,Z=0.0)
+        BoneOffset=(X=0.0,Y=27.0,Z=-6.0)
         WheelRadius=30
         bPoweredWheel=True
         SteerType=VST_Steered
@@ -286,7 +286,7 @@ defaultproperties
         BoneName="Lt_Front_Tire"
         BoneRollAxis=AXIS_Y
         BoneSteerAxis=AXIS_Z
-        BoneOffset=(X=0.0,Y=-27.0,Z=0.0)
+        BoneOffset=(X=0.0,Y=-27.0,Z=-6.0)
         WheelRadius=30
         bPoweredWheel=True
         SteerType=VST_Steered
@@ -332,8 +332,8 @@ defaultproperties
     MaxBrakeTorque=20.5 //20.0
     EngineInertia=0.01
     WheelInertia=0.01
-    ChassisTorqueScale=0.82 //0.7
-    WheelSuspensionOffset=5.0 //HDm: Fixes the chassis sitting height in-game
+    ChassisTorqueScale=1.0 //0.82 //0.7
+    WheelSuspensionOffset=7.0 //5.0 //HDm: Fixes the chassis sitting height in-game
 
     CollisionRadius=219
     
@@ -355,6 +355,11 @@ defaultproperties
     //TPCamDistance=375.000000
     //TPCamLookat=(X=-10,Y=0,Z=0)
     //TPCamWorldOffset=(X=0,Y=0,Z=140)
+    
+    DamagedEffectOffset=(X=-35,Y=25,Z=120)  //Behind Driver Turret Fire Point
+    DamagedEffectScale=1.2                 //Behind Driver Turret Fire Size
+    //DamagedEffectOffset=(X=-60,Y=-65,Z=90)   //Exhaust Pipe Fire Point
+    //DamagedEffectScale=0.6                   //Exhaust Pipe Fire Size
     
     HeadlightCoronaOffset(0)=(X=72.5,Y=26.5,Z=49.5) //(X=77.5,Y=27.5,Z=52.5)
     HeadlightCoronaOffset(1)=(X=72.5,Y=-26.5,Z=49.5)

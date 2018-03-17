@@ -854,6 +854,11 @@ defaultproperties
     FlagBone = 'Body';
 
     //Visual Effects
+    DamagedEffectOffset=(X=0,Y=40,Z=120)      //Near Cannon Fire Point
+    DamagedEffectScale=1.3                    //Near Cannon Fire Size
+    //DamagedEffectOffset=(X=190,Y=-70,Z=100) //Front Tire Fire Point
+    //DamagedEffectScale=1.0                  //Front Tire Fire Size
+
     //HeadlightCoronaOffset(0)=(X=213,Y=85,Z=43) //(X=195,Y=85,Z=70)
     //HeadlightCoronaOffset(1)=(X=213,Y=-85,Z=43) //(X=195,Y=-85,Z=70)
     //HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
@@ -1019,5 +1024,5 @@ defaultproperties
   //CAMERA RELATED
     bAllowViewChange = false // who would want to use it 1st-person anyway 
     bDrawDriverInTP = false
-    
+ 
 }

@@ -1,6 +1,6 @@
 /*
- * Copyright © 2012 100GPing100
  * Copyright © 2014 GreatEmerald
+ * Copyright © 2017-2018 HellDragon
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -38,48 +38,10 @@
  * of such parties' affiliates and subsidiaries.
  */
 
-class UT3EnergyShield extends Actor;
+class UT3DmgType_ScorpionBlades extends DamTypeONSRVBlade;
 
-/* How much health the shield currently has. */
-var int Health;
-/* The mine that is producing this shield. */
-var UT3DeployableMine BaseMine;
-/*  */
-var Sound HitSnd;
-
-event TakeDamage(int DamageAmount, Pawn Instigator, vector HitLocation, vector Momentum, class<DamageType> DamageType)
+defaultproperties
 {
-	Super.TakeDamage(DamageAmount, Instigator, HitLocation, Momentum, DamageType);
-
-	Health -= DamageAmount;
-	PlaySound(HitSnd, SLOT_None, 1.5);
-
-	if (Health <= 0)
-		BaseMine.Destroy();
-}
-
-DefaultProperties
-{
-    // Looks.
-    StaticMesh = StaticMesh'UT3NightshadeSM.Shield';
-    DrawType = DT_StaticMesh;
-    DrawScale = 5.0;
-    Rotation = (Roll=0);
-
-    // Collision.
-    bCollideActors = true;
-    bBlockActors = false;
-    bBlockZeroExtentTraces = true;
-    //bBlockNonZeroExtentTraces = false;
-    bProjTarget = true;
-    bActorShadows = false;
-
-    // Damage.
-    Health = 4000;
-
-    // Sound.
-    AmbientSound = Sound'UT3A_Vehicle_Nightshade.Shield.Shield_Ambient';
-    HitSnd = Sound'UT3A_Vehicle_Nightshade.Shield.Shield_Hit';
-    SoundRadius = 250;
-    SoundVolume = 128;
+    DeathString="%o was cut down by %k's blades."
+    VehicleClass=class'UT3Scorpion'
 }
