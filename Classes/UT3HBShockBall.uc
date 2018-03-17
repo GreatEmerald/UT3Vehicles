@@ -44,15 +44,13 @@ function SuperExplosion()
 
 defaultproperties
 {
-   //Sound Related
+   //SOUND RELATED
    AmbientSound=Sound'UT3A_Weapon_ShockRifle.UT3ShockSingles.UT3ShockAltFireTravel01'
    ImpactSound=Sound'UT3A_Weapon_ShockRifle.UT3ShockAltFireImpact.UT3ShockAltFireImpactCue'
    ComboSound=Sound'UT3A_Weapon_ShockRifle.UT3ShockComboExplosion.UT3ShockComboExplosionCue'
    
-   //Damage Related
+   //DAMAGE RELATED
    ComboDamageType=class'UT3DmgType_HellbenderLaser'
-   
-   //Movement Related
    Speed=1400.000000
    MaxSpeed=1400.000000
    
