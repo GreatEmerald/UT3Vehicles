@@ -38,6 +38,6 @@ simulated function Explode(vector HitLocation, vector HitNormal)
 DefaultProperties
 {
    AccelRate=16000.000000 //GE: This is already ungodly fast. Now even faster!
-   AmbientSound=Sound'UT3A_Weapon_RocketLauncher.UT3RocketSingles.UT3RocketTravel01'
+   //AmbientSound=Sound'UT3A_Weapon_RocketLauncher.UT3RocketSingles.UT3RocketTravel01'
    ExplosionSound=Sound'UT3A_Weapon_RocketLauncher.UT3RocketImpact.UT3RocketImpactCue'
 }
