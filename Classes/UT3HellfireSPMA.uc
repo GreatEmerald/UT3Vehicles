@@ -820,33 +820,119 @@ function TakeDamage(int Damage, Pawn instigatedBy, Vector Hitlocation, Vector Mo
 //=============================================================================
 
 defaultproperties
-{
-    Drawscale = 1.0
-    Health = 800
-    HealthMax = 800
-
+{ 
     /* 100GPing100 BEGIN */
+  //INFO RELATED   
+    //Positions  
+    VehiclePositionString="in a Hellfire SPMA"
+    VehicleNameString = "UT3 Hellfire SPMA"
 
+    //HUD
+    DeployIconCoords = (X1=2,Y1=371,X2=124,Y2=115)
+
+    //Other
+    bNetNotify      = True
+    bStasis = False // would interfer with aiming when deployed
+    bDoStuntInfo = False
+    DeployState     = DS_Undeployed
+    LastDeployState = DS_Undeployed
+    FireImpulse      = (X=0) // sidegun shouldn't recoil and main cannon is fired when deployed
+   
+  //LOOKS RELATED
+    //Appearance
+    Drawscale = 1.0
     Mesh = SkeletalMesh'UT3VH_SPMA_Anims.SK_VH_SPMA';
     RedSkin = Shader'UT3SPMATex.Body.RedSkin';
     BlueSkin = Shader'UT3SPMATex.Body.BlueSkin';
     Skins(1) = Shader'UT3SPMATex.Threads.ThreadsSkin'
 
-    FlagBone = 'Body';
-
+    //Weapons
     DriverWeapons = ();
     DriverWeapons(0) = (WeaponClass=class'UT3HellfireSPMASideGun',WeaponBone="SecondaryTurret_YawLift");
     DriverWeapons(1) = (WeaponClass=class'UT3HellfireSPMACannon',WeaponBone="MainTurret_Yaw");
+    PassengerWeapons = ()
+    FlagBone = 'Body';
 
+    //Visual Effects
+    //HeadlightCoronaOffset(0)=(X=213,Y=85,Z=43) //(X=195,Y=85,Z=70)
+    //HeadlightCoronaOffset(1)=(X=213,Y=-85,Z=43) //(X=195,Y=-85,Z=70)
+    //HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
+    //HeadlightCoronaMaxSize=75
+    HeadlightCoronaMaterial=None
+
+    //HeadlightProjectorOffset=(X=290,Y=0,Z=40)
+    //HeadlightProjectorRotation=(Yaw=0,Pitch=-1500,Roll=0)
+    //HeadlightProjectorMaterial=Texture'VMVehicles-TX.NewPRVGroup.PRVProjector'
+    //HeadlightProjectorScale=0.65
+    HeadlightProjectorMaterial=None
+    
+    BrakeLightOffset(0)=(X=-190,Y=47,Z=72)
+    BrakeLightOffset(1)=(X=-190,Y=-47,Z=72)
+    BrakeLightMaterial=Material'EpicParticles.FlashFlare1'
+    //BrakeLightMaterial=Material'EpicParticles.FlickerFlare'
+
+  //SOUND RELATED
+    //Sounds
+    IdleSound      = Sound'UT3A_Vehicle_SPMA.UT3SPMASingles.UT3SPMAEngineIdle01Cue'
+    StartUpSound   = Sound'UT3A_Vehicle_SPMA.UT3SPMAEngineStart.UT3SPMAEngineStartCue'
+    ShutDownSound  = Sound'UT3A_Vehicle_SPMA.UT3SPMAEngineStop.UT3SPMAEngineStopCue'
+    DeploySound    = Sound'UT3A_Vehicle_SPMA.UT3SPMADeploy.UT3SPMADeployCue'
+    UndeploySound  = Sound'UT3A_Vehicle_SPMA.UT3SPMADeploy.UT3SPMADeployCue'
+    ImpactDamageSounds = ();
+    ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Goliath.UT3GoliathCollide.UT3GoliathCollideCue';
+    ExplosionSounds = ();
+    ExplosionSounds(0) = Sound'UT3A_Vehicle_SPMA.UT3SPMAExplode.UT3SPMAExplodeCue';
+    BulletSounds = ()
+    BulletSounds(0) = Sound'UT3A_Weapon_BulletImpacts.UT3BulletImpactMetal.UT3BulletImpactMetalCue'
+  
+    //Volume & Speed
+    IdleRPM=2500
+    SoundVolume    = 255
+
+  //DAMAGE RELATED
+    Health = 800
+    HealthMax = 800
+    DriverDamageMult = 0.0
+    MomentumMult=0.1 //2.0
+    DamagedEffectHealthSmokeFactor=0.65 //0.5
+    DamagedEffectHealthFireFactor=0.40 //0.25
+    DamagedEffectFireDamagePerSec=2.0 //0.75
+
+  //MOVEMENT RELATED
+    //Acceleration
+    GroundSpeed = 650.0
+    SteerSpeed=70 //110
+    TurnDamping=50 //35
+    TreadVelocityScale = 30.0
+    
+    //Gears
+    TransRatio=0.18
+    ChangeUpPoint=105000
+    
+    //Braking
+    HandbrakeThresh=9000000
+    EngineBrakeRPMScale=0.008
+    MinBrakeFriction=6.5  //4.0
+    
+    //Deployment
+    MaxDeploySpeed = 100.0
+    DeployTime     = 2.1
+    UndeployTime   = 2.0
+    
+    //Suspensions    
+    ChassisTorqueScale=1.2 //1.25
+    MaxBrakeTorque=25.0 //20.0
+    
     Wheels = ();
     Begin Object Class=SVehicleWheel Name=LWheel1
         BoneName="LtFrontTire"
         BoneRollAxis=AXIS_Y
         BoneSteerAxis=AXIS_Z
-        BoneOffset=(X=0.0,Y=-17.0,Z=0.0)
+        BoneOffset=(X=0.0,Y=-17.0,Z=-12.0)
         WheelRadius=40
         bPoweredWheel=True
         bHandbrakeWheel=True
+        SuspensionOffset=7.0
         SteerType=VST_Steered
     End Object
     Wheels(0)=SVehicleWheel'LWheel1'
@@ -855,7 +941,7 @@ defaultproperties
         BoneName="LtTread_Wheel3"
         BoneRollAxis=AXIS_Y
         BoneSteerAxis=AXIS_Z
-        BoneOffset=(X=30.0,Y=15.0,Z=18.0) // GEm: Or Y is 4/15, Z is 5/18 (more truthful but not symmetric)
+        BoneOffset=(X=-10.0,Y=15.0,Z=7.0) // GEm: Or Y is 4/15, Z is 5/18 (more truthful but not symmetric)
         WheelRadius=40
         bPoweredWheel=True
         bHandbrakeWheel=True
@@ -863,7 +949,7 @@ defaultproperties
         bLeftTrack=True
         SuspensionTravel=10.0
         SuspensionMaxRenderTravel=0.0
-        SuspensionOffset=0.0
+        SuspensionOffset=3.0
         SteerType=VST_Fixed
     End Object
     Wheels(1)=SVehicleWheel'LWheel2'
@@ -872,14 +958,14 @@ defaultproperties
         BoneName="RtTread_Wheel3"
         BoneRollAxis=AXIS_Y
         BoneSteerAxis=AXIS_Z
-        BoneOffset=(X=30.0,Y=-15.0,Z=18.0)
+        BoneOffset=(X=-10.0,Y=-15.0,Z=7.0)
         WheelRadius=40
         bPoweredWheel=True
         bHandbrakeWheel=True
         bTrackWheel=True
         SuspensionTravel=10.0
         SuspensionMaxRenderTravel=0.0
-        SuspensionOffset=0.0
+        SuspensionOffset=3.0
         SteerType=VST_Fixed
     End Object
     Wheels(2)=SVehicleWheel'RWheel2'
@@ -888,72 +974,17 @@ defaultproperties
         BoneName="RtFrontTire"
         BoneRollAxis=AXIS_Y
         BoneSteerAxis=AXIS_Z
-        BoneOffset=(X=0.0,Y=17.0,Z=0.0)
+        BoneOffset=(X=0.0,Y=17.0,Z=-12.0)
         WheelRadius=40
         bPoweredWheel=True
         bHandbrakeWheel=True
+        SuspensionOffset=7.0
         SteerType=VST_Steered
     End Object
     Wheels(3)=SVehicleWheel'RWheel1'
 
     /* 100GPing100 END */
-
-    VehiclePositionString="in a Hellfire SPMA"
-    VehicleNameString = "UT3 Hellfire SPMA"
-
-    DeployIconCoords = (X1=2,Y1=371,X2=124,Y2=115)
-
-    PassengerWeapons = ()
-    FireImpulse      = (X=0) // sidegun shouldn't recoil and main cannon is fired when deployed
-    bAllowViewChange = false // who would want to use it 1st-person anyway
-
-    GroundSpeed = 650.0
-
-    bStasis = False // would interfer with aiming when deployed
-
-    bNetNotify      = True
-    DeployState     = DS_Undeployed
-    LastDeployState = DS_Undeployed
-
-    MaxDeploySpeed = 100.0
-    DeployTime     = 2.1
-    UndeployTime   = 2.0
-    DeploySound    = Sound'UT3A_Vehicle_SPMA.UT3SPMADeploy.UT3SPMADeployCue'
-    UndeploySound  = Sound'UT3A_Vehicle_SPMA.UT3SPMADeploy.UT3SPMADeployCue'
-    IdleSound      = Sound'UT3A_Vehicle_SPMA.UT3SPMASingles.UT3SPMAEngineIdle01Cue'
-    StartUpSound   = Sound'UT3A_Vehicle_SPMA.UT3SPMAEngineStart.UT3SPMAEngineStartCue'
-    ShutDownSound  = Sound'UT3A_Vehicle_SPMA.UT3SPMAEngineStop.UT3SPMAEngineStopCue'
-    ImpactDamageSounds = ();
-    ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Goliath.UT3GoliathCollide.UT3GoliathCollideCue';
-    ExplosionSounds = ();
-    ExplosionSounds(0) = Sound'UT3A_Vehicle_SPMA.UT3SPMAExplode.UT3SPMAExplodeCue';
-    BulletSounds = ()
-    BulletSounds(0) = Sound'UT3A_Weapon_BulletImpacts.UT3BulletImpactMetal.UT3BulletImpactMetalCue'
-
-    IdleRPM=2500
-    SoundVolume    = 255
-    
-    DamagedEffectHealthSmokeFactor=0.65 //0.5
-    DamagedEffectHealthFireFactor=0.40 //0.25
-    DamagedEffectFireDamagePerSec=2.0 //0.75
-    
-    bDrawDriverInTP = false
-    DriverDamageMult = 0.0
-    TreadVelocityScale = 30.0
-
-    ChassisTorqueScale=1.2 //1.25
-    MaxBrakeTorque=25.0 //20.0
-    SteerSpeed=70 //110
-    TurnDamping=50 //35
-    HandbrakeThresh=9000000
-    MinBrakeFriction=6.5  //4.0
-    EngineBrakeRPMScale=0.008
-    TransRatio=0.18
-    ChangeUpPoint=105000
-    
-    MomentumMult=0.1 //2.0
-    bDoStuntInfo=False //true
-    
+      
     Begin Object Class=KarmaParamsRBFull Name=KParams0
         KStartEnabled=True
         KFriction=0.5
@@ -978,27 +1009,15 @@ defaultproperties
     End Object
     KParams=KarmaParams'KParams0'
     
+  //ENTRY & EXIT RELATED  
     ExitPositions(0)=(X=50,Y=-165,Z=30)
     ExitPositions(1)=(X=50,Y=165,Z=30)
     ExitPositions(2)=(X=50,Y=-165,Z=-30)
     ExitPositions(3)=(X=50,Y=165,Z=-30)
     ExitPositions(4)=(X=350,Y=0,Z=60)
 
-    //HeadlightCoronaOffset(0)=(X=213,Y=85,Z=43) //(X=195,Y=85,Z=70)
-    //HeadlightCoronaOffset(1)=(X=213,Y=-85,Z=43) //(X=195,Y=-85,Z=70)
-    //HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
-    //HeadlightCoronaMaxSize=75
-    HeadlightCoronaMaterial=None
-
-    //HeadlightProjectorOffset=(X=290,Y=0,Z=40)
-    //HeadlightProjectorRotation=(Yaw=0,Pitch=-1500,Roll=0)
-    //HeadlightProjectorMaterial=Texture'VMVehicles-TX.NewPRVGroup.PRVProjector'
-    //HeadlightProjectorScale=0.65
-    HeadlightProjectorMaterial=None
-    
-    BrakeLightOffset(0)=(X=-190,Y=47,Z=72)
-    BrakeLightOffset(1)=(X=-190,Y=-47,Z=72)
-    BrakeLightMaterial=Material'EpicParticles.FlashFlare1'
-    //BrakeLightMaterial=Material'EpicParticles.FlickerFlare'
+  //CAMERA RELATED
+    bAllowViewChange = false // who would want to use it 1st-person anyway 
+    bDrawDriverInTP = false
     
 }
