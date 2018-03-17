@@ -329,15 +329,37 @@ simulated function PostNetReceive()
 
 defaultproperties
 {
-    MortarCameraOffset = (X=-256.0,Z=128.0)
-    CVScale = 1.0
-    MaxTargetRange = 10240.0
-    Speed = 4000.0
+
+//=============================================================================
+// Appearance
+//=============================================================================
     DrawScale=0.3
+
+//=============================================================================
+// Sound
+//=============================================================================
+
     DeploySound = Sound'UT3A_Vehicle_SPMA.UT3SPMACameraDeploy.UT3SPMACameraDeployCue'
     DeployedAmbientSound = Sound'UT3A_Vehicle_SPMA.UT3SPMASingles.UT3SPMACameraAmbient01CueAll'
     ImpactSound = Sound'UT3A_Vehicle_SPMA.UT3SPMAShellFragmentExplode.UT3SPMAShellFragmentExplodeCue'
-    bOrientToVelocity = True
-    bAlwaysRelevant = True
     //TransientSoundRadius = 500.0
+
+//=============================================================================
+// Movement
+//=============================================================================
+    MaxTargetRange = 10240.0
+    Speed = 4000.0
+
+//=============================================================================
+// Misc
+//=============================================================================
+    bAlwaysRelevant = True
+    CVScale = 1.0
+
+//=============================================================================
+// Camera
+//=============================================================================
+    bOrientToVelocity = True
+    MortarCameraOffset = (X=-256.0,Z=128.0)
+    
 }
