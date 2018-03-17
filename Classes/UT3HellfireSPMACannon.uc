@@ -513,9 +513,6 @@ defaultproperties
     YawBone                  = "MainTurret_Yaw"
     PitchBone                = "MainTurret_Pitch"
     WeaponFireAttachmentBone = "MainTurret_Tip"
-    
-    ProjectileClass        = class'UT3HellfireSPMAShell'
-    AltFireProjectileClass = class'UT3HellfireSPMACamera'
 
     WeaponFireOffset   = 0.0
 
@@ -531,6 +528,9 @@ defaultproperties
 //=============================================================================
 // Health & Damage
 //=============================================================================  
+    ProjectileClass        = class'UT3HellfireSPMAShell'
+    AltFireProjectileClass = class'UT3HellfireSPMACamera'
+    
     FireInterval      = 3.5
     AltFireInterval   = 1.5
 
