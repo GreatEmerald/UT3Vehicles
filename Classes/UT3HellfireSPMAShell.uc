@@ -162,15 +162,7 @@ simulated function ExplodeInAir()
 //=============================================================================
 
 defaultproperties
-{
-
-//=============================================================================
-// Appearance
-//=============================================================================
-    AirExplosionEffectClass = class'UT3HellfireSPMAAirExplosion'
-    ChildProjectileClass = class'UT3HellfireSPMAShellChild'
-    ExplosionEffectClass    = class'UT3HellfireSPMAAirExplosion'
-    
+{    
 //=============================================================================
 // Sounds
 //=============================================================================
@@ -182,6 +174,10 @@ defaultproperties
 //=============================================================================
 // Health & Damage
 //=============================================================================
+    AirExplosionEffectClass = class'UT3HellfireSPMAAirExplosion'
+    ChildProjectileClass = class'UT3HellfireSPMAShellChild'
+    ExplosionEffectClass    = class'UT3HellfireSPMAAirExplosion'
+   
     LifeSpan          = 8.0
     SpreadFactor = 400.0
 
