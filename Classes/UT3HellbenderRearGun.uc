@@ -147,30 +147,39 @@ state InstantFireMode
 
 defaultproperties
 {
+
+    //LOOKS RELATED
     Mesh = SkeletalMesh'UT3VH_Hellbender_Anims.HellbenderMainTurret'
     RedSkin = Shader'UT3HellbenderTex.UT3HellbenderSkinRed'
     BlueSkin = Shader'UT3HellbenderTex.UT3HellbenderSkinBlue'
+    
     PitchBone = MainTurretPitch
     YawBone = MainTurretYaw
     WeaponFireAttachmentBone = MainTurretBarrel
-    GunnerAttachmentBone = MainTurretYaw
-    FireSoundClass=sound'UT3A_Vehicle_Hellbender.UT3HellbenderTurretFire.UT3HellbenderTurretFireCue'
-    //BeamEffectClass=class'ShockBeamEffect'//'ONSChargeBeamEffect'
-    DamageType=Class'UT3DmgType_HellbenderRearGunBeam'
-    FireInterval=0.5
-    DamageMin=120 //180
-    DamageMax=120 //180
-    Momentum=75000
-    MaxHoldTime=3.0
-    //MinDamageScale=1.0
+    GunnerAttachmentBone = MainTurretYaw 
+    
+    bInstantRotation=False
     bShowChargingBar=False
-    TraceRange=20000
-    bDoOffsetTrace=true
-    AIInfo(0)=(bInstantHit=true,RefireRate=0.5,bFireOnRelease=false)//0.85
+    //BeamEffectClass=class'ShockBeamEffect'//'ONSChargeBeamEffect'
     FlashEmitterClass=class'ONSPRVRearGunCharge'
+    
+    //SOUND RELATED
+    FireSoundClass=sound'UT3A_Vehicle_Hellbender.UT3HellbenderTurretFire.UT3HellbenderTurretFireCue'
     ChargingSound=None
     ChargedLoop=None
+    
+    //DAMAGE RELATED
+    bDoOffsetTrace=true
     bHoldingFire=True
-    bInstantRotation=False
+    DamageType=Class'UT3DmgType_HellbenderRearGunBeam'
+    DamageMin=120 //180
+    //MinDamageScale=1.0
+    DamageMax=120 //180
+    FireInterval=0.5
+    MaxHoldTime=3.0
+    Momentum=75000
+    TraceRange=20000
+    AIInfo(0)=(bInstantHit=true,RefireRate=0.5,bFireOnRelease=false)//0.85  
+ 
 }
 
