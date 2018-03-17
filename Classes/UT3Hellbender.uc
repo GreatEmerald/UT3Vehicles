@@ -58,7 +58,7 @@ function AltFire(optional float F) //This is to remove the horn each time you fi
 
 function TakeDamage(int Damage, Pawn instigatedBy, Vector Hitlocation, Vector Momentum, class<DamageType> DamageType)
 {                            //Make sure you don't hurt yourself with a combo
-    if (InstigatedBy == self && ClassIsChildOf(DamageType, class'DamTypeSkyMine'))
+    if (InstigatedBy == self && ClassIsChildOf(DamageType, class'DamTypePRVCombo'))
         return;
     Super.TakeDamage(Damage, instigatedBy, Hitlocation, Momentum, damageType);
 }
