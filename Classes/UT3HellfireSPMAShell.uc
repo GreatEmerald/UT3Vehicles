@@ -163,16 +163,26 @@ simulated function ExplodeInAir()
 
 defaultproperties
 {
+
+//=============================================================================
+// Appearance
+//=============================================================================
+    AirExplosionEffectClass = class'UT3HellfireSPMAAirExplosion'
+    ChildProjectileClass = class'UT3HellfireSPMAShellChild'
+    ExplosionEffectClass    = class'UT3HellfireSPMAAirExplosion'
+    
+//=============================================================================
+// Sounds
+//=============================================================================
     AirExplosionSound = Sound'UT3A_Vehicle_SPMA.UT3SPMAShellBrakingExplode.UT3SPMAShellBrakingExplodeCue'
     ImpactSound       = Sound'UT3A_Vehicle_SPMA.UT3SPMAShellFragmentExplode.UT3SPMAShellFragmentExplodeCue'
     AmbientSound      = None
-    LifeSpan          = 8.0
-
     TransientSoundRadius = 500.0
-
-    ChildProjectileClass = class'UT3HellfireSPMAShellChild'
+    
+//=============================================================================
+// Health & Damage
+//=============================================================================
+    LifeSpan          = 8.0
     SpreadFactor = 400.0
 
-    ExplosionEffectClass    = class'UT3HellfireSPMAAirExplosion'
-    AirExplosionEffectClass = class'UT3HellfireSPMAAirExplosion'
 }
