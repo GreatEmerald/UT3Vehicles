@@ -93,13 +93,24 @@ simulated function ExplodeInAir()
 
 defaultproperties
 {
-    Damage       = 220.0
-    DamageRadius = 500.0
 
+//=============================================================================
+// Appearance
+//=============================================================================
+    AirExplosionEffectClass = class'UT3HellfireSPMAAirExplosion'
+    ExplosionEffectClass    = class'UT3HellfireSPMAAirExplosion'
+  
+//=============================================================================
+// Sound
+//=============================================================================
     ImpactSound  = Sound'UT3A_Vehicle_SPMA.UT3SPMAShellFragmentExplode.UT3SPMAShellFragmentExplodeCue'
     AmbientSound = None
     TransientSoundRadius = 500.0
 
-    ExplosionEffectClass    = class'UT3HellfireSPMAAirExplosion'
-    AirExplosionEffectClass = class'UT3HellfireSPMAAirExplosion'
+//=============================================================================
+// Health & Damage
+//=============================================================================
+    Damage       = 220.0
+    DamageRadius = 500.0
+
 }
