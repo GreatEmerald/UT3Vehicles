@@ -316,36 +316,56 @@ Test 4: 275 works well, although it still gives slight sinkness. But that's OK.
 defaultproperties
 {
 
-    Drawscale = 1.0
 
-    //===========================
-    // @100GPing100
+//=============================================================================
+// Identity
+//=============================================================================
+    VehicleNameString = "UT3 Raptor"
+    VehiclePositionString = "in a UT3 Raptor";
+
+//=============================================================================
+// Appearance
+//=============================================================================
+    Drawscale = 1.0
     Mesh = SkeletalMesh'UT3VH_Raptor_Anims.SK_VH_Raptor';
     RedSkin = Shader'UT3RaptorTex.RaptorSkin';
     BlueSkin = Shader'UT3RaptorTex.RaptorSkinBlue';
     
-    TrailEffectPositions(0) = (X=-120,Y=-42,Z=-19); //(X=-105,Y=-35,Z=-15)
-    TrailEffectPositions(1) = (X=-120,Y=42,Z=-19);  //(X=-105,Y=35,Z=-15)
+    DriverWeapons[0] = (WeaponClass=class'UT3RaptorWeapon',WeaponBone="rt_gun")
+    DriverWeapons[1] = (WeaponClass=class'UT3RaptorWeaponLeft',WeaponBone="left_gun")
+    //DriverWeapons[0] = (WeaponClass=class'UT3RaptorWeapon',WeaponBone=PlasmaGunAttachment)
+
     
-    StreamerEffectOffset(0)=(X=-219,Y=-35,Z=57);
-    StreamerEffectOffset(1)=(X=-219,Y=35,Z=57);
-    StreamerEffectOffset(2)=(X=-52,Y=-24,Z=142);
-    StreamerEffectOffset(3)=(X=-52,Y=24,Z=142);
+    DamagedEffectOffset=(X=0,Y=20,Z=45)   //Top Fire Point
+    DamagedEffectScale=1.2                //Top Fire Size
+    //DamagedEffectOffset=(X=160,Y=-30,Z=-25) //Front Fire Point
+    //DamagedEffectScale=1.0                //Front Fire Size
+    
+    HeadlightCoronaOffset(0)=(X=182,Y=0,Z=-17)
+    HeadlightCoronaOffset(1)=(X=180,Y=-0,Z=-55)
+    HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
+    HeadlightCoronaMaxSize=60
+    
+    HeadlightProjectorOffset=(X=142.0,Y=0,Z=-10.5) //(X=82.5,Y=0,Z=55.5)
+    HeadlightProjectorRotation=(Yaw=0,Pitch=-1000,Roll=0)
+    HeadlightProjectorMaterial=Texture'VMVehicles-TX.NewPRVGroup.PRVProjector'
+    HeadlightProjectorScale=0.40 //0.65
+    
+    StreamerEffectOffset(0)=(X=-160,Y=-80,Z=20);
+    StreamerEffectOffset(1)=(X=-160,Y=80,Z=20);
+    StreamerEffectOffset(2)=(X=-250,Y=-50,Z=10);
+    StreamerEffectOffset(3)=(X=-250,Y=50,Z=10);
     StreamerOpacityRamp=(Min=1200.000000,Max=1600.000000)
     StreamerOpacityChangeRate=1.0
     StreamerOpacityMax=0.7
     StreamerEffectClass=class'Onslaught.ONSAttackCraftStreamer'
 
-    VehiclePositionString = "in a UT3 Raptor";
-    VehicleNameString = "UT3 Raptor"
+    TrailEffectPositions(0) = (X=-120,Y=-42,Z=-19); //(X=-105,Y=-35,Z=-15)
+    TrailEffectPositions(1) = (X=-120,Y=42,Z=-19);  //(X=-105,Y=35,Z=-15)
 
-    DriverWeapons[0] = (WeaponClass=class'UT3RaptorWeapon',WeaponBone="rt_gun")
-    DriverWeapons[1] = (WeaponClass=class'UT3RaptorWeaponLeft',WeaponBone="left_gun")
-
-    WingsRPS = 182; // 182 ~= 1°
-    RudderYawContraint = 2048 // 30° ~= 5461 RUU
-
-    // Sounds.
+//=============================================================================
+// Sound
+//=============================================================================    
     IdleSound = Sound'UT3A_Vehicle_Raptor.UT3RaptorSingles.UT3RaptorEngineLoop01Cue';
     StartUpSound = Sound'UT3A_Vehicle_Raptor.UT3RaptorEngineStart.UT3RaptorEngineStartCue';
     ShutDownSound = Sound'UT3A_Vehicle_Raptor.UT3RaptorEngineStop.UT3RaptorEngineStopCue';
@@ -355,19 +375,37 @@ defaultproperties
     ExplosionSounds(0) = Sound'UT3A_Vehicle_Raptor.UT3RaptorExplode.UT3RaptorExplodeCue';
     BulletSounds = ()
     BulletSounds(0) = Sound'UT3A_Weapon_BulletImpacts.UT3BulletImpactMetal.UT3BulletImpactMetalCue'
-    SoundVolume=255
     
+    SoundVolume=255
+
+//=============================================================================
+// Health & Damage
+//=============================================================================  
+    ImpactDamageMult = 0.00003
     MomentumMult=0.400000 //? HDm to GE: Feels right on everything except Rocket Launcher has more force than it should on the Raptor
-    ImpactDamageMult = 0.00003 //0.0003
-    DamagedEffectHealthSmokeFactor=0.65 //0.5
-    DamagedEffectHealthFireFactor=0.40 //0.25
-    DamagedEffectFireDamagePerSec=2.0 //0.75
-   
-    // @100GPing100
-    //============EDN===========
+    DamagedEffectHealthSmokeFactor=0.65
+    DamagedEffectHealthFireFactor=0.40
+    DamagedEffectFireDamagePerSec=2.0
 
-    //DriverWeapons[0] = (WeaponClass=class'UT3RaptorWeapon',WeaponBone=PlasmaGunAttachment)
+//=============================================================================
+// Movement
+//=============================================================================  
 
+    GroundSpeed=2000               //2500//We are faster now! This should be a true option.
+    MaxThrustForce=70.0
+    
+    MaxRiseForce=70.0
+    UpDamping=0.16
+    
+    MaxStrafeForce=40.0
+    LatDamping=0.14
+    
+    PitchTorqueMax=10.0
+    RollTorqueMax=35.0
+
+    WingsRPS = 182; // 182 ~= 1°
+    RudderYawContraint = 2048 // 30° ~= 5461 RUU
+    
     //SCREW THOSE UT3 CODE OPTIONS, THEY'RE ALL FAKE!!!
     /*UprightStiffness=400.000000 //GE: Decreased by 100, whatever that does
     //UprightDamping=20.000000    //Decreased from 300, but according to the manual this has no effect
@@ -405,27 +443,6 @@ defaultproperties
     MaxRandForce=14.000000
     RandForceInterval=0.625000  Somewhat decreased */
     
-    GroundSpeed=2000               //2500//We are faster now! This should be a true option.
-    
-    MaxThrustForce=70.0
-    
-    MaxRiseForce=70.0
-    UpDamping=0.16
-    
-    MaxStrafeForce=40.0
-    LatDamping=0.14
-    
-    PitchTorqueMax=10.0
-    RollTorqueMax=35.0
-    
-    EntryPosition=(X=0,Y=0,Z=0)
-    EntryRadius = 300
-    
-    ExitPositions(0)=(X=0,Y=-185,Z=30)
-    ExitPositions(1)=(X=0,Y=185,Z=30)
-    ExitPositions(3)=(X=300,Y=0,Z=40)
-    ExitPositions(4)=(X=20,Y=0,Z=110) 
-    
     Begin Object Class=KarmaParamsRBFull Name=KParams0
         KStartEnabled=True
         KFriction=0.5
@@ -453,39 +470,23 @@ defaultproperties
     End Object
     KParams=KarmaParams'KParams0'
     
+//=============================================================================
+// Entry & Exit
+//=============================================================================  
+    EntryPosition=(X=0,Y=0,Z=0)
+    EntryRadius = 300  
+    ExitPositions(0)=(X=0,Y=-185,Z=30)
+    ExitPositions(1)=(X=0,Y=185,Z=30)
+    ExitPositions(3)=(X=300,Y=0,Z=40)
+    ExitPositions(4)=(X=20,Y=0,Z=110) 
+    
+//=============================================================================
+// Camera
+//=============================================================================  
     bDrawMeshInFP=True
     FPCamPos=(X=205,Y=0,Z=-40)
-    
-    //Normal
     TPCamDistance=500.000000
     TPCamLookAt=(X=0.0,Y=0.0,Z=0)
     TPCamWorldOffset=(X=0,Y=0,Z=150)
-    
-    TrailEffectPositions(0) = (X=-120,Y=-42,Z=-19); //(X=-105,Y=-35,Z=-15)
-    TrailEffectPositions(1) = (X=-120,Y=42,Z=-19);  //(X=-105,Y=35,Z=-15)
-    
-    StreamerEffectOffset(0)=(X=-160,Y=-80,Z=20);
-    StreamerEffectOffset(1)=(X=-160,Y=80,Z=20);
-    StreamerEffectOffset(2)=(X=-250,Y=-50,Z=10);
-    StreamerEffectOffset(3)=(X=-250,Y=50,Z=10);
-    StreamerOpacityRamp=(Min=1200.000000,Max=1600.000000)
-    StreamerOpacityChangeRate=1.0
-    StreamerOpacityMax=0.25 //0.7
-    StreamerEffectClass=class'Onslaught.ONSAttackCraftStreamer'
-    
-    DamagedEffectOffset=(X=0,Y=20,Z=45)   //Top Fire Point
-    DamagedEffectScale=1.2                //Top Fire Size
-    //DamagedEffectOffset=(X=160,Y=-30,Z=-25) //Front Fire Point
-    //DamagedEffectScale=1.0                //Front Fire Size
-    
-    HeadlightCoronaOffset(0)=(X=182,Y=0,Z=-17)
-    HeadlightCoronaOffset(1)=(X=180,Y=-0,Z=-55)
-    HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
-    HeadlightCoronaMaxSize=60
-    
-    HeadlightProjectorOffset=(X=142.0,Y=0,Z=-10.5) //(X=82.5,Y=0,Z=55.5)
-    HeadlightProjectorRotation=(Yaw=0,Pitch=-1000,Roll=0)
-    HeadlightProjectorMaterial=Texture'VMVehicles-TX.NewPRVGroup.PRVProjector'
-    HeadlightProjectorScale=0.40 //0.65
-    
+  
 }
