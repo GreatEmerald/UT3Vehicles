@@ -368,7 +368,7 @@ function Projectile SpawnProjectile(class<Projectile> ProjClass, bool bAltFire)
 
     for (C = Level.ControllerList; C != None; C = C.nextController) {
         if (PlayerController(C) != None)
-            PlayerController(C).ClientPlaySound(Sound'DistantBooms.DistantSPMA', true, 1);
+            PlayerController(C).ClientPlaySound(DistantFireSound, true, 1);
     }
     if (AIController(Instigator.Controller) != None) {
         if (Instigator.Controller.Target == None) {
@@ -501,25 +501,47 @@ simulated function float ChargeBar()
 
 defaultproperties
 {
-    bForceCenterAim    = True // rotation is initially disabled
-    PitchUpLimit       = 16000
-    WeaponFireOffset   = 0.0
-    RotationsPerSecond = 1.0
 
-    DistantFireSound  = Sound'DistantBooms.DistantSPMA'
-    ReadyToFireSound  = Sound'WeaponSounds.BaseGunTech.BSeekLost1'
-    FireSoundClass    = Sound'UT3SPMA.SPMACannonFire'
-    FireInterval      = 3.5
-    AltFireSoundClass = Sound'UT3SPMA.SPMACannonFire'
-    AltFireInterval   = 1.5
-    ProjectileClass        = class'UT3HellfireSPMAShell'
-    AltFireProjectileClass = class'UT3HellfireSPMACamera'
-    RotateSound=sound'UT3SPMA.SPMACannonRotate'
-
-    Mesh                     = SkeletalMesh'UT3VH_SPMA_Anims.SPMA_MainTurret'
-    RedSkin                  = Shader'UT3SPMATex.Body.RedSkin'
-    BlueSkin                 = Shader'UT3SPMATex.Body.BlueSkin'
+//=============================================================================
+// Appearance
+//=============================================================================
+    Drawscale = 1.0
+    Mesh = SkeletalMesh'UT3VH_SPMA_Anims.SPMA_MainTurret'
+    RedSkin = Shader'UT3SPMATex.Body.RedSkin'
+    BlueSkin = Shader'UT3SPMATex.Body.BlueSkin'
+    
     YawBone                  = "MainTurret_Yaw"
     PitchBone                = "MainTurret_Pitch"
     WeaponFireAttachmentBone = "MainTurret_Tip"
+
+    WeaponFireOffset   = 0.0
+
+//=============================================================================
+// Sounds
+//=============================================================================
+    FireSoundClass = Sound'UT3A_Vehicle_SPMA.UT3SPMAFire.UT3SPMAFireCue'
+    AltFireSoundClass = Sound'UT3A_Vehicle_SPMA.UT3SPMAFire.UT3SPMAFireCue'
+    ReadyToFireSound = Sound'WeaponSounds.BaseGunTech.BSeekLost1'
+    RotateSound = sound'UT3A_Vehicle_SPMA.UT3SPMASingles.UT3SPMACannonRotate01'
+    DistantFireSound = Sound'UT3A_Vehicle_SPMA.UT3SPMADistantSPMA.UT3SPMADistantSPMACue'
+
+//=============================================================================
+// Health & Damage
+//=============================================================================  
+    ProjectileClass        = class'UT3HellfireSPMAShell'
+    AltFireProjectileClass = class'UT3HellfireSPMACamera'
+    
+    FireInterval      = 3.5
+    AltFireInterval   = 1.5
+
+//=============================================================================
+// Movement
+//=============================================================================  
+    RotationsPerSecond = 1.0
+   
+//=============================================================================
+// Camera
+//=============================================================================  
+    bForceCenterAim    = True // rotation is initially disabled
+    PitchUpLimit       = 16000
 }

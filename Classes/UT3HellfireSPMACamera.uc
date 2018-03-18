@@ -114,7 +114,7 @@ simulated function DeployCamera()
     DesiredRotation = rot(-16384,0,0);
     RotationRate = rot(16384,16384,16384);
     bRotateToDesired = True;
-    PlaySound(DeploySound);
+    PlaySound(DeploySound, SLOT_None, 1.0);
     AmbientSound = DeployedAmbientSound;
     PlayAnim('Deploy', 1.0, 0.0);
     if (Trajectory == None)
@@ -329,14 +329,37 @@ simulated function PostNetReceive()
 
 defaultproperties
 {
-    MortarCameraOffset = (X=-256.0,Z=128.0)
-    CVScale = 1.0
+
+//=============================================================================
+// Appearance
+//=============================================================================
+    DrawScale=0.3
+
+//=============================================================================
+// Sound
+//=============================================================================
+
+    DeploySound = Sound'UT3A_Vehicle_SPMA.UT3SPMACameraDeploy.UT3SPMACameraDeployCue'
+    DeployedAmbientSound = Sound'UT3A_Vehicle_SPMA.UT3SPMASingles.UT3SPMACameraAmbient01CueAll'
+    ImpactSound = Sound'UT3A_Vehicle_SPMA.UT3SPMAShellFragmentExplode.UT3SPMAShellFragmentExplodeCue'
+    //TransientSoundRadius = 500.0
+
+//=============================================================================
+// Movement
+//=============================================================================
     MaxTargetRange = 10240.0
     Speed = 4000.0
-    DrawScale=0.3
-    AmbientSound      = Sound'UT3SPMA.SPMACameraAmbient'
-    ImpactSound       = Sound'UT3SPMA.SPMAShellFragmentExplode'
+
+//=============================================================================
+// Misc
+//=============================================================================
+    bAlwaysRelevant = True
+    CVScale = 1.0
+
+//=============================================================================
+// Camera
+//=============================================================================
     bOrientToVelocity = True
-    bAlwaysRelevant   = True
-    TransientSoundRadius = 500.0
+    MortarCameraOffset = (X=-256.0,Z=128.0)
+    
 }
