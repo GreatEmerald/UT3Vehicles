@@ -58,7 +58,7 @@ function AltFire(optional float F) //This is to remove the horn each time you fi
 
 function TakeDamage(int Damage, Pawn instigatedBy, Vector Hitlocation, Vector Momentum, class<DamageType> DamageType)
 {                            //Make sure you don't hurt yourself with a combo
-    if (InstigatedBy == self && ClassIsChildOf(DamageType, class'DamTypeSkyMine'))
+    if (InstigatedBy == self && ClassIsChildOf(DamageType, class'DamTypePRVCombo'))
         return;
     Super.TakeDamage(Damage, instigatedBy, Hitlocation, Momentum, damageType);
 }
@@ -204,16 +204,22 @@ simulated function TeamChanged()
 defaultproperties
 {
 
-    Drawscale=1.0
+//=============================================================================
+// Identity
+//=============================================================================
+    VehiclePositionString="in a Hellbender"
+    VehicleNameString="UT3 Hellbender
 
-    //===========================
-    // @100GPing100
+    CollisionRadius=219 
+    
+//=============================================================================
+// Appearance
+//=============================================================================
+    Drawscale = 1.0
     Mesh = SkeletalMesh'UT3VH_Hellbender_Anims.SK_VH_Hellbender';
     RedSkin = Shader'UT3HellbenderTex.UT3HellbenderSkinRed';
     BlueSkin = Shader'UT3HellbenderTex.UT3HellbenderSkinBlue';
-    DriveAnim = "Idle"
-    MovementAnims(0) = "Idle"
-
+   
     DriverWeapons(0)=(WeaponClass=Class'UT3HellbenderSideGun',WeaponBone="SecondaryTurretYaw")
     PassengerWeapons=((WeaponPawnClass=Class'UT3HellbenderRearGunPawn',WeaponBone="MainTurretYaw"))
     
@@ -222,8 +228,78 @@ defaultproperties
     and the other pair of () inside the first one to show that this is the one and only element inside it.*/
 
     FlagBone = Hood;
+   
+    DamagedEffectOffset=(X=-35,Y=25,Z=120)  //Behind Driver Turret Fire Point
+    DamagedEffectScale=1.2                 //Behind Driver Turret Fire Size
+    //DamagedEffectOffset=(X=-60,Y=-65,Z=90)   //Exhaust Pipe Fire Point
+    //DamagedEffectScale=0.6                   //Exhaust Pipe Fire Size
+    
+    HeadlightCoronaOffset(0)=(X=90,Y=34,Z=62)
+    HeadlightCoronaOffset(1)=(X=90,Y=-34,Z=62)
+    HeadlightCoronaOffset(2)=(X=90,Y=31,Z=49)
+    HeadlightCoronaOffset(3)=(X=90,Y=-31,Z=49)
+    HeadlightCoronaMaterial=Material'EpicParticles.FlashFlare1'
+    HeadlightCoronaMaxSize=120
+    
+    HeadlightProjectorOffset=(X=90,Y=0,Z=62)
+    HeadlightProjectorRotation=(Yaw=0,Pitch=-1000,Roll=0)
+    HeadlightProjectorMaterial=Texture'VMVehicles-TX.NewPRVGroup.PRVProjector'
+    HeadlightProjectorScale=0.65
 
-    Begin Object Class=KarmaParamsRBFull Name=KParams0
+    BrakeLightOffset(0)=(X=-165,Y=50,Z=77)
+    BrakeLightOffset(1)=(X=-165,Y=-50,Z=77)
+    BrakeLightMaterial=Material'EpicParticles.FlashFlare1'
+   
+//=============================================================================
+// Animation
+//=============================================================================
+    DriveAnim = "Idle"
+    MovementAnims(0) = "Idle"
+ 
+//=============================================================================
+// Sound
+//=============================================================================
+    IdleSound=Sound'UT3A_Vehicle_Hellbender.UT3HellbenderSingles.UT3HellbenderEngineIdle01Cue'
+    StartUpSound=Sound'UT3A_Vehicle_Hellbender.UT3HellbenderEngineStart.UT3HellbenderEngineStartCue'
+    ShutDownSound=Sound'UT3A_Vehicle_Hellbender.UT3HellbenderEngineStop.UT3HellbenderEngineStopCue'
+    HornSounds(0)=Sound'UT3A_Vehicle_Hellbender.UT3HellbenderSingles.UT3HellbenderHorn01'
+    ImpactDamageSounds=()
+    ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Hellbender.UT3HellbenderCollide.UT3HellbenderCollideCue';
+    ExplosionSounds=()
+    ExplosionSounds(0) = Sound'UT3A_Vehicle_Hellbender.UT3HellbenderExplode.UT3HellbenderExplodeCue';
+    BulletSounds = ()
+    BulletSounds(0) = Sound'UT3A_Weapon_BulletImpacts.UT3BulletImpactMetal.UT3BulletImpactMetalCue'
+    
+    IdleRPM=2000
+    SoundVolume=255
+    
+//=============================================================================
+// Health & Damage
+//=============================================================================
+    DriverDamageMult=0.000000
+    ImpactDamageMult = 0.00005
+    MomentumMult=0.400000 //HDm to GE: 0.4 feels right but Rocket and AVRiL force are reversed with each other   
+    DamagedEffectHealthSmokeFactor=0.65
+    DamagedEffectHealthFireFactor=0.40
+    DamagedEffectFireDamagePerSec=2.0
+   
+//=============================================================================
+// Movement
+//=============================================================================
+    GroundSpeed=800.000000 //700
+    EngineInertia=0.01
+    EngineBrakeFactor=0.0002 //0.0001 def
+    SteerSpeed=200.000000 //110.0 def UT2004
+    //MaxSteerAngleCurve=(Points=((OutVal=50.000000),,)) @100GPing100: Causes crash. 
+    TransRatio=0.15 //0.11
+    WheelInertia=0.01
+    
+    ChassisTorqueScale=1.0 //0.82 //0.7
+    MaxBrakeTorque=20.5 //20.0
+    
+    WheelSuspensionOffset=7.0 //5.0 //HDm: Fixes the chassis sitting height in-game
+    
+   Begin Object Class=KarmaParamsRBFull Name=KParams0
         KStartEnabled=True
         KFriction=0.5
         KLinearDamping=0.05
@@ -298,83 +374,25 @@ defaultproperties
     Wheels(1) = LRWheel;
     Wheels(2) = RFWheel;
     Wheels(3) = LFWheel;
-    // @100GPing100
-    //============EDN============
 
-    //MaxSteerAngleCurve=(Points=((OutVal=50.000000),,)) @100GPing100: Causes crash.
-    SteerSpeed=200.000000 //110.0 def UT2004
-    IdleSound=Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_EngineIdle01'
-    StartUpSound=Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_EngineStart01'
-    ShutDownSound=Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_EngineStop01'
-    ImpactDamageMult = 0.00005
-    DamagedEffectHealthSmokeFactor=0.65 //0.5
-    DamagedEffectHealthFireFactor=0.40 //0.25
-    DamagedEffectFireDamagePerSec=2.0 //0.75
-    ImpactDamageSounds=()
-    ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_Collide03';
-    ImpactDamageSounds(1) = Sound'UT3A_Vehicle_Scorpion.Sounds.A_Vehicle_Scorpion_Collide04';
-    ExplosionSounds=()
-    ExplosionSounds(0) = Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_Explode01';
-
+//=============================================================================
+// Entry & Exit
+//=============================================================================
     EntryPosition=(X=0,Y=0,Z=0)
-    EntryRadius=180.0  //300.000000
-    MomentumMult=0.400000 //1.0  //HDm to GE: 0.4 feels right but Rocket and AVRiL force are reversed with each other
-    bDrawDriverInTP=False
-    DriverDamageMult=0.000000
-    VehiclePositionString="in a Hellbender"
-    VehicleNameString="UT3 Hellbender"
-    HornSounds(0)=Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_Horn01'
-    GroundSpeed=800.000000 //700
-    SoundVolume=255
-
-    TransRatio=0.15 //0.11
-    EngineBrakeFactor=0.0002 //0.0001 def
-    MaxBrakeTorque=20.5 //20.0
-    EngineInertia=0.01
-    WheelInertia=0.01
-    ChassisTorqueScale=1.0 //0.82 //0.7
-    WheelSuspensionOffset=7.0 //5.0 //HDm: Fixes the chassis sitting height in-game
-
-    CollisionRadius=219
-    
-    
+    EntryRadius=180.0  //300.000000 
     ExitPositions(0)=(X=-10,Y=-160,Z=50)  //Left
     ExitPositions(1)=(X=-10,Y=160,Z=50)   //Right
     ExitPositions(2)=(X=-10,Y=-160,Z=-50) //Left Below
     ExitPositions(3)=(X=-10,Y=160,Z=-50)  //Right Below
     ExitPositions(4)=(X=10,Y=-5,Z=130)    //Roof
-    
-    FPCamPos=(X=0,Y=28,Z=135)
-    
-    //Normal
+
+//=============================================================================
+// Camera
+//=============================================================================
+    bDrawDriverInTP=False
+    FPCamPos=(X=0,Y=31,Z=160)
     TPCamDistance=375.000000
     TPCamLookat=(X=0,Y=0,Z=0)
     TPCamWorldOffset=(X=0,Y=0,Z=200)
     
-    //Aerial View
-    //TPCamDistance=375.000000
-    //TPCamLookat=(X=-10,Y=0,Z=0)
-    //TPCamWorldOffset=(X=0,Y=0,Z=140)
-    
-    DamagedEffectOffset=(X=-35,Y=25,Z=120)  //Behind Driver Turret Fire Point
-    DamagedEffectScale=1.2                 //Behind Driver Turret Fire Size
-    //DamagedEffectOffset=(X=-60,Y=-65,Z=90)   //Exhaust Pipe Fire Point
-    //DamagedEffectScale=0.6                   //Exhaust Pipe Fire Size
-    
-    HeadlightCoronaOffset(0)=(X=72.5,Y=26.5,Z=49.5) //(X=77.5,Y=27.5,Z=52.5)
-    HeadlightCoronaOffset(1)=(X=72.5,Y=-26.5,Z=49.5)
-    HeadlightCoronaOffset(2)=(X=72.5,Y=25,Z=39)
-    HeadlightCoronaOffset(3)=(X=72.5,Y=-25,Z=39)
-    HeadlightCoronaMaterial=Material'EpicParticles.FlashFlare1'
-    //HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
-    HeadlightCoronaMaxSize=50 //82 works with EFlareOY but FlashFlare is huge
-    
-    HeadlightProjectorOffset=(X=70.0,Y=0,Z=49.5) //(X=82.5,Y=0,Z=55.5)
-    HeadlightProjectorRotation=(Yaw=0,Pitch=-1000,Roll=0)
-    HeadlightProjectorMaterial=Texture'VMVehicles-TX.NewPRVGroup.PRVProjector'
-    HeadlightProjectorScale=0.40 //0.65
-
-    BrakeLightOffset(0)=(X=-131.5,Y=38.5,Z=60) //(X=-137.5,Y=42.5,Z=64)
-    BrakeLightOffset(1)=(X=-131.5,Y=-38.5,Z=60)
-    BrakeLightMaterial=Material'EpicParticles.FlickerFlare'
 }

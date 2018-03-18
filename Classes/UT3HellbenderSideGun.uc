@@ -1,5 +1,6 @@
 /*
  * Copyright © 2008, 2014 GreatEmerald
+ * Copyright © 2017-2018 HellDragon
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -41,19 +42,28 @@ class UT3HellbenderSideGun extends ONSPRVSideGun;
 
 defaultproperties
 {
-
+    //LOOKS RELATED
     DrawScale = 1.0
+    
     Mesh = SkeletalMesh'UT3VH_Hellbender_Anims.HellbenderSecondaryTurret'
     RedSkin = Shader'UT3HellbenderTex.UT3HellbenderSkinRed'
     BlueSkin = Shader'UT3HellbenderTex.UT3HellbenderSkinBlue'
+    
     PitchBone=SecondaryTurretPitch
     YawBone=SecondaryTurretYaw
     WeaponFireAttachmentBone=SecondaryTurretBarrel
+    ProjectileClass = class'UT3HBShockBall'
+    
+    //SOUND RELATED
+    FireSoundClass = Sound'UT3A_Vehicle_Hellbender.UT3HellbenderBallFire.UT3HellbenderBallFireCue'
+    AltFireSoundClass = Sound'UT3A_Vehicle_Hellbender.UT3HellbenderBeamFire.UT3HellbenderBeamFireCue'
+    
+    //DAMAGE RELATED
     DamageType=class'UT3DmgType_HellbenderLaser'
-    FireSoundClass = Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_BallFire01'
-    AltFireSoundClass = Sound'UT3A_Vehicle_Hellbender.Sounds.A_Vehicle_Hellbender_BeamFire01'
+    
+    //MOVEMENT RELATED
     PitchUpLimit=9600  //16000 is about what UT3 is but we don't have UT3's camera collision meaning we see under and through the Hellbender in UT2004
     PitchDownLimit=59200
     bInstantRotation=False
-    ProjectileClass = class'UT3HBShockBall'
+    
 }
