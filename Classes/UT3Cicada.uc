@@ -274,13 +274,18 @@ simulated function TeamChanged()
 defaultproperties
 {
 
-    Drawscale = 1.0
-    
-    //=======================
-    // @100GPing100
+//=============================================================================
+// Identity
+//=============================================================================
     VehiclePositionString = "in a UT3 Cicada";
     VehicleNameString = "UT3 Cicada"
 
+    CollisionHeight=70.000000
+
+//=============================================================================
+// Appearance
+//=============================================================================
+    Drawscale = 1.0
     Mesh = SkeletalMesh'UT3VH_Cicada_Anims.VH_Cicada_Anims';
     RedSkin = Shader'UT3CicadaTex.CicadaSkin';
     BlueSkin = Shader'UT3CicadaTex.CicadaSkinBlue';
@@ -288,86 +293,10 @@ defaultproperties
     DriverWeapons(0)=(WeaponClass=class'UT3CicadaMissileLauncher',WeaponBone=Rt_Gun_Yaw);
     DriverWeapons(1)=(WeaponClass=class'UT3CicadaMissileLauncherLeft',WeaponBone=Lt_Gun_Yaw);
     PassengerWeapons(0)=(WeaponPawnClass=Class'UT3CicadaTurretPawn',WeaponBone=MainTurret_Yaw)
-    // @100GPing100
-    //==========END==========
-    VehicleNameString = "UT3 Cicada"
-
-    GroundSpeed=1600
-    MaxRandForce=2.0
-    RandForceInterval=0.95
-    RollTorqueMax=60 //100
-    RollTorqueStrafeFactor=130 //100
-    RollTorqueTurnFactor=250 //750
-    RollDamping=100.0 //30.0
-    PitchTorqueFactor=50.0 //200.0
-    PitchTorqueMax=20.0 //35.0
-    TurnTorqueFactor=600.0
-    TurnTorqueMax=220.0 //200.0
-    TurnDamping=65.0 //50.0
-    MaxYawRate=1.8 //1.5
-    MaxRiseForce=130.0 //200
-    UpDamping=0.08 //0.05
-    MaxStrafeForce=45.0 //65.0
-    LatDamping=0.08 //0.05
-    MaxThrustForce=80.0 //80.0
-    LongDamping=0.8 //0.3
-    CollisionHeight=70.000000
-    //DriverWeapons(0)=(WeaponClass=class'UT3CicadaMissileLauncher',WeaponBone=RightRLAttach);
+    
+     //DriverWeapons(0)=(WeaponClass=class'UT3CicadaMissileLauncher',WeaponBone=RightRLAttach);
     //DriverWeapons(1)=(WeaponClass=class'UT3CicadaMissileLauncher',WeaponBone=LeftRLAttach);
     //PassengerWeapons(0)=(WeaponPawnClass=Class'UT3CicadaTurretPawn',WeaponBone="GatlingGunAttach")
-    IdleSound=Sound'UT3A_Vehicle_Cicada.UT3CicadaSingles.UT3CicadaEngineLoop02Cue'
-    StartUpSound=Sound'UT3A_Vehicle_Cicada.UT3CicadaEngineStart.UT3CicadaEngineStartCue'
-    ShutDownSound=Sound'UT3A_Vehicle_Cicada.UT3CicadaEngineStop.UT3CicadaEngineStopCue'
-    TargetLockSound=sound'UT3A_Vehicle_Cicada.UT3CicadaSingles.UT3CicadaTargetLock01'
-    ExplosionSounds=()
-    ExplosionSounds(0)=Sound'UT3A_Vehicle_Cicada.UT3CicadaExplode.UT3CicadaExplodeCue'
-    ImpactDamageSounds=()
-    ImpactDamageSounds(0)=Sound'UT3A_Vehicle_Cicada.UT3CicadaCollide.UT3CicadaCollideCue'
-    BulletSounds = ()
-    BulletSounds(0) = Sound'UT3A_Weapon_BulletImpacts.UT3BulletImpactMetal.UT3BulletImpactMetalCue'
-    SoundVolume=255
-    
-    MomentumMult=0.400000 //?
-    ImpactDamageMult = 0.00003 //0.0003
-    DamagedEffectHealthSmokeFactor=0.65 //0.5
-    DamagedEffectHealthFireFactor=0.40 //0.25
-    DamagedEffectFireDamagePerSec=2.0 //0.75
-
-    EntryRadius=300
-    EntryPosition=(X=40,Y=0,Z=0)
-    
-    ExitPositions(0)=(X=80,Y=-210,Z=25)
-    ExitPositions(1)=(X=80,Y=210,Z=25)
-    ExitPositions(2)=(X=330,Y=0,Z=35)
-    ExitPositions(3)=(X=90,Y=0,Z=160) 
-    
-    bDrawMeshInFP=True
-    //FPCamPos=(X=265,Y=0,Z=40) //Front Cam
-    FPCamPos=(X=40,Y=100,Z=80)  //Launcher Cam, I prefer this one but I encouarge trying both
-    
-    //Normal
-    TPCamDistance=600.000000
-    TPCamLookAt=(X=50.0,Y=0.0,Z=0)
-    TPCamWorldOffset=(Z=260)
-    
-    //Aerial View
-    //TPCamLookAt=(X=50.0,Y=0.0,Z=0)
-    //TPCamWorldOffset=(Z=250)
-    
-    TrailEffectRotation=(Yaw=32768)
-    TrailEffectPositions(0)=(X=-63,Y=-42.5,Z=118) //(X=-53,Y=-33,Z=63)
-    TrailEffectPositions(1)=(X=-63,Y=42.5,Z=118)
-    
-    StreamerEffectOffset(0)=(X=175,Y=-95,Z=-33);
-    StreamerEffectOffset(1)=(X=175,Y=95,Z=-33);
-    StreamerEffectOffset(2)=(X=-250,Y=-100,Z=130);
-    StreamerEffectOffset(3)=(X=-250,Y=100,Z=130);
-    StreamerEffectOffset(4)=(X=-40,Y=-195,Z=67);
-    StreamerEffectOffset(5)=(X=-40,Y=195,Z=67);
-    StreamerOpacityRamp=(Min=1200.000000,Max=1600.000000)
-    StreamerOpacityChangeRate=1.0
-    StreamerOpacityMax=0.25 //0.7
-    StreamerEffectClass=class'Onslaught.ONSAttackCraftStreamer'
     
     //DamagedEffectOffset=(X=-10,Y=50,Z=120)   //Engine Fire Point
     //DamagedEffectScale=1.2                   //Engine Fire Size
@@ -383,5 +312,93 @@ defaultproperties
     HeadlightProjectorRotation=(Yaw=0,Pitch=-1000,Roll=0)
     HeadlightProjectorMaterial=Texture'VMVehicles-TX.NewPRVGroup.PRVProjector'
     HeadlightProjectorScale=0.20
+
+    StreamerEffectOffset(0)=(X=175,Y=-95,Z=-33);
+    StreamerEffectOffset(1)=(X=175,Y=95,Z=-33);
+    StreamerEffectOffset(2)=(X=-250,Y=-100,Z=130);
+    StreamerEffectOffset(3)=(X=-250,Y=100,Z=130);
+    StreamerEffectOffset(4)=(X=-40,Y=-195,Z=67);
+    StreamerEffectOffset(5)=(X=-40,Y=195,Z=67);
+    StreamerOpacityRamp=(Min=1200.000000,Max=1600.000000)
+    StreamerOpacityChangeRate=1.0
+    StreamerOpacityMax=0.25 //0.7
+    StreamerEffectClass=class'Onslaught.ONSAttackCraftStreamer'
+    
+    TrailEffectRotation=(Yaw=32768)
+    TrailEffectPositions(0)=(X=-63,Y=-42.5,Z=118) //(X=-53,Y=-33,Z=63)
+    TrailEffectPositions(1)=(X=-63,Y=42.5,Z=118)
+
+//=============================================================================
+// Sound
+//=============================================================================   
+    IdleSound=Sound'UT3A_Vehicle_Cicada.UT3CicadaSingles.UT3CicadaEngineLoop02Cue'
+    StartUpSound=Sound'UT3A_Vehicle_Cicada.UT3CicadaEngineStart.UT3CicadaEngineStartCue'
+    ShutDownSound=Sound'UT3A_Vehicle_Cicada.UT3CicadaEngineStop.UT3CicadaEngineStopCue'
+    TargetLockSound=sound'UT3A_Vehicle_Cicada.UT3CicadaSingles.UT3CicadaTargetLock01'
+    ExplosionSounds=()
+    ExplosionSounds(0)=Sound'UT3A_Vehicle_Cicada.UT3CicadaExplode.UT3CicadaExplodeCue'
+    ImpactDamageSounds=()
+    ImpactDamageSounds(0)=Sound'UT3A_Vehicle_Cicada.UT3CicadaCollide.UT3CicadaCollideCue'
+    BulletSounds = ()
+    BulletSounds(0) = Sound'UT3A_Weapon_BulletImpacts.UT3BulletImpactMetal.UT3BulletImpactMetalCue'
+    
+    SoundVolume=255
+
+//=============================================================================
+// Health & Damage
+//=============================================================================
+    ImpactDamageMult = 0.00003
+    MomentumMult=0.400000
+    DamagedEffectHealthSmokeFactor=0.65
+    DamagedEffectHealthFireFactor=0.40
+    DamagedEffectFireDamagePerSec=2.0 
+
+//=============================================================================
+// Movement
+//=============================================================================
+
+    GroundSpeed=1600
+    MaxThrustForce=80.0 //80.0
+    LongDamping=0.8 //0.3
+    MaxYawRate=1.8 //1.5
+    TurnDamping=65.0 //50.0
+    MaxRiseForce=130.0 //200
+    UpDamping=0.08 //0.05
+    MaxStrafeForce=45.0 //65.0
+    LatDamping=0.08 //0.05
+      
+    RollTorqueMax=60 //100
+    RollTorqueStrafeFactor=130 //100
+    RollTorqueTurnFactor=250 //750
+    RollDamping=100.0 //30.0
+    PitchTorqueFactor=50.0 //200.0
+    PitchTorqueMax=20.0 //35.0
+    TurnTorqueFactor=600.0
+    TurnTorqueMax=220.0 //200.0   
+    
+    MaxRandForce=2.0
+    RandForceInterval=0.95
+    
+//=============================================================================
+// Entry & Exit
+//============================================================================= 
+    EntryRadius=300
+    EntryPosition=(X=40,Y=0,Z=0)
+    ExitPositions(0)=(X=80,Y=-210,Z=25)
+    ExitPositions(1)=(X=80,Y=210,Z=25)
+    ExitPositions(2)=(X=330,Y=0,Z=35)
+    ExitPositions(3)=(X=90,Y=0,Z=160) 
+ 
+//=============================================================================
+// Camera
+//============================================================================= 
+    bDrawMeshInFP=True
+    //FPCamPos=(X=265,Y=0,Z=40) //Front Cam
+    FPCamPos=(X=40,Y=100,Z=80)  //Launcher Cam, I prefer this one but I encouarge trying both
+    
+    //Normal
+    TPCamDistance=600.000000
+    TPCamLookAt=(X=50.0,Y=0.0,Z=0)
+    TPCamWorldOffset=(Z=260)
     
 }
