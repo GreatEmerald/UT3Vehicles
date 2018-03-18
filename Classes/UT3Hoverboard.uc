@@ -47,7 +47,6 @@
 
 #exec OBJ LOAD FILE=..\StaticMeshes\EONSLocustSM.usx
 #exec OBJ LOAD FILE=..\Animations\EONSLocustA.ukx
-#exec OBJ LOAD FILE=..\Textures\EONSLocustTex.utx
 
 #exec OBJ LOAD FILE=..\Sounds\ONSVehicleSounds-S.uax
 #exec OBJ LOAD FILE=..\textures\EpicParticles.utx
@@ -882,10 +881,10 @@ defaultproperties
 //==================================================
     DrawScale3D=(X=1.2,Y=1.2,Z=1.2)
     Mesh=Mesh'UT3Hoverboard'
-    Skins(0)=Material'EONSLocustTex.UT3HoverboardGrey'
-    RedSkin=Material'EONSLocustTex.UT3HoverboardGrey'
-    BlueSkin=Material'EONSLocustTex.UT3HoverboardGrey'
-
+    Skins(0)=Shader'UT3HoverboardTex.HoverboardSkin'
+    RedSkin=Shader'UT3HoverboardTex.HoverboardSkin'
+    BlueSkin=Shader'UT3HoverboardTex.HoverboardSkinBlue'
+    
     DestroyedVehicleMesh=StaticMesh'EONSLocustSM.UT3HoverboardSM'
     DestructionEffectClass=class'Onslaught.ONSSmallVehicleExplosionEffect'
     DisintegrationEffectClass=class'Onslaught.ONSVehicleExplosionEffect'
