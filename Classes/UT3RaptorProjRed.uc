@@ -39,6 +39,10 @@
  */
 class UT3RaptorProjRed extends ONSAttackCraftPlasmaProjectileRed;
 
+#exec obj load file=../Sounds/UT3A_Vehicle_Manta.uax
+
+var(Sound) sound PlasmaImpactSound;
+
 // GEm: Don't hurt the instigator? It does hurt, but as if the radius was super small
 /*simulated function HurtRadius( float DamageAmount, float DamageRadius, class<DamageType> DamageType, float Momentum, vector HitLocation )
 {
@@ -118,6 +122,7 @@ simulated function HitWall(vector HitNormal, actor Wall)
 
 simulated function Explode(vector HitLocation, vector HitNormal)
 {
+    PlaySound(PlasmaImpactSound, Slot_NONE, 1.0);
     UpdateDamage();
     Super.Explode(HitLocation, HitNormal);
 }
@@ -130,6 +135,7 @@ simulated function BlowUp(vector HitLocation)
 
 defaultproperties
 {
+    PlasmaImpactSound = Sound'UT3A_Vehicle_Manta.UT3MantaShot.UT3MantaShotCue';
     Damage = 20.0 //GE: We're weaker! Hooray!
     Speed=2000
     MaxSpeed=12500
