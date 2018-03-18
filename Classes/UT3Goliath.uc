@@ -219,8 +219,17 @@ function Died(Controller Killer, class<DamageType> damageType, vector HitLocatio
 defaultproperties
 {
 
-    //===============
-    // @100GPing100
+//=============================================================================
+// Identity
+//=============================================================================
+    VehicleNameString = "UT3 Goliath"
+    VehiclePositionString="in a Goliath"
+    
+    MaxDesireability=1.25
+
+//=============================================================================
+// Appearance
+//=============================================================================
     Drawscale = 1.0
     Mesh = SkeletalMesh'UT3GoliathAnims.Goliath';
     RedSkin = Shader'UT3GoliathTex.Goliath.GoliathSkin';
@@ -232,42 +241,65 @@ defaultproperties
     DriverWeapons(0)=(WeaponClass=class'UT3GoliathCannon',WeaponBone=Chassis)
     PassengerWeapons(0)=(WeaponPawnClass=class'UT3GoliathTurretPawn',WeaponBone=Object10)
 
-    Health=900
-    HealthMax=900
+    TrailEffectPositions(0)=(X=-250.000000,Y=-80.000000,Z=19.000000)
+    TrailEffectPositions(1)=(X=-250.000000,Y=80.000000,Z=19.000000)
+    TrailEffectClass=Class'Onslaught.ONSAttackCraftExhaust'
+    
+    DamagedEffectOffset=(X=0,Y=120,Z=100)  //Right Treads Fire Point
+    DamagedEffectScale=1.7                 //Right Treads Fire Size
+    //DamagedEffectOffset=(X=170,Y=-40,Z=80)
+    //DamagedEffectScale=1.0
+    
+    HeadlightCoronaOffset(0)=(X=222,Y=135,Z=58)
+    HeadlightCoronaOffset(1)=(X=222,Y=-135,Z=58)
+    HeadlightCoronaMaterial=Material'EpicParticles.FlashFlare1'
+    HeadlightCoronaMaxSize=115  //95 looks good to me as well
 
+    HeadlightProjectorOffset=(X=220,Y=0,Z=90)
+    HeadlightProjectorRotation=(Yaw=0,Pitch=-1500,Roll=0)
+    //HeadlightProjectorMaterial=Texture'VMVehicles-TX.HoverTankGroup.TankProjector'
+    HeadlightProjectorMaterial=Texture'VMVehicles-TX.NewPRVGroup.PRVProjector'
+    HeadlightProjectorScale=0.80
+
+//=============================================================================
+// Sound
+//=============================================================================
     IdleSound = Sound'UT3A_Vehicle_Goliath.UT3GoliathSingles.UT3GoliathEngineLoop01CueTreadsMix';
     //IdleSound = Sound'UT3A_Vehicle_Goliath.UT3GoliathSingles.UT3GoliathEngineLoop01Cue';
     StartUpSound = SoundGroup'UT3A_Vehicle_Goliath.UT3GoliathEngineStart.UT3GoliathEngineStartCue';
     ShutDownSound = SoundGroup'UT3A_Vehicle_Goliath.UT3GoliathEngineStop.UT3GoliathEngineStopCue';
-    DamagedEffectHealthSmokeFactor=0.65 //0.5
-    DamagedEffectHealthFireFactor=0.40 //0.25
-    DamagedEffectFireDamagePerSec=2.0 //0.75
     ImpactDamageSounds=()
     ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Goliath.UT3GoliathCollide.UT3GoliathCollideCue';
     ExplosionSounds=()
     ExplosionSounds(0) = Sound'UT3A_Vehicle_Goliath.UT3GoliathExplode.UT3GoliathExplodeCue';
     BulletSounds = ()
     BulletSounds(0) = Sound'UT3A_Weapon_BulletImpacts.UT3BulletImpactMetal.UT3BulletImpactMetalCue'
+    
     SoundVolume = 255
    
-    TreadVelocityScale = 12.0;
-    // @100GPing100
-    //======END======
-
-
-    VehicleNameString = "UT3 Goliath"
-    VehiclePositionString="in a Goliath"
-    MaxGroundSpeed=900.0 //600.0
-    GroundSpeed=520 //500
-    MaxAirSpeed=900.0  //5000.0
-    MaxSteerTorque=70.0
-    ForwardDampFactor=0.13
-    //ChassisTorqueScale=5.0 compiles but is ignored in-game
-    MaxThrust=80.0 //GE val 200.000000//GE: was 65, maybe the tank is too fast now?
-    MaxDesireability=1.25
-    
+//=============================================================================
+// Health & Damage
+//=============================================================================
+    Health=900
+    HealthMax=900
     MomentumMult=0.1 //0.3
-    
+    DamagedEffectHealthSmokeFactor=0.65
+    DamagedEffectHealthFireFactor=0.40
+    DamagedEffectFireDamagePerSec=2.0
+   
+//=============================================================================
+// Movement
+//=============================================================================
+    GroundSpeed=520 //500
+    MaxGroundSpeed=900.0 //600.0
+    MaxAirSpeed=900.0  //5000.0
+    ForwardDampFactor=0.13
+    TreadVelocityScale = 12.0;
+
+    //ChassisTorqueScale=5.0 compiles but is ignored in-game
+    MaxSteerTorque=70.0
+    MaxThrust=80.0 //GE val 200.000000//GE: was 65, maybe the tank is too fast now?
+     
     Begin Object Class=KarmaParamsRBFull Name=KParams0
         KStartEnabled=True
         KFriction=0.5
@@ -293,32 +325,17 @@ defaultproperties
     End Object
     KParams=KarmaParams'KParams0'
     
+//=============================================================================
+// Entry & Exit
+//=============================================================================
     EntryRadius=350.0
-    
     ExitPositions(0)=(X=2,Y=-250,Z=30)
     ExitPositions(1)=(X=2,Y=250,Z=30)
     ExitPositions(2)=(X=-100,Y=0,Z=200)
-    
+   
+//=============================================================================
+// Camera
+//=============================================================================
     FPCamPos=(X=-70,Y=0,Z=160)
-    
-    TrailEffectPositions(0)=(X=-250.000000,Y=-80.000000,Z=19.000000)
-    TrailEffectPositions(1)=(X=-250.000000,Y=80.000000,Z=19.000000)
-    TrailEffectClass=Class'Onslaught.ONSAttackCraftExhaust'
-    
-    DamagedEffectOffset=(X=0,Y=120,Z=100)  //Right Treads Fire Point
-    DamagedEffectScale=1.7                 //Right Treads Fire Size
-    //DamagedEffectOffset=(X=170,Y=-40,Z=80)
-    //DamagedEffectScale=1.0
-    
-    HeadlightCoronaOffset(0)=(X=222,Y=135,Z=58)
-    HeadlightCoronaOffset(1)=(X=222,Y=-135,Z=58)
-    HeadlightCoronaMaterial=Material'EpicParticles.FlashFlare1'
-    HeadlightCoronaMaxSize=115  //95 looks good to me as well
-
-    HeadlightProjectorOffset=(X=220,Y=0,Z=90)
-    HeadlightProjectorRotation=(Yaw=0,Pitch=-1500,Roll=0)
-    //HeadlightProjectorMaterial=Texture'VMVehicles-TX.HoverTankGroup.TankProjector'
-    HeadlightProjectorMaterial=Texture'VMVehicles-TX.NewPRVGroup.PRVProjector'
-    HeadlightProjectorScale=0.80
     
 }
