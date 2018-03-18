@@ -105,10 +105,11 @@ simulated function CalcWeaponFire()
 
 defaultproperties
 {
-    // @100GPing100
-    FireSoundClass = Sound'UT3A_Vehicle_Manta.Sounds.A_Vehicle_Manta_Fire01';
 
-    //FireSoundClass=sound'UT3Vehicles.Manta.MantaFire'
+    Drawscale = 1.0
+
+    // @100GPing100
+    FireSoundClass = Sound'UT3A_Vehicle_Manta.UT3MantaFire.UT3MantaFireCue';
     TransientSoundVolume=0.4
     ProjectileClass=class'UT3MantaPlasmaProjectile'
 
