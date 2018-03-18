@@ -852,109 +852,65 @@ event Timer()
 
 DefaultProperties
 {
-	VehiclePositionString="in a Stealthbender"
-	VehicleNameString="Stealthbender"
 
-	// Looks.
-	Mesh = SkeletalMesh'UT3StealthBenderAnims.StealthBender';
+//===============================
+// Identity
+//===============================
+    VehicleNameString="Stealthbender"
+    VehiclePositionString="in a Stealthbender"
+    
+    CollisionRadius=175.0
+    VehicleMass=4.0
+    
+//===============================
+// Appearance
+//===============================
+    Mesh = SkeletalMesh'UT3StealthBenderAnims.StealthBender';
+    DestroyedVehicleMesh=StaticMesh'ONSDeadVehicles-SM.NewPRVDead'
     RedSkin = Shader'UT3StealthBenderTex.HELLBENDER.HellbenderSkin';
-	BlueSkin = Shader'UT3StealthBenderTex.HELLBENDER.HellbenderSkinBlue';
-	CloakedSkin = FinalBlend'XEffectMat.Combos.InvisOverlayFB';
-	bDrawDriverInTP = false;
-	bAdjustDriversHead = false;
-	MineObjectClasses(0) = class'UT3SpiderMineObject';
-	MineObjectClasses(1) = class'UT3StasisFieldObject';
-	MineObjectClasses(2) = class'UT3EMPObject';
-	MineObjectClasses(3) = class'UT3ShieldObject';
-
-	// HUD.
-	Begin Object Class=UT3HUDItem Name=HUDSpidermineTrap
-		DrawColor = (R=128,G=128,B=128,A=255);
-		Icon = Texture'UT3NightshadeTex.SpiderMine.Icon_SpiderMineTrap';
-		Scale = 0.5;
-	End Object
-	HUDItems(0) = HUDSpidermineTrap
-	Begin Object Class=UT3HUDItem Name=HUDStasisField
-		DrawColor = (R=128,G=128,B=128,A=255);
-		Icon = Texture'UT3NightshadeTex.SlowField.Icon_SlowFieldGenerator';
-		Scale = 0.5;
-	End Object
-	HUDItems(1) = HUDStasisField
-	Begin Object Class=UT3HUDItem Name=HUDEMP
-		DrawColor = (R=128,G=128,B=128,A=255);
-		Icon = Texture'UT3NightshadeTex.EMPMine.Icon_EMPMine';
-		Scale = 0.5;
-	End Object
-	HUDItems(2) = HUDEMP
-	Begin Object Class=UT3HUDItem Name=HUDShield
-		DrawColor = (R=128,G=128,B=128,A=255);
-		Icon = Texture'UT3NightshadeTex.ShieldGenerator.Icon_ShieldGenerator';
-		Scale = 0.5;
-	End Object
-	HUDItems(3) = HUDShield
-
-	// Damage.
-	DriverWeapons(0) = (WeaponClass=Class'Onslaught.ONSHoverBikePlasmaGun',WeaponBone="SecondaryTurretBarrel")
-	Health = 600;
-	HealthMax = 600;
-	MeleeRange = -100;
-	DriverDamageMult = 0;
-	SelectedMine 0 1;
-	Mines(0) = none;
-	Mines(1) = none;
-	Mines(2) = none;
-	Mines(3) = none;
-	Mines(4) = none;
-
-	// Checks.
-	DeployCheckRadius = 1800.0;
-	DeployCheckDistance = 375.0;
-
-	// Movement.
-	CloakedSpeedModifier = 0.45;
-
-	//PassengerWeapons(0)=(WeaponPawnClass=class'Onslaught.ONSPRVSideGunPawn',WeaponBone=Dummy01);
-	//PassengerWeapons(1)=(WeaponPawnClass=class'Onslaught.ONSPRVRearGunPawn',WeaponBone=Dummy02);
-
-	DestroyedVehicleMesh=StaticMesh'ONSDeadVehicles-SM.NewPRVDead'
+    BlueSkin = Shader'UT3StealthBenderTex.HELLBENDER.HellbenderSkinBlue';
+    CloakedSkin = FinalBlend'XEffectMat.Combos.InvisOverlayFB';
+    bAdjustDriversHead = false;
+    bAllowBigWheels=True
+    
+    DriverWeapons(0) = (WeaponClass=Class'Onslaught.ONSHoverBikePlasmaGun',WeaponBone="SecondaryTurretBarrel");
+    //PassengerWeapons(0)=(WeaponPawnClass=class'Onslaught.ONSPRVSideGunPawn',WeaponBone=Dummy01);
+    //PassengerWeapons(1)=(WeaponPawnClass=class'Onslaught.ONSPRVRearGunPawn',WeaponBone=Dummy02);
+    bDriverHoldsFlag=false
+    //FlagBone=Dummy01
+     FlagRotation=(Yaw=32768)
+	
+    MineObjectClasses(0) = class'UT3SpiderMineObject';
+    MineObjectClasses(1) = class'UT3StasisFieldObject';
+    MineObjectClasses(2) = class'UT3EMPObject';
+    MineObjectClasses(3) = class'UT3ShieldObject';
+    
+    SelectedMine 0 1;
+    Mines(0) = none;
+    Mines(1) = none;
+    Mines(2) = none;
+    Mines(3) = none;
+    Mines(4) = none;
+    
     DestructionEffectClass=class'Onslaught.ONSVehicleExplosionEffect'
-	DisintegrationEffectClass=class'Onslaught.ONSVehDeathPRV'
-    DestructionLinearMomentum=(Min=250000,Max=400000)
-    DestructionAngularMomentum=(Min=100,Max=150)
-    DisintegrationHealth=-100
-	ImpactDamageMult=0.0010
+    DisintegrationEffectClass=class'Onslaught.ONSVehDeathPRV'
+    
+    DamagedEffectOffset=(X=100,Y=-10,Z=35)
+    DamagedEffectScale=1.2
+    
+    HeadlightCoronaOffset(0)=(X=140,Y=45,Z=11)
+    HeadlightCoronaOffset(1)=(X=140,Y=-45,Z=11)
+    HeadlightCoronaMaterial=Material'EpicParticles.flashflare1'
+    //HeadlightCoronaMaxSize=100
 
-	MomentumMult=2.0
-	RanOverDamageType=class'DamTypePRVRoadkill'
-	CrushedDamageType=class'DamTypePRVPancake'
+    HeadlightProjectorOffset=(X=145,Y=0,Z=11)
+    HeadlightProjectorRotation=(Yaw=0,Pitch=-1000,Roll=0)
+    HeadlightProjectorMaterial=Texture'VMVehicles-TX.NewPRVGroup.PRVProjector'
+    HeadlightProjectorScale=0.65
 
-	CollisionRadius=175.0
-
-	FPCamPos=(X=20,Y=-40,Z=50)
-	TPCamLookat=(X=0,Y=0,Z=0)
-	TPCamWorldOffset=(X=0,Y=0,Z=100)
-	TPCamDistance=375
-
-	bDoStuntInfo=true
-	DaredevilThreshInAirSpin=90.0
-	DaredevilThreshInAirPitch=300.0
-	DaredevilThreshInAirRoll=300.0
-	DaredevilThreshInAirTime=1.2
-	DaredevilThreshInAirDistance=17.0
-
-	AirTurnTorque=35.0
-	AirPitchTorque=55.0
-	AirPitchDamping=35.0
-	AirRollTorque=35.0
-	AirRollDamping=35.0
-
-	bDrawMeshInFP=True
-	bHasHandbrake=True
-	bAllowBigWheels=True
-
-	MaxViewYaw=16000
-	MaxViewPitch=16000
-
+//===============================
+// Sound
+//===============================
     IdleSound=sound'UT3A_Vehicle_Stealthbender.UT3StealthbenderSingles.UT3StealthbenderEngineLoop01Cue'
     StartUpSound=sound'UT3A_Vehicle_Stealthbender.UT3StealthbenderEngineStart.UT3StealthbenderEngineStartCue'
     ShutDownSound=sound'UT3A_Vehicle_Stealthbender.UT3StealthbenderEngineStop.UT3StealthbenderEngineStopCue'
@@ -970,172 +926,231 @@ DefaultProperties
     BulletSounds = ()
     BulletSounds(0) = Sound'UT3A_Weapon_BulletImpacts.UT3BulletImpactMetal.UT3BulletImpactMetalCue'
     
-	EngineRPMSoundRange=10000
-	IdleRPM=500
-	RevMeterScale=4000
-	SoundVolume=255
-	SoundRadius=200
+    EngineRPMSoundRange=10000
+    IdleRPM=500
+    RevMeterScale=4000
+    SoundVolume=255
+    SoundRadius=200
 
-	StartUpForce="PRVStartUp"
-	ShutDownForce="PRVShutDown"
+    StartUpForce="PRVStartUp"
+    ShutDownForce="PRVShutDown"
 
-	SteerBoneName="Base"
-	SteerBoneAxis=AXIS_Z
-	SteerBoneMaxAngle=90
+//===============================
+// Health & Damage
+//===============================
+    Health = 600;
+    HealthMax = 600;
+    DriverDamageMult = 0;
+    ImpactDamageMult=0.0010
+    MomentumMult=2.0
+    DisintegrationHealth=-100
+    DestructionLinearMomentum=(Min=250000,Max=400000)
+    DestructionAngularMomentum=(Min=100,Max=150)
+    MeleeRange = -100;
+    CrushedDamageType=class'DamTypePRVPancake'
+    RanOverDamageType=class'DamTypePRVRoadkill'
+  
+//===============================
+// Movement
+//===============================
+    bHasHandbrake=True
+    GroundSpeed=840
+    EngineInertia=0.1
+    WheelInertia=0.1
+    EngineBrakeFactor=0.0001
+    EngineBrakeRPMScale=0.1
+    MinBrakeFriction=4.0
+    HandbrakeThresh=200
+    StopThreshold=100
+    SteerBoneName="Base"
+    SteerBoneAxis=AXIS_Z
+    SteerBoneMaxAngle=90
+    SteerSpeed=110
+    TurnDamping=35
+    MaxSteerAngleCurve=(Points=((InVal=0,OutVal=25.0),(InVal=1500.0,OutVal=8.0),(InVal=1000000000.0,OutVal=8.0)))
+    TransRatio=0.11
+    GearRatios[0]=-0.5
+    GearRatios[1]=0.4
+    GearRatios[2]=0.65
+    GearRatios[3]=0.85
+    GearRatios[4]=1.1
+    ChangeUpPoint=2000
+    ChangeDownPoint=1000
+    LSDFactor=1.0
+    
+    AirTurnTorque=35.0
+    AirPitchTorque=55.0
+    AirPitchDamping=35.0
+    AirRollTorque=35.0
+    AirRollDamping=35.0
 
-	EntryPosition=(X=20,Y=-60,Z=10)
-	EntryRadius=190.0
+    WheelPenScale=1.5
+    WheelPenOffset=0.01
+    WheelSoftness=0.04
+    WheelRestitution=0.1
+    WheelAdhesion=0.0
+    WheelLongFrictionFunc=(Points=((InVal=0,OutVal=0.0),(InVal=100.0,OutVal=1.0),(InVal=200.0,OutVal=0.9),(InVal=10000000000.0,OutVal=0.9)))
+    WheelLongFrictionScale=1.1
+    WheelLatFrictionScale=1.5
+    WheelLongSlip=0.001
+    WheelLatSlipFunc=(Points=((InVal=0.0,OutVal=0.0),(InVal=30.0,OutVal=0.009),(InVal=45.0,OutVal=0.00),(InVal=10000000000.0,OutVal=0.00)))
 
-	ExitPositions(0)=(X=0,Y=-165,Z=100)
-	ExitPositions(1)=(X=0,Y=165,Z=100)
-	ExitPositions(2)=(X=0,Y=-165,Z=-100)
-	ExitPositions(3)=(X=0,Y=165,Z=-100)
+    WheelHandbrakeSlip=0.01
+    WheelHandbrakeFriction=0.1
+    WheelSuspensionTravel=25.0
+    WheelSuspensionOffset=-10.0
+    WheelSuspensionMaxRenderTravel=25.0
 
-	HeadlightCoronaOffset(0)=(X=140,Y=45,Z=11)
-	HeadlightCoronaOffset(1)=(X=140,Y=-45,Z=11)
-	HeadlightCoronaMaterial=Material'EpicParticles.flashflare1'
-	//HeadlightCoronaMaxSize=100
+    FTScale=0.03
+    ChassisTorqueScale=0.7
+    MaxBrakeTorque=20.0
+    TorqueCurve=(Points=((InVal=0,OutVal=9.0),(InVal=200,OutVal=10.0),(InVal=1500,OutVal=11.0),(InVal=2500,OutVal=0.0)))
+	
+    CloakedSpeedModifier = 0.45;
+	
+    DeployCheckRadius = 1800.0;
+    DeployCheckDistance = 375.0;
 
-	HeadlightProjectorOffset=(X=145,Y=0,Z=11)
-	HeadlightProjectorRotation=(Yaw=0,Pitch=-1000,Roll=0)
-	HeadlightProjectorMaterial=Texture'VMVehicles-TX.NewPRVGroup.PRVProjector'
-	HeadlightProjectorScale=0.65
-
-	DamagedEffectOffset=(X=100,Y=-10,Z=35)
-	DamagedEffectScale=1.2
-
-	WheelPenScale=1.5
-	WheelPenOffset=0.01
-	WheelSoftness=0.04
-	WheelRestitution=0.1
-	WheelAdhesion=0.0
-	WheelLongFrictionFunc=(Points=((InVal=0,OutVal=0.0),(InVal=100.0,OutVal=1.0),(InVal=200.0,OutVal=0.9),(InVal=10000000000.0,OutVal=0.9)))
-	WheelLongFrictionScale=1.1
-	WheelLatFrictionScale=1.5
-	WheelLongSlip=0.001
-	WheelLatSlipFunc=(Points=((InVal=0.0,OutVal=0.0),(InVal=30.0,OutVal=0.009),(InVal=45.0,OutVal=0.00),(InVal=10000000000.0,OutVal=0.00)))
-
-	WheelHandbrakeSlip=0.01
-	WheelHandbrakeFriction=0.1
-	WheelSuspensionTravel=25.0
-	WheelSuspensionOffset=-10.0
-	WheelSuspensionMaxRenderTravel=25.0
-
-	TurnDamping=35
-
-	HandbrakeThresh=200
-	FTScale=0.03
-	ChassisTorqueScale=0.7
-
-	MinBrakeFriction=4.0
-	MaxBrakeTorque=20.0
-	MaxSteerAngleCurve=(Points=((InVal=0,OutVal=25.0),(InVal=1500.0,OutVal=8.0),(InVal=1000000000.0,OutVal=8.0)))
-	SteerSpeed=110
-	StopThreshold=100
-	TorqueCurve=(Points=((InVal=0,OutVal=9.0),(InVal=200,OutVal=10.0),(InVal=1500,OutVal=11.0),(InVal=2500,OutVal=0.0)))
-	EngineBrakeFactor=0.0001
-	EngineBrakeRPMScale=0.1
-	EngineInertia=0.1
-	WheelInertia=0.1
-
-	TransRatio=0.11
-	GearRatios[0]=-0.5
-	GearRatios[1]=0.4
-	GearRatios[2]=0.65
-	GearRatios[3]=0.85
-	GearRatios[4]=1.1
-	ChangeUpPoint=2000
-	ChangeDownPoint=1000
-	LSDFactor=1.0
-
-	VehicleMass=4.0
-
-	Begin Object Class=KarmaParamsRBFull Name=KParams0
-		KStartEnabled=True
-		KFriction=0.5
-		KLinearDamping=0.05
-		KAngularDamping=0.05
-		KImpactThreshold=500
-		bKNonSphericalInertia=True
+    Begin Object Class=KarmaParamsRBFull Name=KParams0
+        KStartEnabled=True
+        KFriction=0.5
+        KLinearDamping=0.05
+        KAngularDamping=0.05
+        KImpactThreshold=500
+        bKNonSphericalInertia=True
         bHighDetailOnly=False
         bClientOnly=False
-		bKDoubleTickRate=True
-		KInertiaTensor(0)=1.0
-		KInertiaTensor(1)=0.0
-		KInertiaTensor(2)=0.0
-		KInertiaTensor(3)=3.0
-		KInertiaTensor(4)=0.0
-		KInertiaTensor(5)=3.5
-		KCOMOffset=(X=-0.3,Y=0.0,Z=-0.5)
-		bDestroyOnWorldPenetrate=True
-		bDoSafetime=True
+        bKDoubleTickRate=True
+        KInertiaTensor(0)=1.0
+        KInertiaTensor(1)=0.0
+        KInertiaTensor(2)=0.0
+        KInertiaTensor(3)=3.0
+        KInertiaTensor(4)=0.0
+        KInertiaTensor(5)=3.5
+        KCOMOffset=(X=-0.3,Y=0.0,Z=-0.5)
+        bDestroyOnWorldPenetrate=True
+        bDoSafetime=True
         Name="KParams0"
     End Object
     KParams=KarmaParams'KParams0'
 
-	Begin Object Class=SVehicleWheel Name=RRWheel
-		BoneName="Rt_Rear_Tire"
-		BoneRollAxis=AXIS_Y
-		BoneSteerAxis=AXIS_Z
-		BoneOffset=(X=-15.0,Y=0.0,Z=0.0)
-		WheelRadius = 35;
-		bPoweredWheel=True
-		bHandbrakeWheel=True
-		SteerType=VST_Fixed
-		SupportBoneName="Rt_Rear_Suspension"
-		SupportBoneAxis=AXIS_Y
-	End Object
-	Wheels(0)=SVehicleWheel'RRWheel'
+    Begin Object Class=SVehicleWheel Name=RRWheel
+        BoneName="Rt_Rear_Tire"
+        BoneRollAxis=AXIS_Y
+        BoneSteerAxis=AXIS_Z
+        BoneOffset=(X=-15.0,Y=0.0,Z=0.0)
+        WheelRadius = 35;
+        bPoweredWheel=True
+        bHandbrakeWheel=True
+        SteerType=VST_Fixed
+        SupportBoneName="Rt_Rear_Suspension"
+        SupportBoneAxis=AXIS_Y
+    End Object
+    Wheels(0)=SVehicleWheel'RRWheel'
 
-	Begin Object Class=SVehicleWheel Name=LRWheel
-		BoneName="Lt_Rear_Tire"
-		BoneRollAxis=AXIS_Y
-		BoneSteerAxis=AXIS_Z
-		BoneOffset=(X=15.0,Y=0.0,Z=0.0)
-		WheelRadius = 35;
-		bPoweredWheel=True
-		bHandbrakeWheel=True
-		SteerType=VST_Fixed
-		SupportBoneName="Lt_Rear_Suspension"
-		SupportBoneAxis=AXIS_Y
-	End Object
-	Wheels(1)=SVehicleWheel'LRWheel'
+    Begin Object Class=SVehicleWheel Name=LRWheel
+        BoneName="Lt_Rear_Tire"
+        BoneRollAxis=AXIS_Y
+        BoneSteerAxis=AXIS_Z
+        BoneOffset=(X=15.0,Y=0.0,Z=0.0)
+        WheelRadius = 35;
+        bPoweredWheel=True
+        bHandbrakeWheel=True
+        SteerType=VST_Fixed
+        SupportBoneName="Lt_Rear_Suspension"
+        SupportBoneAxis=AXIS_Y
+    End Object
+    Wheels(1)=SVehicleWheel'LRWheel'
 
-	Begin Object Class=SVehicleWheel Name=RFWheel
-		BoneName="Rt_Front_Tire"
-		BoneRollAxis=AXIS_Y
-		BoneSteerAxis=AXIS_Z
-		BoneOffset=(X=-15.0,Y=0.0,Z=0.0)
-		WheelRadius = 35;
-		bPoweredWheel=True
-		SteerType=VST_Steered
-		SupportBoneName="Rt_Front_Suspension"
-		SupportBoneAxis=AXIS_Y
-	End Object
-	Wheels(2)=SVehicleWheel'RFWheel'
+    Begin Object Class=SVehicleWheel Name=RFWheel
+        BoneName="Rt_Front_Tire"
+        BoneRollAxis=AXIS_Y
+        BoneSteerAxis=AXIS_Z
+        BoneOffset=(X=-15.0,Y=0.0,Z=0.0)
+        WheelRadius = 35;
+        bPoweredWheel=True
+        SteerType=VST_Steered
+        SupportBoneName="Rt_Front_Suspension"
+        SupportBoneAxis=AXIS_Y
+    End Object
+    Wheels(2)=SVehicleWheel'RFWheel'
 
-	Begin Object Class=SVehicleWheel Name=LFWheel
-		BoneName="Lt_Front_Tire"
-		BoneRollAxis=AXIS_Y
-		BoneSteerAxis=AXIS_Z
-		BoneOffset=(X=15.0,Y=0.0,Z=0.0)
-		WheelRadius = 35;
-		bPoweredWheel=True
-		SteerType=VST_Steered
-		SupportBoneName="Lt_Front_Suspension"
-		SupportBoneAxis=AXIS_Y
-	End Object
-	Wheels(3)=SVehicleWheel'LFWheel'
+    Begin Object Class=SVehicleWheel Name=LFWheel
+        BoneName="Lt_Front_Tire"
+        BoneRollAxis=AXIS_Y
+        BoneSteerAxis=AXIS_Z
+        BoneOffset=(X=15.0,Y=0.0,Z=0.0)
+        WheelRadius = 35;
+        bPoweredWheel=True
+        SteerType=VST_Steered
+        SupportBoneName="Lt_Front_Suspension"
+        SupportBoneAxis=AXIS_Y
+    End Object
+    Wheels(3)=SVehicleWheel'LFWheel'
 
-	GroundSpeed=840
-	bDriverHoldsFlag=false
-	//FlagBone=Dummy01
-	FlagRotation=(Yaw=32768)
+//===============================
+// HUD
+//===============================
+    bCanDoTrickJumps=true
+    bDoStuntInfo=true
+    DaredevilThreshInAirSpin=90.0
+    DaredevilThreshInAirPitch=300.0
+    DaredevilThreshInAirRoll=300.0
+    DaredevilThreshInAirTime=1.2
+    DaredevilThreshInAirDistance=17.0
 
-	//VehicleIcon=(Material=Texture'AS_FX_TX.HUD.AssaultHUD',X=380,Y=83,SizeX=130,SizeY=64)
-	VehicleIcon=(Material=Texture'AS_FX_TX.Icons.OBJ_HellBender',X=0,Y=0,SizeX=64,SizeY=64,bIsGreyScale=true)
+    //VehicleIcon=(Material=Texture'AS_FX_TX.HUD.AssaultHUD',X=380,Y=83,SizeX=130,SizeY=64)
+    VehicleIcon=(Material=Texture'AS_FX_TX.Icons.OBJ_HellBender',X=0,Y=0,SizeX=64,SizeY=64,bIsGreyScale=true)
 
-	ObjectiveGetOutDist=1500.0
-	bCanDoTrickJumps=true
+    Begin Object Class=UT3HUDItem Name=HUDSpidermineTrap
+        DrawColor = (R=128,G=128,B=128,A=255);
+        Icon = Texture'UT3NightshadeTex.SpiderMine.Icon_SpiderMineTrap';
+        Scale = 0.5;
+    End Object
+    HUDItems(0) = HUDSpidermineTrap
+    Begin Object Class=UT3HUDItem Name=HUDStasisField
+        DrawColor = (R=128,G=128,B=128,A=255);
+        Icon = Texture'UT3NightshadeTex.SlowField.Icon_SlowFieldGenerator';
+        Scale = 0.5;
+    End Object
+    HUDItems(1) = HUDStasisField
+    Begin Object Class=UT3HUDItem Name=HUDEMP
+        DrawColor = (R=128,G=128,B=128,A=255);
+        Icon = Texture'UT3NightshadeTex.EMPMine.Icon_EMPMine';
+        Scale = 0.5;
+    End Object
+    HUDItems(2) = HUDEMP
+    Begin Object Class=UT3HUDItem Name=HUDShield
+        DrawColor = (R=128,G=128,B=128,A=255);
+        Icon = Texture'UT3NightshadeTex.ShieldGenerator.Icon_ShieldGenerator';
+        Scale = 0.5;
+    End Object
+    HUDItems(3) = HUDShield
+
+//===============================
+// Entry & Exit
+//===============================
+    EntryPosition=(X=20,Y=-60,Z=10)
+    EntryRadius=190.0
+    ExitPositions(0)=(X=0,Y=-165,Z=100)
+    ExitPositions(1)=(X=0,Y=165,Z=100)
+    ExitPositions(2)=(X=0,Y=-165,Z=-100)
+    ExitPositions(3)=(X=0,Y=165,Z=-100)
+    ObjectiveGetOutDist=1500.0
+
+//===============================
+// Camera
+//===============================
+   
+    MaxViewYaw=16000
+    MaxViewPitch=16000
+
+    bDrawMeshInFP=True
+    bDrawDriverInTP = false;
+    FPCamPos=(X=20,Y=-40,Z=50)
+    TPCamLookat=(X=0,Y=0,Z=0)
+    TPCamWorldOffset=(X=0,Y=0,Z=100)
+    TPCamDistance=375
+		
 }
 
