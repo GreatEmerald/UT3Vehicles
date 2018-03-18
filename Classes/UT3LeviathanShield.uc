@@ -46,7 +46,7 @@ simulated function ActivateShield(byte TeamNum)
 			else
 				ShockShieldEffect = Spawn(class'UT3LeviathanShieldEffectRed', self);
 			
-			PlaySound(Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_ShieldActivate01', SLOT_None, 2.0);
+			PlaySound(ShieldActivateSound, SLOT_None, 2.0);
 		}
 		
 		if (ShockShieldEffect != None && Owner != None && UT3LeviathanTurretWeapon(Owner) != None)
@@ -63,6 +63,7 @@ defaultproperties
 {
     DrawScale3D = (X=1.0,Y=1.0,Z=1.0)
     PrePivot=(X=20,Y=0.0,Z=-30)
-    ShieldDeactivateSound = Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_ShieldOff01';
-    ShieldAmbientSound = Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_ShieldAmbient01';
+    ShieldActivateSound = Sound'UT3A_Vehicle_Paladin.UT3PaladinShieldActivate.UT3PaladinShieldActivateCue';
+    ShieldDeactivateSound = Sound'UT3A_Vehicle_Paladin.UT3PaladinShieldOff.UT3PaladinShieldOffCue';
+    ShieldAmbientSound = Sound'UT3A_Vehicle_Paladin.UT3PaladinSingles.UT3PaladinShieldAmbient01';
 }

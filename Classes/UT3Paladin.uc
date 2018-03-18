@@ -79,34 +79,84 @@ simulated function TeamChanged()
 defaultproperties
 {
 
-    Drawscale = 1.0 //Ensure default scale and not be overriden by stock classes
+//=============================================================================
+// Identity
+//=============================================================================
+   VehicleNameString="UT3 Paladin"   //GE: UT3 Paladin...
+   VehiclePositionString="in a UT3 Paladin"
 
+//=============================================================================
+// Appearance
+//=============================================================================
+    Drawscale = 1.0
     Mesh=SkeletalMesh'UT3PaladinAnims.Paladin'
     RedSkin=Shader'UT3PaladinTex.Paladin.PaladinSkin'
     BlueSkin=Shader'UT3PaladinTex.Paladin.PaladinSkinBlue'
 
     DriverWeapons(0)=(WeaponClass=class'UT3PaladinCannon',WeaponBone="Turret_Yaw")
+   //DriverWeapons(0)=(WeaponClass=class'UT3PaladinCannon',WeaponBone=CannonAttach); // Has a better shield
+    
+    DamagedEffectOffset=(X=160,Y=50,Z=100)     //Front Fire Point
+    DamagedEffectScale=1.2                     //Front Fire Size, 1.1 may be better
+    //DamagedEffectOffset=(X=-110,Y=-20,Z=70)  //Front Fire Point
+    //DamagedEffectScale=1.1                   //Front Fire Size, 1.1 may be better
+    
+    HeadlightCoronaOffset=()
+    HeadlightCoronaOffset(0)=(X=290.0,Y=47,Z=58.0)
+    HeadlightCoronaMaterial=Material'EpicParticles.FlashFlare1'
+    //HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
+    HeadlightCoronaMaxSize=92
+    
+    HeadlightProjectorOffset=(X=290,Y=10,Z=58.0)
+    HeadlightProjectorRotation=(Yaw=0,Pitch=-1000,Roll=0)
+    HeadlightProjectorMaterial=Texture'VMVehicles-TX.NewPRVGroup.PRVProjector'
+    HeadlightProjectorScale=0.05
 
-    VehiclePositionString="in a UT3 Paladin"
-    SteerBoneName="Body"
-
-    // Sound.
-    IdleSound=Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_EngineLoop01'
-    StartUpSound=Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Start01'
-    ShutDownSound=Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Stop01'
-    DamagedEffectHealthSmokeFactor=0.65 //0.5
-    DamagedEffectHealthFireFactor=0.40 //0.25
-    DamagedEffectFireDamagePerSec=2.00 //0.75
-    ExplosionSounds=()
-    ExplosionSounds(0)=Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Explode02'
-    ImpactDamageSounds=()
-    ImpactDamageSounds(0)=Sound'UT3A_Vehicle_Paladin.Sounds.A_Vehicle_Paladin_Collide01'
-
+//=============================================================================
+// Sound
+//=============================================================================
+    IdleSound = Sound'UT3A_Vehicle_Paladin.UT3PaladinSingles.UT3PaladinEngineLoop01Cue';
+    StartUpSound = Sound'UT3A_Vehicle_Paladin.UT3PaladinEngineStart.UT3PaladinEngineStartCue';
+    ShutDownSound = Sound'UT3A_Vehicle_Paladin.UT3PaladinEngineStop.UT3PaladinEngineStopCue';
     //HornSounds(0)=sound'ONSBPSounds.ShockTank.PaladinHorn'
     //HornSounds(1)=sound'ONSVehicleSounds-S.Dixie_Horn'
+    ExplosionSounds=()
+    ExplosionSounds(0) = Sound'UT3A_Vehicle_Paladin.UT3PaladinExplode.UT3PaladinExplodeCue';
+    ImpactDamageSounds=()
+    ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Paladin.UT3PaladinCollide.UT3PaladinCollideCue';
+    BulletSounds = ()
+    BulletSounds(0) = Sound'UT3A_Weapon_BulletImpacts.UT3BulletImpactMetal.UT3BulletImpactMetalCue'
+   
+    EngineRPMSoundRange=11000
+    IdleRPM=3500
+    SoundVolume = 255
 
-    BaseEyeheight=40
-    Eyeheight=40
+//=============================================================================
+// Health & Damage
+//=============================================================================
+    ImpactDamageMult=0.0003
+    MomentumMult=0.1
+    DamagedEffectHealthSmokeFactor=0.65
+    DamagedEffectHealthFireFactor=0.40
+    DamagedEffectFireDamagePerSec=2.00
+    
+//=============================================================================
+// Movement
+//=============================================================================
+    GroundSpeed=700.000000       //Is faster, GroundSpeed == deprecated?
+    //EngineBrakeFactor=0.100000        // This makes it extremely easy to flip and have an accident
+    MinBrakeFriction=4.2
+    TurnDamping=25     //35
+    SteerBoneName="Body"
+    SteerSpeed=82                       // Is steered more easily
+    TransRatio=0.030    //0.03
+    ChangeUpPoint=2600 //2000
+    WheelInertia=0.750000               // Has more inertia
+    MaxSteerAngleCurve=(Points=((OutVal=20.000000),(InVal=700.000000,OutVal=15.000000))) // Again, steered more easily
+     
+    ChassisTorqueScale=0.18             // Has a lower... setting of some kind  
+    MaxBrakeTorque=75.000000            // And another, but this time higher  
+    WheelSuspensionOffset=3.0
 
     Begin Object Class=SVehicleWheel Name=RWheel1
         BoneName="RtTire01"
@@ -219,27 +269,7 @@ defaultproperties
     Wheels(4)=LWheel1
     Wheels(5)=LWheel2
     Wheels(6)=LWheel3
-    Wheels(7)=LWheel4
-
-    VehicleNameString="UT3 Paladin"   //GE: UT3 Paladin...
-    ImpactDamageMult=0.0003
-    SteerSpeed=82                       // Is steered more easily
-    ChassisTorqueScale=0.18             // Has a lower... setting of some kind
-    MinBrakeFriction=4.2
-    MaxBrakeTorque=75.000000            // And another, but this time higher
-    MaxSteerAngleCurve=(Points=((OutVal=20.000000),(InVal=700.000000,OutVal=15.000000))) // Again, steered more easily
-    //EngineBrakeFactor=0.100000        // This makes it extremely easy to flip and have an accident
-    WheelInertia=0.750000               // Has more inertia
-    WheelSuspensionOffset=3.0
-    
-    GroundSpeed=700.000000              //Is faster, GroundSpeed == deprecated?
-    //DriverWeapons(0)=(WeaponClass=class'UT3PaladinCannon',WeaponBone=CannonAttach); // Has a better shield
-    
-    TurnDamping=25     //35
-    TransRatio=0.030    //0.03
-    ChangeUpPoint=2600 //2000
-    
-    MomentumMult=0.1 //0.8
+    Wheels(7)=LWheel4  
     
     Begin Object Class=KarmaParamsRBFull Name=KParams0
         KStartEnabled=True
@@ -265,14 +295,22 @@ defaultproperties
     End Object
     KParams=KarmaParams'KParams0'
     
+//=============================================================================
+// Entry & Exit
+//=============================================================================
     EntryPosition=(X=20,Y=0,Z=0)
-    EntryRadius=350.0
-    
+    EntryRadius=350.0 
     ExitPositions(0)=(X=0,Y=-260,Z=50)
     ExitPositions(1)=(X=0,Y=260,Z=50)
     ExitPositions(2)=(X=0,Y=-260,Z=-50)
     ExitPositions(3)=(X=0,Y=260,Z=-50)
     ExitPositions(4)=(X=90,Y=0,Z=160)
+
+//=============================================================================
+// Camera
+//=============================================================================
+    BaseEyeheight=40
+    Eyeheight=40
     
     FPCamPos = (X=-55,Y=0,Z=170);
     FPCamViewOffset = (X=0,Y=0,Z=0);
@@ -280,23 +318,4 @@ defaultproperties
     TPCamWorldOffset = (X=0,Y=0,Z=220); //280+ aiming up without clipping but ground level aim feels awkward
     TPCamDistance = 575;
 
-    //Aerial View
-    //TPCamWorldOffset = (X=0,Y=0,Z=200);
-    
-    DamagedEffectOffset=(X=160,Y=50,Z=100)     //Front Fire Point
-    DamagedEffectScale=1.2                     //Front Fire Size, 1.1 may be better
-    //DamagedEffectOffset=(X=-110,Y=-20,Z=70)  //Front Fire Point
-    //DamagedEffectScale=1.1                   //Front Fire Size, 1.1 may be better
-    
-    HeadlightCoronaOffset=()
-    HeadlightCoronaOffset(0)=(X=290.0,Y=47,Z=58.0)
-    HeadlightCoronaMaterial=Material'EpicParticles.FlashFlare1'
-    //HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
-    HeadlightCoronaMaxSize=92
-    
-    HeadlightProjectorOffset=(X=290,Y=10,Z=58.0)
-    HeadlightProjectorRotation=(Yaw=0,Pitch=-1000,Roll=0)
-    HeadlightProjectorMaterial=Texture'VMVehicles-TX.NewPRVGroup.PRVProjector'
-    HeadlightProjectorScale=0.05
-    
 }
