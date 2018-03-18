@@ -384,25 +384,79 @@ function Died(Controller Killer, class<DamageType> damageType, vector HitLocatio
 defaultproperties
 {
 
-    // Looks.
+//=============================================================================
+// Identity
+//=============================================================================
+    VehicleNameString = "UT3 Manta"
+    VehiclePositionString = "in a UT3 Manta";
+   
+//=============================================================================
+// Appearance
+//=============================================================================
     Drawscale = 1.0
     Mesh = SkeletalMesh'UT3MantaAnims.Manta';
     RedSkin = Shader'UT3MantaTex.MantaSkin';
     BlueSkin = Shader'UT3MantaTex.MantaSkinBlue';
     DrivePos = (X=-67,Y=0.0,Z=64.0);
 
-    // Damage.
     DriverWeapons(0)=(WeaponClass=class'UT3MantaPlasmaGun',WeaponBone=barrel_rt);
+ 
+    DamagedEffectOffset=(X=2,Y=31,Z=16)   //Turbine fire point
+    //DamagedEffectOffset=(X=2,Y=-75,Z=-10) //Blades fire point
+    //DamagedEffectScale=0.6
 
-    // Strings.
-    VehiclePositionString = "in a UT3 Manta";
-    VehicleNameString = "UT3 Manta"
+    HeadlightCoronaOffset=()
+    HeadlightCoronaOffset(0)=(X=40.0,Y=0.0,Z=-20.0)
+    HeadlightCoronaMaterial=Material'EpicParticles.FlashFlare1'
+    //HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
+    
+    HeadlightProjectorOffset=(X=35,Y=0,Z=-30)
+    HeadlightProjectorRotation=(Yaw=0,Pitch=-1000,Roll=0)
+    HeadlightProjectorMaterial=Texture'VMVehicles-TX.RVGroup.RVProjector'
+    HeadlightProjectorScale=0.02
 
-    // Movement.
+    TrailEffectPositions(0)=(X=-127.000000,Y=-16.000000,Z=16.000000)
+    TrailEffectPositions(1)=(X=-127.000000,Y=16.000000,Z=16.000000)
+    TrailEffectClass=Class'Onslaught.ONSAttackCraftExhaust'
+
+//=============================================================================
+// Sound
+//=============================================================================
+    IdleSound = Sound'UT3A_Vehicle_Manta.UT3MantaSingles.UT3MantaEngineLoop01Cue';
+    StartUpSound = Sound'UT3A_Vehicle_Manta.UT3MantaEngineStart.UT3MantaEngineStartCue';
+    ShutDownSound = Sound'UT3A_Vehicle_Manta.UT3MantaEngineStop.UT3MantaEngineStopCue';
+    JumpSound = Sound'UT3A_Vehicle_Manta.UT3MantaJump.UT3MantaJumpCue';
+    DuckSound = Sound'UT3A_Vehicle_Manta.UT3MantaCrouch.UT3MantaCrouchCue';
+    HornSounds(1)=sound'ONSVehicleSounds-S.Horns.LaCuchachaHorn';
+    ImpactDamageSounds=();
+    ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Manta.UT3MantaCollide.UT3MantaCollideCue';
+    ExplosionSounds=();
+    ExplosionSounds(0) = Sound'UT3A_Vehicle_Manta.UT3MantaExplode.UT3MantaExplodeCue';
+    BulletSounds=()
+    BulletSounds(0) = Sound'UT3A_Weapon_BulletImpacts.UT3BulletImpactMetal.UT3BulletImpactMetalCue'
+    
+    MaxPitchSpeed = 2000; //HD: Doesn't sound high enough when moving but changing this causes idle to not sound right either
+
+//=============================================================================
+// Health & Damage
+//=============================================================================
+    ImpactDamageMult = 0.00001
+    MomentumMult=0.8
+    DamagedEffectHealthSmokeFactor=0.65
+    DamagedEffectHealthFireFactor=0.40
+    DamagedEffectFireDamagePerSec=2.0 
+
+//=============================================================================
+// Movement
+//=============================================================================
     GroundSpeed = 1500 //UT2004 default is 2000 UT3 default is 1500
     JumpForceMag=200.0
     AirControl = 1.5
     MaxYawRate=5.0 //3.0
+    MaxStrafeForce=27 //20 def UT2004
+    LatDamping=0.2
+    LongDamping=0.1
+
     TurnTorqueMax=180.0 //125.0 def UT2004
     UprightStiffness=450.000000 //The manual says it doesn't do anything
     UprightDamping=20.000000  //The manual says it doesn't do anything
@@ -410,11 +464,7 @@ defaultproperties
     RollTorqueMax=10.0  //25.0 //12.5 default 2004 value
     RollDamping=20.0    //30.0 def UT2004
     RollTorqueStrafeFactor=100.0 //50.0 def UT2004
-        
-    MaxStrafeForce=27 //20 def UT2004
-    LatDamping=0.2
-    LongDamping=0.1
-    
+           
     HoverSoftness=0.15 //0.09 def UT2004
     HoverPenScale=1.35 //1.0 def UT2004
     HoverCheckDist=165; //155 //150.0 def UT2004
@@ -445,27 +495,9 @@ defaultproperties
     End Object
     KParams=KarmaParams'KParams0'
         
-    // Sounds.
-    IdleSound = Sound'UT3A_Vehicle_Manta.UT3MantaSingles.UT3MantaEngineLoop01Cue';
-    StartUpSound = Sound'UT3A_Vehicle_Manta.UT3MantaEngineStart.UT3MantaEngineStartCue';
-    ShutDownSound = Sound'UT3A_Vehicle_Manta.UT3MantaEngineStop.UT3MantaEngineStopCue';
-    JumpSound = Sound'UT3A_Vehicle_Manta.UT3MantaJump.UT3MantaJumpCue';
-    DuckSound = Sound'UT3A_Vehicle_Manta.UT3MantaCrouch.UT3MantaCrouchCue';
-    ImpactDamageSounds=();
-    ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Manta.UT3MantaCollide.UT3MantaCollideCue';
-    ExplosionSounds=();
-    ExplosionSounds(0) = Sound'UT3A_Vehicle_Manta.UT3MantaExplode.UT3MantaExplodeCue';
-    BulletSounds=()
-    BulletSounds(0) = Sound'UT3A_Weapon_BulletImpacts.UT3BulletImpactMetal.UT3BulletImpactMetalCue'
-    HornSounds(1)=sound'ONSVehicleSounds-S.Horns.LaCuchachaHorn';
-    MaxPitchSpeed = 2000; //HD: Doesn't sound high enough when moving but changing this causes idle to not sound right either
-    
-    MomentumMult=0.8 //?
-    ImpactDamageMult = 0.00001 //0.0003
-    DamagedEffectHealthSmokeFactor=0.65 //0.5
-    DamagedEffectHealthFireFactor=0.40 //0.25 //.373 is what I had, I think 0.4 will be too much but we'll se
-    DamagedEffectFireDamagePerSec=2.0  //0.75
-        
+//=============================================================================
+// Entry & Exit
+//=============================================================================      
     EntryRadius = 160.0
     ExitPositions(0)=(X=-70,Y=140,Z=30)   //Right
     ExitPositions(1)=(X=-70,Y=-140,Z=30)  //Left
@@ -476,31 +508,13 @@ defaultproperties
     ExitPositions(6)=(X=-70,Y=140,Z=-30)  //Right Below
     ExitPositions(7)=(X=-70,Y=-140,Z=-30) //Left Below
     
+//=============================================================================
+// Camera
+//=============================================================================  
     bDrawMeshInFP=True
-    
     FPCamPos=(X=65,Y=0,Z=-5)
-    
-    //Normal
     TPCamDistance=300.000000  //NOTE: Be sure TO DELETE THIS LINE from USER.INI, it overrides this value and will be re-added to the ini as soon as you use the vehicle, all this does here is make it the starting distance
     TPCamLookat=(X=-10,Y=0,Z=0)
     TPCamWorldOffset=(X=0,Y=0,Z=100) //Z might need to be 110 or 120 for better upwards aim
-    
-    TrailEffectPositions(0)=(X=-127.000000,Y=-16.000000,Z=16.000000)
-    TrailEffectPositions(1)=(X=-127.000000,Y=16.000000,Z=16.000000)
-    TrailEffectClass=Class'Onslaught.ONSAttackCraftExhaust'
-    
-    DamagedEffectOffset=(X=2,Y=31,Z=16)   //Turbine fire point
-    //DamagedEffectOffset=(X=2,Y=-75,Z=-10) //Blades fire point
-    //DamagedEffectScale=0.6
-
-    HeadlightCoronaOffset=()
-    HeadlightCoronaOffset(0)=(X=40.0,Y=0.0,Z=-20.0)
-    HeadlightCoronaMaterial=Material'EpicParticles.FlashFlare1'
-    //HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
-    
-    HeadlightProjectorOffset=(X=35,Y=0,Z=-30)
-    HeadlightProjectorRotation=(Yaw=0,Pitch=-1000,Roll=0)
-    HeadlightProjectorMaterial=Texture'VMVehicles-TX.RVGroup.RVProjector'
-    HeadlightProjectorScale=0.02
-    
+     
 }
