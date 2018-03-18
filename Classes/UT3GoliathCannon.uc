@@ -7,7 +7,7 @@
 //-----------------------------------------------------------
 class UT3GoliathCannon extends ONSHoverTankCannon;
 
-var()   sound           ReloadSoundClass;
+//var()   sound           ReloadSoundClass;
 
 function Projectile SpawnProjectile(class<Projectile> ProjClass, bool bAltFire)
 {
@@ -69,10 +69,10 @@ function Projectile SpawnProjectile(class<Projectile> ProjClass, bool bAltFire)
     return P;
 }
 
-Simulated Function Timer()
-{
-  PlaySound(ReloadSoundClass, SLOT_None, FireSoundVolume/255.0,, FireSoundRadius,, false);
-}
+//Simulated Function Timer()
+//{
+//  PlaySound(ReloadSoundClass, SLOT_None, FireSoundVolume/255.0,, FireSoundRadius,, false);
+//}
 
 DefaultProperties
 {
@@ -86,8 +86,8 @@ DefaultProperties
 	PitchBone = "Object09";
 	WeaponFireAttachmentBone = "Object08";
 
-	FireSoundClass = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Fire01';
-	ReloadSoundClass = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Reload02';
+	FireSoundClass = Sound'UT3A_Vehicle_Goliath.UT3GoliathFire.UT3GoliathFireCue';
+	//ReloadSoundClass = Sound'UT3A_Vehicle_Goliath.Sounds.A_Vehicle_Goliath_Reload02';
 	// @100GPing100
 	//======END======
 
