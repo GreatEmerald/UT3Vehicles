@@ -842,9 +842,6 @@ defaultproperties
     PassengerWeapons = ()
     FlagBone = 'Body';
 
-//=============================================================================
-// Special Visual Effects
-//=============================================================================
     DamagedEffectOffset=(X=0,Y=40,Z=120)      //Near Cannon Fire Point
     DamagedEffectScale=1.3                    //Near Cannon Fire Size
     //DamagedEffectOffset=(X=190,Y=-70,Z=100) //Front Tire Fire Point
