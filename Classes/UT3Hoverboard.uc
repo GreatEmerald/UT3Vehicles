@@ -866,14 +866,49 @@ simulated function UpdatePrecacheMaterials()
 
 defaultproperties
 {
-    VehiclePositionString="on a hoverboard"
-    VehicleNameString="UT3 Hoverboard"
 
-    Mesh=Mesh'UT3Hoverboard'
+//==================================================
+// Identity
+//==================================================
+    VehicleNameString="UT3 Hoverboard"
+    VehiclePositionString="on a hoverboard"
+   
+    CollisionHeight=1.0
+    MaxDesireability=0.5
+    VehicleMass=1.5 //2.0
+   
+//==================================================
+// Appearance
+//==================================================
     DrawScale3D=(X=1.2,Y=1.2,Z=1.2)
+    Mesh=Mesh'UT3Hoverboard'
     Skins(0)=Material'EONSLocustTex.UT3HoverboardGrey'
     RedSkin=Material'EONSLocustTex.UT3HoverboardGrey'
     BlueSkin=Material'EONSLocustTex.UT3HoverboardGrey'
+
+    DestroyedVehicleMesh=StaticMesh'EONSLocustSM.UT3HoverboardSM'
+    DestructionEffectClass=class'Onslaught.ONSSmallVehicleExplosionEffect'
+    DisintegrationEffectClass=class'Onslaught.ONSVehicleExplosionEffect'
+
+    bCanCarryFlag=true
+    bDriverHoldsFlag=true
+    DriveAnim="Idle_Biggun"
+    DrivePos=(X=0.000000,Y=0.000000,Z=61.000000)
+    DriveRot=(Yaw=6000)
+    FlagBone="trail2"
+    FlagOffset=(Z=45.000000)
+    FlagRotation=(Yaw=32768)
+
+    BikeDustOffset(0)=(X=30.000000,Z=10.000000)
+    BikeDustOffset(1)=(X=-30.000000,Z=10.000000)
+    BikeDustTraceDistance=100.000000
+
+    DamagedEffectScale=0.500000
+    DamagedEffectOffset=(X=28.000000,Y=-10.000000,Z=10.000000)
+
+    ThrusterOffsets(0)=(X=50.000000,Z=10.000000)
+    ThrusterOffsets(1)=(X=-50.000000,Z=10.000000)
+    ThrusterOffsets(2)=(Z=0.000000)
 
     TrailClass(0)=class'EONSLocustThrusterEffectRed'
     TrailClass(1)=class'EONSLocustThrusterEffectBlue'
@@ -882,39 +917,22 @@ defaultproperties
     TrailRotOffset(0)=(Pitch=15000)   //Pitch=16384
     TrailRotOffset(1)=(Pitch=15000)
 
-    DriveAnim="Idle_Biggun"
-    DrivePos=(X=0.000000,Y=0.000000,Z=61.000000)
-    DriveRot=(Yaw=6000)
-
-    HealthMax=1.000000
-    Health=1
-    LinkHealMult=1.000000
-
-    DriverDamageMult=1.0
-    MomentumMult=2.0
-    CollisionHeight=1.0
-    MinRunOverSpeed=100000
-
-    DestroyedVehicleMesh=StaticMesh'EONSLocustSM.UT3HoverboardSM'
-    DestructionEffectClass=class'Onslaught.ONSSmallVehicleExplosionEffect'
-    DisintegrationEffectClass=class'Onslaught.ONSVehicleExplosionEffect'
-    DisintegrationHealth=-25
-
-    HornSounds(0)=Sound'ONSVehicleSounds-S.Horns.Horn02'
-    HornSounds(1)=Sound'ONSVehicleSounds-S.Horns.La_Cucharacha_Horn'
-
-    // GEm: Should make sure none of the below ever happen
-    //RanOverDamageType=class'DamTypeEONSLocustHeadshot'
-    //CrushedDamageType=class'DamTypeEONSLocustPancake'
-
+//==================================================
+// Sound
+//==================================================
     IdleSound=Sound'UT3A_Vehicle_Hoverboard.UT3HoverboardSingles.UT3HoverboardEngine01Cue'
     StartUpSound=Sound'UT3A_Vehicle_Hoverboard.UT3HoverboardEngineStart.UT3HoverboardEngineStartCue'
     ShutDownSound=Sound'UT3A_Vehicle_Hoverboard.UT3HoverboardEngineStop.UT3HoverboardEngineStopCue'
     JumpSound=Sound'UT3A_Vehicle_Hoverboard.UT3HoverboardJump.UT3HoverboardJumpCue'
     AltFireSound=Sound'UT3A_Vehicle_Hoverboard.UT3HoverboardGrappleFail.UT3HoverboardGrappleFailCue'
     WaterDisruptSound=Sound'UT3A_Vehicle_Hoverboard.UT3HoverboardWaterDisrupt.UT3HoverboardWaterDisruptCue'
+    HornSounds(0)=Sound'ONSVehicleSounds-S.Horns.Horn02'
+    HornSounds(1)=Sound'ONSVehicleSounds-S.Horns.La_Cucharacha_Horn'
     ImpactDamageSounds=()
     ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Hoverboard.UT3HoverboardCollide.UT3HoverboardCollideCue'
+    StolenAnnouncement=None                        //
+    StolenSound=None                               //sound'ONSVehicleSounds-S.CarAlarm01'
+    
     MaxPitchSpeed=1200.000000
     SoundVolume=255
     SoundRadius=600.000000
@@ -923,60 +941,44 @@ defaultproperties
     ShutDownForce="HoverBikeShutDown"
     JumpForce="HoverBikeJump"
 
-    FPCamPos=(Z=50.000000)
-
-    //Normal
-    TPCamDistance=250.000000 //NOTE: Be sure TO DELETE THIS LINE from USER.INI as it overrides this value and wil be re-added to the ini as soon as you use the vehicle, all this does here is make it the starting distance
-    TPCamLookat=(X=10.000000,Z=0.000000)
-    TPCamWorldOffset=(Z=140.000000)
-
-    //Gears or Outsider Style
-    //TPCamDistance=150.000000
-    //TPCamLookat=(X=0.000000,Y=40.000000,Z=0.000000)  //Gears Style, more Y is needed for a true Gears style, 40 is more Outsider
-    //TPCamWorldOffset=(Z=100.000000)
-
-    //Aerial View
-    //TPCamDistance=200.000000
-    //TPCamLookat=(X=-10.000000,Z=0.000000)
-    //TPCamWorldOffset=(Z=50.000000)
-
-    bShowDamageOverlay=True
-    bDrawDriverInTP=True
-    bDrawMeshInFP=True
-    bTurnInPlace=True
-    bScriptedRise=True
+//==================================================
+// Health & Damage
+//==================================================
+    bBlockActors = false // GEm: This is so we don't instantly die, KDriverEnter unsets this
+    bEjectDriver = true
     bHasAltFire=False
-    bCanStrafe=false
-    bShowChargingBar=True
+    Health=1
+    HealthMax=1.000000
+    DestructionLinearMomentum=(Min=62000.000000,Max=100000.000000)
+    DestructionAngularMomentum=(Min=25.000000,Max=75.000000)
+    DisintegrationHealth=-25
+    LinkHealMult=1.000000
+    DriverDamageMult=1.0
+    ImpactDamageMult=0.00008
+    MomentumMult=2.0
+    MeleeRange=-200.000000    
+    MinRunOverSpeed=100000
+
+    // GEm: Should make sure none of the below ever happen
+    //RanOverDamageType=class'DamTypeEONSLocustHeadshot'
+    //CrushedDamageType=class'DamTypeEONSLocustPancake'
+
+//==================================================
+// Movement
+//==================================================
     bCanFlip=True
+    bCanStrafe=false
     bDriverCollideActors=True
+    bDuckReleased=false
+    bScriptedRise=True
+    bTurnInPlace=True
+    bZeroPCRotOnEntry=false
+    bSetPCRotOnPossess=false
 
-    MaxViewYaw=16000
-    MaxViewPitch=16000
-
-    ExitPositions(0)=(Z=60.000000)
-    ExitPositions(1)=(Z=60.000000)
-    ExitPositions(2)=(Z=60.000000)
-    ExitPositions(3)=(Z=60.000000)
-    ExitPositions(4)=(Z=60.000000)
-    ExitPositions(5)=(Z=60.000000)
-    ExitPositions(6)=(Z=60.000000)
-    ExitPositions(7)=(Z=60.000000)
-
-    EntryPosition=(X=0,Y=0,Z=0)
-    EntryRadius=140.0
-
-    ThrusterOffsets(0)=(X=50.000000,Z=10.000000)
-    ThrusterOffsets(1)=(X=-50.000000,Z=10.000000)
-    ThrusterOffsets(2)=(Z=0.000000)
-
-    BikeDustOffset(0)=(X=30.000000,Z=10.000000)
-    BikeDustOffset(1)=(X=-30.000000,Z=10.000000)
-    BikeDustTraceDistance=100.000000
-
-    HoverSoftness=0.0 // GEm: Controls amortisation. We don't need that at all.
-    HoverPenScale=2.0 // GEm: Controls how well the board follows land curves. High values create "bounciness".
-    HoverCheckDist=50.0
+    GroundSpeed=700.000000
+    MaxGroundSpeed=900.0
+    MaxWaterSpeed=300.0
+    MaxMovementSpeed=900.0
 
     UprightStiffness=400.000000
     UprightDamping=300.000000
@@ -1002,59 +1004,16 @@ defaultproperties
     RollDamping=10.000000
 
     StopThreshold=200.000000
-    VehicleMass=1.5 //2.0
 
     JumpDuration=0.100000
     JumpForceMag=160.0
     JumpDelay=1.000000
-
-    //
-
-    NoEntryTexture=Texture'HUDContent.NoEntry'
-    TeamBeaconTexture=Texture'ONSInterface-TX.HealthBar'
-    TeamBeaconBorderMaterial=Material'InterfaceContent.BorderBoxD'
-
-    StolenAnnouncement=None                        //
-    StolenSound=None                               //sound'ONSVehicleSounds-S.CarAlarm01'
-
-    CrosshairColor=(R=0,G=255,B=0,A=255)
-    CrosshairX=32
-    CrosshairY=32
-    CrosshairTexture=Texture'ONSInterface-TX.MineLayerReticle' //Texture'ONSInterface-TX.tankBarrelAligned'
-    VehicleIcon=(Material=Texture'AS_FX_TX.HUD.TrackedVehicleIcon',X=0,Y=0,SizeX=64,SizeY=64)
-
-    bTeamLocked=False
-    bZeroPCRotOnEntry=false
-    bSetPCRotOnPossess=false
-    bSpecialHUD=True
-
-    //
-
-    DestructionLinearMomentum=(Min=62000.000000,Max=100000.000000)
-    DestructionAngularMomentum=(Min=25.000000,Max=75.000000)
-    DamagedEffectScale=0.500000
-    DamagedEffectOffset=(X=28.000000,Y=-10.000000,Z=10.000000)
-    ImpactDamageMult=0.00008
-
     jumpMult=1000
-    bDuckReleased=false
 
-    bDriverHoldsFlag=true
-    bCanCarryFlag=true
-    FlagBone="trail2"
-    FlagOffset=(Z=45.000000)
-    FlagRotation=(Yaw=32768)
-
-    ObjectiveGetOutDist=10.000000
     bTraceWater=True
-    MaxDesireability=0.5
-
-    MeleeRange=-200.000000
-    GroundSpeed=700.000000
-
-    MaxGroundSpeed=900.0
-    MaxWaterSpeed=300.0
-    MaxMovementSpeed=900.0
+    HoverSoftness=0.0 // GEm: Controls amortisation. We don't need that at all.
+    HoverPenScale=2.0 // GEm: Controls how well the board follows land curves. High values create "bounciness".
+    HoverCheckDist=50.0
 
     Begin Object Class=KarmaParamsRBFull Name=KParams0
         kMaxSpeed=12000.0 // GEm: Around 3000 is the falling speed off the Torlan tower, 1200 is the fall damage threshold
@@ -1076,7 +1035,56 @@ defaultproperties
     End Object
     KParams=KarmaParamsRBFull'KParams0'
 
-    bEjectDriver = true
+//==================================================
+// HUD
+//==================================================
+    bShowChargingBar=True
+    bShowDamageOverlay=True
+    bSpecialHUD=True
+    CrosshairColor=(R=0,G=255,B=0,A=255)
+    CrosshairX=32
+    CrosshairY=32
+    CrosshairTexture=Texture'ONSInterface-TX.MineLayerReticle' //Texture'ONSInterface-TX.tankBarrelAligned'
+    NoEntryTexture=Texture'HUDContent.NoEntry'
+    TeamBeaconTexture=Texture'ONSInterface-TX.HealthBar'
+    TeamBeaconBorderMaterial=Material'InterfaceContent.BorderBoxD'
+    VehicleIcon=(Material=Texture'AS_FX_TX.HUD.TrackedVehicleIcon',X=0,Y=0,SizeX=64,SizeY=64)
 
-    bBlockActors = false // GEm: This is so we don't instantly die, KDriverEnter unsets this
+//==================================================
+// Entry & Exit
+//==================================================
+    bTeamLocked=False
+    EntryPosition=(X=0,Y=0,Z=0)
+    EntryRadius=140.0
+    ExitPositions(0)=(Z=60.000000)
+    ExitPositions(1)=(Z=60.000000)
+    ExitPositions(2)=(Z=60.000000)
+    ExitPositions(3)=(Z=60.000000)
+    ExitPositions(4)=(Z=60.000000)
+    ExitPositions(5)=(Z=60.000000)
+    ExitPositions(6)=(Z=60.000000)
+    ExitPositions(7)=(Z=60.000000)
+    ObjectiveGetOutDist=10.000000
+
+//==================================================
+// Camera
+//==================================================
+    bDrawDriverInTP=True
+    bDrawMeshInFP=True
+
+    MaxViewYaw=16000
+    MaxViewPitch=16000
+
+    FPCamPos=(Z=50.000000)
+
+    //Normal
+    TPCamDistance=250.000000 //NOTE: Be sure TO DELETE THIS LINE from USER.INI as it overrides this value and wil be re-added to the ini as soon as you use the vehicle, all this does here is make it the starting distance
+    TPCamLookat=(X=10.000000,Z=0.000000)
+    TPCamWorldOffset=(Z=140.000000)
+
+    //Gears or Outsider Style
+    //TPCamDistance=150.000000
+    //TPCamLookat=(X=0.000000,Y=40.000000,Z=0.000000)  //Gears Style, more Y is needed for a true Gears style, 40 is more Outsider
+    //TPCamWorldOffset=(Z=100.000000)
+    
 }
