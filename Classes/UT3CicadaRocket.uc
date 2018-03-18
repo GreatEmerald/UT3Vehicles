@@ -39,6 +39,8 @@
 
 class UT3CicadaRocket extends ONSDualACRocket;
 
+var(Sound) sound ExplosionSound;
+
 simulated function Timer() //GE: Change the sound volume to something bearable
 {
 	local float dist,travelTime;
@@ -101,6 +103,23 @@ simulated function Timer() //GE: Change the sound volume to something bearable
 	}
 }
 
+simulated function Explode(vector HitLocation, vector HitNormal)
+{
+    local PlayerController PC;
+
+    PlaySound(ExplosionSound,,2.5*TransientSoundVolume);
+
+    if ( EffectIsRelevant(Location,false) )
+    {
+            PC = Level.GetLocalPlayerController();
+            if ( (PC.ViewTarget != None) && (VSize(PC.ViewTarget.Location - Location) < 8000) )
+                Spawn(class'ONSDualMissileExplosion',,,HitLocation + HitNormal*20,rotator(HitNormal));
+    }
+
+    BlowUp(HitLocation);
+    Destroy();
+}
+
 DefaultProperties
 {
    Speed=1000.000000
@@ -108,5 +127,6 @@ DefaultProperties
    MomentumTransfer=40000.000000
    DamageRadius=220.000000
    KillRange=2000.000000
-   IgniteSound=Sound'UT3A_Vehicle_Cicada.Sounds.A_Vehicle_Cicada_MissleIgnite01'
+   IgniteSound=Sound'UT3A_Vehicle_Cicada.UT3CicadaMissileIgnite.UT3CicadaMissileIgniteCue'
+   ExplosionSound=SoundGroup'UT3A_Weapon_RocketLauncher.UT3RocketImpact.UT3RocketImpactCue'
 }
