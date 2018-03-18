@@ -204,22 +204,21 @@ simulated function TeamChanged()
 defaultproperties
 {
 
-    //===========================
-    // @100GPing100
-    //LOOKS RELATED
-    Drawscale = 1.0
-    
+//=============================================================================
+// Identity
+//=============================================================================
     VehiclePositionString="in a Hellbender"
     VehicleNameString="UT3 Hellbender
+
+    CollisionRadius=219 
     
+//=============================================================================
+// Appearance
+//=============================================================================
+    Drawscale = 1.0
     Mesh = SkeletalMesh'UT3VH_Hellbender_Anims.SK_VH_Hellbender';
     RedSkin = Shader'UT3HellbenderTex.UT3HellbenderSkinRed';
     BlueSkin = Shader'UT3HellbenderTex.UT3HellbenderSkinBlue';
-    
-    DriveAnim = "Idle"
-    MovementAnims(0) = "Idle"
-
-    CollisionRadius=219 
    
     DriverWeapons(0)=(WeaponClass=Class'UT3HellbenderSideGun',WeaponBone="SecondaryTurretYaw")
     PassengerWeapons=((WeaponPawnClass=Class'UT3HellbenderRearGunPawn',WeaponBone="MainTurretYaw"))
@@ -229,7 +228,7 @@ defaultproperties
     and the other pair of () inside the first one to show that this is the one and only element inside it.*/
 
     FlagBone = Hood;
-
+   
     DamagedEffectOffset=(X=-35,Y=25,Z=120)  //Behind Driver Turret Fire Point
     DamagedEffectScale=1.2                 //Behind Driver Turret Fire Size
     //DamagedEffectOffset=(X=-60,Y=-65,Z=90)   //Exhaust Pipe Fire Point
@@ -251,7 +250,15 @@ defaultproperties
     BrakeLightOffset(1)=(X=-165,Y=-50,Z=77)
     BrakeLightMaterial=Material'EpicParticles.FlashFlare1'
    
-    //SOUND RELATED
+//=============================================================================
+// Animation
+//=============================================================================
+    DriveAnim = "Idle"
+    MovementAnims(0) = "Idle"
+ 
+//=============================================================================
+// Sound
+//=============================================================================
     IdleSound=Sound'UT3A_Vehicle_Hellbender.UT3HellbenderSingles.UT3HellbenderEngineIdle01Cue'
     StartUpSound=Sound'UT3A_Vehicle_Hellbender.UT3HellbenderEngineStart.UT3HellbenderEngineStartCue'
     ShutDownSound=Sound'UT3A_Vehicle_Hellbender.UT3HellbenderEngineStop.UT3HellbenderEngineStopCue'
@@ -262,29 +269,34 @@ defaultproperties
     ExplosionSounds(0) = Sound'UT3A_Vehicle_Hellbender.UT3HellbenderExplode.UT3HellbenderExplodeCue';
     BulletSounds = ()
     BulletSounds(0) = Sound'UT3A_Weapon_BulletImpacts.UT3BulletImpactMetal.UT3BulletImpactMetalCue'
+    
     IdleRPM=2000
     SoundVolume=255
     
-    //DAMAGE RELATED
-    DamagedEffectHealthSmokeFactor=0.65 //0.5
-    DamagedEffectHealthFireFactor=0.40 //0.25
-    DamagedEffectFireDamagePerSec=2.0 //0.75
-   
+//=============================================================================
+// Health & Damage
+//=============================================================================
     DriverDamageMult=0.000000
     ImpactDamageMult = 0.00005
-    MomentumMult=0.400000 //1.0  //HDm to GE: 0.4 feels right but Rocket and AVRiL force are reversed with each other
-        
-    //MOVEMENT RELATED
+    MomentumMult=0.400000 //HDm to GE: 0.4 feels right but Rocket and AVRiL force are reversed with each other   
+    DamagedEffectHealthSmokeFactor=0.65
+    DamagedEffectHealthFireFactor=0.40
+    DamagedEffectFireDamagePerSec=2.0
+   
+//=============================================================================
+// Movement
+//=============================================================================
     GroundSpeed=800.000000 //700
-    SteerSpeed=200.000000 //110.0 def UT2004
-    //MaxSteerAngleCurve=(Points=((OutVal=50.000000),,)) @100GPing100: Causes crash.    
-    TransRatio=0.15 //0.11
-    
-    ChassisTorqueScale=1.0 //0.82 //0.7
     EngineInertia=0.01
     EngineBrakeFactor=0.0002 //0.0001 def
-    MaxBrakeTorque=20.5 //20.0
+    SteerSpeed=200.000000 //110.0 def UT2004
+    //MaxSteerAngleCurve=(Points=((OutVal=50.000000),,)) @100GPing100: Causes crash. 
+    TransRatio=0.15 //0.11
     WheelInertia=0.01
+    
+    ChassisTorqueScale=1.0 //0.82 //0.7
+    MaxBrakeTorque=20.5 //20.0
+    
     WheelSuspensionOffset=7.0 //5.0 //HDm: Fixes the chassis sitting height in-game
     
    Begin Object Class=KarmaParamsRBFull Name=KParams0
@@ -362,21 +374,21 @@ defaultproperties
     Wheels(1) = LRWheel;
     Wheels(2) = RFWheel;
     Wheels(3) = LFWheel;
-    // @100GPing100
-    //============EDN============   
-   
-    //ENTRY & EXIT RELATED
 
+//=============================================================================
+// Entry & Exit
+//=============================================================================
     EntryPosition=(X=0,Y=0,Z=0)
-    EntryRadius=180.0  //300.000000
-    
+    EntryRadius=180.0  //300.000000 
     ExitPositions(0)=(X=-10,Y=-160,Z=50)  //Left
     ExitPositions(1)=(X=-10,Y=160,Z=50)   //Right
     ExitPositions(2)=(X=-10,Y=-160,Z=-50) //Left Below
     ExitPositions(3)=(X=-10,Y=160,Z=-50)  //Right Below
     ExitPositions(4)=(X=10,Y=-5,Z=130)    //Roof
 
-    //CAMERA RELATED
+//=============================================================================
+// Camera
+//=============================================================================
     bDrawDriverInTP=False
     FPCamPos=(X=0,Y=31,Z=160)
     TPCamDistance=375.000000
