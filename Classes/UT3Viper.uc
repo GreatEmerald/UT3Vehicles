@@ -615,44 +615,43 @@ simulated function DetachDriver(Pawn P)
 
 DefaultProperties
 {
-    // Looks.
+
+//===============================
+// Identity
+//===============================
+    VehicleNameString="UT3 Viper";
+    VehiclePositionString="in a UT3 Viper";
+    
+    bCanBeBaseForPawns = true;
+    CollisionHeight=50;
+    CollisionRadius=220;
+    MaxDesireability=0.6;
+    
+//===============================
+// Appearance
+//===============================
     Mesh=Mesh'UT3ViperAnims.VH_NecrisManta';
     DestroyedVehicleMesh=StaticMesh'UT3ViperSM.UT3Viper';
     RedSkin=Shader'UT3ViperTex.Viper.ViperSkin';
     BlueSkin=Shader'UT3ViperTex.Viper.ViperSkinBlue';
-    HeadlightCoronaMaxSize=0.0;
+    DrivePos=(X=22.0,Y=0.0,Z=73.0);
+    DriveRot=(Pitch=-1400)
+    
+    DriverWeapons(0)=(WeaponClass=Class'UT3Weap_ViperGun',WeaponBone="FrontBody")
+    
     BikeDustOffset(0)=(X=50.00,Y=0.0,Z=10.0)
     BikeDustOffset(1)=(X=-25.0,Y=0.0,Z=10.0)
 
-    // Weapons.
-    DriverWeapons(0)=(WeaponClass=Class'UT3Weap_ViperGun',WeaponBone="FrontBody")
+    DamagedEffectOffset=(X=-40,Y=-25,Z=10)   //Engine Fire Point
+    DamagedEffectScale=1.0                   //Engine Fire Size
+    //DamagedEffectOffset=(X=120,Y=8,Z=-10)  //Front Fire Point
+    //DamagedEffectScale=0.4                 //Front Fire Size
 
+    HeadlightCoronaMaxSize=0.0;
 
-    // Health
-    Health=200;
-    HealthMax=200;
-
-    // Strings.
-    VehiclePositionString="in a UT3 Viper";
-    VehicleNameString="UT3 Viper";
-
-    // Movement
-    GroundSpeed=1500.0;
-    AirSpeed=2400.0;
-    JumpDuration=0.12;
-    JumpDelay=2.0;
-    MomentumMult=2.2; // 3.2
-    JumpForceMag=60.0; // 67.5
-    JumpTraceDist=175.0;
-    NormalGravScale = 0.9;
-    GlidingGravScale = 0.1;
-    GlideMaxThrustForce = 1.0;
-    GlideMaxStrafeForce = 1.0;
-    NormalMaxThrustForce = 27.0;
-    NormalMaxStrafeForce = 20.0;
-    ImpactDamageMult = 0.000010
-
-    // Sound.
+//===============================
+// Sound
+//===============================
     IdleSound=Sound'UT3A_Vehicle_Viper.UT3ViperSingles.UT3ViperEngineLoopCue';
     StartUpSound=Sound'UT3A_Vehicle_Viper.UT3ViperEngineStart.UT3ViperEngineStartCue';
     ShutDownSound=Sound'UT3A_Vehicle_Viper.UT3ViperEngineStop.UT3ViperEngineStopCue';
@@ -667,34 +666,39 @@ DefaultProperties
     ImpactDamageSounds(0)=Sound'UT3A_Vehicle_Viper.UT3ViperCollide.UT3ViperCollideCue';
     BulletSounds = ()
     BulletSounds(0) = Sound'UT3A_Weapon_BulletImpacts.UT3BulletImpactMetal.UT3BulletImpactMetalCue'
+   
     MaxPitchSpeed=1000;
     SoundVolume=255;
     SoundRadius=900;
 
-    // SelfDestruct.
-    SelfDestructWindow = 3;
-    SelfDestructForceDuration = 1;
+//===============================
+// Health & Damage
+//===============================
+    Health=200;
+    HealthMax=200;
+    LinkHealMult=0.35;
+    ImpactDamageMult = 0.000010
+    MomentumMult=2.2; // 3.2
+    DamagedEffectHealthSmokeFactor=0.65 
+    DamagedEffectHealthFireFactor=0.40 
+    DamagedEffectFireDamagePerSec=2.0  
+    
+    MeleeRange=-100.0;
+    
     DmgType_SelfDestruct = Class'UT3DmgType_SelfDestruct'
+    SelfDestructWindow = 3;
+    SelfDestructForceDuration = 1; 
     SelfDestructDamage = 800;
     SelfDestructRadius = 600;
     SelfDestructMomentum = 200000;
     BoostForce = 500; // 200
     TimeToRiseForSelfDestruct = 1.1;
 
-    // Misc.
-    bCanBeBaseForPawns = true;
-    CollisionHeight=50;
-    CollisionRadius=220;
-    DrivePos=(X=22.0,Y=0.0,Z=73.0);
-    DriveRot=(Pitch=-1400)
-    ObjectiveGetOutDist=750.0;
-    MaxDesireability=0.6;
-    LinkHealMult=0.35;
-    MeleeRange=-100.0;
-    DamagedEffectHealthSmokeFactor=0.65 
-    DamagedEffectHealthFireFactor=0.40 
-    DamagedEffectFireDamagePerSec=2.0  
-    HoverCheckDist=100; // 150
+//===============================
+// Movement
+//===============================
+    GroundSpeed=1500.0;
+    AirSpeed=2400.0;
 
     TurnDamping=55;
     TurnTorqueFactor=750.0;
@@ -709,7 +713,24 @@ DefaultProperties
     UpDamping=0.0;
 
     PitchTorqueMax=35.0;
+
+    JumpDuration=0.12;
+    JumpDelay=2.0;
+    JumpForceMag=60.0; // 67.5
+    JumpTraceDist=175.0;
+
+    NormalGravScale = 0.9;
+    GlidingGravScale = 0.1;
+    GlideMaxThrustForce = 1.0;
+    GlideMaxStrafeForce = 1.0;
+    NormalMaxThrustForce = 27.0;
+    NormalMaxStrafeForce = 20.0;
     
+    HoverCheckDist=100; // 150
+
+//===============================
+// Entry & Exit
+//===============================
     EntryRadius = 160.0
     ExitPositions(0)=(X=30,Y=140,Z=30)   //Right
     ExitPositions(1)=(X=30,Y=-140,Z=30)  //Left
@@ -719,18 +740,16 @@ DefaultProperties
     ExitPositions(5)=(X=200,Y=0,Z=-30)  //Front Below
     ExitPositions(6)=(X=30,Y=140,Z=-30)  //Right Below
     ExitPositions(7)=(X=30,Y=-140,Z=-30) //Left Below
+    ObjectiveGetOutDist=750.0;
     
+//===============================
+// Camera
+//===============================
     bDrawMeshInFP=True
     
     FPCamPos=(X=63,Y=0,Z=56)
-    
     TPCamDistance=300.000000  //NOTE: Be sure TO DELETE THIS LINE from USER.INI, it overrides this value and will be re-added to the ini as soon as you use the vehicle, all this does here is make it the starting distance
     TPCamLookat=(X=-10,Y=0,Z=0)
     TPCamWorldOffset=(X=0,Y=0,Z=100)
-    
-    DamagedEffectOffset=(X=-40,Y=-25,Z=10)   //Engine Fire Point
-    DamagedEffectScale=1.0                   //Engine Fire Size
-    //DamagedEffectOffset=(X=120,Y=8,Z=-10)  //Front Fire Point
-    //DamagedEffectScale=0.4                 //Front Fire Size
-    
+   
 }
