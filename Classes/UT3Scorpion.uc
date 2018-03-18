@@ -635,17 +635,111 @@ simulated function TeamChanged()
 defaultproperties
 {
 
+//=============================================================================
+// Identity
+//=============================================================================
+    VehicleNameString = "UT3 Scorpion"
+    VehiclePositionString="in a Scorpion"
+
+//=============================================================================
+// Appearance
+//=============================================================================
     DrawScale=1.0
-    
-    //=======================
-    // @100GPing100
     Mesh = SkeletalMesh'UT3VH_Scorpion_Anims.SK_VH_Scorpion';
     RedSkin = Shader'UT3ScorpionTex.ScorpionSkin';
     BlueSkin = Shader'UT3ScorpionTex.ScorpionSkinBlue';
+    //RedSkin=Shader'VMVehicles-TX.RVGroup.RVChassisFinalRED'
+    //BlueSkin=Shader'VMVehicles-TX.RVGroup.RVChassisFinalBLUE'
+
+    DrivePos=(X=-20.0,Y=0.0,Z=60.0) //DrivePos=(X=2.0,Y=0.0,Z=50.0)
+    DriveRot=(Pitch=8000)
 
     DriverWeapons(0)=(WeaponClass=Class'UT3ScorpionTurret',WeaponBone="gun_rotate")
+    //DriverWeapons(0)=(WeaponClass=Class'UT3ScorpionTurret',WeaponBone="ChainGunAttachment")
 
+    AfterburnerOffset(0) = (X=-80.0,Y=-16.0,Z=21.0)
+    AfterburnerOffset(1) = (X=-80.0,Y=16.0,Z=21.0)
+
+    //DamagedEffectOffset=(X=60,Y=10,Z=10)  //Hood Fire Point
+    DamagedEffectOffset=(X=-12,Y=-40,Z=0)   //Body Fire Point
+    DamagedEffectScale=0.6                  //Body Fire Size
+    //DamagedEffectOffset=(X=-80,Y=20,Z=30)   //Booster Fire Point, scale probably needs to be larger than 1.0
+    
+    HeadlightCoronaOffset(0)=(X=77,Y=39.0,Z=25)
+    HeadlightCoronaOffset(1)=(X=77,Y=-39.0,Z=25)
+    HeadlightCoronaMaterial=Material'EpicParticles.FlashFlare1'
+    //HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
+    HeadlightCoronaMaxSize=45 //45 //65 looks good but probably too large with FlashFlare...except it's also the default UT2004 value
+
+    HeadlightProjectorOffset=(X=75,Y=0,Z=25) //(X=90,Y=0,Z=7)
+    HeadlightProjectorRotation=(Yaw=0,Pitch=-1000,Roll=0)
+    HeadlightProjectorMaterial=Texture'VMVehicles-TX.RVGroup.RVProjector'
+    HeadlightProjectorScale=0.3
+
+    bMakeBrakeLights=true
+    BrakeLightOffset(0)=(X=-86,Y=0,Z=45)
+    BrakeLightOffset(1)=(X=-92,Y=0,Z=42)
+    BrakeLightMaterial=Material'EpicParticles.FlashFlare1' //Material'EpicParticles.FlickerFlare'
+
+//=============================================================================
+// Sound
+//=============================================================================
+    IdleSound = sound'UT3A_Vehicle_Scorpion.UT3ScorpionSingles.UT3ScorpionEngineLoop01Cue'
+    StartUpSound = sound'UT3A_Vehicle_Scorpion.UT3ScorpionEngineStart.UT3ScorpionEngineStartCue'
+    ShutDownSound = sound'UT3A_Vehicle_Scorpion.UT3ScorpionEngineStop.UT3ScorpionEngineStopCue'
+    ArmExtendSound = sound'UT3A_Vehicle_Scorpion.UT3ScorpionBladeExtend.UT3ScorpionBladeExtendCue'
+    ArmRetractSound = sound'UT3A_Vehicle_Scorpion.UT3ScorpionBladeRetract.UT3ScorpionBladeRetractCue'
+    BladeBreakSound = sound'UT3A_Vehicle_Scorpion.UT3ScorpionBladeBreakOff.UT3ScorpionBladeBreakOffCue'
+    BoostSound = Sound'UT3A_Vehicle_Scorpion.UT3ScorpionSingles.UT3ScorpionEjectReadyBeepThrustStartMix'
+    BoostReadySound = None
+    DriverEjectSnd=Sound'UT3A_Vehicle_Scorpion.UT3ScorpionSingles.UT3ScorpionEject01DestructionWarningMix';
+    ImpactDamageSounds = ();
+    ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Scorpion.UT3ScorpionCollide.UT3ScorpionCollideCue';
+    ExplosionSounds = ();
+    ExplosionSounds(0) = Sound'UT3A_Vehicle_Scorpion.UT3ScorpionExplode.UT3ScorpionExplodeCue';
+    BulletSounds = ()   
+    BulletSounds(0) = Sound'UT3A_Weapon_BulletImpacts.UT3BulletImpactMetal.UT3BulletImpactMetalCue'
+   
+    SoundVolume=255
+//=============================================================================
+// Health & Damage
+//=============================================================================
+    bHasAltFire=False
+    MomentumMult=0.25 //?
+    DamagedEffectHealthSmokeFactor=0.65
+    DamagedEffectHealthFireFactor=0.40 
+    DamagedEffectFireDamagePerSec=2.0
+    CrushedDamageType=class'DamTypeRVPancake'
+    RanOverDamageType=class'DamTypeRVRoadkill'
+    SelfDestructDamageType=class'UT3ScorpionSDDamage'
+    SelfDestructDamage = 600.0
+    SelfDestructDamageRadius = 600.0
+    SelfDestructMomentum = 20000
+    
+//=============================================================================
+// Movement
+//=============================================================================
+    bAllowAirControl = false
+    bHasHandBrake=False //GE: Override for the space bar?
+    GroundSpeed=950.0000
+    EngineBrakeFactor=0.001 //0.0001 def
+    EngineInertia=0.008
     SteerBoneName = "Main_Root";
+    SteerSpeed=200.00 //200.00 //160 def
+    TurnDamping=10 //35 def
+    TransRatio=0.18 //0.15 def UT2004
+    WheelInertia=0.008
+    
+    ChassisTorqueScale=0.45 //0.4
+    MaxBrakeTorque=22.0 //20 def 
+    WheelSuspensionOffset=3.0
+    WheelSoftness=0.045  //.025
+    WheelSuspensionTravel=35.0  //15
+    WheelSuspensionMaxRenderTravel=35.0  //15
+    
+    BoostForce = 1800.0
+    BoostRechargeTime = 5.0
+    MinEjectSpeed = 700.0 // GEm: Originally 900, but it feels too much in comparison
 
     Begin Object Class=SVehicleWheel Name=RRWheel
         BoneName = "B_R_Tire";
@@ -709,58 +803,6 @@ defaultproperties
     Wheels(1) = LRWheel;
     Wheels(2) = RFWheel;
     Wheels(3) = LFWheel;
-    // @100GPing100
-    //==========END==========
-    VehicleNameString = "UT3 Scorpion"
-    VehiclePositionString="in a Scorpion"
-    //RedSkin=Shader'VMVehicles-TX.RVGroup.RVChassisFinalRED'
-    //BlueSkin=Shader'VMVehicles-TX.RVGroup.RVChassisFinalBLUE'
-    //DriverWeapons(0)=(WeaponClass=Class'UT3ScorpionTurret',WeaponBone="ChainGunAttachment")
-    bHasAltFire=False
-    GroundSpeed=950.0000
-    SteerSpeed=200.00 //200.00 //160 def
-    TurnDamping=10 //35 def
-    ChassisTorqueScale=0.45 //0.4
-    MaxBrakeTorque=22.0 //20 def
-    EngineBrakeFactor=0.001 //0.0001 def
-    TransRatio=0.18 //0.15 def UT2004
-    EngineInertia=0.008
-    WheelInertia=0.008
-    WheelSuspensionOffset=3.0
-    WheelSoftness=0.045  //.025
-    WheelSuspensionTravel=35.0  //15
-    WheelSuspensionMaxRenderTravel=35.0  //15
-    bHasHandBrake=False //GE: Override for the space bar?
-    
-    //Sound Related
-    BoostSound = Sound'UT3A_Vehicle_Scorpion.UT3ScorpionSingles.UT3ScorpionEjectReadyBeepThrustStartMix'
-    BoostReadySound = None
-    DriverEjectSnd=Sound'UT3A_Vehicle_Scorpion.UT3ScorpionSingles.UT3ScorpionEject01DestructionWarningMix';
-    IdleSound = sound'UT3A_Vehicle_Scorpion.UT3ScorpionSingles.UT3ScorpionEngineLoop01Cue'
-    StartUpSound = sound'UT3A_Vehicle_Scorpion.UT3ScorpionEngineStart.UT3ScorpionEngineStartCue'
-    ShutDownSound = sound'UT3A_Vehicle_Scorpion.UT3ScorpionEngineStop.UT3ScorpionEngineStopCue'
-    ArmExtendSound = sound'UT3A_Vehicle_Scorpion.UT3ScorpionBladeExtend.UT3ScorpionBladeExtendCue'
-    ArmRetractSound = sound'UT3A_Vehicle_Scorpion.UT3ScorpionBladeRetract.UT3ScorpionBladeRetractCue'
-    BladeBreakSound = sound'UT3A_Vehicle_Scorpion.UT3ScorpionBladeBreakOff.UT3ScorpionBladeBreakOffCue'
-    ImpactDamageSounds = ();
-    ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Scorpion.UT3ScorpionCollide.UT3ScorpionCollideCue';
-    ExplosionSounds = ();
-    ExplosionSounds(0) = Sound'UT3A_Vehicle_Scorpion.UT3ScorpionExplode.UT3ScorpionExplodeCue';
-    BulletSounds = ()
-    BulletSounds(0) = Sound'UT3A_Weapon_BulletImpacts.UT3BulletImpactMetal.UT3BulletImpactMetalCue'
-    SoundVolume=255
-    
-    DamagedEffectHealthSmokeFactor=0.65
-    DamagedEffectHealthFireFactor=0.40 
-    DamagedEffectFireDamagePerSec=2.0  //0.75
-    
-    RanOverDamageType=class'DamTypeRVRoadkill'
-    CrushedDamageType=class'DamTypeRVPancake'
-    SelfDestructDamageType=class'UT3ScorpionSDDamage'
-    BoostIconCoords = (X1=2,Y1=843,X2=97,Y2=50)
-    EjectIconCoords = (X1=92,Y1=317,X2=50,Y2=50)
-    DrivePos=(X=-20.0,Y=0.0,Z=60.0) //DrivePos=(X=2.0,Y=0.0,Z=50.0)
-    DriveRot=(Pitch=8000)
 
     Begin Object Class=KarmaParamsRBFull Name=KParams0
         KStartEnabled=True
@@ -786,18 +828,15 @@ defaultproperties
     End Object
     KParams=KarmaParams'KParams0'
 
-    BoostRechargeTime = 5.0
-    AfterburnerOffset(0) = (X=-80.0,Y=-16.0,Z=21.0)
-    AfterburnerOffset(1) = (X=-80.0,Y=16.0,Z=21.0)
-    BoostForce = 1800.0
-    MinEjectSpeed = 700.0 // GEm: Originally 900, but it feels too much in comparison
-    bAllowAirControl = false
-    SelfDestructDamage = 600.0
-    SelfDestructDamageRadius = 600.0
-    SelfDestructMomentum = 20000
+//=============================================================================
+// HUD
+//=============================================================================
+    BoostIconCoords = (X1=2,Y1=843,X2=97,Y2=50)
+    EjectIconCoords = (X1=92,Y1=317,X2=50,Y2=50)
 
-    MomentumMult=0.25 //?
-    
+//=============================================================================
+// Entry & Exit
+//=============================================================================
     ExitPositions(0)=(X=0,Y=-150,Z=50)  //Left
     ExitPositions(1)=(X=0,Y=150,Z=50)   //Right
     ExitPositions(2)=(X=0,Y=-150,Z=-50) //Left Below
@@ -808,32 +847,12 @@ defaultproperties
     ExitPositions(7)=(X=-150,Y=0,Z=-50) //Rear Below
     ExitPositions(8)=(X=-150,Y=0,Z=50)  //Rear
     
+//=============================================================================
+// Entry & Exit
+//============================================================================= 
     FPCamPos=(X=-70,Y=0,Z=105)
-    
-    //Normal
     TPCamDistance=250.000000
     TPCamLookat=(X=-70,Y=0,Z=0) //X-40
     TPCamWorldOffset=(X=0,Y=0,Z=140) //170-200 is better for aiming high up but to me it makes ground level aim feel awkward
-    
-    //DamagedEffectOffset=(X=60,Y=10,Z=10)  //Hood Fire Point
-    DamagedEffectOffset=(X=-12,Y=-40,Z=0)   //Body Fire Point
-    DamagedEffectScale=0.6                  //Body Fire Size
-    //DamagedEffectOffset=(X=-80,Y=20,Z=30)   //Booster Fire Point, scale probably needs to be larger than 1.0
-    
-    HeadlightCoronaOffset(0)=(X=77,Y=39.0,Z=25)
-    HeadlightCoronaOffset(1)=(X=77,Y=-39.0,Z=25)
-    HeadlightCoronaMaterial=Material'EpicParticles.FlashFlare1'
-    //HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
-    HeadlightCoronaMaxSize=45 //45 //65 looks good but probably too large with FlashFlare...except it's also the default UT2004 value
-
-    HeadlightProjectorOffset=(X=75,Y=0,Z=25) //(X=90,Y=0,Z=7)
-    HeadlightProjectorRotation=(Yaw=0,Pitch=-1000,Roll=0)
-    HeadlightProjectorMaterial=Texture'VMVehicles-TX.RVGroup.RVProjector'
-    HeadlightProjectorScale=0.3
-
-    bMakeBrakeLights=true
-    BrakeLightOffset(0)=(X=-86,Y=0,Z=45)
-    BrakeLightOffset(1)=(X=-92,Y=0,Z=42)
-    BrakeLightMaterial=Material'EpicParticles.FlashFlare1' //Material'EpicParticles.FlickerFlare'
-    
+     
 }
