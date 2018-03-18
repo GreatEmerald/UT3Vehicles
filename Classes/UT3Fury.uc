@@ -72,12 +72,25 @@ simulated event DrivingStatusChanged()
 DefaultProperties
 {
 
-    Drawscale = 1.0
-
-    // Strings.
-    VehiclePositionString="in a UT3 Fury";
+//============================================================
+// Identity
+//============================================================
     VehicleNameString="UT3 Fury";
+    VehiclePositionString="in a UT3 Fury";
     
+//============================================================
+// Appearance
+//============================================================
+    Drawscale = 1.0
+    Mesh=SkeletalMesh'UT3FuryAnims.UT3Fury';
+    RedSkin=Shader'UT3FuryTex.Fury.FurySkin';
+    BlueSkin=Shader'UT3FuryTex.Fury.FurySkinBlue';
+
+    DriverWeapons(0)=(WeaponClass=Class'Onslaught.ONSAttackCraftGun',WeaponBone="UpRt_Arm08")
+
+//============================================================
+// Sounds
+//============================================================ 
     IdleSound = Sound'UT3A_Vehicle_Fury.UT3FurySingles.UT3FuryEngineLoop01'; //Loop is not modulated
     StartUpSound = Sound'UT3A_Vehicle_Fury.UT3FuryEngineStart.UT3FuryEngineStartCue';
     ShutDownSound = Sound'UT3A_Vehicle_Fury.UT3FuryEngineStop.UT3FuryEngineStopCue';
@@ -87,19 +100,17 @@ DefaultProperties
     ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Fury.UT3FuryCollide.UT3FuryCollideCue';
     BulletSounds = ()
     BulletSounds(0) = Sound'UT3A_Weapon_BulletImpacts.UT3BulletImpactMetal.UT3BulletImpactMetalCue'
+    
     SoundVolume=255
     
+//============================================================
+// Health & Damage
+//============================================================  
     ImpactDamageMult = 0.00003
     
-    // Looks.
-    Mesh=SkeletalMesh'UT3FuryAnims.UT3Fury';
-    RedSkin=Shader'UT3FuryTex.Fury.FurySkin';
-    BlueSkin=Shader'UT3FuryTex.Fury.FurySkinBlue';
-	
-    // Damage.
-    DriverWeapons(0)=(WeaponClass=Class'Onslaught.ONSAttackCraftGun',WeaponBone="UpRt_Arm08")
-	
-    // Misc
+//============================================================
+// Entry & Exit
+//============================================================  
     EntryPosition=(X=0,Y=0,Z=20);
     EntryRadius=250.0;
 
