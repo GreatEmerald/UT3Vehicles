@@ -398,10 +398,26 @@ simulated event TeamChanged()
 
 defaultproperties
 {
+
+//=============================================================================
+// Identity
+//=============================================================================
     VehicleNameString = "UT3 Leviathan"
 
-    Health = 6500
-    HealthMax = 6500
+    CollisionHeight=100.0
+
+//=============================================================================
+// Appearance
+//=============================================================================
+
+    Mesh = SkeletalMesh'UT3VH_Leviathan_Anims.SK_VH_Leviathan'
+    // GEm: TODO: Two skins!
+    RedSkin = Shader'UT3LeviathanTex.Levi1.LeviathanSkin1'
+    BlueSkin = Shader'UT3LeviathanTex.Levi1.LeviathanSkin1Blue'
+    RedSkinB(0) = Shader'UT3LeviathanTex.Levi2.LeviathanSkin2'
+    BlueSkinB(0) = Shader'UT3LeviathanTex.Levi2.LeviathanSkin2Blue'
+    RedSkinB(1) = Shader'UT3LeviathanTex.LeviTurret.TurretSkin'
+    BlueSkinB(1) = Shader'UT3LeviathanTex.LeviTurret.TurretSkinBlue'
 
     DriverWeapons(0) = (WeaponClass=class'UT3LeviathanDriverWeapon',WeaponBone="DriverTurretYaw")
     DriverWeapons(1)=(WeaponClass=class'UT3LeviathanPrimaryWeapon',WeaponBone="Base");
@@ -411,16 +427,71 @@ defaultproperties
     PassengerWeapons(2) = (WeaponPawnClass=class'UT3LeviathanTurretStinger',WeaponBone="LT_Rear_TurretYaw")
     PassengerWeapons(3) = (WeaponPawnClass=class'UT3LeviathanTurretShock',WeaponBone="RT_Rear_TurretYaw")
 
-    CollisionHeight=100.0
+    //DamagedEffectOffset=(X=280,Y=160,Z=210)   //Front Right Turret Fire Point
+    DamagedEffectScale=2.3                    
+    //DamagedEffectOffset=(X=-110,Y=-150,Z=150)   //Rear Left Turret Fire Point
+
+    //Custom Alternate Fire Locations Away from Passenger Turrets
+    DamagedEffectOffset=(X=210,Y=70,Z=190)     
+    //DamagedEffectOffset=(X=-70,Y=-110,Z=150)
+
+    HeadlightCoronaOffset(0)=(X=318,Y=87,Z=212)
+    HeadlightCoronaOffset(1)=(X=318,Y=-87,Z=212)
+    HeadlightCoronaOffset(2)=(X=318,Y=72.5,Z=212)
+    HeadlightCoronaOffset(3)=(X=318,Y=-72.5,Z=212)
+    HeadlightCoronaMaterial=Material'EpicParticles.FlashFlare1'
+    //HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
+    HeadlightCoronaMaxSize=50
+    
+    HeadlightProjectorOffset=(X=254.0,Y=0,Z=165)
+    HeadlightProjectorRotation=(Yaw=0,Pitch=-1000,Roll=0)
+    HeadlightProjectorMaterial=Texture'VMVehicles-TX.RVGroup.RVProjector'
+    HeadlightProjectorScale=0.16
+
+//=============================================================================
+// Sound
+//=============================================================================
+    IdleSound = Sound'UT3A_Vehicle_Leviathan.UT3LeviathanSingles.UT3LeviathanEngineIdle02Cue'
+    StartUpSound = Sound'UT3A_Vehicle_Leviathan.UT3LeviathanEngineStart.UT3LeviathanEngineStartCue'
+    ShutDownSound = Sound'UT3A_Vehicle_Leviathan.UT3LeviathanEngineStop.UT3LeviathanEngineStopCue'
+    DeploySound = Sound'UT3A_Vehicle_Leviathan.UT3LeviathanDeploy.UT3LeviathanDeployCue'
+    HideSound = Sound'UT3A_Vehicle_Leviathan.UT3LeviathanDeploy.UT3LeviathanDeployCue'
+    ImpactDamageSounds = ()
+    ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Leviathan.UT3LeviathanCollide.UT3LeviathanCollideCue'
+    ExplosionSounds = ()
+    ExplosionSounds(0) = Sound'UT3A_Vehicle_Leviathan.UT3LeviathanExplode.UT3LeviathanExplodeCue'
+    BulletSounds = ()
+    BulletSounds(0) = Sound'UT3A_Weapon_BulletImpacts.UT3BulletImpactMetal.UT3BulletImpactMetalCue' 
+    
+    SoundVolume = 255
+
+//=============================================================================
+// Health & Damage
+//=============================================================================
+    Health = 6500
+    HealthMax = 6500
+    ImpactDamageMult = 0.00003
+    MomentumMult=0.0001    
+    DamagedEffectHealthSmokeFactor=0.90
+    DamagedEffectHealthFireFactor=0.80
+    DamagedEffectFireDamagePerSec=2.0
+
+//=============================================================================
+// Movement
+//=============================================================================
     GroundSpeed=600
-    LSDFactor=1.000000
-    ChassisTorqueScale=0.200000
-    MaxSteerAngleCurve=(Points=((OutVal=30.000000),(InVal=1500.000000,OutVal=20.000000)))
-    SteerSpeed=50.000000
     //EngineBrakeFactor=0.020000
-    MaxBrakeTorque=8.000000
     //StopThreshold=500.000000
+    SteerSpeed=50.000000
+    MaxSteerAngleCurve=(Points=((OutVal=30.000000),(InVal=1500.000000,OutVal=20.000000)))
+    
+    LSDFactor=1.000000
+    
+    ChassisTorqueScale=0.200000   
+    MaxBrakeTorque=8.000000 
     WheelSuspensionOffset=25.0
+
+    MaxDeploySpeed = 15.0
 
     Begin Object Class=KarmaParamsRBFull Name=KParams0
         KStartEnabled=True
@@ -445,15 +516,6 @@ defaultproperties
         Name="KParams0"
     End Object
     KParams=KarmaParams'KParams0'
-
-    Mesh = SkeletalMesh'UT3VH_Leviathan_Anims.SK_VH_Leviathan'
-    // GEm: TODO: Two skins!
-    RedSkin = Shader'UT3LeviathanTex.Levi1.LeviathanSkin1'
-    BlueSkin = Shader'UT3LeviathanTex.Levi1.LeviathanSkin1Blue'
-    RedSkinB(0) = Shader'UT3LeviathanTex.Levi2.LeviathanSkin2'
-    BlueSkinB(0) = Shader'UT3LeviathanTex.Levi2.LeviathanSkin2Blue'
-    RedSkinB(1) = Shader'UT3LeviathanTex.LeviTurret.TurretSkin'
-    BlueSkinB(1) = Shader'UT3LeviathanTex.LeviTurret.TurretSkinBlue'
 
     Begin Object Class=SVehicleWheel Name=RtRWheel
         BoneName="Rt_Rear_Tire"
@@ -550,57 +612,32 @@ defaultproperties
         SteerType=VST_Fixed
     End Object
     Wheels(6) = SVehicleWheel'CenterWheel'*/
-
-    IdleSound = Sound'UT3A_Vehicle_Leviathan.UT3LeviathanSingles.UT3LeviathanEngineIdle02Cue'
-    StartUpSound = Sound'UT3A_Vehicle_Leviathan.UT3LeviathanEngineStart.UT3LeviathanEngineStartCue'
-    ShutDownSound = Sound'UT3A_Vehicle_Leviathan.UT3LeviathanEngineStop.UT3LeviathanEngineStopCue'
-    DeploySound = Sound'UT3A_Vehicle_Leviathan.UT3LeviathanDeploy.UT3LeviathanDeployCue'
-    HideSound = Sound'UT3A_Vehicle_Leviathan.UT3LeviathanDeploy.UT3LeviathanDeployCue'
-    ImpactDamageSounds = ()
-    ImpactDamageSounds(0) = Sound'UT3A_Vehicle_Leviathan.UT3LeviathanCollide.UT3LeviathanCollideCue'
-    ExplosionSounds = ()
-    ExplosionSounds(0) = Sound'UT3A_Vehicle_Leviathan.UT3LeviathanExplode.UT3LeviathanExplodeCue'
-    BulletSounds = ()
-    BulletSounds(0) = Sound'UT3A_Weapon_BulletImpacts.UT3BulletImpactMetal.UT3BulletImpactMetalCue' 
-    SoundVolume = 255
     
-    MomentumMult=0.0001
-    ImpactDamageMult = 0.00003 //0.0003
-    DamagedEffectHealthSmokeFactor=0.90 //0.5
-    DamagedEffectHealthFireFactor=0.80 //0.25
-    DamagedEffectFireDamagePerSec=2.0 //0.75
-    
-    MaxDeploySpeed = 15.0
+//=============================================================================
+// HUD
+//============================================================================= 
     DeployIconCoords = (X1=0,Y1=670,X2=154,Y2=96)
     
+//=============================================================================
+// Entry & Exit
+//=============================================================================
     ExitPositions(0)=(X=90,Y=-330,Z=20)
     ExitPositions(1)=(X=90,Y=330,Z=20)
     ExitPositions(2)=(X=90,Y=-330,Z=-20)
     ExitPositions(3)=(X=90,Y=330,Z=-20)
     ExitPositions(4)=(X=230,Y=-90,Z=280)
 
+//=============================================================================
+// Camera
+//=============================================================================
+    FPCamPos=(X=100,Y=0,Z=330)
+    UnDeployedFPCamPos=(X=100,Y=0,Z=330)
+    DeployedFPCamPos=(X=-200,Y=0,Z=500)
     TPCamDistance=980.000000
     TPCamLookat=(X=0,Y=0,Z=170) //(X=-200,Y=0,Z=300) def UT2004
     UnDeployedTPCamLookat=(X=0,Y=0,Z=170)
     UnDeployedTPCamWorldOffset=(X=0,Y=0,Z=170)
     DeployedTPCamWorldOffset=(X=0,Y=0,Z=500) //(X=0,Y=0,Z=800) def UT2004
-    DeployedTPCamLookat=(X=-60,Y=0,Z=0) //(X=100,Y=0,Z=0)
-    
-    FPCamPos=(X=100,Y=0,Z=330)
-    UnDeployedFPCamPos=(X=100,Y=0,Z=330)
-    DeployedFPCamPos=(X=-200,Y=0,Z=500)
-
-    HeadlightCoronaOffset(0)=(X=318,Y=87,Z=212)
-    HeadlightCoronaOffset(1)=(X=318,Y=-87,Z=212)
-    HeadlightCoronaOffset(2)=(X=318,Y=72.5,Z=212)
-    HeadlightCoronaOffset(3)=(X=318,Y=-72.5,Z=212)
-    HeadlightCoronaMaterial=Material'EpicParticles.FlashFlare1'
-    //HeadlightCoronaMaterial=Material'EmitterTextures.Flares.EFlareOY'
-    HeadlightCoronaMaxSize=50
-    
-    HeadlightProjectorOffset=(X=254.0,Y=0,Z=165)
-    HeadlightProjectorRotation=(Yaw=0,Pitch=-1000,Roll=0)
-    HeadlightProjectorMaterial=Texture'VMVehicles-TX.RVGroup.RVProjector'
-    HeadlightProjectorScale=0.16
+    DeployedTPCamLookat=(X=-60,Y=0,Z=0) //(X=100,Y=0,Z=0)   
     
 }
