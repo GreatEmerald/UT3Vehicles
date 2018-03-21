@@ -48,10 +48,11 @@ simulated function Explode(vector HitLocation, vector HitNormal)
 
     if ( EffectIsRelevant(Location,false) )
     {
-        sparks = Spawn(class'LinkProjSparksYellow',,, HitLocation, rotator(HitNormal));
+        sparks = Spawn(class'LinkProjSparksYellow',,, HitLocation*20, rotator(HitNormal));
         sparks.Skins[0] = texture'Shock_Sparkle';
     }
     PlaySound(ExplosionSound, Slot_None, 1.0);
+    BlowUp(HitLocation);
     Destroy();
 }
 
