@@ -57,7 +57,8 @@ var float ShieldRecharge;
 var float ShieldAvailableTime;
 
 var name EnterAnim, LeaveAnim, ArmBone;
-
+var(Sound) sound TurretActivateSound;
+var(Sound) sound TurretDeactivateSound;
 
 /**
 Best mode is always primary. Shield activation is handled separately for bots.
@@ -162,7 +163,7 @@ function KDriverEnter(Pawn P)
         AnimSlot = UT3LeviathanTurretWeapon(Gun).SkinSlot-1;
         VehicleBase.AnimBlendParams(AnimSlot, 1.0, , , ArmBone);
         VehicleBase.PlayAnim(EnterAnim, 1.0, 0.0, AnimSlot);
-        PlaySound(Sound'UT3A_Vehicle_Leviathan.Sounds.A_Vehicle_Leviathan_TurretActivate', SLOT_None, 2.0);
+        PlaySound(TurretActivateSound, SLOT_None, 2.0);
     }
 }
 
@@ -177,7 +178,7 @@ function bool KDriverLeave(bool bForceLeave)
         AnimSlot = UT3LeviathanTurretWeapon(Gun).SkinSlot-1;
         VehicleBase.AnimBlendParams(AnimSlot, 1.0, , , ArmBone);
         VehicleBase.PlayAnim(LeaveAnim, 1.0, 0.0, AnimSlot);
-        PlaySound(Sound'UT3A_Vehicle_Leviathan.Sounds.A_Vehicle_Leviathan_TurretDeactivate', SLOT_None, 2.0);
+        PlaySound(TurretDeactivateSound, SLOT_None, 2.0);
     }
 
     return bResult;
@@ -262,6 +263,8 @@ simulated function DetachDriver(Pawn P)
 
 defaultproperties
 {
+    TurretActivateSound = Sound'UT3A_Vehicle_Leviathan.UT3LeviathanTurretActivate.UT3LeviathanTurretActivateCue'
+    TurretDeactivateSound = Sound'UT3A_Vehicle_Leviathan.UT3LeviathanTurretDeactivate.UT3LeviathanTurretDeactivateCue'
     bShowChargingBar = True
     bHasAltFire      = False
     ShieldDuration   = 4.0

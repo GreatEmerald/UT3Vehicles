@@ -102,11 +102,11 @@ defaultproperties
     Damage           =    45.0  //120.0
     DamageRadius     =    128.0 //300.0
     ComboDamage      =    120.0 //215
-    ComboSound=Sound'UT3Weapons.ShockRifle.ShockCombo'
+    ComboSound=Sound'UT3A_Weapon_ShockRifle.UT3ShockComboExplosion.UT3ShockComboExplosionCue'
+    AmbientSound=Sound'UT3A_Weapon_ShockRifle.UT3ShockSingles.UT3ShockAltFireTravel01'
+    ImpactSound=Sound'UT3A_Weapon_ShockRifle.UT3ShockAltFireImpact.UT3ShockAltFireImpactCue'
     MomentumTransfer=70000.0
     MyDamageType=class'UT3DmgType_LeviathanShockBall'
 
-    AmbientSound=Sound'UT3Weapons.ShockRifle.ShockRifleAltAmb'
-    ImpactSound=Sound'UT3Weapons.ShockRifle.ShockBallImpact'
     LifeSpan=8.000000
 }
