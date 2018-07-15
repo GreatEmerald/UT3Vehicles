@@ -712,10 +712,18 @@ defaultproperties
     CrushedDamageType=class'DamTypeRVPancake'
     RanOverDamageType=class'DamTypeRVRoadkill'
     SelfDestructDamageType=class'UT3ScorpionSDDamage'
-    SelfDestructDamage = 600.0
+    SelfDestructDamage = 100.0 //600.0
     SelfDestructDamageRadius = 600.0
-    SelfDestructMomentum = 20000
+    SelfDestructMomentum = 130 //20000
     
+    //HD Notes
+    //SD Crash test fix 1 results - Damage = 100.0 & Momentum = 20 works but SD has no distance
+	//SD Crash test fix 2 results - Damage = 100.0 & Momentum = 100 works, no distance and single hit took core from 100% to 18%
+	//SD Crash test fix 3 results - Damage = 100.0 & Momentum = 120 works, core droped to 15%, no distance
+	//SD Crash test fix 4 results - Damage = 100.0 & Momentum = 130 works, no distance, core dropped to 74%
+	//SD Crash test fix 5 results - Damage = 150.0 & Momentum = 130 works, core dropped to 51% from 100%
+	//SD Crash test fix 6 results - Damage = 200.0 & Momentum = 50 works, core dropped to 5% from 100% 
+    //Final opinon - distance isn't possible to keep and results 5 & 6 are too overpowered so result 4 seems best
 //=============================================================================
 // Movement
 //=============================================================================
