@@ -41,6 +41,7 @@ class UT3ScorpionBallRed extends EONSScorpionEnergyProjectileRed;
 
 var class<Emitter>  ProjectileEffectClass2;
 var Emitter         ProjectileEffect2;
+var(Sound) sound ExplosionSound;
 
 simulated function PostBeginPlay()
 {
@@ -83,7 +84,7 @@ simulated function SpawnEffects( vector HitLocation, vector HitNormal )
         if (bZap)
         {
            spawn(class'xEffects.GoopSparks',,,Location);
-           PlaySound(sound'WeaponSounds.BioRifle.BioRifleGoo1',,8*TransientSoundVolume);
+           PlaySound(ExplosionSound,,8*TransientSoundVolume);
         }
         else
         {
@@ -203,6 +204,7 @@ DefaultProperties
   ForceScale=10.0
   //AmbientSound=Sound'UT3Vehicles.SCORPION.ScorpionBallAmb'
   AmbientSound=None
-  ImpactSound=Sound'UT3Weapons2.BioRifle.BioRifleExplode' // GEm: FIXME, should not depend on UT3Weapons2
+  ImpactSound=Sound'UT3A_Weapon_BioRifle.UT3BioFireImpactFizzle.UT3BioFireImpactFizzleCue'
+  ExplosionSound=Sound'UT3A_Weapon_BioRifle.UT3BioFireImpactExplode.UT3BioFireImpactExplodeCue'
   MyDamageType=class'UT3ScorpionBallDamage'
 }

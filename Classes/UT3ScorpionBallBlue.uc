@@ -76,14 +76,14 @@ simulated function Destroyed()
         ProjectileEffect2.Destroy();
 }
 
-/*simulated function SpawnEffects( vector HitLocation, vector HitNormal )
+simulated function SpawnEffects( vector HitLocation, vector HitNormal )
 {
     if ( EffectIsRelevant(Location,false) )
     {
         if (bZap)
         {
            spawn(class'xEffects.GoopSparks',,,Location);
-           PlaySound(sound'WeaponSounds.BioRifle.BioRifleGoo1',,8*TransientSoundVolume);
+           PlaySound(ExplosionSound,,8*TransientSoundVolume);
         }
         else
         {
@@ -95,7 +95,7 @@ simulated function Destroyed()
         if ( (ExplosionDecal != None) && (Level.NetMode != NM_DedicatedServer) )
             Spawn(ExplosionDecal,self,,HitLocation, rotator(-HitNormal));
     }
-}  */
+}
 
 simulated function ProcessTouch (Actor Other, vector HitLocation) //GE: For reflecting off shieldguns
 {
@@ -201,9 +201,9 @@ DefaultProperties
   CollisionHeight=30
   CollisionRadius=30
   ForceScale=10.0
-  //AmbientSound=Sound'UT3Vehicles.SCORPION.ScorpionBallAmb'
   AmbientSound=None
-  ImpactSound=Sound'UT3Weapons2.BioRifle.BioRifleExplode' // GEm: FIXME, should not depend on UT3Weapons2
+  ImpactSound=Sound'UT3A_Weapon_BioRifle.UT3BioFireImpactFizzle.UT3BioFireImpactFizzleCue'
+  ExplosionSound=Sound'UT3A_Weapon_BioRifle.UT3BioFireImpactExplode.UT3BioFireImpactExplodeCue'
   MyDamageType=class'UT3ScorpionBallDamage'
   ExplosionEmitterClass=class'ONSPlasmaHitBlue'
 }
