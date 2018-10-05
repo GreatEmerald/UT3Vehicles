@@ -102,6 +102,8 @@ var bool bStoppedRise;
 var bool bJumped;
 
 
+var Emitter DuckEffect;
+
 replication
 {
 	reliable if (bNetOwner)
@@ -237,15 +239,16 @@ function vector GetBoostForce()
 
 simulated function CheckJumpDuck()
 {
-	local Emitter JumpEffect;
-
-    if (JumpCountdown <= 0.0 && (Rise > 0 || bWeaponIsAltFiring) && Level.TimeSeconds - JumpDelay >= LastJumpTime && TraceJump(JumpTraceDist)) {
-		bJumped = true;
+    local Emitter JumpEffect;
+    
+    if (JumpCountdown <= 0.0 && (Rise > 0 || bWeaponIsAltFiring) && !bOverWater && !bHoldingDuck && Level.TimeSeconds - JumpDelay >= LastJumpTime && TraceJump(JumpTraceDist)) 
+    {
+	bJumped = true;
         PlaySound(JumpSound, SLOT_Misc, 1.0, true);
 
         if (Role == ROLE_Authority) {
-			DoBikeJump = !DoBikeJump;
-		}
+	    DoBikeJump = !DoBikeJump;
+	}
 
         if(Level.NetMode != NM_DedicatedServer) {
             JumpEffect = Spawn(class'ONSHoverBikeJumpEffect');
@@ -254,11 +257,33 @@ simulated function CheckJumpDuck()
         }
 
     	if (AIController(Controller) != none) {
-    		Rise = 0;
+    	    Rise = 0;
     	}
 
-    	LastJumpTime = Level.TimeSeconds;
+        LastJumpTime = Level.TimeSeconds;
     }
+    else if (DuckCountdown <= 0.0 && (Rise < 0 || bWeaponIsAltFiring))
+    {
+        if (!bHoldingDuck)
+        {
+            bHoldingDuck = True;
+
+            PlaySound(DuckSound,,1.0);
+
+            if(Level.NetMode != NM_DedicatedServer)
+            {
+                DuckEffect = Spawn(class'UT3MantaDuckEffect');
+                DuckEffect.SetBase(Self);
+            }
+
+            if ( AIController(Controller) != None )
+                Rise = 0;
+
+            JumpCountdown = 0.0; // Stops any jumping that was going on.
+        }
+    }
+    else
+    bHoldingDuck = False;
 }
 
 function AltFire(optional float F)
@@ -332,6 +357,10 @@ function UsedBy(Pawn user)
 
 simulated function Tick(float DeltaTime)
 {
+	
+	if (!bHoldingDuck && DuckEffect != None)
+        DuckEffect.Destroy();
+	
 	if (bEjected == false) {
 		Animate();
 		CheckGliding();
